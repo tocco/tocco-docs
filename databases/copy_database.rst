@@ -43,7 +43,7 @@ This example assumes that the customer name is *tocco* and DB name *nice2_tocco*
 
       CREATE DATABASE ${COPIED_DB_NAME} WITH TEMPLATE ${DATABASE_NAME};
 
-   .. :note:: By convention, databases not used by a test or production system must follow this naming pattern:
+   .. note:: By convention, databases not used by a test or production system should follow this naming pattern:
               **nice2_${CUSTOMER}_${YOUR_SHORT_NAME}_${YEAR}${MONTH}${DAY}**
 
 4. restart instance (if previously stopped)
