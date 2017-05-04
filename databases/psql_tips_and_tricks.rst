@@ -7,7 +7,8 @@ Getting Help
 Show SQL Syntax
 ^^^^^^^^^^^^^^^
 
-``\h`` shows all available statements. Use ``\h SELECT`` or ``\h ALTER DATABASE`` to see the full syntax description.
+``\h`` by itself shows all available statements. Use ``\h SELECT`` or ``\h ALTER DATABASE`` to see the full syntax
+description.
 
 .. code::
 
@@ -56,8 +57,8 @@ Show ``psql`` commands
 Enable Extended Output
 ----------------------
 
-Regular Output
-^^^^^^^^^^^^^^
+Regular Output (columns)
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code::
 
@@ -68,8 +69,8 @@ Regular Output
              2 |                   | 2017-01-26 03:08:54.836+01 |                   | 2017-01-25 20:14:01.032+01 | 4e1805cf7486501098f4bf45e024b88817add85a |              74838 | History_domain_entity | 13595     | 680915 | UPDATED   |                  | 1501010041032
    (2 rows)
 
-Extended Output
-^^^^^^^^^^^^^^^
+Extended Output (rows)
+^^^^^^^^^^^^^^^^^^^^^^
 
 .. code::
 
@@ -107,7 +108,7 @@ Extended Output
 Details
 ^^^^^^^
 
-``\x auto``: enable extended output if screen to small
+``\x auto``: enable extended output if screen is too small
 ``\x on``:   always use extended output
 ``\x off``:  disable extended output
 
@@ -118,7 +119,6 @@ Change Password
 
 .. code::
 
-   \passsword USERNAME
+   \password USERNAME
    Enter new password: <PASSWORD>
    Enter it again: <PASSWORD>
-
