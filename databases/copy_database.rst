@@ -25,7 +25,7 @@ This example assumes that the customer name is *tocco* and DB name *nice2_tocco*
 
    .. code:: bash
 
-      bash mgrsh stop nice2-${CUSTOMER_NAME}
+      mgrsh stop nice2-${CUSTOMER_NAME}
 
 2. kill connections to database (in case someone is still connected to it)
 
