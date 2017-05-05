@@ -6,17 +6,19 @@
 Welcome to Tocco DevOps's documentation!
 ========================================
 
-Contents:
-
 .. toctree::
+   :caption: Databases
    :maxdepth: 2
 
+   databases/copy_database
+   databases/dump_database
+   databases/restore_database
+   databases/psql_tips_and_tricks
 
 
 Indices and tables
 ==================
 
 * :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`
 
