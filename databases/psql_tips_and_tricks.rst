@@ -64,9 +64,9 @@ Regular Output (columns)
 
    SELECT * FROM nice_history_domain_entity LIMIT 2;
     _nice_version | _nice_update_user |   _nice_update_timestamp   | _nice_create_user |   _nice_create_timestamp   |                xmlContent                | fk_history_version |      entityModel      | entityKey |   pk   | operation | fk_business_unit |    expires
-    ---------------+-------------------+----------------------------+-------------------+----------------------------+------------------------------------------+--------------------+-----------------------+-----------+--------+-----------+------------------+---------------
-             2 |                   | 2017-01-26 03:08:46.686+01 |                   | 2017-01-25 20:14:00.526+01 | 7bc7a4cdd4ff9a138fe9eefe061498e9b67b3322 |              74837 | History_domain_entity | 13536     | 680909 | UPDATED   |                  | 1501010040526
-             2 |                   | 2017-01-26 03:08:54.836+01 |                   | 2017-01-25 20:14:01.032+01 | 4e1805cf7486501098f4bf45e024b88817add85a |              74838 | History_domain_entity | 13595     | 680915 | UPDATED   |                  | 1501010041032
+   ---------------+-------------------+----------------------------+-------------------+----------------------------+------------------------------------------+--------------------+-----------------------+-----------+--------+-----------+------------------+---------------
+                2 |                   | 2017-01-26 03:08:46.686+01 |                   | 2017-01-25 20:14:00.526+01 | 7bc7a4cdd4ff9a138fe9eefe061498e9b67b3322 |              74837 | History_domain_entity | 13536     | 680909 | UPDATED   |                  | 1501010040526
+                2 |                   | 2017-01-26 03:08:54.836+01 |                   | 2017-01-25 20:14:01.032+01 | 4e1805cf7486501098f4bf45e024b88817add85a |              74838 | History_domain_entity | 13595     | 680915 | UPDATED   |                  | 1501010041032
    (2 rows)
 
 Extended Output (rows)
@@ -107,10 +107,11 @@ Extended Output (rows)
 
 Details
 ^^^^^^^
-
-``\x auto``: enable extended output if screen is too small
-``\x on``:   always use extended output
-``\x off``:  disable extended output
+============   =============================================
+``\x auto``    enable extended output if screen is too small
+``\x on``      always use extended output
+``\x off``     disable extended output
+============   =============================================
 
 To use extended output by default add ``\x auto`` to ``~/.psqlrc``.
 
