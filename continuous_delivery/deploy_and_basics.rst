@@ -31,8 +31,9 @@ Deliver (Simple)
    *Run* menu
 
 #. Click on **Run** in the `main page`_
-#. (optional) adjust the `dump mode`_ in the `run menu`_
-#. Click **Run Build** in the `run menu`_
+#. (optional) adjust the `dump mode`_ in the `run menu <#run-menu>`_
+#. Click **Run Build** in the `run menu <#run-menu>`_
+
 
 Deliver (Advanced)
 ------------------
@@ -47,12 +48,13 @@ Deliver (Advanced)
    *Changes* tab in *Run* menu
 
 #. Click on **Run** in the `main page`_.
-#. (optional) Adjust the `dump mode`_ in the `run menu`_.
-#. (optional) Select a particular `Git tag or branch <#deploy-a-specific-git-tag>`_ or deploy a particular Docker image.
-   tag [#f1]_
-#. Click **Run Build** in the `run menu`_.
+#. (optional) Adjust the `dump mode`_ in the `run menu <#run-menu>`_.
+#. (optional) Select a particular `Git tag or branch <#deploy-a-specific-git-tag>`_ or deploy a particular `Docker image
+   tag <deploy-a-specific-docker-image-tag>`_ [#f1]_.
+#. Click **Run Build** in the `run menu <#run-menu>`_.
 
 .. todo:: write and link guide for deploying specific Docker images
+
 
 Dump Mode
 ---------
@@ -68,6 +70,7 @@ dump and restore database  In case of a deployment failure, automatically roll b
                            **In case of a rollback, changes made to the DB, after starting the dump, are lost!**
 =========================  =============================================================================================
 
+
 Deploy a Specific Git Tag
 -------------------------
 
@@ -80,6 +83,20 @@ Deploy a Specific Git Tag
 .. important::
    #. This should only be used with test systems [#f1]_.
    #. The value of **Build branch** is ignored if `Docker Image ID <#run-menu-advanced>`_ is set.
+
+
+Deploy a Specific Docker Image Tag
+----------------------------------
+
+This is only used for production systems, it allows you to deploy a docker image that was once installed on the test
+system. By default the ``test`` tag is deployed which installs the very same image the test system is using. You can
+however also install an older image formerly installed on the test system.
+
+#. Find the tag name for the version you want to have installed. I looks like this ``test-2017-05-09T12_54_27``.
+#. Enter the tag in the **Docker Image ID** field in the `run menu <#run-menu-advanced>`_.
+
+.. todo:: describe where the tag names can be found
+
 
 .. rubric:: Footnotes
 

@@ -11,6 +11,7 @@ Welcome to Tocco DevOps's documentation!
    :maxdepth: 2
 
    continuous_delivery/deploy_and_basics
+   continuous_delivery/add_customer_or_installation
 
 .. toctree::
    :caption: Databases
