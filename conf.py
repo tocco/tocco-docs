@@ -113,8 +113,8 @@ pygments_style = 'sphinx'
 # If true, keep warnings as "system message" paragraphs in the built documents.
 # keep_warnings = False
 
-# If true, `todo` and `todoList` produce output, else they produce nothing.
-todo_include_todos = True
+# do not include TODOs on Read the Docs
+todo_include_todos = os.environ.get('READTHEDOCS', None) != 'True'
 
 
 # -- Options for HTML output ----------------------------------------------

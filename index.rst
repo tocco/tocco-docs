@@ -7,6 +7,12 @@ Welcome to Tocco DevOps's documentation!
 ========================================
 
 .. toctree::
+   :caption: Continuous Delivery
+   :maxdepth: 2
+
+   continuous_delivery/deploy_and_basics
+
+.. toctree::
    :caption: Databases
    :maxdepth: 2
 
