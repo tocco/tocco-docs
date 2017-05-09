@@ -20,6 +20,8 @@ Welcome to Tocco DevOps's documentation!
    databases/dump_database
    databases/restore_database
    databases/psql_tips_and_tricks
+   databases/sql_snippets_nice2
+   databases/sql_snippets_postgres
 
 
 Indices and tables
