@@ -44,3 +44,28 @@ Close all connections to DB ``DB_NAME``.
     WHERE
       pg_stat_activity.datname = 'DB_NAME'
       AND pid <> pg_backend_pid(); 
+
+
+Find long-running queries
+-------------------------
+
+Show queries that have been running for more than 5 minutes.
+
+.. code:: sql
+
+   SELECT
+     pid,
+     now() - query_start as time,
+     datname,
+     query
+   FROM
+     pg_stat_activity
+   WHERE
+     state = 'active'
+     AND now() - query_start > interval '5m' order by query_start;
+
+.. hint::
+
+   You can terminate any running query using the number shown in the ``pid`` column.:
+
+   ``SELECT pg_terminate_backend(pid);``
