@@ -73,7 +73,7 @@ FLUENTD_TARGET_PORT  Target port for fluentd. (defaults to 24224)
         instead of      use
         ==============  ===========================
         ``.`` (period)  ``__`` (double underscore)
-        ``-`` (hypen)   ``___`` (triple underscore)
+        ``-`` (hyphen)  ``___`` (triple underscore)
         ==============  ===========================
 
     For instance, instead of:

@@ -9,7 +9,7 @@ Introduction to OpenShift
 
 Here's what's important:
 
-* A single Docker Image image is deployed when continuous delivering. It contains Nice2, Java and all runtime
+* A single Docker Image is deployed via continuous delivery. It contains Nice2, Java and all runtime
   dependencies. Thus, Nice2 can be run in any OpenShift/Docker environment.
 * OpenShift orchestrates the Docker images, service, routes, etc. and ensure they stay available.
 
@@ -60,6 +60,6 @@ Every installation consists of the following OpenShift elements:
 .. [#f2] By default the ``stable`` tag is used. ``latest`` is the staging area and is only deployed on selected systems.
 .. [#f3] Mounted at ``/persist`` and only the subdirectory ``/persist/index_data`` is currently used for the Solr index.
 .. [#f4] Image source is hosted on `github <https://github.com/tocco/openshift-nginx>`_ and the ``latest`` tag is
-         automatically build on `dockerhub <https://hub.docker.com/r/toccoag/openshift-nginx/>`_.
+         automatically built on `dockerhub <https://hub.docker.com/r/toccoag/openshift-nginx/>`_.
 .. [#f5] Image source is hosted on `github <https://github.com/tocco/openshift-solr>`_ and the ``latest`` tag is
-         automatically build on `dockerhub <https://hub.docker.com/r/toccoag/openshift-solr/>`_.
+         automatically built on `dockerhub <https://hub.docker.com/r/toccoag/openshift-solr/>`_.
