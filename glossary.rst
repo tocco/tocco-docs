@@ -3,6 +3,12 @@ Glossary
 
 .. glossary::
 
+    continuous delivery
+    CD
+        Continuous delivery is used to deploy our Nice2 installations.
+
+        Our CD is powerd by TeamCity and can be found at https://tc.tocco.ch.
+
     container
         A :term:`docker image` running in a :term:`pod`.
 
@@ -22,6 +28,11 @@ Glossary
         Port that is made available to other pods or services.
 
         This is configured in the :term:`deployment config`.
+
+    Fluentd
+        `Fluentd`_ is used for as a tool for central log collection on our OpenShift platform.
+
+        .. _Fluentd: https://www.fluentd.org/
 
     image stream
     IS
