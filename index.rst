@@ -24,10 +24,18 @@ Welcome to Tocco DevOps's documentation!
    databases/sql_snippets_nice2
    databases/sql_snippets_postgres
 
+.. toctree::
+   :caption: OpenShift
+   :maxdepth: 2
+
+   openshift/basics
+   openshift/openshift_client
+   openshift/edit_resources
+
 
 Indices and tables
 ==================
 
 * :ref:`genindex`
+* :doc:`glossary`
 * :ref:`search`
-
