@@ -30,6 +30,7 @@ Welcome to Tocco DevOps's documentation!
 
    openshift/basics
    openshift/openshift_client
+   openshift/create_nice_installation
    openshift/edit_resources
 
 

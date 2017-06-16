@@ -18,6 +18,8 @@ Create a new Customer
 3. Fill in parameters as shown above
 
 
+.. _create-installation-in-teamcity:
+
 Create a new Installation
 -------------------------
 
@@ -48,3 +50,7 @@ Create a new Installation
    ================ ================================================================
 
    It shouldn't be necessary to touch any of the other parameters.
+
+.. important::
+
+    The installation needs also to be :doc:`created in OpenShift <../openshift/create_nice_installation>`.
