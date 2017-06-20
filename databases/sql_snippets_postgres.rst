@@ -4,30 +4,60 @@ SQL Snippets (Postgres)
 Show Queries Running in Postgres
 --------------------------------
 
-show all queries:
+Show all Queries
+^^^^^^^^^^^^^^^^
 
 .. code:: sql
 
     SELECT
       datname,
       now() - query_start as time,
-      query 
+      query
     FROM
       pg_stat_activity
-    WHERE 
+    WHERE
       state = 'active';
 
-show queries running on DB ``DB_NAME``:
+Show Queries Running on DB
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Show queries on ``DB_NAME``:
 
 .. code:: sql
 
     SELECT
       now() - query_start as time,
-      query 
+      query
     FROM
       pg_stat_activity
-    WHERE 
+    WHERE
       datname = 'DB_NAME' AND state = 'active';
+
+Show Long Running Queries
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Show Queries that have been Running for more than 5 Minutes:
+
+.. code:: sql
+
+   SELECT
+     pid,
+     now() - query_start as time,
+     datname,
+     query
+   FROM
+     pg_stat_activity
+   WHERE
+     state = 'active'
+     AND now() - query_start > interval '5m'
+  ORDER BY
+     query_start;
+
+.. hint::
+
+   You can terminate any running query using the number shown in the ``pid`` column:
+
+   ``SELECT pg_terminate_backend(pid);``
 
 
 Forcibly Close Connections to DB
@@ -43,29 +73,4 @@ Close all connections to DB ``DB_NAME``.
       pg_stat_activity
     WHERE
       pg_stat_activity.datname = 'DB_NAME'
-      AND pid <> pg_backend_pid(); 
-
-
-Find long-running queries
--------------------------
-
-Show queries that have been running for more than 5 minutes.
-
-.. code:: sql
-
-   SELECT
-     pid,
-     now() - query_start as time,
-     datname,
-     query
-   FROM
-     pg_stat_activity
-   WHERE
-     state = 'active'
-     AND now() - query_start > interval '5m' order by query_start;
-
-.. hint::
-
-   You can terminate any running query using the number shown in the ``pid`` column.:
-
-   ``SELECT pg_terminate_backend(pid);``
+      AND pid <> pg_backend_pid();

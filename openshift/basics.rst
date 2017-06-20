@@ -9,13 +9,13 @@ Introduction to OpenShift
 
 Here's what's important:
 
-* A single Docker Image is deployed via continuous delivery. It contains Nice2, Java and all runtime
-  dependencies. Thus, Nice2 can be run in any OpenShift/Docker environment.
-* OpenShift orchestrates the Docker images, service, routes, etc. and ensure they stay available.
+* A single Docker Image is deployed via continuous delivery. It contains Nice, Java and all runtime
+  dependencies. Thus, Nice can be run in any OpenShift/Docker environment.
+* OpenShift orchestrates the Docker images, service, routes, etc. and ensures they stay available.
 
 Here are a few resources that help you understand the core concepts:
 
-* `High level architecture of Openshift <https://docs.openshift.org/latest/architecture/index.html>`_.
+* `High level architecture of OpenShift <https://docs.openshift.org/latest/architecture/index.html>`_.
 * `An introduction to Docker <https://en.wikipedia.org/wiki/Docker_(software)>`_.
 
 Have a look at the full `OpenShift documentation`_ and `Docker documentation`_ if you want to know all the details.
@@ -26,8 +26,8 @@ Have a look at the full `OpenShift documentation`_ and `Docker documentation`_ i
 .. _OpenShift documentation: https://docs.openshift.org/latest/
 
 
-OpenShift Structure used for Nice2
-----------------------------------
+OpenShift Structure used for Nice
+---------------------------------
 
 Every installation consists of the following OpenShift elements:
 
@@ -58,8 +58,8 @@ Every installation consists of the following OpenShift elements:
 
 .. [#f1] Production systems use the ``production`` tag and test systems the ``test`` tag.
 .. [#f2] By default the ``stable`` tag is used. ``latest`` is the staging area and is only deployed on selected systems.
-.. [#f3] Mounted at ``/persist`` and only the subdirectory ``/persist/index_data`` is currently used for the Solr index.
-.. [#f4] Image source is hosted on `github <https://github.com/tocco/openshift-nginx>`_ and the ``latest`` tag is
-         automatically built on `dockerhub <https://hub.docker.com/r/toccoag/openshift-nginx/>`_.
-.. [#f5] Image source is hosted on `github <https://github.com/tocco/openshift-solr>`_ and the ``latest`` tag is
-         automatically built on `dockerhub <https://hub.docker.com/r/toccoag/openshift-solr/>`_.
+.. [#f3] Mounted at ``/persist`` and only the subdirectory ``/persist/index_data`` is currently used for the :term:`Solr` index.
+.. [#f4] Image source is hosted on `Github <https://github.com/tocco/openshift-nginx>`_ and the ``latest`` tag is
+         automatically built on `Dockerhub <https://hub.docker.com/r/toccoag/openshift-nginx/>`_.
+.. [#f5] Image source is hosted on `Github <https://github.com/tocco/openshift-solr>`_ and the ``latest`` tag is
+         automatically built on `Dockerhub <https://hub.docker.com/r/toccoag/openshift-solr/>`_.

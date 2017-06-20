@@ -92,7 +92,8 @@ This is only used for production systems, it allows you to deploy a docker image
 system. By default the ``test`` tag is deployed which installs the very same image the test system is using. You can
 however also install an older image formerly installed on the test system.
 
-#. Find the tag name for the version you want to have installed. I looks like this ``test-2017-05-09T12_54_27``.
+#. Find the tag name for the version you want to have installed. I looks like this ``ecap-2017-05-09T12_54_27``.
+   **ecap** is the customer name.
 #. Enter the tag in the **Docker Image ID** field in the `run menu <#run-menu-advanced>`_.
 
 .. todo:: describe where the tag names can be found

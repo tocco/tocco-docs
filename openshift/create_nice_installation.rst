@@ -30,9 +30,10 @@ Step by Step Instructions
    Parameter are specified using ``-v KEY=VALUE``, this is the list of **mandatory** parameters:
 
    =================== ===============================================================================================
-    key                 value
+    Key                 Value
    =================== ===============================================================================================
-    CUSTOMER            Name of the customer (e.g. agogis, ecap but never :strike:`agogistest` or :strike:`ecaptest`).
+    CUSTOMER            Name of the customer (e.g. agogis or ecap but never :strike:`agogistest` or
+                        :strike:`ecaptest`).
 
     INSTALLATION        Name of the installation (e.g. ecap or ecaptest)
 
@@ -41,16 +42,16 @@ Step by Step Instructions
     RUN_ENV             Run environment which must be one of ``production`` or ``test``.
    =================== ===============================================================================================
 
-   Additionally, this optional parameters are available. **(Default values should suffice mostly.)**
+   Additionally, these optional parameters are available. **(Default values should suffice mostly.)**
 
    ===================== ==========================================================================================
-    key                   value
+    Key                   Value
    ===================== ==========================================================================================
     FLUENTD_TARGET        URL to the :term:`Fluentd` logging service.
 
                           :subscript:`Leave blank to log to /app/var/log/nice.log instead.`
 
-    JAVA_MEM              Max. memory available to Java (e.g. `1.5g` or `512m`).
+    JAVA_MEM              Max. memory available to Java (e.g. ``1.5g`` or ``512m``).
 
     DB_PASSWORD           Password for database access.
 
@@ -60,9 +61,9 @@ Step by Step Instructions
 
     DOCKER_REGISTRY_URL   URL to the Docker image registry.
 
-    NGINX_IMAGE_NAME      Name of the Nginx Docker image.
+    NGINX_IMAGE_NAME      Name of the :term:`Nginx` Docker image.
 
-    SOLR_DISK_SPACE       Persistent disk space available to Solr (e.g. ``512m`` or ``5g``).
+    SOLR_DISK_SPACE       Persistent disk space available to :term:`Solr` (e.g. ``512m`` or ``5g``).
 
     SOLR_IMAGE_URL        Name of the Solr Docker image.
    ===================== ==========================================================================================

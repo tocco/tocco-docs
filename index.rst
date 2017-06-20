@@ -18,8 +18,6 @@ Welcome to Tocco DevOps's documentation!
    :maxdepth: 2
 
    databases/copy_database
-   databases/dump_database
-   databases/restore_database
    databases/psql_tips_and_tricks
    databases/sql_snippets_nice2
    databases/sql_snippets_postgres

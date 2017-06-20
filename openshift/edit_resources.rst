@@ -66,7 +66,9 @@ FLUENTD_TARGET_PORT  Target port for :term:`fluentd`. (defaults to 24224)
 ===================  ===================================================================================================
 
 .. important::
-    Openshift does not currently allow '.' or '-' to appear as key of an environment variable. [#f2]_
+
+    OpenShift does not currently allow ``.`` (period) or ``-`` (hyphen) to appear as key of an environment variable.
+    [#f2]_
 
     As workaround:
 
@@ -78,46 +80,46 @@ FLUENTD_TARGET_PORT  Target port for :term:`fluentd`. (defaults to 24224)
         ==============  ===========================
 
     For instance, instead of:
-        NICE2_JAVA_OPT\_-Dch.tocco.nice2.runenv=production
+        ``NICE2_JAVA_OPT_-Dch.tocco.nice2.runenv=production``
     use:
-        NICE2_JAVA_OPT____Dch__tocco__nice2__runenv=production [#f1]_
+        ``NICE2_JAVA_OPT____Dch__tocco__nice2__runenv=production`` [#f1]_
 
 Examples
 ````````
 
     Adding entries to application.local.properties:
         Expected entry:
-            nice2.web.core.compressJavascript=true
+            ``nice2.web.core.compressJavascript=true``
 
         Environment variable:
-            NICE2_APP_nice2.web.core.compressJavascript=true
+            ``NICE2_APP_nice2.web.core.compressJavascript=true``
 
     Adding entries to hikaricp.local.properties
         Expected entries:
-            dataSource.databaseName=nice2_dockertest
-            dataSource.password=
-            dataSource.serverName=172.17.1.11
+            ``dataSource.databaseName=nice2_dockertest``
+            ``dataSource.password=``
+            ``dataSource.serverName=172.17.1.11``
 
         Environment variables:
-            NICE2_HIKARI_dataSource.databaseName=nice2_dockertest
-            NICE2_HIKARI_dataSource.password=
-            NICE2_HIKARI_dataSource.serverName=172.17.1.11
+            ``NICE2_HIKARI_dataSource.databaseName=nice2_dockertest``
+            ``NICE2_HIKARI_dataSource.password=``
+            ``NICE2_HIKARI_dataSource.serverName=172.17.1.11``
 
     Setting Java options:
         Expected options passed to java(1):
-            -Xmx1g
-            -Dch.tocco.nice2.runenv=production
+            ``-Xmx1g``
+            ``-Dch.tocco.nice2.runenv=production``
 
         Environment variables:
-            NICE2_JAVA_OPT\_-Xmx2g=
-            NICE2_JAVA_OPT\_-Dch.tocco.nice2.runenv=production
+            ``NICE2_JAVA_OPT_-Xmx1g=``
+            ``NICE2_JAVA_OPT_-Dch.tocco.nice2.runenv=production``
 
-    Setting Nice2 arguments:
+    Setting Nice arguments:
         Expected arguments passed to ch.tocco.nice2.boot.Nice2
-            -logConfig=/app/etc/custom_logback.xml
+            ``-logConfig=/app/etc/custom_logback.xml``
 
         Environment variable:
-            NICE2_NICE_ARG\_-logConfig=/app/etc/custom_logback.xml
+            ``NICE2_NICE_ARG_-logConfig=/app/etc/custom_logback.xml``
 
 
 .. rubric:: Footnotes
