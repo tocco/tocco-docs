@@ -1,5 +1,5 @@
-SQL Snippets (Nice2)
-====================
+SQL Snippets (Nice)
+===================
 
 Assign All Roles to User 'tocco'
 --------------------------------
@@ -40,7 +40,7 @@ Unblock User 'tocco'
 
     UPDATE nice_principal
     SET
-        fail_login_attempts = 0, 
+        fail_login_attempts = 0,
         fk_principal_status = (SELECT pk FROM nice_principal_status WHERE unique_id = 'active')
     WHERE username = 'tocco';
 
