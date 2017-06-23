@@ -44,7 +44,8 @@ Create a new Installation
 
    =====================  ======================================================================================
    CUSTOMER               Customer name (e.g. agogis or smc but never :strike:`agogistest` or :strike:`smctest`)
-   DOCKER_IMAGE_PULL_TAG  ``test`` for production systems and empty for test systems
+   DOCKER_IMAGE_PULL_TAG  ``test`` for **production** systems and empty for test systems
+   DOCKER_IMAGE_PUSH_TAG  ``test`` for test systems and ``production`` for production systems
    DUMP_MODE              ``dump`` for production systems and ``no_dump`` for test systems
    GIT_TREEISH            Branch to be deployed, e.g. ``releases/2.13``
    INSTALLATION           Installation name (e.g. smc or smctest)
