@@ -42,12 +42,13 @@ Create a new Installation
 4. Fill in parameters as shown above
 5. Fill in these additional template parameters:
 
-   ================ ================================================================
-   CUSTOMER         Customer name
-   DOCKER_IMAGE_TAG ``test`` for production systems and empty for test systems
-   DUMP_MODE        ``dump`` for production systems and ``no_dump`` for test systems
-   GIT_TREEISH      Branch to be deployed, e.g. ``releases/2.13``
-   ================ ================================================================
+   =====================  ======================================================================================
+   CUSTOMER               Customer name (e.g. agogis or smc but never :strike:`agogistest` or :strike:`smctest`)
+   DOCKER_IMAGE_PULL_TAG  ``test`` for production systems and empty for test systems
+   DUMP_MODE              ``dump`` for production systems and ``no_dump`` for test systems
+   GIT_TREEISH            Branch to be deployed, e.g. ``releases/2.13``
+   INSTALLATION           Installation name (e.g. smc or smctest)
+   =====================  ======================================================================================
 
    It shouldn't be necessary to touch any of the other parameters.
 
