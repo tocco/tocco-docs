@@ -63,6 +63,8 @@ Step by Step Instructions
 
     NGINX_IMAGE_NAME      Name of the :term:`Nginx` Docker image.
 
+    SMTP_RELAY            Hostname of SMTP relay.
+
     SOLR_DISK_SPACE       Persistent disk space available to :term:`Solr` (e.g. ``512m`` or ``5g``).
 
     SOLR_IMAGE_URL        Name of the Solr Docker image.
