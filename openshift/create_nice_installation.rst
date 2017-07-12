@@ -61,6 +61,8 @@ Step by Step Instructions
 
     DOCKER_REGISTRY_URL   URL to the Docker image registry.
 
+    HSTS_SECS             ``max-time`` used for Strict-Transport-Security HTTP header.
+
     NGINX_IMAGE_NAME      Name of the :term:`Nginx` Docker image.
 
     SMTP_RELAY            Hostname of SMTP relay.
