@@ -7,7 +7,7 @@ Create a new Customer
 .. figure:: new_customer.png
 
 1. Go to the `Continuous Delivery project settings`_
-2. Manually create a new subproject (screenshot above)
+2. **Create subproject** (screenshot above)
 
    .. _Continuous Delivery project settings: https://dev.tocco.ch/teamcity/admin/editProject.html?projectId=ContinuousDeliveryNg
 
@@ -33,7 +33,7 @@ Create a new Installation
 
    Build configurations for customers
 
-3. Manually create a new subproject (screenshot above)
+3. **Create build configuration** (screenshot above)
 
 .. figure:: new_installation3.png
 
