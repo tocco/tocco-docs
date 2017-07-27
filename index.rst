@@ -31,6 +31,13 @@ Welcome to Tocco DevOps's documentation!
    openshift/create_nice_installation
    openshift/edit_resources
 
+.. toctree::
+   :caption: Mail
+   :maxdepth: 2
+
+   mail/dns_entries
+   mail/outgoing_mail_in_nice
+
 
 Indices and tables
 ==================

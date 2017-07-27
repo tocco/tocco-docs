@@ -29,6 +29,8 @@ OpenShift documentation has some more details on `requests and limits`_.
 .. _Requests and Limits: https://docs.openshift.org/latest/admin_guide/overcommit.html#requests-and-limits
 
 
+.. _java-and-nice-params:
+
 Setting Java and Nice Parameters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
