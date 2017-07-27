@@ -3,6 +3,21 @@ Glossary
 
 .. glossary::
 
+    application property
+        Application properties can be used to configure Nice. They are simple key, value pairs and look like this:
+
+        .. code::
+
+            my.property=configuration value
+
+        The chapter :ref:`java-and-nice-params` describes how to set parameters in OpenShift. Alternatively, a property
+        can be changed for a customer by adjusting the ``application.properties`` file. See next paragraph.
+
+        While developing, you can edit the application.properties in the Nice Git repository located at
+        ``customer/${CUSTOMER}/etc/application.properties``. If you don't want to commit the changes you can create
+        an ``application.local.properties`` in the same directory. Settings made the the *local* properties file
+        override the settings in the regular properties file.
+
     continuous delivery
     CD
         Continuous delivery is used to deploy our Nice installations.
