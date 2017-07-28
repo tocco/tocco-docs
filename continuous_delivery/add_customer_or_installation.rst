@@ -4,14 +4,14 @@ Add Customer / Installation
 Create a new Customer
 ---------------------
 
-.. figure:: new_customer.png
+.. figure:: add_customer_or_installation_static/new_customer.png
 
 1. Go to the `Continuous Delivery project settings`_
 2. **Create subproject** (screenshot above)
 
    .. _Continuous Delivery project settings: https://dev.tocco.ch/teamcity/admin/editProject.html?projectId=ContinuousDeliveryNg
 
-.. figure:: new_customer2.png
+.. figure:: add_customer_or_installation_static/new_customer2.png
 
    Project setting for a new customer
 
@@ -23,19 +23,19 @@ Create a new Customer
 Create a new Installation
 -------------------------
 
-.. figure:: new_installation1.png
+.. figure:: add_customer_or_installation_static/new_installation1.png
 
 1. Go to the `Continuous Delivery project settings`_
 2. Find the customer you want and click on **edit**. If doesn't exist, it needs to be
    `created <#create-a-new-customer>`_ first.
 
-.. figure:: new_installation2.png
+.. figure:: add_customer_or_installation_static/new_installation2.png
 
    Build configurations for customers
 
 3. **Create build configuration** (screenshot above)
 
-.. figure:: new_installation3.png
+.. figure:: add_customer_or_installation_static/new_installation3.png
 
    Template parameters
 

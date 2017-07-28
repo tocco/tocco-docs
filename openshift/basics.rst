@@ -60,6 +60,6 @@ Every installation consists of the following OpenShift elements:
 .. [#f2] By default the ``stable`` tag is used. ``latest`` is the staging area and is only deployed on selected systems.
 .. [#f3] Mounted at ``/persist`` and only the subdirectory ``/persist/index_data`` is currently used for the :term:`Solr` index.
 .. [#f4] Image source is hosted on `Github <https://github.com/tocco/openshift-nginx>`_ and the ``latest`` tag is
-         automatically built on `Dockerhub <https://hub.docker.com/r/toccoag/openshift-nginx/>`_.
+         automatically built on `Dockerhub <https://hub.docker.com/r/toccoag/openshift-nginx/>`__.
 .. [#f5] Image source is hosted on `Github <https://github.com/tocco/openshift-solr>`_ and the ``latest`` tag is
-         automatically built on `Dockerhub <https://hub.docker.com/r/toccoag/openshift-solr/>`_.
+         automatically built on `Dockerhub <https://hub.docker.com/r/toccoag/openshift-solr/>`__.
