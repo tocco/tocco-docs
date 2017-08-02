@@ -19,7 +19,7 @@ Go to `Continuous Delivery project settings`_, find the right customer and open 
 Create Trigger
 ``````````````
 
-.. _Continuous Delivery project settings: https://dev.tocco.ch/teamcity/admin/editProject.html?projectId=ContinuousDeliveryNg
+.. _Continuous Delivery project settings: https://dev.tocco.ch/teamcity/project.html?projectId=ContinuousDeliveryNg&tab=projectOverview
 
 .. figure:: trigger_deployments_static/cron_trigger.png
 

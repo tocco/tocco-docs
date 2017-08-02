@@ -25,6 +25,11 @@ Setting up oc
 
    .. todo:: update endpoint for private cloud
 
+4. switch to ``toco-nice`` project
+
+    .. code::
+
+        oc project toco-nice
 
 Show Resources
 --------------
