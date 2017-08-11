@@ -15,7 +15,7 @@ Restore Database
 
 .. code:: bash
 
-   pg_restore -j 4 -U postgres -h ${DB_SERVER} --role ${DB_USER} --no-owner --no-acl -d ${DB_NAME} ${DUMP_FILE_PATH}
+   PGOPTIONS="-c synchronous_commit=off" pg_restore -j 4 -U postgres -h ${DB_SERVER} --role ${DB_USER} --no-owner --no-acl -d ${DB_NAME} ${DUMP_FILE_PATH}
 
 
 Copy database using WITH TEMPLATE
