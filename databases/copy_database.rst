@@ -7,7 +7,7 @@ Dump Database
 
 .. code:: bash
 
-   pg_dump -U postgres -h ${DB_SERVER} -Fc -f ~/_to_delete/nice2_${CUSTOMER}_$(date +"%Y_%m_%d").psql ${DATABASE};
+    pg_dump -U postgres -h ${DB_SERVER} -Fc -f ~/_to_delete/nice2_${CUSTOMER}_$(date +"%Y_%m_%d").psql ${DATABASE};
 
 
 Restore Database
@@ -15,7 +15,7 @@ Restore Database
 
 .. code:: bash
 
-   PGOPTIONS="-c synchronous_commit=off" pg_restore -j 4 -U postgres -h ${DB_SERVER} --role ${DB_USER} --no-owner --no-acl -d ${DB_NAME} ${DUMP_FILE_PATH}
+    PGOPTIONS="-c synchronous_commit=off" pg_restore -j 4 -U postgres -h ${DB_SERVER} --role ${DB_USER} --no-owner --no-acl -d ${DB_NAME} ${DUMP_FILE_PATH}
 
 
 Copy database using WITH TEMPLATE
@@ -23,41 +23,48 @@ Copy database using WITH TEMPLATE
 
 This is the fastest way to copy a database. Alternatively, you can dump and then restore the database.
 
-.. warning:: This requires that no one is connected to the database. Consequently, it isn't possible to copy a database of
-             a running system.
+.. warning::
+
+    This requires that no one is connected to the database. Consequently, it isn't possible to copy a database of
+    a running system.
 
 Example
 ^^^^^^^
 
 This example assumes that the customer name is *tocco* and DB name *nice2_tocco*.
 
-1. stop instance (if required)
+#. check how many instance are running
 
-   .. code:: bash
+    .. code:: bash
 
-      mgrsh stop nice2-${CUSTOMER_NAME}
+        oc get dc/nice-${INSTALLATION} -o go-template='{{.spec.replicas}}{{"\n"}}'
 
-2. kill connections to database (in case someone is still connected to it)
+#. stop instance (if required)
 
-   .. code:: sql
+    .. code:: bash
 
-      SELECT pg_terminate_backend(pg_stat_activity.pid)
-      FROM pg_stat_activity
-      WHERE pg_stat_activity.datname = '${DATABASE_NAME}'
-            AND pid <> pg_backend_pid();
+        oc scale --replicas=0 dc/nice-${INSTALLATION}
 
+#. copy database
 
-3. copy database
+    .. code:: sql
 
-   .. code:: sql
+        CREATE DATABASE ${NAME_OF_DB_COPY} WITH TEMPLATE ${SOURCE_DB_NAME};
 
-      CREATE DATABASE ${NAME_OF_DB_COPY} WITH TEMPLATE ${SOURCE_DB_NAME};
+    .. hint::
 
-   .. note:: By convention, databases not used by a test or production systems should follow this naming pattern:
-              **nice2_${CUSTOMER}_${YOUR_SHORT_NAME}_${YEAR}${MONTH}${DAY}**
+        If you get "source database '…' is being accessed by other users", try :ref:`killing the connections to the
+        database <force-close-db-connection>` first.
 
-4. restart instance (if previously stopped)
+    .. note::
 
-   .. code:: bash
+        By convention, databases not used by a test or production systems should follow this naming pattern:
+        ``nice_${CUSTOMER}_${YOUR_SHORT_NAME}_${YEAR}${MONTH}${DAY}``
 
-      mgrsh start nice2-${DATABASE_NAME}
+5. restart instances (if previously stopped)
+
+    .. code:: bash
+
+        oc scale --replicas=${N} dc/nice-${INSTALLATION}
+
+    Start ``${N}`` instances.
