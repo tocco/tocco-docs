@@ -33,9 +33,7 @@ Add Route / Hostname
 
     ``HOSTNAME`` is the FQDN you want to add and ``SERVICE`` is nice-${INSTALLATION}.
 
-#. Create DNS entry if needed
-
-   See :doc:`dns`
+#. Create DNS entry if needed, see :doc:`dns`.
 
 #. Issue SSL Certificate as described in the next section.
 
