@@ -60,10 +60,16 @@ Show Queries that have been Running for more than 5 Minutes:
    ``SELECT pg_terminate_backend(pid);``
 
 
+.. _force-close-db-connection:
+
 Forcibly Close Connections to DB
 --------------------------------
 
 Close all connections to DB ``DB_NAME``.
+
+.. caution::
+
+    This kills all connections to the Database, including connections from Nice and pg_dump!
 
 .. code:: sql
 
