@@ -3,7 +3,7 @@ Create a Nice Installation
 
 A template is used to create a new installation. It can be found in the `Ansible Git Repository`_.
 
-.. _Ansible Git Repository: https://git.tocco.ch/gitweb?p=ansible.git
+.. _Ansible Git Repository: https://git.tocco.ch/gitweb?p=ansible.git;a=blob;f=openshift/nice-template.yml
 
 
 Step by Step Instructions
@@ -79,3 +79,12 @@ Step by Step Instructions
 .. note::
 
   The installation is automatically started once :term:`CD` pushes an image to the Docker registry.
+
+#. Issue an SSL Certificate
+
+    Issue a SSL certificate for ${CUSTOMER}.tocco.ch which is created by the template. See :ref:`issue-ssl-certificate`
+    for instructions.
+
+#. Add additional Routes / Hostnames If Needed
+
+    See :ref:`add-route`
