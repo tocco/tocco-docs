@@ -31,6 +31,24 @@ OpenShift documentation has some more details on `requests and limits`_.
 
 .. _java-and-nice-params:
 
+Scale Up/Down
+^^^^^^^^^^^^^
+
+.. code:: yaml
+
+    spec:
+        replicas: 1
+
+``replicas`` is the number of simultaneously running instances.
+
+You can also use this command to scale Nice instances:
+
+.. code::
+
+    oc scale dc/nice-${CUSTOMER} --replicas=${N}
+
+This scales ``CUSTOMER`` to ``N`` replicas. Use 0 to stop all instances.
+
 Setting Java and Nice Parameters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
