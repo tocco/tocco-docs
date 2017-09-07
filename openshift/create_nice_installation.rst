@@ -19,6 +19,7 @@ Step by Step Instructions
     .. hint::
 
         ``toco-`` is prefixed automatically. Hence, the project name is going to be ``toco-nice-${INSTALLATION}``.
+        Before you ask ``toco`` isn't a typo but rather the abbreviation that VSHN uses for Tocco.
 
 .. _Create Project: https://control.vshn.net/openshift/projects/appuio%20public/_create
 
