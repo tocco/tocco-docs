@@ -9,6 +9,19 @@ A template is used to create a new installation. It can be found in the `Ansible
 Step by Step Instructions
 -------------------------
 
+#. Create a new project
+
+    .. figure:: create_nice_installation/create_project.png
+        :scale: 60%
+
+    Go to the `Create Project`_ page of VSHN and create a new project [#f1]_.
+
+    .. hint::
+
+        ``toco-`` is prefixed automatically. Hence, the project name is going to be ``toco-nice-${INSTALLATION}``.
+
+.. _Create Project: https://control.vshn.net/openshift/projects/appuio%20public/_create
+
 #. Clone the `Ansible Git Repository`_
 
    .. code::
@@ -20,6 +33,18 @@ Step by Step Instructions
    .. code::
 
        cd ansible/openshift
+
+#. Switch to the newly created project
+
+    .. code::
+
+        oc project toco-nice-${INSTALLATION}
+
+#. Allow pulling images from project toco-shared-imagestreams [#f2]_
+
+    .. code::
+
+        oc policy add-role-to-user system:image-puller system:serviceaccount:toco-nice-${INSTALLATION}:default --namespace=toco-shared-imagestreams
 
 #. Create all resources required
 
@@ -72,14 +97,6 @@ Step by Step Instructions
     SOLR_IMAGE_URL        Name of the Solr Docker image.
    ===================== ==========================================================================================
 
-.. important::
-
-    The installation needs also to be :ref:`created in Teamcity <create-installation-in-teamcity>`.
-
-.. note::
-
-  The installation is automatically started once :term:`CD` pushes an image to the Docker registry.
-
 #. Issue an SSL Certificate
 
     Issue a SSL certificate for ${CUSTOMER}.tocco.ch which is created by the template. See :ref:`issue-ssl-certificate`
@@ -88,3 +105,19 @@ Step by Step Instructions
 #. Add additional Routes / Hostnames if Needed
 
     See :ref:`add-route`
+
+.. important::
+
+    The installation needs also to be :ref:`created in Teamcity <create-installation-in-teamcity>`.
+
+.. note::
+
+  The installation is automatically started once :term:`CD` pushes an image to the Docker registry.
+
+
+.. rubric:: Footnotes
+
+.. [#f1] An unlimited number of project is included in dedicated APPUiO.
+
+.. [#f2] Nginx and Solr images, which are used by all Nice projects, are in toco-shared-imagestreams.
+
