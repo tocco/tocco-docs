@@ -80,9 +80,6 @@ NICE2_APP_*          Add custom entries to ``application.local.properties``.
 NICE2_HIKARI_*       Add custom entries to ``hikiricp.local.properties``.
 NICE2_JAVA_PARAM_*   Pass custom parameters to Java.
 NICE2_NICE_ARG_*     Pass custom argument to Nice.
-FLUENTD_TARGET_HOST  Target host for :term:`fluentd`. (Fluentd forwarding is enabled automatically if this variable is
-                     set)
-FLUENTD_TARGET_PORT  Target port for :term:`fluentd`. (defaults to 24224)
 ===================  ===================================================================================================
 
 .. important::

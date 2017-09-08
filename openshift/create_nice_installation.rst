@@ -73,10 +73,6 @@ Step by Step Instructions
    ===================== ==========================================================================================
     Key                   Value
    ===================== ==========================================================================================
-    FLUENTD_TARGET        URL to the :term:`Fluentd` logging service.
-
-                          :subscript:`Leave blank to log to /app/var/log/nice.log instead.`
-
     JAVA_MEM              Max. memory available to Java (e.g. ``1.5g`` or ``512m``).
 
     DB_PASSWORD           Password for database access.
@@ -89,13 +85,9 @@ Step by Step Instructions
 
     HSTS_SECS             ``max-time`` used for Strict-Transport-Security HTTP header.
 
-    NGINX_IMAGE_NAME      Name of the :term:`Nginx` Docker image.
-
     SMTP_RELAY            Hostname of SMTP relay.
 
     SOLR_DISK_SPACE       Persistent disk space available to :term:`Solr` (e.g. ``512m`` or ``5g``).
-
-    SOLR_IMAGE_URL        Name of the Solr Docker image.
    ===================== ==========================================================================================
 
 #. Issue an SSL Certificate

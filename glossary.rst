@@ -44,11 +44,6 @@ Glossary
 
         This is configured in the :term:`deployment config`.
 
-    Fluentd
-        `Fluentd`_ is used for as a tool for central log collection on our OpenShift platform.
-
-        .. _Fluentd: https://www.fluentd.org/
-
     image stream
     IS
         Describes a docker repository. Pushing a docker image to it can be used to trigger an automatic deployment.
