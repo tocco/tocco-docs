@@ -49,7 +49,7 @@ Query Syntax
 2. The word **ERROR** must be contained in the result. Without the **+**, the results matching closest the query are
    returned even if they don't contain all search terms.
 
-3. Filter out all result that contain the word **runtime**.
+3. Filter out all results that contain the word **runtime**.
 
 4. Search for the phrase **some text** rather than the words **some** and **text**. You may also have to use quotes if
    the search term contains special characters. For instance, if it contains a hyphen, like **start-up**, it is treated
@@ -70,7 +70,7 @@ You can use the panel on the left or the detail view to show more columns.
 Filter by Fields
 ----------------
 
-.. figure:: logs/filter_by_column.png
+.. figure:: logs/filter_by_field.png
    :scale: 80%
 
 By using the +/- magnifying glasses in the detail view, you can filter based on a field's value.
