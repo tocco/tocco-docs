@@ -28,6 +28,7 @@ Welcome to Tocco DevOps's documentation!
    :maxdepth: 2
 
    openshift/basics
+   openshift/logs
    openshift/openshift_client
    openshift/create_nice_installation
    openshift/routes
