@@ -7,13 +7,13 @@ Show Routes
 .. code::
 
     $ oc get routes
-    NAME                             HOST/PORT                  PATH      SERVICES         PORT      TERMINATION
-    nice-tocco                       tocco.tocco.ch                       nice-tocco       80-tcp    edge/Redirect
-    nice-tocco-backoffice.tocco.ch   backoffice.tocco.ch                  nice-tocco       80-tcp    edge/Redirect
-    nice-tocco-tocco.ch              tocco.ch                             nice-tocco       80-tcp    edge/Redirect
-    nice-tocco-webmodul.ch           webmodul.ch                          nice-tocco       80-tcp    edge/Redirect
-    nice-tocco-www.tocco.ch          www.tocco.ch                         nice-tocco       80-tcp    edge/Redirect
-    nice-tocco-www.webmodul.ch       www.webmodul.ch                      nice-tocco       80-tcp    edge/Redirect
+    NAME                        HOST/PORT                  PATH      SERVICES    PORT      TERMINATION
+    tocco                       tocco.tocco.ch                       tocco       80-tcp    edge/Redirect
+    tocco-backoffice.tocco.ch   backoffice.tocco.ch                  tocco       80-tcp    edge/Redirect
+    tocco-tocco.ch              tocco.ch                             tocco       80-tcp    edge/Redirect
+    tocco-webmodul.ch           webmodul.ch                          tocco       80-tcp    edge/Redirect
+    tocco-www.tocco.ch          www.tocco.ch                         tocco       80-tcp    edge/Redirect
+    tocco-www.webmodul.ch       www.webmodul.ch                      tocco       80-tcp    edge/Redirect
 
 
 .. _add-route:
@@ -29,9 +29,9 @@ Add Route / Hostname
 
     .. code::
 
-        oc process -f nice-route-template.yml HOSTNAME=www.tocco.ch SERVICE=nice-tocco | oc create -f -
+        oc process -f nice-route-template.yml HOSTNAME=www.tocco.ch SERVICE=nice | oc create -f -
 
-    ``HOSTNAME`` is the FQDN you want to add and ``SERVICE`` is nice-${INSTALLATION}.
+    ``HOSTNAME`` is the FQDN you want to add and ``SERVICE`` is nice.
 
 #. Create DNS entry if needed, see :doc:`dns`.
 
@@ -64,4 +64,4 @@ Remove Routes
 
 .. code:: bash
 
-    oc delete route nice-tocco-www.tocco.ch
+    oc delete route tocco-www.tocco.ch
