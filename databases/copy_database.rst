@@ -33,17 +33,23 @@ Example
 
 This example assumes that the customer name is *tocco* and DB name *nice2_tocco*.
 
+#. switch to the right project
+
+    .. code:: bash
+
+        oc project toco-nice-${INSTALLATION}
+
 #. check how many instance are running
 
     .. code:: bash
 
-        oc get dc/nice-${INSTALLATION} -o go-template='{{.spec.replicas}}{{"\n"}}'
+        oc get dc/nice -o go-template='{{.spec.replicas}}{{"\n"}}'
 
 #. stop instance (if required)
 
     .. code:: bash
 
-        oc scale --replicas=0 dc/nice-${INSTALLATION}
+        oc scale --replicas=0 dc/nice
 
 #. copy database
 
@@ -65,6 +71,6 @@ This example assumes that the customer name is *tocco* and DB name *nice2_tocco*
 
     .. code:: bash
 
-        oc scale --replicas=${N} dc/nice-${INSTALLATION}
+        oc scale --replicas=${N} dc/nice
 
     Start ``${N}`` instances.

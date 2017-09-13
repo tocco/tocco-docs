@@ -45,9 +45,10 @@ You can also use this command to scale Nice instances:
 
 .. code::
 
-    oc scale dc/nice-${CUSTOMER} --replicas=${N}
+    oc scale dc/nice --replicas=${N}
 
-This scales ``CUSTOMER`` to ``N`` replicas. Use 0 to stop all instances.
+This scales Nice to ``N`` replicas. Use 0 to stop all instances.
+
 
 Setting Java and Nice Parameters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -70,7 +71,7 @@ The env section looks something like this:
         - name: NICE2_JAVA_OPT____Dch__tocco__nice2__runenv
           value: production
         - name: NICE2_APP_nice2__enterprisesearch__solrUrl
-          value: http://solr-pege:8983/solr/nice2_index
+          value: http://solr:8983/solr/nice2_index
 
 
 The following environment variables are supported:

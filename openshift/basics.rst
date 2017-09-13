@@ -26,30 +26,46 @@ Have a look at the full `OpenShift documentation`_ and `Docker documentation`_ i
 .. _OpenShift documentation: https://docs.openshift.org/latest/
 
 
-OpenShift Structure used for Nice
----------------------------------
+Projects
+--------
 
-Every installation consists of the following OpenShift elements:
+The following projects currently exist:
+
+=========================== ============================================================================================
+ Project Name                Description
+=========================== ============================================================================================
+ toco-nice-${INSTALLATION}   Nice and all its services for installation ${INSTALLATION}.
+ toco-nice-documentation     Documentation of Nice.
+ toco-shared-imagestreams    Contains imagestreams shared amongst different projects (e.g. Solr and Nginx).
+=========================== ============================================================================================
+
+Use ``oc projects`` to list projects and ``oc project ${PROJECT}`` to switch to one of them.
+
+
+OpenShift Structure used for Nice Projects
+------------------------------------------
+
+Every project consists of the following OpenShift elements:
 
 +------------------------------+----------------------------------------------------------------------------+---------------------------------+
-| :term:`deployment config`    | ``nice2-${installation}``                                                  | ``solr-${installation}``        |
+| :term:`deployment config`    | ``nice``                                                                   | ``solr``                        |
 +------------------------------+-----------------------------------+----------------------------------------+---------------------------------+
 | :term:`container             | ``nice``                          | ``nginx``                              | ``solr``                        |
 | <container (openshift)>`     |                                   |                                        |                                 |
 +------------------------------+-----------------------------------+----------------------------------------+---------------------------------+
-| :term:`image stream`         | ``nice-${customer}``              | ``nginx`` [#f4]_                       | ``solr`` [#f5]_                 |
+| :term:`image stream`         | ``nice``                          | ``nginx`` [#f4]_                       | ``solr`` [#f5]_                 |
 +------------------------------+-----------------------------------+----------------------------------------+---------------------------------+
 | :term:`image stream tag`     | ``test`` or ``production`` [#f1]_ | ``stable`` or ``latest`` [#f2]_        | ``stable`` or ``latest`` [#f2]_ |
 +------------------------------+-----------------------------------+----------------------------------------+---------------------------------+
 | :term:`exposed port`         | tcp/8080                          | tcp/8081                               | tcp/8983                        |
 +------------------------------+-----------------------------------+----------------------------------------+---------------------------------+
-| :term:`service`              |                                   | ``nice-${installation}``               | ``solr-${installation}``        |
+| :term:`service`              |                                   | ``nice``                               | ``solr``                        |
 |                              |                                   | (tcp/80 redirected to tcp/8081)        | (tcp/8983)                      |
 +------------------------------+-----------------------------------+----------------------------------------+---------------------------------+
-| :term:`route`                |                                   | ``nice-${installation}``               |                                 |
-|                              |                                   | (https\://${installation}.tocco.ch)    |                                 |
+| :term:`route`                |                                   | ``nice``                               |                                 |
+|                              |                                   | (https\://${INSTALLATION}.tocco.ch)    |                                 |
 +------------------------------+-----------------------------------+----------------------------------------+---------------------------------+
-| :term:`persistent volume     |                                   |                                        | ``solr-${installation}`` [#f3]_ |
+| :term:`persistent volume     |                                   |                                        | ``solr``                 [#f3]_ |
 | claim`                       |                                   |                                        |                                 |
 +------------------------------+-----------------------------------+----------------------------------------+---------------------------------+
 
