@@ -113,8 +113,28 @@ Show Resources
         Strategy:       Recreate
         …
 
-
 Edit resources
 --------------
 
 Take a look at :doc:`edit_resources`.
+
+Usefull stuff
+-------------
+
+1. Remote shell connection to pod
+
+  .. code::
+  
+    oc rsh -c nice PODNAME bash
+    
+2. Copy file from pod
+  
+  .. code::
+  
+    oc cp -c nice PODNAME:/path/to/file.txt ~/destination/folder/
+
+3. Synchronise folder with pod
+
+  .. code::
+  
+    oc rsync -c nice PODNAME:/path/to/folder ~/destination/folder/
