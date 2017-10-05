@@ -22,6 +22,7 @@ Welcome to Tocco DevOps's documentation!
    databases/psql_tips_and_tricks
    databases/sql_snippets_nice2
    databases/sql_snippets_postgres
+   databases/psql_replication
 
 .. toctree::
    :caption: OpenShift
