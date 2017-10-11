@@ -23,6 +23,23 @@ Step by Step Instructions
 
 .. _Create Project: https://control.vshn.net/openshift/projects/appuio%20public/_create
 
+#. Assign project to group **tocco**
+
+    .. figure:: create_nice_installation/tocco_group_1.png
+        :scale: 60%
+
+        show details for the project
+
+    .. figure:: create_nice_installation/tocco_group_2.png
+        :scale: 60%
+
+        edit *admin*\(s)
+
+    .. figure:: create_nice_installation/tocco_group_3.png
+        :scale: 60%
+
+        add **tocco** group to admins
+
 #. Clone the `Ansible Git Repository`_
 
    .. code::
@@ -51,9 +68,9 @@ Step by Step Instructions
 
    .. code::
 
-       oc process -f nice-template.yml -v CUSTOMER=${CUSTOMER} -v … | oc create -f -
+       oc process -f nice-template.yml CUSTOMER=${CUSTOMER} … | oc create -f -
 
-   Parameter are specified using ``-v KEY=VALUE``, this is the list of **mandatory** parameters:
+   Parameter are specified using ``KEY=VALUE``, this is the list of **mandatory** parameters:
 
    =================== ===============================================================================================
     Key                 Value
@@ -75,7 +92,7 @@ Step by Step Instructions
    ===================== ==========================================================================================
     JAVA_MEM              Max. memory available to Java (e.g. ``1.5g`` or ``512m``).
 
-    DB_PASSWORD           Password for database access.
+    DB_PASS               Password for database access.
 
                           :subscript:`Randomly generated if left off.`
 
@@ -87,7 +104,7 @@ Step by Step Instructions
 
     SMTP_RELAY            Hostname of SMTP relay.
 
-    SOLR_DISK_SPACE       Persistent disk space available to :term:`Solr` (e.g. ``512m`` or ``5g``).
+    SOLR_DISK_SPACE       Persistent disk space available to :term:`Solr` (e.g. ``512Mi`` or ``5Gi``).
    ===================== ==========================================================================================
 
 #. Issue an SSL Certificate
