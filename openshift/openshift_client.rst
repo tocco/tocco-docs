@@ -143,7 +143,7 @@ Open Shell in Pod
 
     oc rsh -c nice PODNAME bash
 
-``-c`` specifies the pod name, use ``-c nginx`` to enter the nginx container or ``oc rsh PODNAME bash`` to enter
+``-c`` specifies the container name, use ``-c nginx`` to enter the nginx container or ``oc rsh PODNAME bash`` to enter
 a Solr pod (has only one container).
 
 
