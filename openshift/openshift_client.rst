@@ -41,100 +41,180 @@ Setting up oc
 
             oc get projects
 
-Show Resources
+
+Resource Types
 --------------
 
-* List all resources
+To get a list of all resources use ``oc get``.
+
+Here are the resource types you'll need:
+
+======= =================================================================================================================
+ Type   Description
+======= =================================================================================================================
+ dc      **D**\eployment **c**\onfiguration: A template for a pod. If you need to change a pod, change this
+         configuration. Changes are automatically deployed.
+
+ pod     A pod is an instance of a Deployment Configuration (AKA dc).
+
+         * Start and stop them using ``oc scale replicas=N dc/nice`` (``N`` → number of instances)
+         * Change the dc to change the configuration of a pod
+
+ route   A DNS route
+
+         .. code::
+
+            oc get route
+            NAME      HOST/PORT          PATH      SERVICES   PORT      TERMINATION     WILDCARD
+            nice      abc.tocco.ch                 nice       80-tcp    edge/Redirect   None
+            nice      www.abc.ch                   nice       80-tcp    edge/Redirect   None
+
+ svc     Service (**svc**): Represents a set of pods that provide a service. Allows talking to Solr, for instance,
+         without having to worry about in what pod it is running in or how many instances are running.
+
+ is      **I**\mage **s**\tream: This is a docker image that has been pushed to OpenShift. In the world of docker, they
+         are called repositories.
+======= =================================================================================================================
+
+
+.. _list-resources:
+
+List Resources
+--------------
+
+Use ``oc get TYPE`` to get all list of the resource of a certain type or ``oc get all`` to show all of them.
+
+Example
+^^^^^^^
 
   .. code:: bash
 
-     $ oc get all
-     NAME              DOCKER REPO                                    TAGS              UPDATED
-     is/pege           172.30.1.1:5000/appuio-demo4441/pege      test,production   28 hours ago
-     …
-
-     NAME            REVISION   DESIRED   CURRENT   TRIGGERED BY
-     dc/pege         7          0         0         config,image(pege:production)
-     …
-
-     NAME              DESIRED   CURRENT   READY     AGE
-     rc/pege-1         0         0         0         13d
-     …
-
-     NAME                HOST/PORT           PATH      SERVICES          PORT       TERMINATION
-     routes/pege         pege.tocco.ch                 pege         80-tcp     edge/Redirect
-     …
-
-     NAME                   CLUSTER-IP       EXTERNAL-IP   PORT(S)                   AGE
-     svc/solr               172.30.64.69     <none>        8983/TCP                  13d
-     …
-
-     NAME                      READY     STATUS      RESTARTS   AGE
-     po/pegetest-14-edtob      2/2       Running     0          1d
-     …
-
-* List resources of a particular type
-
-  .. code:: bash
-
-     $ oc get pod
-     NAME               READY     STATUS      RESTARTS   AGE
-     nice-13-deploy     0/1       Error       0          1d
-     nice-13-hook-pre   0/1       Completed   0          1d
-     nice-14-edtob      2/2       Running     0          1d
-     solr-10-qd9u8      1/1       Running     0          2d
+    $ oc get pod
+    NAME            READY     STATUS    RESTARTS   AGE
+    nice-25-kchv3   2/2       Running   0          3h
+    solr-2-gt5tg    1/1       Running   0          1h
 
 
-* Show details for a resource
+Describe a Resource in Detail
+-----------------------------
 
-  #. show available deployment configs (or any other resource type)
+Use ``oc describe TYPE RESOURCE`` to show details about a specific pod/dc/is/….
+
+.. hint:: :ref:`list-resources` shows how to obtain the RESOURCE name.
+
+Example
+^^^^^^^
 
      .. code::
 
-        $ oc get dc
-        NAME        REVISION   DESIRED   CURRENT   TRIGGERED BY
-        nice        7          0         0         config,image(pege:production)
-        solr        14         0         0         config,image(solr:stable)
-
-  #. use the **NAME** column to retrieve more details
-
-     .. code::
-
-        $ oc describe dc pege
-        Name:           pege
-        Namespace:      appuio-demo4441
-        Created:        13 days ago
-        Labels:         run=pege
-        Annotations:    <none>
-        Latest Version: 7
-        Selector:       run=pege
-        Replicas:       0
-        Triggers:       Config, Image(pege@production, auto=true)
-        Strategy:       Recreate
+        $ oc describe pod nice-25-kchv3
+        Name:                   nice-25-kchv3
+        Namespace:              toco-nice-test212
+        Security Policy:        restricted
+        Node:                   node19.prod.zrh.appuio.ch/172.17.176.161
+        Start Time:             Wed, 18 Oct 2017 13:07:00 +0200
+        Labels:                 deployment=nice-25
+                                deploymentconfig=nice
+                                run=nice
         …
 
-Edit resources
+
+Edit Resources
 --------------
 
-Take a look at :doc:`edit_resources`.
+Use ``oc edit TYPE RESOURCE`` to edit a specific pod/dc/is/….
 
-Usefull stuff
--------------
+.. hint:: :ref:`list-resources` shows how to obtain the RESOURCE name.
 
-1. Remote shell connection to pod
+Example
+^^^^^^^
 
-  .. code::
-  
+    #. Open config in editor: ``oc edit pod nice-25-kchv3``
+    #. Make any changes you want to the configuration.
+    #. Save changes and exit in order to trigger a deployment.
+
+See document :doc:`edit_resources` for all the details.
+
+
+Open Shell in Pod
+-----------------
+
+.. code::
+
     oc rsh -c nice PODNAME bash
-    
-2. Copy file from pod
+
+``-c`` specifies the pod name, use ``-c nginx`` to enter the nginx container or ``oc rsh PODNAME bash`` to enter
+a Solr pod (has only one container).
+
+
+Copy File from Pod
+------------------
   
-  .. code::
+.. code::
   
     oc cp -c nice PODNAME:/path/to/file.txt ~/destination/folder/
 
-3. Synchronise folder with pod
 
-  .. code::
+Synchronize Folder with Pod
+---------------------------
+
+.. code::
   
     oc rsync -c nice PODNAME:/path/to/folder ~/destination/folder/
+
+
+Manually Deploy
+---------------
+
+Deploy latest version of Nice:
+
+.. code::
+
+    oc rollout latest dc/nice
+
+
+Retry Failed Deployment
+-----------------------
+
+Retry failed deployment of Nice:
+
+.. code::
+
+    oc deploy --retry dc/nice
+
+
+Open a Remote Shell in a Pod
+----------------------------
+
+To get a shell within a Nice pod use ``oc rsh -c nice POD``.
+
+Example
+^^^^^^^
+
+.. code::
+
+    $ oc rsh -c nice nice-25-kchv3
+    nice-25-kchv3:/app $ …
+
+Open a shell in the Nginx container using ``oc rsh -c nginx nice-25-kchv3`` or in the Solr Pod using
+``oc rsh solr-2-gt5tg``.
+
+Access Log Files in Nice Pod
+----------------------------
+
+.. code::
+
+    oc exec -c PODNAME -- tail -n +0 var/log/nice.log |less
+
+
+Start PSQL
+----------
+
+This open the database the pod uses.
+
+.. code::
+
+    $ oc rsh -c nice PODNAME psql
+    psql (9.4.13, server 9.5.9)
+
+    nice_test212=> …
