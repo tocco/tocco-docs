@@ -9,7 +9,7 @@ Error
 
 .. code::
 
-    \__System.checkHeartbeat.dwr … PermanentPersistException: Expected 1 items but list size is 0!
+    __System.checkHeartbeat.dwr … PermanentPersistException: Expected 1 items but list size is 0!
 
 
 Solution
