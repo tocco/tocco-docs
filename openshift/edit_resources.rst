@@ -26,6 +26,11 @@ You can change the resource for any of the containers. Here is how it looks like
 The **requests** section describes the guaranteed resources and **limits** the maximum available. Both are optional. The
 OpenShift documentation has some more details on `requests and limits`_.
 
+.. attention::
+
+    If you need to increase the memory that Java allocates for Nice2, you'll have to set the ``-Xmx…`` parameter too.
+    See examples below.
+
 .. _Requests and Limits: https://docs.openshift.org/latest/admin_guide/overcommit.html#requests-and-limits
 
 
