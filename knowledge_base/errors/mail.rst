@@ -1,5 +1,5 @@
-Mail
-====
+Mail Errors
+===========
 
 Incorrect SMTP Server
 ---------------------
