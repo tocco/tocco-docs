@@ -17,7 +17,7 @@ How do I see if a resource was cached by Nginx?
 
 Search for the ``X-Cache`` header on the response. (See screenshot below.)
 
-You'll usually see one of this values [#f1]_:
+You'll usually see one of these values [#f1]_:
 
 ============= ==================================================================
  Value        Description
@@ -35,6 +35,6 @@ You'll usually see one of this values [#f1]_:
 
 .. rubric:: Footnotes
 
-.. [#f1] This value correspondence to the Nginx variable `$upstream_cache_status`_
+.. [#f1] This value corresponds to the Nginx variable `$upstream_cache_status`_
 
 .. _$upstream_cache_status: https://nginx.org/en/docs/http/ngx_http_upstream_module.html#var_upstream_cache_status

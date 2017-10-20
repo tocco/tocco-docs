@@ -26,7 +26,7 @@ List Buckets
         buckets = connection.get_all_buckets()
 
 
-Get a bucket
+Get a Bucket
 ^^^^^^^^^^^^
 
     .. code:: python
