@@ -42,6 +42,15 @@ Welcome to Tocco DevOps's documentation!
    mail/dns_entries
    mail/outgoing_mail_in_nice
 
+.. toctree::
+   :caption: Knowledge Base
+   :maxdepth: 2
+
+   knowledge_base/db_refactoring.rst
+   knowledge_base/mail.rst
+   knowledge_base/nginx.rst
+   knowledge_base/s3.rst
+
 
 Indices and tables
 ==================
