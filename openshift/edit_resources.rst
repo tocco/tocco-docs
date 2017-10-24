@@ -6,6 +6,9 @@ Deployment Config
 
 You can modify the config using ``oc edit dc ${INSTALLATION}``.
 
+
+.. _openshift-adjust-memory-cpu:
+
 Adjust Memory / CPU
 ^^^^^^^^^^^^^^^^^^^
 
