@@ -37,6 +37,12 @@ Welcome to Tocco DevOps's documentation!
    openshift/edit_resources
 
 .. toctree::
+   :caption: Nice
+   :maxdepth: 2
+
+   nice/remote_debugging
+
+.. toctree::
    :caption: Mail
    :maxdepth: 2
 
