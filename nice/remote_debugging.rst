@@ -16,7 +16,7 @@ Remote Debugging of Nice2
 
         .. code::
 
-            ssh -t tocco@${INSTALLATION}.tocco.ch less /home/tocco/etc/manager/manager.xml
+            ssh -t tocco@${INSTALLATION}.tocco.ch less /home/tocco/manager/etc/manager.xml
 
     #. find the ``<debug port="PORT_NUMBER">`` of **CUSTOMER**
 
