@@ -38,5 +38,6 @@ Remote Debugging of Nice2
 #. Now Set Up Remote Debugging in IDEA
 
     .. figure:: remote_debugging/remote_debugging.png
+        :scale: 60%
 
         Add debug configuration in IDEA.
