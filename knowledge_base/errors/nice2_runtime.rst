@@ -15,7 +15,7 @@ Error
 Cause
 ^^^^^
 
-This happens when the browser request a business unit (via ``X-Business-Unit`` HTTP request header) but that
+This happens when the browser requests a business unit (via ``X-Business-Unit`` HTTP request header) but that
 unit doesn't or does no longer exist. You'll see this frequently when you start a different customer on **localhost**
 without logging out first.
 
@@ -64,7 +64,7 @@ Error:
 Cause
 ^^^^^
 
-    The whhtmltopdf processed has been killed by signal 9 (SIGKILL) [#f1]_. This most likely happened because
+    The whhtmltopdf process has been killed by signal 9 (SIGKILL) [#f1]_. This most likely happened because
     of an out-of-memory error.
 
 
@@ -84,7 +84,7 @@ Option 1: Reduce Memory Usage
 Option 2: Increase Available Memory
 ```````````````````````````````````
 
-Increase **requested memory** to ensure the instance is moved on a node with enough free memory available and/or adjust
+Increase **requested memory** to ensure the instance is moved onto a node with enough free memory available and/or adjust
 the **memory limit** to ensure it's not hit when generating reports.
 
 See :ref:`openshift-adjust-memory-cpu` for more details [#f2]_.
