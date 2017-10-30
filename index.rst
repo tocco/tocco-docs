@@ -50,11 +50,11 @@ Welcome to Tocco DevOps's documentation!
    mail/outgoing_mail_in_nice
 
 
-Knowledge Base
-==============
+Collection of Useful Information
+================================
 
 .. toctree::
-   :caption: Random Topics
+   :caption: Knowledge Base
    :maxdepth: 2
 
    knowledge_base/nginx.rst
