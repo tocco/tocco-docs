@@ -65,6 +65,7 @@ Collection of Useful Information
    :maxdepth: 2
 
    knowledge_base/errors/db_refactoring.rst
+   knowledge_base/errors/db_restore_dump.rst
    knowledge_base/errors/mail.rst
    knowledge_base/errors/nice2_runtime.rst
 
