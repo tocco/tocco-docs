@@ -29,7 +29,7 @@ Deliver (Simple)
    *Run* menu
 
 #. Click on **Run** in the `main page`_		
-#. (optional) adjust the `dump mode`_ in the `run menu <#run-menu>`__		
+#. (optional) adjust the `dump mode`_ in the `run menu <#run-menu>`__
 #. Click **Run Build** in the `run menu <#run-menu>`__
 
 Deliver (Advanced)
