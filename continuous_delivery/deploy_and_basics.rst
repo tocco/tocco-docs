@@ -78,7 +78,7 @@ Deploy a Specific Git Tag
 **Build branch** allows you to specify to deploy an arbitrary Git branch or tag.
 
 .. note:: There might be a situation where you want to deploy a tag directly on production. 
-          In that case remove the CD parameter "DOCKER_PULL_URL". `Deploy s Specific Docker Image <#deploy-a-specific-docker-image>`_.
+          In that case remove the CD parameter "DOCKER_PULL_URL". `See deploy a Specific Docker Image <#deploy-a-specific-docker-image>`_.
 
 
 Deploy a Specific Docker Image
@@ -86,13 +86,13 @@ Deploy a Specific Docker Image
 
 This is used for production systems, it allows you to deploy a docker image that was once installed on the test
 system. The image is determined by the DOCKER_PULL_URL parameter. It allows you to pick a image from a project an deploy it on your target project.
-For this you can fill the parameter with the following: 
+E.g. This deploys the image from toccotest if you're deploying tocco. For this you can fill the parameter with the following: 
 
 **registry.appuio.ch/toco-nice-%env.INSTALLATION%test/%env.DOCKER_IMAGE%.**
 
 After the evaluation of the CD parameters it will appear as an URL like this: 
          
-``registry.appuio.ch/tocco-nice-tocco/nice:latest`` [#f1]_
+``registry.appuio.ch/tocco-nice-toccotest/nice:latest`` [#f1]_
 
 
 .. rubric:: Footnotes
