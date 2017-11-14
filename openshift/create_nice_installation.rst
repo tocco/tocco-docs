@@ -40,6 +40,29 @@ Step by Step Instructions
 
         add **tocco** group to admins
 
+#. Add service account (SA) to Project
+
+    .. figure:: create_nice_installation/vshn_control_sa_1.png
+        :scale: 60%
+
+        edit *editor*\(s)
+
+    .. figure:: create_nice_installation/vshn_control_sa_2.png
+        :scale: 60%
+
+        add **system:serviceaccount:toco-serviceaccoutns:teamcity** SA to editors
+
+    .. note::
+
+        This Step is **mandatory** else the Installation can't be deployed via Teamcity-CI.
+        If you'd forget this step, don't worry: It will print this error during Deployment:
+
+        .. code::
+           
+           Error response from daemon: Get https://registry.appuio.ch/v2/: unauthorized: authentication required
+
+        This error message doesn't always have to lead to the issue described.
+
 #. Clone the `Ansible Git Repository`_
 
    .. code::
