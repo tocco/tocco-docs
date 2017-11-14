@@ -42,27 +42,16 @@ Create a new Installation
 4. Fill in parameters as shown above
 5. Fill in these additional template parameters:
 
-   ============================  ======================================================================================
+   ============================  ============================================================================================
    CUSTOMER                      Customer name (e.g. agogis or smc but never :strike:`agogistest` or :strike:`smctest`)
-   DOCKER_IMAGE_PULL_TAG [#f1]_  ``test`` for **production** systems and empty for test systems
-   DOCKER_IMAGE_PUSH_TAG         ``test`` for test systems and ``production`` for production systems
+   DOCKER_PULL_URL               Only needed for production systems. Leave it empty for test system, so a new image is built.
    DUMP_MODE                     ``dump`` for production systems and ``no_dump`` for test systems
-   GIT_TREEISH [#f1]_            Git branch for test systems (e.g. ``releases/2.13``) and empty for production
+   GIT_TREEISH                   Git branch for test systems (e.g. ``releases/2.13``) and empty for production
    INSTALLATION                  Installation name (e.g. smc or smctest)
-   ============================  ======================================================================================
+   ============================  ============================================================================================
 
    It shouldn't be necessary to touch any of the other parameters.
 
 .. important::
 
     The installation needs also to be :doc:`created in OpenShift <../openshift/create_nice_installation>`.
-
-.. rubric:: Footnotes
-
-.. [#f1] Only one of DOCKER_IMAGE_PULL_TAG and GIT_TREEISH can be used at the same time.
-
-         Generally:
-
-         * GIT_TREEISH is used for test systems, it instructs :term:`CD` to build a new Docker image from source.
-         * DOCKER_IMAGE_PULL_TAG is used for production systems and it is set to ``test`` which instruct CD to reuse
-           the Docker image currently in use by the test system.

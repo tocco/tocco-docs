@@ -23,9 +23,7 @@ Deliver (Simple)
       #. … a test system with a custom Git branch or tag
       #. … a production system with a Docker image previously installed on the test system
 
-   .. todo:: link "Docker image" to high level overview
-
-.. figure:: deploy_and_basics_static/tc_run_menu.png
+.. figure:: deploy_and_basics_static/tc_run_menu.png		
    :name: run menu
 
    *Run* menu
@@ -33,7 +31,6 @@ Deliver (Simple)
 #. Click on **Run** in the `main page`_
 #. (optional) adjust the `dump mode`_ in the `run menu <#run-menu>`__
 #. Click **Run Build** in the `run menu <#run-menu>`__
-
 
 Deliver (Advanced)
 ------------------
@@ -50,14 +47,14 @@ Deliver (Advanced)
 #. Click on **Run** in the `main page`_.
 #. (optional) Adjust the `dump mode`_ in the `run menu <#run-menu>`__.
 #. (optional) Select a particular `Git tag or branch <#deploy-a-specific-git-tag>`_ or deploy a particular `Docker image
-   tag <deploy-a-specific-docker-image-tag>`_ [#f1]_.
+   <#deploy-a-specific-docker-image>`_.
 #. Click **Run Build** in the `run menu <#run-menu>`__.
 
-.. todo:: write and link guide for deploying specific Docker images
 
-
-Dump Mode
+Dump Mode 
 ---------
+
+.. note:: dump mode is currently not available 
 
 .. figure:: deploy_and_basics_static/tc_dump_modes_dropdown.png
 
@@ -80,26 +77,30 @@ Deploy a Specific Git Tag
 
 **Build branch** allows you to specify to deploy an arbitrary Git branch or tag.
 
-.. important::
-   #. This should only be used with test systems [#f1]_.
-   #. The value of **Build branch** is ignored if `Docker Image ID <#run-menu-advanced>`__ is set.
+.. note:: There might be a situation where you want to deploy a tag directly on production. 
+          In that case remove the CD parameter "DOCKER_PULL_URL". `See deploy a Specific Docker Image <#deploy-a-specific-docker-image>`_.
 
 
-Deploy a Specific Docker Image Tag
-----------------------------------
+Deploy a Specific Docker Image
+------------------------------
 
-This is only used for production systems, it allows you to deploy a docker image that was once installed on the test
-system. By default the ``test`` tag is deployed which installs the very same image the test system is using. You can
-however also install an older image formerly installed on the test system.
+This is used for production systems, it allows you to deploy a docker image that was once installed on the test
+system. The image is determined by the DOCKER_PULL_URL parameter. It allows you to pick a image from a project an deploy it on your target project.
+E.g. This deploys the image from toccotest if you're deploying tocco. For this you can fill the parameter with the following: 
 
-#. Find the tag name for the version you want to have installed. It looks like this ``ecap-2017-05-09T12_54_27``.
-   **ecap** is the customer name.
-#. Enter the tag in the **Docker Image ID** field in the `run menu <#run-menu-advanced>`__.
+**registry.appuio.ch/toco-nice-%env.INSTALLATION%test/%env.DOCKER_IMAGE%.**
 
-.. todo:: describe where the tag names can be found
+After the evaluation of the CD parameters it will appear as an URL like this: 
+         
+``registry.appuio.ch/tocco-nice-toccotest/nice:latest`` [#f1]_
 
 
 .. rubric:: Footnotes
 
-.. [#f1] In general, test systems are deployed from git and production systems reuse the Docker Images from
-         the test systems.
+.. [#f1] It is also possible to deploy an image from any other system on your target system.
+         E.g. test213 -> test214
+         After that, test214 will have the state of test213 which obvosuly makes no sense at all.
+
+         So be aware of that, and only use it to deploy a test image on a production system.
+
+
