@@ -54,8 +54,9 @@ This will look like this:
            --------------
            04:15:55.03134
 
-   If the number is very small the slave is probably reading from master in that moment. But always have an look on the issue.
-   If the Number is extremely high then you should do following query:
+   It prints the delation in human readable time format like (hh:mm:ss). 
+   The advantage of this query is, that is very comprehensive. So you dont have to calculate a lot, the output is appropriate.
+   If the delation is very small the slave is probably reading from master in that moment. But always have an look on the issue.
 
 #. Check the last replay
 
