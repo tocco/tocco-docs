@@ -204,7 +204,7 @@ Access Log Files in Nice Pod
 
 .. code::
 
-    oc exec -c PODNAME -- tail -n +0 var/log/nice.log |less
+    oc exec -c nice PODNAME -- tail -n +0 var/log/nice.log |less
 
 
 Start PSQL
