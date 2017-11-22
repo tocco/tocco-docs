@@ -33,7 +33,7 @@ Remote Debugging of Nice2
 
     #. now forward the port to your machine
 
-        ssh -N -L ${PORT_NUMBER_FROM_MANAGER_XML}:localhost:40200
+        ssh -N -L localhost:40200:${PORT_NUMBER_FROM_MANAGER_XML} ${INSTALLATION_NAME}.tocco.ch
 
 #. Now Set Up Remote Debugging in IDEA
 
