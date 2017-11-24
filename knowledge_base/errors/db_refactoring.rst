@@ -18,7 +18,16 @@ Solution
 
     Business units in DB: ``SELECT unique_id FROM nice_business_unit``
 
-    Business units in application properties: Look for property named ``nice2.dbrefactoring.businessunits``.
+    Set the business units in property ``nice2.dbrefactoring.businessunits``:
+
+        #. ``oc project toco-nice-${INSTALLATION}``
+        #. ``oc edit dc nice``
+        #. Add/adjust this entry in the ``env`` section:
+
+           .. parsed-literal::
+
+                - name: NICE2_APP_nice2__dbrefactoring__businessunits
+                  value: **bu1,bu2,…**
 
 Full Error Message
 ^^^^^^^^^^^^^^^^^^
