@@ -32,6 +32,7 @@ import os
 extensions = [
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
+    'javasphinx'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -354,3 +355,7 @@ rst_prolog = ".. include:: /global.rst"
 # add custom style sheet
 def setup(app):
     app.add_stylesheet("css/custom.css")
+
+javadoc_url_map = {
+    'org.hibernate' : ('http://docs.jboss.org/hibernate/orm/5.2/javadocs/', 'javadoc'),
+}
