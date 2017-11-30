@@ -15,7 +15,7 @@ As the two modes cannot be mixed and we would like to be able to use typed entit
 :java:ref:`Entity<ch.tocco.nice2.persist.entity.Entity>` interface) in the future we need to dynamically generate classes for the entity models.
 
 The `javassist <http://jboss-javassist.github.io/javassist/>`_ library is used to generate the classes. The same
-library is used by  Hibernate 5.2.x itself to generate proxy classes. Bytebuddy (http://bytebuddy.net/) would
+library is used by  Hibernate 5.2.x itself to generate proxy classes. `Bytebuddy <http://bytebuddy.net/>`_ would
 be a more modern alternative, but the newest version is much `slower <https://stackoverflow.com/questions/45456076/bytebuddy-performance-in-hibernate>`_ than javassist.
 
 Class generation
@@ -29,9 +29,9 @@ interface.
 
 The generated classes contain the following:
 
-- a private field of the corresponding type for each field and relation
-- a getter and setter for each field
-- JPA annotations, which define the hibernate data model, on the getter methods
+* a private field of the corresponding type for each field and relation
+* a getter and setter for each field
+* JPA annotations, which define the hibernate data model, on the getter methods
 
 If the annotations are placed on the getters (instead of the field), hibernate uses the getters and setters to
 access the fields.
