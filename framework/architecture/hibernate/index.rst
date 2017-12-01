@@ -7,3 +7,5 @@ Hibernate Integration
    introduction
    session-factory-provider
    entity-class-generation
+   session-lifecycle
+   transaction-lifecycle
