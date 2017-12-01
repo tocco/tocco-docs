@@ -23,6 +23,10 @@ Copy database using WITH TEMPLATE
 
 This is the fastest way to copy a database. Alternatively, you can dump and then restore the database.
 
+.. code::
+
+    CREATE DATABASE ${TARGET_DB} WITH TEMPLATE ${SOURCE_DB};
+
 .. warning::
 
     This requires that no one is connected to the database. Consequently, it isn't possible to copy a database of
