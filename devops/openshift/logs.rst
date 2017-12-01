@@ -8,24 +8,29 @@ Logs
 Getting Started
 ---------------
 
-1. Log in on https://logging.appuio.ch.
+#. Log in on https://logging.appuio.ch.
 
 .. figure:: logs/main_page.png
    :scale: 80%
 
-2. Open *saved searches* menu
+#. Import *saved searches* (only after first login)
 
-3. Select a *saved search*
+   #. Download `this file </_static/download/kibana_searches.json>`__
+   #. Import it via *Settings* → *Objects* → *Import*
+
+#. Open *saved searches* menu
+
+#. Select a *saved search*
 
    Select ``Nice`` to get the Nice event logs or ``Nginx`` to get the Nginx access logs.
 
-4. Show all projects
+#. Show all projects
 
-5. Select Project
+#. Select Project
 
    There is one project per installation.
 
-6. Select a time frame
+#. Select a time frame
 
 .. warning::
 

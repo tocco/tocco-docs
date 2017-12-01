@@ -1,0 +1,67 @@
+[
+  {
+    "_id": "Nginx",
+    "_type": "search",
+    "_source": {
+      "title": "Nginx",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "status",
+        "method",
+        "url",
+        "request_time",
+        "client_addr"
+      ],
+      "sort": [
+        "@timestamp",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"project.toco-nice-master.87617c03-b4d8-11e7-b6e3-fa163ed95dac.*\",\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[{\"meta\":{\"negate\":false,\"index\":\"project.toco-nice-master.87617c03-b4d8-11e7-b6e3-fa163ed95dac.*\",\"key\":\"kubernetes.container_name\",\"value\":\"nginx\",\"disabled\":false,\"alias\":null},\"query\":{\"match\":{\"kubernetes.container_name\":{\"query\":\"nginx\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}}],\"highlight\":{\"pre_tags\":[\"@kibana-highlighted-field@\"],\"post_tags\":[\"@/kibana-highlighted-field@\"],\"fields\":{\"*\":{}},\"require_field_match\":false,\"fragment_size\":2147483647}}"
+      }
+    }
+  },
+  {
+    "_id": "Nice",
+    "_type": "search",
+    "_source": {
+      "title": "Nice",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "level_name",
+        "message"
+      ],
+      "sort": [
+        "@timestamp",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\n  \"index\": \"project.toco-nice-master.87617c03-b4d8-11e7-b6e3-fa163ed95dac.*\",\n  \"query\": {\n    \"query_string\": {\n      \"analyze_wildcard\": true,\n      \"query\": \"*\"\n    }\n  },\n  \"filter\": [\n    {\n      \"$state\": {\n        \"store\": \"appState\"\n      },\n      \"meta\": {\n        \"alias\": null,\n        \"disabled\": false,\n        \"index\": \"project.toco-nice-master.87617c03-b4d8-11e7-b6e3-fa163ed95dac.*\",\n        \"key\": \"kubernetes.container_name\",\n        \"negate\": false,\n        \"value\": \"nice\"\n      },\n      \"query\": {\n        \"match\": {\n          \"kubernetes.container_name\": {\n            \"query\": \"nice\",\n            \"type\": \"phrase\"\n          }\n        }\n      }\n    },\n    {\n      \"$state\": {\n        \"store\": \"appState\"\n      },\n      \"meta\": {\n        \"alias\": null,\n        \"disabled\": true,\n        \"index\": \"project.toco-nice-master.87617c03-b4d8-11e7-b6e3-fa163ed95dac.*\",\n        \"key\": \"level_name\",\n        \"negate\": true,\n        \"value\": \"DEBUG\"\n      },\n      \"query\": {\n        \"match\": {\n          \"level_name\": {\n            \"query\": \"DEBUG\",\n            \"type\": \"phrase\"\n          }\n        }\n      }\n    },\n    {\n      \"$state\": {\n        \"store\": \"appState\"\n      },\n      \"meta\": {\n        \"alias\": null,\n        \"disabled\": true,\n        \"index\": \"project.toco-nice-master.87617c03-b4d8-11e7-b6e3-fa163ed95dac.*\",\n        \"key\": \"level_name\",\n        \"negate\": true,\n        \"value\": \"INFO\"\n      },\n      \"query\": {\n        \"match\": {\n          \"level_name\": {\n            \"query\": \"INFO\",\n            \"type\": \"phrase\"\n          }\n        }\n      }\n    },\n    {\n      \"$state\": {\n        \"store\": \"appState\"\n      },\n      \"meta\": {\n        \"alias\": null,\n        \"disabled\": true,\n        \"index\": \"project.toco-nice-master.87617c03-b4d8-11e7-b6e3-fa163ed95dac.*\",\n        \"key\": \"level_name\",\n        \"negate\": true,\n        \"value\": \"WARN\"\n      },\n      \"query\": {\n        \"match\": {\n          \"level_name\": {\n            \"query\": \"WARN\",\n            \"type\": \"phrase\"\n          }\n        }\n      }\n    },\n    {\n      \"$state\": {\n        \"store\": \"appState\"\n      },\n      \"meta\": {\n        \"alias\": null,\n        \"disabled\": true,\n        \"index\": \"project.toco-nice-master.87617c03-b4d8-11e7-b6e3-fa163ed95dac.*\",\n        \"key\": \"level_name\",\n        \"negate\": true,\n        \"value\": \"ERROR\"\n      },\n      \"query\": {\n        \"match\": {\n          \"level_name\": {\n            \"query\": \"ERROR\",\n            \"type\": \"phrase\"\n          }\n        }\n      }\n    }\n  ],\n  \"highlight\": {\n    \"pre_tags\": [\n      \"@kibana-highlighted-field@\"\n    ],\n    \"post_tags\": [\n      \"@/kibana-highlighted-field@\"\n    ],\n    \"fields\": {\n      \"*\": {}\n    },\n    \"require_field_match\": false,\n    \"fragment_size\": 2147483647\n  }\n}"
+      }
+    }
+  },
+  {
+    "_id": "Solr",
+    "_type": "search",
+    "_source": {
+      "title": "Solr",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "message"
+      ],
+      "sort": [
+        "@timestamp",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"project.toco-nice-master.87617c03-b4d8-11e7-b6e3-fa163ed95dac.*\",\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[{\"meta\":{\"negate\":false,\"index\":\"project.toco-nice-master.87617c03-b4d8-11e7-b6e3-fa163ed95dac.*\",\"key\":\"kubernetes.container_name\",\"value\":\"solr\",\"disabled\":false,\"alias\":null},\"query\":{\"match\":{\"kubernetes.container_name\":{\"query\":\"solr\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}}],\"highlight\":{\"pre_tags\":[\"@kibana-highlighted-field@\"],\"post_tags\":[\"@/kibana-highlighted-field@\"],\"fields\":{\"*\":{}},\"require_field_match\":false,\"fragment_size\":2147483647}}"
+      }
+    }
+  }
+]
