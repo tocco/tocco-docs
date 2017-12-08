@@ -30,6 +30,7 @@ DevOps Documentation
    openshift/routes
    openshift/dns
    openshift/edit_resources
+   openshift/customizing_docker_images
 
 .. toctree::
    :caption: Nice
