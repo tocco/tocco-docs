@@ -13,7 +13,14 @@ Setting up oc
 
 2. enable autocompletion
 
-    Execute ``oc completion -h`` and follow the instructions.
+    On most Linux based systems:
+
+    .. code::
+
+        oc completion bash | sudo bash -c 'cat >/etc/bash_completion.d/oc'
+        exit # and open a new terminal
+
+    For non-Linux systems use ``oc completion --help`` for further information.
 
 3. login
 
