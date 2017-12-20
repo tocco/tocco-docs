@@ -12,6 +12,6 @@ Knowledge Base
    :maxdepth: 2
 
    errors/db_refactoring.rst
-   errors/db_restore_dump.rst
+   errors/database.rst
    errors/mail.rst
    errors/nice2_runtime.rst
