@@ -1,5 +1,5 @@
-Hibernate Integration
-=====================
+Databases
+=========
 
 .. toctree::
    :maxdepth: 2
