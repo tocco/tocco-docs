@@ -17,6 +17,6 @@ Here is explaind how to set up PROXMOX if one of the hosts fails.
 
     * set user root with the right root password.
     * set the right domain name e.g. host03a.tocco.ch
-    * set the right ip address for the used domain name
+    * set the right IP address for the used domain name
 
- #. follow the `installation manual <https://pve.proxmox.com/wiki/Install_Proxmox_VE_on_Debian_Stretch#Install_Proxmox_VE>`_ for Proxmox.
+ #. Follow the `installation manual <https://pve.proxmox.com/wiki/Install_Proxmox_VE_on_Debian_Stretch#Install_Proxmox_VE>`_ for Proxmox.
