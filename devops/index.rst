@@ -2,6 +2,13 @@ DevOps Documentation
 ====================
 
 .. toctree::
+   :caption: Internal Servers
+   :maxdepth: 2
+
+   internal_servers/servers_and_services.rst
+   internal_servers/proxmox.rst
+
+.. toctree::
    :caption: Continuous Delivery
    :maxdepth: 2
 
