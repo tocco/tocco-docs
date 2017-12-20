@@ -1,5 +1,5 @@
-Database Restore / Dump
-=======================
+Database
+========
 
 Can't Change Permissions on Extension
 -------------------------------------
@@ -55,3 +55,58 @@ Full Error
     pg_restore: [archiver (db)] Error from TOC entry 2091; 0 0 COMMENT EXTENSION plpgsql
     pg_restore: [archiver (db)] could not execute query: **ERROR:  must be owner of extension plpgsql**
         **Command was: COMMENT ON EXTENSION** plpgsql IS 'PL/pgSQL procedural language';
+
+
+Out of Shared Memory
+--------------------
+
+Error
+^^^^^
+
+.. parsed-literal::
+
+    2017-12-19 03:38:20.691 ERROR nice2.tasks.MainTaskQueue [main-worker-2]
+    Exception thrown during task run
+    ch.tocco.nice2.persist.PersistException: SQL error: ERROR: **out of shared memory**
+     Hint: You might need to increase max_locks_per_transaction.
+           …
+
+This error can also appear during ``pg_restore``\s.
+
+
+Cause
+^^^^^
+
+There is a `fixed, global limit of locks <https://www.postgresql.org/docs/9.1/static/runtime-config-locks.html#UC-MAX-LOCKS-PER-TRANSACTION>`_
+in Postgres. This error simply means that there are no more locks available. Usually, this is caused by poor code that
+acquires hundreds of thousands of locks in a single transaction.
+
+Solution
+^^^^^^^^
+
+Figure out what statement is  holding all these locks:
+
+.. parsed-literal::
+
+    SELECT l.\ **pid**, min(datname) AS db, count(*)
+    FROM pg_locks AS l LEFT OUTER JOIN pg_stat_activity AS a ON l.pid = a.pid
+    GROUP BY l.pid
+    ORDER BY 3;
+
+If you see a large count (>10,000) you may want to have a look at the query that's being executed.
+
+.. parsed-literal::
+
+    SELECT now() - query_start AS time, query
+    FROM pg_stat_activity
+    WHERE pid = **${pid}**
+
+.. hint::
+
+    **pid** is the number from the pid column of the first query.
+
+Once you figured out what's causing the issue, so it can be fixed later, you may want to terminate the query:
+
+.. parsed-literal::
+
+    SELECT pg_terminate_backend(**${pid}**);
