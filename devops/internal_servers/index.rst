@@ -1,4 +1,4 @@
-Servers ans Services
+Servers and Services
 ====================
 
 .. toctree::
