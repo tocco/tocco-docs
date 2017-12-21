@@ -1,5 +1,5 @@
-Hibernate Integration
-=====================
+Mail
+====
 
 .. toctree::
    :maxdepth: 2

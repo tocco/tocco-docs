@@ -1,5 +1,5 @@
-Hibernate Integration
-=====================
+Openshift
+=========
 
 .. toctree::
    :maxdepth: 2
