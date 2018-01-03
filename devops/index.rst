@@ -10,3 +10,4 @@ DevOps Documentation
    mail/index
    nice/index
    openshift/index
+   backups/index
