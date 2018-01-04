@@ -6,13 +6,13 @@ Installation
 
 #. Microsoft provides dedicated virtual machines for testing edge and ie11. Download it `here <https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/>`_ .
 
-   .. note:
+   .. note::
      
-      Yes Microsoft doesn't provide a simple .iso file. You can just download a prebuilt image for different VM platforms. That's why we have to convert the image.
-      Suggested is to download the Virtualbox (.ova) image. It actually doesn't matter what image you download but he following steps fit to a Virtualbox image.
+      Yes, Microsoft doesn't provide a simple .iso file. You can only download a prebuilt image for different VM platforms. That's why we have to convert the image.
+      Suggested is to download the Virtualbox (.ova) image. It actually doesn't matter what image you download but the following steps fit to a Virtualbox image.
 
  
-#. After downloading we have to convert into the KVM format (qcow2). 
+#. After downloading we have to convert the image into the KVM format (qcow2). 
 
    .. code::
 
@@ -51,17 +51,17 @@ Installation
 
    .. note:: 
       
-      the VitrIO network device won't work for windows because it doesn't have installed the dirvers. That's why we to install them manually.
+      The VirtIO network device won't work for windows because it doesn't have installed the dirvers. That's why we have to install them manually.
 
 
-#. At this moment you should have successfully create a new VM. It should appear on the left side by the other VM's
+#. At this moment you should have successfully created a new VM. It should appear on the left side by the other VM's
    For the next step we need to command line again. We have to replace to mock image with the windows edge image.
 
    .. code::
 
       ssh tadm@host03b.tocco.ch
 
-      VMID=*the nuber you have choosen for you vm*
+      VMID=*the number you have choosen for you VM*
 
       cd /home/tadm/backup/storage/images/${VMID}
 
@@ -76,13 +76,13 @@ Installation
       sudo qm rescan -vmid ${VMID}
 
 
-#. Download divers for the VitrIO network device.
+#. Download divers for the VirtIO network device.
 
    The VM is now ready to boot, but we need the drivers for the network device else we won't have any connection to the network.
    Fedora provides the driver for Windows. It can be found `on the fedora project website <https://fedoraproject.org/wiki/Windows_Virtio_Drivers#Direct_download>`_.
 
    We have to upload the driver the same way we did it with the image file, see step 3.
-   Before we can start the VM we need to add the drivers to a virtual drive, so that you can access it inside the VM.
+   Before we can start the VM, we need to add the drivers to a virtual drive, so that you can access it inside the VM.
 
    .. figure:: edge//upload_vitrio_driver.png
 
@@ -95,7 +95,7 @@ Installation
    .. hint::
 
       When the vm starts a Windows logo should appear. After booting you should be logged in automatically. 
-      If not (what might be possible it is microsoft), the default password for Microsoft VM's is **Passw0rd!**.
+      If not (what is possible, it is microsoft), the default password for Microsoft VM's is **Passw0rd!**.
 
 
 #. Install the VirtIO drivers
@@ -120,7 +120,7 @@ Installation
 
 
 #. IP configuration
-   When we finally got a connection to the network we need to configure the IP address. In the end edge.tocco.ch should point to the VM.
+   Now that we finally got a connection to the network we need to configure the IP address. In the end edge.tocco.ch should point to the VM.
 
    Usually edge.tocco.ch points to 10.27.1.33. But this might have changed when you are reading this. So check the DNS entry before. 
    You can do that in the Linux shell: 
@@ -170,7 +170,7 @@ Installation
    Not sure if it has really an effect but to be save change the PC name to edge.
 
 
-#. Now we got the VM connected to the Network and Microsoft Remote Desktop running.
+#. Now we got the VM connected to the network and Microsoft Remote Desktop running.
    Unfortunately this doesn't mean that it works.
 
    If you do a network scan you will recognize that there is no visible Host with the given IP. Even ping doesn't work.
@@ -183,19 +183,19 @@ Installation
       ping edge.tocco.ch
 
 
-   The solution for this Problem is simple. Just deactivate all firewall's.
+   The solution for this Problem is simple. Just deactivate all firewall.
 
       * Type **firewall** in to the search field at the **left bottom corner**.
 
-      * **Windows Defender Firewall** will appear as a search result. Click on that
+      * **Windows Defender Firewall** will appear as a search result. **Click on that**
 
       * Click on the Tab **Turn Windows Defender Firewall on or off** in the list at left side.
 
-      * Disable the firewall **Public and Private** by clicking on the **Turn off** radio button's.
+      * Disable the firewall **Public and Private** by clicking on the **Turn off** radio button.
 
       * click on the **OK** button to save the setttings. 
 
-      * You probably have to restart the VM again.
+      * You probably have to restart the VM, again.
 
 #. Now we can try open a remote desktop.
    On Linux **rdesktop** is recommended 
@@ -209,7 +209,7 @@ Installation
 
   .. attention:: 
      
-     It is very likely that thiy error will appear now. to get rid of that message hjust disable CredSSP. To avoid that you have to search 1 hour for the checkbox below is shown how to find it.
+     It is very likely that thiy error will appear now. To get rid of that message just disable CredSSP. To avoid that you have to search 1 hour for the checkbox below is shown how to find it.
 
 
 #. Disable CredSSP
@@ -219,7 +219,7 @@ Installation
       * On the **left list** click on the tab **Remote Settings** 
 
       * A new windows opens. At the bottom you find an enabled check box it is labeled as follows:
-        **Allow connections onyl from computer running Remote Desktop with Network Level Authentification**
+        **Allow connections only from computer running Remote Desktop with Network Level Authentification**
         Disable the checkbox.
 
    Now you should be able to open a Remote Desktop Session.
