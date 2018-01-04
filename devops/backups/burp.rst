@@ -24,12 +24,21 @@ BURP combines all these steps in one Program and makes backups more comprehensib
 
 Search and restore a file
 -------------------------
+#. Login to a host via ssh
+
+   .. code::
+      
+      ssh db1.tocco.cust.vshn.net
 
 #. Show all available backups.
 
+   .. note::
+      
+      With the -C option you can list/restore backups from another Client. It is also possible to use the own Client, for that just don't use the -C option.
+
    .. code:: 
 
-      sudo burp -a list 
+      sudo burp -C db2.tocco.cust.vshn.net -a list 
 
       Backup: 0000054 2017-10-21 23:08:28 +0200 (deletable)
       Backup: 0000055 2017-10-22 22:33:40 +0200 (deletable)
@@ -39,7 +48,7 @@ Search and restore a file
 
    .. code::
 
-      sudo burp -a list -b 0000055
+      sudo burp -C db2.tocco.cust.vshn.net -a list -b 0000055
 
       /var/spool/postfix/public/showq
       /var/spool/postfix/saved
@@ -55,38 +64,22 @@ Search and restore a file
 
    .. code::
 
-      sudo burp -a list -b 55 -r 'nice2'
+      sudo burp -C db2.tocco.cust.vshn.net -a list -b 55 -r '/var/lib/postgresql-backup/postgres-*'
 
       Backup: 0000055 2017-10-22 22:33:40 +0200 (deletable)
-      With regex: nice2
-      /home/nils.kreienbuehl/dumps/nice2_ethz_dump_cloud.sql
-      /home/nils.kreienbuehl/dumps/nice2_heks.sql
-      /home/nils.kreienbuehl/dumps/nice2_heks2017-09-13T12:20:29Z.sql
+      With regex: postgresql-backup
+      /var/lib/postgresql-backup/postgres-nice_create_installation.dump.gz
+      /var/lib/postgresql-backup/postgres-nice_ethz.dump.gz
+      /var/lib/postgresql-backup/postgres-nice_heks.dump.gz
       ...
 
-#. Restore all files in a backup that match the given regex condition.
+#. Restore all files in a backup that match the given regex.
 
    .. code::
 
-      sudo burp -a restore -b 55 -r 'nice2'
+      sudo burp -C db2.tocco.cust.vshn.net -a restore -b 55 -r '/var/lib/postgresql-backup/postgres-*'
       
-      2017-10-23 18:02:38 +0200: burp[12429] doing restore 55:nice2
+      2017-10-23 18:02:38 +0200: burp[12429] doing restore 55:/var/lib/postgresql-backup/postgres-*
       2017-10-23 18:02:38 +0200: burp[12429] doing restore confirmed
       ...
       2017-10-23 18:02:39 +0200: burp[12429] restore finished
-
-#. We saw how to list and restore backups with burp. But you are not bound to you actual client. With burp you can even list and restore from other Clients. This is very easily done with the '-C' option.
-
-  .. code::
-
-     (suppose you are on db1.tocco.cust.vshn.net)
-
-     sudo burp -a list -C db2.tocco.cust.vshn.net
-
-     2018-01-03 10:26:07 +0100: burp[17912] Switched to client db2.tocco.cust.vshn.net
-     ...
-     Backup: 0000106 2017-12-11 01:26:02 +0100 (deletable)
-     Backup: 0000113 2017-12-18 01:12:10 +0100 (deletable)
-     Backup: 0000120 2017-12-25 01:07:33 +0100 (deletable)
-     ...
-     2018-01-03 10:26:07 +0100: burp[17912] List finished ok
