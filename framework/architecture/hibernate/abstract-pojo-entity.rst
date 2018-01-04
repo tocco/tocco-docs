@@ -73,8 +73,8 @@ Writing values
 All calls to the different ``Entity#setValue()`` methods are delegated to ``AbstractHibernateEntity#internalSetValue()``,
 where the actual (generated) setter method is resolved and called by reflection.
 
-At the first the value is converted to the required target type (if this is not already the case and a suitable
-:java:ref:`Converter<ch.tocco.nice2.types.spi.Converter>` exists.
+At first the value is converted to the required target type (if this is not already the case and a suitable
+:java:ref:`Converter<ch.tocco.nice2.types.spi.Converter>` exists).
 
 The resulting value is then compared to the old value - if they are the same, the method silently returns.
 After the value has been set, a ``EntityFacadeListener#entityChanging()`` event will be fired.
@@ -91,7 +91,7 @@ called directly.
 Resolving relations
 -------------------
 
-An associations in hibernate is simply an instance of the referenced type (or a collection if it's a to-many relation).
+An association in hibernate is simply an instance of the referenced type (or a collection if it's a to-many relation).
 In the old API it was required to 'resolve' a relation ( ``Entity#resolve()`` ) to a :java:ref:`RelationQuery<ch.tocco.nice2.persist.query.RelationQuery>`.
 This relation query can then be executed to get an instance of :java:ref:`Relation<ch.tocco.nice2.persist.entity.Relation>`.
 
@@ -106,7 +106,7 @@ It does not contain any special logic, it simply delegates the calls to the wrap
 
 :java:ref:`ToOneRelationAdapter<ch.tocco.nice2.persist.hibernate.pojo.relation.ToOneRelationAdapter>` is the implementation
 of :java:ref:`Relation<ch.tocco.nice2.persist.entity.Relation>` for to-one associations. This class implements getting, setting
-or removing the associated instance.
+and removing the associated instance.
 
 All access (read or write) goes through the :java:ref:`RelationInterceptor<ch.tocco.nice2.persist.hibernate.RelationInterceptor>`,
 this allows other modules to add functionality (for example security checks).
