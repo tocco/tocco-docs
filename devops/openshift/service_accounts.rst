@@ -3,21 +3,21 @@
 Service Accounts
 ================
 
-Besides the normal user accounts that are used to login interactively with the openshift client, openshift provides service accounts.
+Beside the normal user accounts that are used to login interactively with the openshift client, openshift provides service accounts.
 With a service accounts you can login interactively as well, but as the name says, this accounts are rather used by services than people.
 
 What Do We Need Service Accounts For?
 -------------------------------------
 
-When we do a deployment with teamcity we have to run certain oenshift commands like: 'oc get' or  'oc rollout'.
-These commands have to be executed by an account. Therewith not someone has to be logged in with his own account on all agents all the time, we us service accounts.
+When we do a deployment with teamcity we have to run certain openshift commands like: 'oc get' or  'oc rollout'.
+These commands have to be executed by an account. Therewith someone hasn't to be logged in with his own account all the time, we us service accounts.
 With this type of account we just have to login once and the session will stay.
 
 How To Create A Service Account
 -------------------------------
 
 In openshift you can only create service accounts according to a project and no to the whole cluster. First this seems to be a little bit weird, and yes it is.
-So it is common sense to create on project just for service accounts. The accounts in that project you can easily permission to other projects. 
+So it is common sense to create on project just for service accounts. You can easily give permissions for other projects to the service account. 
 The syntax to create an account is very easy, but be sure that you are in the right project.
 
 .. parsed-literal::
@@ -33,12 +33,12 @@ The syntax to create an account is very easy, but be sure that you are in the ri
      deployer   2         57d
      teamcity   2         2S
 
-How to add a service account to a peoject see :ref:`add-sa-reference-label`.
+How to add a service account to a project see :ref:`add-sa-reference-label`.
 
 Login With A Service Account
 ----------------------------
 
-The login with a service account isn't common, with username and password. The credentials are replaced with a token.
+The login with a service account isn't the common style with username and password. The credentials are replaced with a token.
 So you only need the token to login. The challenge here is to find the token, but don't worry we documented it for you.
 
 .. parsed-literal::
@@ -87,7 +87,7 @@ So you only need the token to login. The challenge here is to find the token, bu
 
 .. parsed-literal::
 
-   oc login --token=**token**
+   oc login --token= **token**
 
 
 
