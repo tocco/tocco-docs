@@ -1,5 +1,3 @@
-.. _service-account-reference-label:
-
 Service Accounts
 ================
 
@@ -10,13 +8,13 @@ What Do We Need Service Accounts For?
 -------------------------------------
 
 When we do a deployment with teamcity we have to run certain openshift commands like: 'oc get' or  'oc rollout'.
-These commands have to be executed by an account. Therewith someone hasn't to be logged in with his own account all the time, we us service accounts.
+These commands have to be executed by an account. That no one has to be logged in all the time with his own account, we use service accounts.
 With this type of account we just have to login once and the session will stay.
 
 How To Create A Service Account
 -------------------------------
 
-In openshift you can only create service accounts according to a project and no to the whole cluster. First this seems to be a little bit weird, and yes it is.
+In openshift you can only create service accounts bound  a project and not to the whole cluster. First this seems to be a little bit weird, and yes it is.
 So it is common sense to create on project just for service accounts. You can easily give permissions for other projects to the service account. 
 The syntax to create an account is very easy, but be sure that you are in the right project.
 
@@ -88,6 +86,3 @@ So you only need the token to login. The challenge here is to find the token, bu
 .. parsed-literal::
 
    oc login --token= **token**
-
-
-

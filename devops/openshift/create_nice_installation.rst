@@ -63,7 +63,7 @@ Step by Step Instructions
            Error response from daemon: Get https://registry.appuio.ch/v2/: unauthorized: authentication required
 
         This error message doesn't always have to lead to the issue described.
-        For further information about service accounts see :ref:`service-account-reference-label`.
+        For further information about service accounts see :doc:`./service_accounts`.
 
 #. Clone the `Ansible Git Repository`_
 
