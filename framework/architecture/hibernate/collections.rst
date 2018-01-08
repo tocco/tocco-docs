@@ -9,7 +9,7 @@ In order to provide the same behaviour for collections as in the old API, some e
 Collection filtering
 --------------------
 
-All collection will be lazily initialized, this happens when a to many relation is resolved. However we don't just want
+All collection will be lazily initialized, this happens when a to many relation is resolved. However, we don't just want
 to return all rows in the database. The elements in the collection should be filtered depending on, for example, the
 current business unit or security.
 
@@ -56,7 +56,7 @@ Other modules can contribute collection initializer instances for specific relat
 The default :java:ref:`CollectionInitializer<ch.tocco.nice2.persist.hibernate.interceptor.CollectionInitializer>` is the
 :java:ref:`DefaultCollectionInitializer<ch.tocco.nice2.persist.hibernate.interceptor.DefaultCollectionInitializer>`.
 It creates the same query as Hibernate would, using the reverse association of the loaded collection.
-However because the query is executed through the :java:ref:`CriteriaQueryBuilder<ch.tocco.nice2.persist.hibernate.query.CriteriaQueryBuilder>`,
+However, because the query is executed through the :java:ref:`CriteriaQueryBuilder<ch.tocco.nice2.persist.hibernate.query.CriteriaQueryBuilder>`,
 the query is dynamically modified by all :java:ref:`QueryBuilderInterceptor<ch.tocco.nice2.persist.hibernate.query.QueryBuilderInterceptor>`, which
 add conditions depending on the current user roles and business units.
 
@@ -81,7 +81,7 @@ Collection reloading
 --------------------
 
 Per default a collection cannot be reloaded from the database once it has been initialized.
-However when a relation is resolved the collection should always be reloaded from the database, because
+However, when a relation is resolved the collection should always be reloaded from the database because
 a relation may be resolved multiple times within the same transaction with different privileges.
 
 To support this, we use a custom persistent collection type, the :java:ref:`ReloadablePersistentCollectionType<ch.tocco.nice2.persist.hibernate.usertype.ReloadablePersistentCollectionType>`.
@@ -96,7 +96,7 @@ Reloading
 See ``ReloadablePersistentSet#reloadCollection``.
 
 A collection can only be reloaded if it is already initialized and not transient.
-If a collection is reloaded, all uncommitted changes would be lost, therefore we need to track them
+If a collection is reloaded, all uncommitted changes will be lost, therefore we need to track them
 so that they can be applied again after the reload.
 These tracked changes must be reset after the session is flushed, this is done by overriding
 ``PersistentCollection#postAction()``.
@@ -119,8 +119,9 @@ Delayed operation
 
 Hibernate supports delayed (queued) operations, that get executed only after the collection was initialized.
 This enables adding and removing elements without initializing the collection.
-However this is only possible for the inverse side of a collection (otherwise the updates would simply not be flushed to
-the database).
+Queued operations cannot be used on the owning side of a many to many association because the owning side is
+responsible for persisting the association. This means that the element has to be normally added to the collection
+so that the change will be detected.
 We use the delayed operations wherever possible (that means if an element is added to or removed from an uninitialized,
 inverse collection) for performance reasons.
 The queued operations are executed during ``PersistentCollection#afterInitialize()``. As our collection loading process
