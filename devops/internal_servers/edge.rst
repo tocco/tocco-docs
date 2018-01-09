@@ -51,11 +51,11 @@ Installation
 
    .. note:: 
       
-      The VirtIO network device won't work for windows because it doesn't have installed the dirvers. That's why we have to install them manually.
+      The VirtIO network device won't work for windows because it doesn't have installed the drivers. That's why we have to install them manually.
 
 
-#. At this moment you should have successfully created a new VM. It should appear on the left side by the other VM's
-   For the next step we need to command line again. We have to replace to mock image with the windows edge image.
+#. At this moment you should have successfully created a new VM. It should appear on the left side by the other VMs
+   For the next step we need the command line again. We have to replace the mock image with the windows edge image.
 
    .. code::
 
@@ -76,7 +76,7 @@ Installation
       sudo qm rescan -vmid ${VMID}
 
 
-#. Download divers for the VirtIO network device.
+#. Download drivers for the VirtIO network device.
 
    The VM is now ready to boot, but we need the drivers for the network device else we won't have any connection to the network.
    Fedora provides the driver for Windows. It can be found `on the fedora project website <https://fedoraproject.org/wiki/Windows_Virtio_Drivers#Direct_download>`_.
@@ -88,14 +88,14 @@ Installation
 
 
 #. The VM should now be ready to boot. 
-   For that, click on the VM on the left side and then on the start button in the right top corner.
+   For that, click on the VM on the left side and then on the start button in the top right corner.
 
    .. figure:: edge/start_vm.png
 
    .. hint::
 
       When the vm starts a Windows logo should appear. After booting you should be logged in automatically. 
-      If not (what is possible, it is microsoft), the default password for Microsoft VM's is **Passw0rd!**.
+      If not (what is possible, it is Microsoft), the default password for Microsoft VMs is **Passw0rd!**.
 
 
 #. Install the VirtIO drivers
@@ -114,7 +114,7 @@ Installation
 
       * choose **Browse my computer for updated driver software**
 
-      * Select the drive with the driver in it. It will scan the drive an automatically recognize the driver and install it.
+      * Select the drive with the driver in it. It will scan the drive and automatically recognize the driver and install it.
 
       * After installing the driver you probably have to reboot the VM.
 
@@ -197,7 +197,7 @@ Installation
 
       * You probably have to restart the VM, again.
 
-#. Now we can try open a remote desktop.
+#. Now we can try opening a remote desktop.
    On Linux **rdesktop** is recommended 
 
    .. code::
@@ -209,7 +209,7 @@ Installation
 
   .. attention:: 
      
-     It is very likely that thiy error will appear now. To get rid of that message just disable CredSSP. To avoid that you have to search 1 hour for the checkbox below is shown how to find it.
+     It is very likely that this error will appear now. To get rid of that message just disable CredSSP. To avoid that you have to search 1 hour for the checkbox. Below is shown how to find it.
 
 
 #. Disable CredSSP
@@ -218,7 +218,7 @@ Installation
 
       * On the **left list** click on the tab **Remote Settings** 
 
-      * A new windows opens. At the bottom you find an enabled check box it is labeled as follows:
+      * A new window opens. At the bottom you find an enabled check box it is labeled as follows:
         **Allow connections only from computer running Remote Desktop with Network Level Authentification**
         Disable the checkbox.
 
