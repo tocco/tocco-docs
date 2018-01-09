@@ -14,7 +14,7 @@ With this type of account we just have to login once and the session will stay.
 How To Create A Service Account
 -------------------------------
 
-In openshift you can only create service accounts bound  a project and not to the whole cluster. First this seems to be a little bit weird, and yes it is.
+In openshift you can only create service accounts bound to a project and not to the whole cluster. First this seems to be a little bit weird, and yes it is.
 So it is common sense to create on project just for service accounts. You can easily give permissions for other projects to the service account. 
 The syntax to create an account is very easy, but be sure that you are in the right project.
 
