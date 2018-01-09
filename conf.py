@@ -358,4 +358,5 @@ def setup(app):
 
 javadoc_url_map = {
     'org.hibernate' : ('http://docs.jboss.org/hibernate/orm/5.2/javadocs/', 'javadoc'),
+    'javassist' : ('https://jboss-javassist.github.io/javassist/html', 'javadoc')
 }
