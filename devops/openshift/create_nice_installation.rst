@@ -14,9 +14,9 @@ Step by Step Instructions
     .. figure:: create_nice_installation/create_project.png
         :scale: 60%
     
-    #. The name of you account
+    #. The name of your account
 
-    #. Has to be **dedicated**, else you are not allowed to create the project
+    #. Has to be **dedicated**, else you can't create the project.
 
     #. **CHECK**
 
