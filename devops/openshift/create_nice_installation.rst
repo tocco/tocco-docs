@@ -13,6 +13,12 @@ Step by Step Instructions
 
     .. figure:: create_nice_installation/create_project.png
         :scale: 60%
+    
+    #. The name of you account
+
+    #. Has to be **dedicated**, else you are not allowed to create the project
+
+    #. **CHECK**
 
     Go to the `Create Project`_ page of VSHN and create a new project [#f1]_.
 
