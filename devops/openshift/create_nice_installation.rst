@@ -50,7 +50,7 @@ Step by Step Instructions
     .. figure:: create_nice_installation/vshn_control_sa_2.png
         :scale: 60%
 
-        add **system:serviceaccount:toco-serviceaccoutns:teamcity** SA to editors
+        add ``system:serviceaccount:toco-serviceaccoutns:teamcity`` SA to editors
 
     .. note::
 
@@ -61,13 +61,13 @@ Step by Step Instructions
            
            Error response from daemon: Get https://registry.appuio.ch/v2/: unauthorized: authentication required
 
-        This error message doesn't always have to lead to the issue described.
+        This error message doesn't always have to stem from the issue described.
 
 #. Clone the `Ansible Git Repository`_
 
-   .. code::
+   .. parsed-literal::
 
-       git clone ssh://USER@git.tocco.ch:29418/ansible.git
+       git clone ssh://**${USER}**\ @git.tocco.ch:29418/ansible.git
 
 #. Go to the ``openshift`` directory within the repository.
 
@@ -77,21 +77,21 @@ Step by Step Instructions
 
 #. Switch to the newly created project
 
-    .. code::
+    .. parsed-literal::
 
-        oc project toco-nice-${INSTALLATION}
+        oc project toco-nice-**${INSTALLATION}**
 
 #. Allow pulling images from project toco-shared-imagestreams [#f2]_
 
-    .. code::
+    .. parsed-literal::
 
-        oc policy add-role-to-user system:image-puller system:serviceaccount:toco-nice-${INSTALLATION}:default --namespace=toco-shared-imagestreams
+        oc policy add-role-to-user system:image-puller system:serviceaccount:toco-nice-**${INSTALLATION}**:default --namespace=toco-shared-imagestreams
 
 #. Create all resources required
 
-   .. code::
+   .. parsed-literal::
 
-       oc process -f nice-template.yml CUSTOMER=${CUSTOMER} … | oc create -f -
+       oc process -f nice-template.yml CUSTOMER=\ **${CUSTOMER}** INSTALLATION=\ **${INSTALLATION}** RUN_ENV=\ **${RUN_ENV}** DB_PASS=\ **${DB_PASS}** | oc create -f -
 
    Parameter are specified using ``KEY=VALUE``, this is the list of **mandatory** parameters:
 
@@ -130,9 +130,15 @@ Step by Step Instructions
     SOLR_DISK_SPACE       Persistent disk space available to :term:`Solr` (e.g. ``512Mi`` or ``5Gi``).
    ===================== ==========================================================================================
 
+#. Start Solr
+
+   .. code::
+
+       oc rollout latest solr
+
 #. Issue an SSL Certificate
 
-    Issue a SSL certificate for ${CUSTOMER}.tocco.ch which is created by the template. See :ref:`issue-ssl-certificate`
+    Issue a SSL certificate for **${CUSTOMER}**.tocco.ch which is created by the template. See :ref:`issue-ssl-certificate`
     for instructions.
 
 #. Add additional Routes / Hostnames if Needed
