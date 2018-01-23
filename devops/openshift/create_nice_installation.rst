@@ -121,6 +121,8 @@ Step by Step Instructions
 
     DB_SERVER             URL to the Postgres database server.
 
+    DB_SSL_MODE           Postgres SSL mode as described in `libpg - SSL Support`_. Defaults to ``require``.
+
     DOCKER_REGISTRY_URL   URL to the Docker image registry.
 
     HSTS_SECS             ``max-time`` used for Strict-Transport-Security HTTP header.
@@ -129,6 +131,8 @@ Step by Step Instructions
 
     SOLR_DISK_SPACE       Persistent disk space available to :term:`Solr` (e.g. ``512Mi`` or ``5Gi``).
    ===================== ==========================================================================================
+
+..  _libpg - SSL Support:  https://www.postgresql.org/docs/current/static/libpq-ssl.html#LIBPQ-SSL-PROTECTION
 
 #. Start Solr
 
