@@ -1,13 +1,13 @@
 Web Server
 ==========
 
-502 - Bad Gateway
------------------
+504 - Gateway Timeout
+---------------------
 
 Error
 ^^^^^
 
-HTTP requests fail with status code 504.
+HTTP requests fails with status code 504.
 
 .. figure:: ../img/504_timeout.png
 
