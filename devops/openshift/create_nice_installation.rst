@@ -16,8 +16,6 @@ Step by Step Instructions
     
     #. The name of your account
 
-    #. Has to be **dedicated**, else you can't create the project.
-
     #. **CHECK**
 
     Go to the `Create Project`_ page of VSHN and create a new project [#f1]_.
