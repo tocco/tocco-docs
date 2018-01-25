@@ -16,7 +16,9 @@ Step by Step Instructions
     
     #. The name of your account
 
-    #. **CHECK**
+    #. Project name ("nice-{$INSTALLATION}")
+
+    #. Check 
 
     Go to the `Create Project`_ page of VSHN and create a new project [#f1]_.
 
