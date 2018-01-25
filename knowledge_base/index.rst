@@ -15,3 +15,4 @@ Knowledge Base
    errors/database.rst
    errors/mail.rst
    errors/nice2_runtime.rst
+   errors/web_server.rst
