@@ -5,7 +5,6 @@ A template is used to create a new installation. It can be found in the `Ansible
 
 .. _Ansible Git Repository: https://git.tocco.ch/gitweb?p=ansible.git;a=blob;f=openshift/nice-template.yml
 
-
 Step by Step Instructions
 -------------------------
 
@@ -42,6 +41,8 @@ Step by Step Instructions
 
 #. Add service account (SA) to Project
 
+    .. _add-sa-reference-label:
+
     .. figure:: create_nice_installation/vshn_control_sa_1.png
         :scale: 60%
 
@@ -62,6 +63,7 @@ Step by Step Instructions
            Error response from daemon: Get https://registry.appuio.ch/v2/: unauthorized: authentication required
 
         This error message doesn't always have to stem from the issue described.
+        For further information about service accounts see :doc:`./service_accounts`.
 
 #. Clone the `Ansible Git Repository`_
 
