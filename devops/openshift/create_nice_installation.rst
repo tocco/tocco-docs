@@ -12,6 +12,12 @@ Step by Step Instructions
 
     .. figure:: create_nice_installation/create_project.png
         :scale: 60%
+    
+    #. The name of your account
+
+    #. Project name ("nice-{$INSTALLATION}")
+
+    #. Check 
 
     Go to the `Create Project`_ page of VSHN and create a new project [#f1]_.
 
