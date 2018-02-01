@@ -64,7 +64,6 @@ Here are the resource types you'll need:
 
  pod     A pod is an instance of a Deployment Configuration (AKA dc).
 
-         * Start and stop them using ``oc scale replicas=N dc/nice`` (``N`` → number of instances)
          * Change the dc to change the configuration of a pod
 
  route   A DNS route
@@ -213,6 +212,12 @@ Access Log Files in Nice Pod
 
     oc exec -c nice PODNAME -- tail -n +0 var/log/nice.log |less
 
+
+Scale / Start/Stop Nice
+
+    Start and stop Nice instances using ``oc scale --replicas=N dc/nice`` (``N`` → number of instances)
+
+    Use ``0`` to stop Nice entirely.
 
 Start PSQL
 ----------
