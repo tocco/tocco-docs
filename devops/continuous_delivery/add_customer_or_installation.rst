@@ -42,16 +42,29 @@ Create a new Installation
 4. Fill in parameters as shown above
 5. Fill in these additional template parameters:
 
-   ============================  ============================================================================================
+   ============================  =======================================================================================
    CUSTOMER                      Customer name (e.g. agogis or smc but never :strike:`agogistest` or :strike:`smctest`)
-   DOCKER_PULL_URL               Only needed for production systems. Leave it empty for test system, so a new image is built.
-   DUMP_MODE                     ``dump`` for production systems and ``no_dump`` for test systems
-   GIT_TREEISH                   Git branch for test systems (e.g. ``releases/2.13``) and empty for production
+   DOCKER_PULL_URL               Default values are [#f1]_:
+
+                                 **production** systems:
+                                 ``registry.appuio.ch/toco-nice-%env.INSTALLATION%/%env.DOCKER_IMAGE%`` [#f3]_
+
+                                 **test** systems: ``""`` (empty)
+   DUMP_MODE                     ``dump`` for production systems and ``no_dump`` for test systems [#f2]_
+   GIT_TREEISH                   Git branch (e.g. ``releases/2.13``). [#f1]_
    INSTALLATION                  Installation name (e.g. smc or smctest)
-   ============================  ============================================================================================
+   ============================  =======================================================================================
 
    It shouldn't be necessary to touch any of the other parameters.
 
 .. important::
 
     The installation needs also to be :doc:`created in OpenShift <../openshift/create_nice_installation>`.
+
+
+.. rubric:: Footnotes
+
+.. [#f1] If **DOCKER_PULL_URL** is present, the Docker image for the installation is fetched from that URL. Otherwise,
+         a new image is built from **GIT_TREEISH**.
+.. [#f2] **DUMP_MODE** decides whether a dump is done by default. The user can still override this when deploying.
+.. [#f3] This fetches the current image from the test system.
