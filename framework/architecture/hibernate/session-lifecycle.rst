@@ -12,10 +12,10 @@ ContextService
 The :java:ref:`ContextService<ch.tocco.nice2.persist.hibernate.legacy.ContextService>` is a service that implements
 the :java:ref:`Context<ch.tocco.nice2.persist.Context>` interface.
 This is the implementation that is injected into other services, when they need to access the :java:ref:`Context<ch.tocco.nice2.persist.Context>`.
-It is a threaded service, because a context or session is always associated with a certain thread and must not be shared among
-different threads. It is also important to properly close a session to avoid memory leaks. This is achieved by implementing
-hivemind's :java:ref:`Discardable<org.apache.hivemind.Discardable>` interface and closing the current context when the thread is discarded.
-The service delegates all method calls to the current context.
+It is important to properly close a session to avoid memory leaks.
+The :java:ref:`ContextService<ch.tocco.nice2.persist.hibernate.legacy.ContextService>` is a threaded service and implements
+hivemind's :java:ref:`Discardable<org.apache.hivemind.Discardable>` interface to be able to close the implicit context easily
+(see below).
 
 Implicitly and explicitly created contexts
 ------------------------------------------
@@ -24,14 +24,19 @@ There is exactly one implicit context per thread, which is created when the curr
 the first time (typically through the :java:ref:`ContextService<ch.tocco.nice2.persist.hibernate.legacy.ContextService>`).
 Unless the user manually creates additional contexts, all the persistence calls are handled by the implicit context.
 It is stored in a :java:extdoc:`ThreadLocal<java.lang.ThreadLocal>` variable in the :java:ref:`ContextManagerAdapter<ch.tocco.nice2.persist.hibernate.legacy.ContextManagerAdapter>`.
+The implicit context is automatically closed in the ``threadDidDiscardService()`` method, which is called by
+hivemind at the end of the thread.
 
 Sometimes it is necessary to create an isolated context for specific work. New contexts can be created by the
 :java:ref:`ContextManager<ch.tocco.nice2.persist.ContextManager>`. Unlike the implicit context, all additional contexts
 must be manually closed by the user.
 
-The :java:ref:`ContextManagerAdapter<ch.tocco.nice2.persist.hibernate.legacy.ContextManagerAdapter>` maintains a :java:extdoc:`ThreadLocal<java.lang.ThreadLocal>`
+The :java:ref:`ContextManagerAdapter<ch.tocco.nice2.persist.hibernate.legacy.ContextManagerAdapter>` maintains a
 map which keeps track of all explicitly created contexts. This is necessary to be able to find a specific context instance by the
 session it references.
+
+This also makes it possible to attach an open context to a new thread. This is not recommended (the session is not thread safe),
+but required by some legacy code.
 
 Whenever a new context is created, a Hibernate session is opened and passed to this context.
 

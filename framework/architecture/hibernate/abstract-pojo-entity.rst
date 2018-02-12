@@ -62,7 +62,7 @@ Reading values
 ^^^^^^^^^^^^^^
 
 All calls to the different ``Entity#getValue()`` methods are delegated to ``AbstractHibernateEntity#internalGetValue()``,
-where the actual (generated) getter method is resolved and called by reflection.
+where the actual field is resolved and read by reflection.
 
 For backwards compatibility, the resulting value is passed to ``TypeManager#isolate()`` before it is returned
 (which creates a copy of :java:ref:`Binary<ch.tocco.nice2.persist.entity.Binary>` instances).
@@ -71,7 +71,7 @@ Writing values
 ^^^^^^^^^^^^^^
 
 All calls to the different ``Entity#setValue()`` methods are delegated to ``AbstractHibernateEntity#internalSetValue()``,
-where the actual (generated) setter method is resolved and called by reflection.
+where the actual field is resolved and updated by reflection.
 
 At first the value is converted to the required target type (if this is not already the case and a suitable
 :java:ref:`Converter<ch.tocco.nice2.types.spi.Converter>` exists).
@@ -80,7 +80,7 @@ The resulting value is then compared to the old value - if they are the same, th
 After the value has been set, a ``EntityFacadeListener#entityChanging()`` event will be fired.
 
 .. warning::
-    Calling ``internalGetValue()``, ``internalSetValue()`` or the generated getter and setter methods bypasses the
+    Calling ``internalGetValue()``, ``internalSetValue()`` bypasses the
     entity interceptors (security, localization etc). Therefore passing the field name to ``EntityInterceptor#accessField()`` is
     normally required before calling these methods. It may be omitted for certain internal calls where the interceptors
     are not required.
