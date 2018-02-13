@@ -33,11 +33,12 @@ The generated classes contain the following:
 * a getter and setter for each field
 * JPA annotations, which define the hibernate data model, on the getter methods
 
-If the annotations are placed on the getters (instead of the field), hibernate uses the getters and setters to
-access the fields.
+If the annotations are placed on the fields (instead of the getters), hibernate reads and writes from the fields
+directly, without using the setters and getters.
 
-.. todo::
-   Why did we switch to annotations on methods instead of fields?
+This has the advantage that we can use the entity interceptors (e.g. security) in the getters and setters, which
+is necessary if we want to be able to use the created classes directly (instead of using the ``Entity`` interface)
+in the future. It is also required for the 'script listener' functionality, which also uses the getters and setters directly.
 
 Transient entities
 ^^^^^^^^^^^^^^^^^^
