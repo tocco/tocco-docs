@@ -18,8 +18,8 @@ Access The Control Software
 ---------------------------
 
 The network and the ``AP's`` can be controlled via the **Unifi Controller Software**. It is installed on the edge remote desktop vm on host03b. 
-You can either install it on your local machine but is it not recommended. You probably have to reconfigure all ``AP's``. That means that all wireless networks will be reset.
-Only do it in case of a broken/unavailable edge vm or an urgent "wlan emergency". If so follow the `installation manual <https://dl.ubnt.com/guides/UniFi/UniFi_Controller_UG.pdf>`_ under Chapter 1: System Setup.
+You can install it on your local machine but it is not recommended. You probably have to reconfigure all ``AP's``. That means that all wireless networks will be reset.
+Only do it in case of a broken/unavailable edge vm or an urgent "wlan emergency". If so, follow the `installation manual <https://dl.ubnt.com/guides/UniFi/UniFi_Controller_UG.pdf>`_ under Chapter 1: System Setup.
 
 #. Once you have successfully logged on to the edge vm start the UniFi Controller. There is a desktop icon for it.
 
@@ -33,7 +33,7 @@ Only do it in case of a broken/unavailable edge vm or an urgent "wlan emergency"
 Unifi Controll Panel
 --------------------
 
-The Control Panel has a very intuitive Design but there are two basic interfaces which we need to configure/maintenance the wlan's.
+The Control Panel has a very intuitive design but there are two basic interfaces which we need to configure/maintenance the wlan's.
 
 #. The Panel for Devices. Here you can manage all the ``AP's`` (update, restart).
 
