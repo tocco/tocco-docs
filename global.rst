@@ -12,3 +12,4 @@
 .. ------------
 
 .. _VSHN Control: https://control.vshn.net
+.. _Requests and Limits: https://docs.openshift.org/latest/admin_guide/overcommit.html#requests-and-limits

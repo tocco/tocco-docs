@@ -34,9 +34,6 @@ OpenShift documentation has some more details on `requests and limits`_.
     If you need to increase the memory that Java allocates for Nice2, you'll have to set the ``-Xmx…`` parameter too.
     See examples below.
 
-.. _Requests and Limits: https://docs.openshift.org/latest/admin_guide/overcommit.html#requests-and-limits
-
-
 .. _java-and-nice-params:
 
 Scale Up/Down
