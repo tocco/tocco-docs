@@ -83,6 +83,12 @@ Step by Step Instructions
 
        cd ansible/openshift
 
+#. Ensure the repository is up-to-date
+
+   .. code::
+
+        git pull
+
 #. Switch to the newly created project
 
     .. parsed-literal::
@@ -118,27 +124,34 @@ Step by Step Instructions
 
    Additionally, these optional parameters are available. **(Default values should suffice mostly.)**
 
-   ===================== ==========================================================================================
-    Key                   Value
-   ===================== ==========================================================================================
-    JAVA_MEM              Max. memory available to Java (e.g. ``1.5g`` or ``512m``).
+   ====================== ==========================================================================================
+    Key                    Value
+   ====================== ==========================================================================================
+    DB_PASS                Password for database access.
 
-    DB_PASS               Password for database access.
+                           :subscript:`Randomly generated if left off.`
 
-                          :subscript:`Randomly generated if left off.`
+    DB_SERVER              URL to the Postgres database server.
 
-    DB_SERVER             URL to the Postgres database server.
+    DB_SSL_MODE            Postgres SSL mode as described in `libpg - SSL Support`_. Defaults to ``require``.
 
-    DB_SSL_MODE           Postgres SSL mode as described in `libpg - SSL Support`_. Defaults to ``require``.
+    DOCKER_REGISTRY_URL    URL to the Docker image registry.
 
-    DOCKER_REGISTRY_URL   URL to the Docker image registry.
+    HSTS_SECS              ``max-time`` used for Strict-Transport-Security HTTP header.
 
-    HSTS_SECS             ``max-time`` used for Strict-Transport-Security HTTP header.
+    NICE_MEMORY_LIMIT      Max. memory available to a nice :term:`pod`. See :ref:`nice-memory` for details.
 
-    SMTP_RELAY            Hostname of SMTP relay.
+    NICE_REQUESTED_MEMORY  Memory requested from OpenShift for running a nice :term:`pod`. See :ref:`nice-memory` for
+                           details.
 
-    SOLR_DISK_SPACE       Persistent disk space available to :term:`Solr` (e.g. ``512Mi`` or ``5Gi``).
-   ===================== ==========================================================================================
+    SOLR_MEMORY_LIMIT      Max. memory available to the solr :term:`pod`. See :ref:`solr-memory` for details.
+
+    SOLR_REQUESTED_MEMORY  Memory requested from OpenShift for running solr. See :ref:`solr-memory` for details.
+
+    SMTP_RELAY             Hostname of SMTP relay.
+
+    SOLR_DISK_SPACE        Persistent disk space available to :term:`Solr` (e.g. ``512Mi`` or ``5Gi``).
+   ====================== ==========================================================================================
 
 ..  _libpg - SSL Support:  https://www.postgresql.org/docs/current/static/libpq-ssl.html#LIBPQ-SSL-PROTECTION
 

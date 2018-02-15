@@ -1,5 +1,5 @@
-OpenShift Client (oc)
-=====================
+OpenShift Client / Basic Commands
+=================================
 
 Setting up oc
 -------------
@@ -139,7 +139,7 @@ Example
     #. Make any changes you want to the configuration.
     #. Save changes and exit in order to trigger a deployment.
 
-See document :doc:`edit_resources` for all the details.
+See document :doc:`../nice/configuration` for all the details.
 
 
 Open Shell in Pod
@@ -213,11 +213,25 @@ Access Log Files in Nice Pod
     oc exec -c nice PODNAME -- tail -n +0 var/log/nice.log |less
 
 
-Scale / Start/Stop Nice
+Scale Up/Down (Start/Stop instances)
+------------------------------------
 
-    Start and stop Nice instances using ``oc scale --replicas=N dc/nice`` (``N`` → number of instances)
+.. parsed-literal::
 
-    Use ``0`` to stop Nice entirely.
+    $ oc get dc nice
+    NAME      REVISION   **DESIRED**   **CURRENT**   TRIGGERED BY
+    nice      49         **2**         **2**         config,image(nice:latest)
+
+* ``DESIRED``: Number of replicas/instances configured
+* ``CURRENT``: Number of replicas/instances currently online
+
+Use this command to scale Nice instances:
+
+.. code::
+
+    oc scale dc/nice --replicas=${N}
+
+This scales Nice to ``N`` replicas. Use 0 to stop all instances.
 
 Start PSQL
 ----------

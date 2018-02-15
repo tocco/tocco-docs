@@ -1,8 +1,10 @@
 Solr Configuration
 ==================
 
-Memory
-------
+.. _solr-memory:
+
+Solr Memory
+-----------
 
 Adjusting Memory
 ^^^^^^^^^^^^^^^^
@@ -11,7 +13,7 @@ Adjusting Memory
 
     .. parsed-literal::
 
-        $ oc get dc nice -o yaml
+        $ oc get dc solr -o yaml
         …
         spec:
           …
@@ -39,7 +41,7 @@ Adjusting Memory
 
     .. code-block:: bash
 
-        oc set resources --limits=memory=512Mi --requests=memory=256Mi
+        oc set resources --limits=memory=512Mi --requests=memory=256Mi dc/solr
 
     Check out OpenShifts introduction to `Requests and Limits`_ for more details.
 
@@ -54,7 +56,7 @@ the max. memory. Alternatively, the env. variable **MEMORY_FACTOR** can be set (
 
 
 Custom Configurations
-^^^^^^^^^^^^^^^^^^^^^
+---------------------
 
 All configuration parameters available in ``/opt/solr/bin/solr.in.sh`` within the Docker image can be overridden using
 environment variables by prefixing ``SOLR_PARAM_``.
