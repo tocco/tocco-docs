@@ -10,8 +10,8 @@ Glossary
 
             my.property=configuration value
 
-        The chapter :ref:`java-and-nice-params` describes how to set parameters in OpenShift. Alternatively, a property
-        can be changed for a customer by adjusting the ``application.properties`` file. See next paragraph.
+        The chapter :ref:`app-properties-in-openshift` describes how to set parameters in OpenShift. Alternatively, a
+        property can be changed for a customer by adjusting the ``application.properties`` file. See next paragraph.
 
         While developing, you can edit the application.properties in the Nice Git repository located at
         ``customer/${CUSTOMER}/etc/application.properties``. If you don't want to commit the changes you can create
@@ -28,6 +28,9 @@ Glossary
         A :term:`docker image` running in a :term:`pod`.
 
         Configuration is part of the :term:`deployment config`.
+
+    DB refactoring
+        In the context of Nice, the DB migration in generally referred to as DB refactoring.
 
     deployment config
     DC
@@ -74,6 +77,13 @@ Glossary
 
         Accessible via ``oc (get|describe|edit|…) pod …``.
 
+    pre-hook pod
+        A pre-hook pod is a :term:`pod` that is executed during rollout, before executing the actual pod. In our setup,
+        it is used for :term:`DB refactoring` and some startup checks. For more details, see
+        `Pod-based Lifecycle Hook`_ in the OpenShift documentation.
+
+        .. _Pod-based Lifecycle Hook: https://docs.openshift.org/latest/dev_guide/deployments/deployment_strategies.html#pod-based-lifecycle-hook
+
     service
     SVC
         Used to make a service available in the network. It provides a DNS name for a service in a way that hides the
@@ -90,3 +100,10 @@ Glossary
         Provides a route to a service. This is used to make a service reachable via internet.
 
         Accessible via ``oc (get|describe|edit|…) route …``.
+
+    wkhtmltopdf
+        A command line tool for converting HTML into PDF. Within Nice it is used to generate PDF reports.
+
+        The `wkhtmltopdf-binary`_ wrapper is used to be able to call the tool from within Java.
+
+        .. _wkhtmltopdf-binary: https://github.com/tocco/wkhtmltopdf-binary

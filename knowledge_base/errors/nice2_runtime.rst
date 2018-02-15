@@ -64,7 +64,7 @@ Error:
 Cause
 ^^^^^
 
-    The whhtmltopdf process has been killed by signal 9 (SIGKILL) [#f1]_. This most likely happened because
+    The :term:`wkhtmltopdf` process has been killed by signal 9 (SIGKILL) [#f1]_. This most likely happened because
     of an out-of-memory error.
 
 
@@ -87,7 +87,7 @@ Option 2: Increase Available Memory
 Increase **requested memory** to ensure the instance is moved onto a node with enough free memory available and/or adjust
 the **memory limit** to ensure it's not hit when generating reports.
 
-See :ref:`openshift-adjust-memory-cpu` for more details [#f2]_.
+See :ref:`nice-memory` for more details [#f2]_.
 
 
 Full Error:

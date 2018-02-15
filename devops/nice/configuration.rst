@@ -1,64 +1,89 @@
-Edit resources
-==============
+Nice Configuration
+==================
 
-Deployment Config
------------------
+.. _nice-memory:
 
-You can modify the config using ``oc edit dc ${INSTALLATION}``.
+Nice Memory
+-----------
+
+Adjusting Memory
+````````````````
+
+#. Find the current memory settings
+
+    .. parsed-literal::
+
+        $ oc get dc nice -o yaml
+        …
+        spec:
+          …
+          strategy:
+            …
+            resources:             # resources for the :term:`pre-hook pod` (:term:`DB refactoring` is done in this pod)
+              requests:
+                cpu: "1"
+                memory: 1945Mi
+            …
+          template:
+            …
+            spec:
+              containers:
+              - name: nginx        # resources for :term:`Nginx`
+                …
+                resources:
+                  requests:
+                    cpu: 30m
+                    memory: 20m
+                …
+
+              - name: **nice**         # resources for Nice
+                …
+                resources:
+                  **limits**:
+                    **memory**: 10Gi
+                  **requests**:
+                    cpu: "1"
+                    **memory**: 2470Mi
+                …
+
+#. Adjust it as required
+
+    Adjusting **limits.memory**:
+
+        Unless Nice or another process in the Nice container is killed because of this limit, there is no need to change
+        it.
+
+        .. note::
+
+            This limit needs to be set pretty high in order to ensure there is enough memory for :term:`wkhtmltopdf`
+            which is started as process in same pod.
+
+    Adjusting **requests.memory**:
+
+        This is used by OpenShift to ensure enough memory is available on the node. It is also used to set the Java
+        heap memory (-Xmx…) to a sensible value. Increase this if Nice itself needs more memory.
+
+    .. code-block:: bash
+
+        oc set resources --limits=memory=8Gi --requests=memory=3500Mi dc/nice
+
+    Check out OpenShifts introduction to `Requests and Limits`_ for more details.
+
+Java Heap Memory
+^^^^^^^^^^^^^^^^
+
+Java heap memory is automatically set. The minimum value (-Xms…) is hardcoded and the maximum is set based on
+**limits.requests** shown above. By default, a hardcoded factor in the OpenShift entrypoint script is used to calculate
+the max. memory. Alternatively, the env. variable **MEMORY_FACTOR** can be set (**requests.memory** * **MEMORY_FACTOR**
+= **MAX_JAVA_HEAP**).
 
 
-.. _openshift-adjust-memory-cpu:
-
-Adjust Memory / CPU
-^^^^^^^^^^^^^^^^^^^
-
-You can change the resource for any of the containers. Here is how it looks like for Nice:
-
-.. code:: yaml
-
-   containers:
-   - name: nice
-     resources:
-       limits:
-         cpu: "1"
-         memory: 2Gi
-       requests:
-         cpu: 100m
-         memory: 1Gi
-
-The **requests** section describes the guaranteed resources and **limits** the maximum available. Both are optional. The
-OpenShift documentation has some more details on `requests and limits`_.
-
-.. attention::
-
-    If you need to increase the memory that Java allocates for Nice2, you'll have to set the ``-Xmx…`` parameter too.
-    See examples below.
-
-.. _java-and-nice-params:
-
-Scale Up/Down
-^^^^^^^^^^^^^
-
-.. code:: yaml
-
-    spec:
-        replicas: 1
-
-``replicas`` is the number of simultaneously running instances.
-
-You can also use this command to scale Nice instances:
-
-.. code::
-
-    oc scale dc/nice --replicas=${N}
-
-This scales Nice to ``N`` replicas. Use 0 to stop all instances.
-
+.. _app-properties-in-openshift:
 
 Setting Java and Nice Parameters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The ``env`` section can be used to change Java Paramaters, application.properties and hikaricp.properties.
+The ``env`` section can be used to change Java Parameters, application.properties and hikaricp.properties.
 
 The env section looks something like this:
 
@@ -85,7 +110,7 @@ The following environment variables are supported:
 NICE2_APP_*          Add custom entries to ``application.local.properties``.
 NICE2_HIKARI_*       Add custom entries to ``hikiricp.local.properties``.
 NICE2_JAVA_PARAM_*   Pass custom parameters to Java.
-NICE2_NICE_ARG_*     Pass custom argument to Nice.
+NICE2_NICE_ARG_*     Pass custom argument to Nice. (Not applied in :term:`pre-hook pod`)
 ===================  ===================================================================================================
 
 .. important::
