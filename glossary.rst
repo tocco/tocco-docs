@@ -20,7 +20,7 @@ Glossary
 
     JFrog's Artifactory
     Artifactory
-        Tocco hosts its own JFrog's Artifactory, a Maven software repository. During build, all artifact are fetched
+        Tocco hosts its own JFrog's Artifactory, a Maven software repository. During build, all artifacts are fetched
         from there. Either, the package is uploaded to the artifact directly or a :term:`Remote Repository` can be
         configured.
 

@@ -58,7 +58,7 @@ Cause
 In both cases, :blue:`A` and :green:`B`, a file received from :term:`Artifactory` is corrupted. In case of a ``*.jar``,
 the resulting error is en extraction error (:blue:`A`) and in case of a ``pom.xml`` a parser error (:green:`B`).
 
-The corruption is usually caused by and :term:`Remote Repository` used by our :term:`Artifactory`. The latest incident
+The corruption is usually caused by a :term:`Remote Repository` used by our :term:`Artifactory`. The latest incident
 happened when one of the repositories was moving and for that time served "Project web is currently offline pending the
 final migration of its data to our new datacenter" for all requests. To check if and how the files are
 corrupted take a look at the affected file in the local cache (``~/.m2/repository/``) or on said :term:`Artifactory`.
@@ -91,7 +91,7 @@ Solution
     In the Repository Browser, you should be able to figure out what :blue:`repository` is affected. Once you know, go
     to **Admin** → **Remote** → **${AFFECTED_REPOSITORY}** in the settings.
 
-    In the remote setting you have two option to ensure that corrupted packages are no longer fetched:
+    In the remote setting you have two options to ensure that corrupted packages are no longer fetched:
 
         a) Set the repository offline. This will work if all needed files are in the cache which should be the case.
         b) Set an include pattern (and don't forget to remove the default ``**/*``). This is what I did last time, when
