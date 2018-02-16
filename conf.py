@@ -350,7 +350,7 @@ texinfo_documents = [
 intersphinx_mapping = {'https://docs.python.org/': None}
 
 # added to all *.rst files
-rst_prolog = ".. include:: /global.rst"
+rst_epilog = "\n.. include:: /global.rst"
 
 # add custom style sheet
 def setup(app):
