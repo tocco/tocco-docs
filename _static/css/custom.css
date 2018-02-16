@@ -6,3 +6,15 @@
 div.figure img {
     border: solid lightgray 1px;
 }
+
+.blue {
+    color: blue;
+}
+
+.green {
+    color: green;
+}
+
+.red {
+    color: red;
+}
