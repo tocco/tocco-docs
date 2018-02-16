@@ -13,30 +13,45 @@ Add DNS Entry (Domains Managed by Us)
 
         You probably want to add a :ref:`route <add-route>` first.
 
-1. Go to the `Nine's Cockpit`_.
+#. Go to the `Nine's Cockpit`_.
 
-2. Find the right domain and click on it.
+#. Find the right domain and click on it.
 
-3. Find the "create" button.
+#. Create or update entries
 
-    .. figure:: dns_static/create_button.png
-        :scale: 60%
+   Let's assume entries for ``tocco.ch``, ``www.tocco.ch`` and ``cockpit.tocco.ch`` are needed, they'd look like this:
 
-        create button
+   .. code-block:: ini
 
-4a. For the domain itself you need **two** ``A`` entries …
+       ; domain itself
+       tocco.ch          3600 IN A      5.102.151.2
+       tocco.ch          3600 IN A      5.102.151.3
 
-    .. figure:: dns_static/nine_a_record.png
-        :scale: 60%
+       ; subdomains
+       www.tocco.ch      3600 IN CNAME  ha-proxy.tocco.ch
+       cockpit.tocco.ch  3600 IN CNAME  ha-proxy.tocco.ch
 
-        add record\ **s** for domain (IPs ``5.102.151.2`` and ``5.102.151.3``)
+   Note that for domains themselves **two** ``A`` entries are needed. For subdomains only one ``CNAME``.
 
-4b. … and for subdomains a ``CNAME`` entry
+   In Nine's web interface, add domains like this …
 
-    .. figure:: dns_static/nine_cname_record.png
-        :scale: 60%
+       .. figure:: dns_static/nine_a_record.png
+           :scale: 60%
 
-        add record for subdomain (target ``ha-proxy.tocco.ch``)
+           add record\ **s** for domain (IPs ``5.102.151.2`` and ``5.102.151.3``)
+
+
+   … and subdomains like this:
+
+       .. figure:: dns_static/nine_cname_record.png
+           :scale: 60%
+
+           add record for subdomain (target ``ha-proxy.tocco.ch``)
+
+#. Remove superfluous entries
+
+    Remove all other ``A`` and ``CNAME`` entries for the domains/subdomains. So, only the ones you created/adjusted
+    remain. **Don't touch any other entries though.**
 
 .. _Nine's Cockpit: https://cockpit.nine.ch/en/dns/domains
 
