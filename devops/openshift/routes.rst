@@ -8,12 +8,12 @@ Show Routes
 
     $ oc get routes
     NAME                        HOST/PORT                  PATH      SERVICES    PORT      TERMINATION
-    tocco                       tocco.tocco.ch                       tocco       80-tcp    edge/Redirect
-    tocco-backoffice.tocco.ch   backoffice.tocco.ch                  tocco       80-tcp    edge/Redirect
-    tocco-tocco.ch              tocco.ch                             tocco       80-tcp    edge/Redirect
-    tocco-webmodul.ch           webmodul.ch                          tocco       80-tcp    edge/Redirect
-    tocco-www.tocco.ch          www.tocco.ch                         tocco       80-tcp    edge/Redirect
-    tocco-www.webmodul.ch       www.webmodul.ch                      tocco       80-tcp    edge/Redirect
+    tocco                       tocco.tocco.ch                       nice        80-tcp    edge/Redirect
+    tocco-backoffice.tocco.ch   backoffice.tocco.ch                  nice        80-tcp    edge/Redirect
+    tocco-tocco.ch              tocco.ch                             nice        80-tcp    edge/Redirect
+    tocco-webmodul.ch           webmodul.ch                          nice        80-tcp    edge/Redirect
+    tocco-www.tocco.ch          www.tocco.ch                         nice        80-tcp    edge/Redirect
+    tocco-www.webmodul.ch       www.webmodul.ch                      nice        80-tcp    edge/Redirect
 
 
 .. _add-route:
@@ -29,9 +29,9 @@ Add Route / Hostname
 
     .. code::
 
-        oc process -f nice-route-template.yml HOSTNAME=www.tocco.ch SERVICE=nice | oc create -f -
+        oc process -f nice-route-template.yml HOSTNAME=www.tocco.ch | oc create -f -
 
-    ``HOSTNAME`` is the FQDN you want to add and ``SERVICE`` is nice.
+    ``HOSTNAME`` is the FQDN you want to add.
 
 #. Create DNS entry if needed, see :doc:`dns`.
 
