@@ -11,6 +11,7 @@ This documentation is based [Sphinx](http://www.sphinx-doc.org/en/stable/) and
 You need tho have this dependency installed:
 
 * python3-sphinx
+* python3-sphinx-rtd-theme
 * javasphinx (`pip3 install --user javasphinx`)
 
 Now you can build the documentation using:
