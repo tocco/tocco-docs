@@ -14,5 +14,6 @@ Knowledge Base
    errors/db_refactoring.rst
    errors/database.rst
    errors/mail.rst
+   errors/nice2_build.rst
    errors/nice2_runtime.rst
    errors/web_server.rst

@@ -7,6 +7,14 @@
 .. role:: strike
     :class: strike
 
+.. role:: blue
+    :class: blue
+
+.. role:: green
+    :class: green
+
+.. role:: red
+    :class: red
 
 .. global links
 .. ------------

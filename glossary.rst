@@ -20,6 +20,14 @@ Glossary
         an ``application.local.properties`` in the same directory. Settings made the the *local* properties file
         override the settings in the regular properties file.
 
+    JFrog's Artifactory
+    Artifactory
+        Tocco hosts its own JFrog's Artifactory, a Maven software repository. During build, all artifacts are fetched
+        from there. Either, the package is uploaded to the artifact directly or a :term:`Remote Repository` can be
+        configured.
+
+        Our Artifactory can be found at https://mvn.tocco.ch.
+
     continuous delivery
     CD
         Continuous delivery is used to deploy our Nice installations.
@@ -85,6 +93,12 @@ Glossary
         `Pod-based Lifecycle Hook`_ in the OpenShift documentation.
 
         .. _Pod-based Lifecycle Hook: https://docs.openshift.org/latest/dev_guide/deployments/deployment_strategies.html#pod-based-lifecycle-hook
+
+    Remote Repository
+        In :term:`Artifactory`, Remote Repositories can be configured. For such repositories, Artifactory will forward
+        requests to the configured upstream repository and cache the result for later use.
+
+        Remote Repositories can be configured in **Admin** → **Remote**.
 
     service
     SVC
