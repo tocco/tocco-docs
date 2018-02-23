@@ -175,3 +175,67 @@ Examples
 .. [#f1] Replacement is done from right to left, preferring the longest possible replacement. Replacing only the three
          rightmost underscores in a quadruple underscore.
 .. [#f2] https://github.com/openshift/origin/issues/8771
+
+
+.. _persistent-volume:
+
+Persistent Volumes
+------------------
+
+In some cases it is necessary to add custom, persistent volumes.
+
+In particular, these directories may be needed:
+
+========================= ==============================================================================================
+``/app/var/cms``           Contains CMS resources, in particular CSS and logos, used by our CMS. Most content has
+                           been moved to git but some older installations still read resources from that location and
+                           serve it via HTTP at ``/cms/*``.
+``/app/var/lms``           The LMS module writes it's Scorm data to this directory. This directory must be made
+                           persistent for all installation which have that module installed.
+========================= ==============================================================================================
+
+
+Creating a Persistent Volume
+````````````````````````````
+
+This creates a :term:`PVC` of size 1 GiB called ``cms`` which is mounted in the ``nice`` container at ``/app/var/cms``.
+
+.. code::
+
+    oc volume dc/nice -c nice --add --name=cms --claim-name=cms --claim-size=1G --mount-path=/app/var/cms
+
+You can list the PVCs using ``oc get pvc`` and you'll see the mounted volumes in the deployment config
+using ``oc describe dc ${POD}``, section *Mount*.
+
+
+Populating a Persistent Volume
+``````````````````````````````
+
+Here is how you copy the directory ``cms`` on your machine into a volume located at ``/var/app/cms``.
+
+
+#. Find a running pod (a nice pod in this example)
+
+   .. parsed-literal::
+
+        # find a running pod (a nice pod in this case)
+        $ oc get pods -l run=nice
+        NAME             READY     STATUS    RESTARTS   AGE
+        **nice-169-v2vsx**   2/2       Running   0          11m
+
+#. Now, copy the content into the volume within that pod
+
+   .. parsed-literal::
+
+        oc cp -c nice cms **nice-169-v2vsx**:/app/var/cms
+
+
+Removing a Persistent Volume
+````````````````````````````
+
+First remove the volume from the container. Then, remove the actual :term:`PVC`.
+
+.. code::
+
+        oc volume dc/nice -c nice --remove --name=cms
+        oc delete pvc cms
