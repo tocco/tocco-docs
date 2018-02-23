@@ -1,0 +1,83 @@
+Create a new release branch
+===========================
+
+Create databases
+----------------
+#. Copy db refactoring_existing from master
+
+   .. parsed-literal::
+
+         CREATE DATABASE dbrefactoring_existing\_\ **${NEW_VERSION}** WITH TEMPLATE dbrefactoring_existing_master OWNER 'test_user';
+
+#. Copy local developer db from master
+
+   .. parsed-literal::
+
+         CREATE DATABASE nice2_test\_\ **${NEW_VERSION}** WITH TEMPLATE nice2_test_master OWNER 'test_user'
+
+Create branches
+---------------
+- Gerrit -> Projects -> List -> nice2
+- Gerrit -> Projects -> Branches
+
+#. Branch Name: /releases/**${NEW_VERSION}**, Initial Revision: master
+#. Branch Name: /integration/releases/**${NEW_VERSION}**, Initial Revision: releases/**${NEW_VERSION}**
+
+Create new configs for db refactoring
+-------------------------------------
+Teamcity -> Administration -> Nice2 DB-Refactoring
+
+- Copy *Nice2 DB-Refactoring new Database (master)*
+- Copy *Nice2 DB-Refactoring new existing Database (master)*
+- adjust Parameters
+
+Create new auto merge
+---------------------
+- Create integration/${NEW_VERSION} -> release/${NEW_VERSION}
+- Create release/${NEW_VERSION} -> integration/master
+- Rename release/${LAST_VERSION} -> integration/{NEW_VERSION}
+- Adjust parameters
+
+Create new test system
+----------------------
+- Copy configuration from last version of Continuous Delivery
+- Adjust parameters, trigger
+
+Change version in files
+-----------------------
+Change version in these files:
+
+- *current-version.txt*
+- *web/core/module/resources/webapp/js/version.js*
+- Example commit: Idc3f9d9783065ded2079c394db44572802c67c95
+
+Change the database of the test customer:
+
+- Change test customer db to ${NEW_VERSION}: *customer/test/etc/hikaricp.properties*
+- Example commit: Ifae0bf7c18ebe0f9810e898c1bca747dc30da0bd
+
+    .. warning::
+
+      The commit will automaticly be merged into master and needs to be reverted there.
+
+Sonar
+-----
+Teamcity:
+
+- Copy config from last version
+- Adjust parameters
+- Start manually
+
+Sonar:
+
+- Quality Gates -> copy Tocco
+- Copy values from last version ->  (*Blocker Issues*, *Critical Issues*)
+- Administration -> Projects -> Management -> Create Project
+
+Backoffice
+----------
+- Change branch of ${LAST_VERSION}
+- Add new Version
+- Set status of versions older than 6 versions to outdated
+- Check all installations if ${NEW_VERSION} is set
+

@@ -1,5 +1,5 @@
-DevOps Documentation
-====================
+DevOps
+======
 
 .. toctree::
    :maxdepth: 2
