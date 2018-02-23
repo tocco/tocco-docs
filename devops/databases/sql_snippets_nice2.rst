@@ -1,8 +1,8 @@
 SQL Snippets (Nice)
 ===================
 
-Assign All Roles to User 'tocco'
---------------------------------
+Assign All Non-Guest Roles to User 'tocco'
+------------------------------------------
 
 .. code:: sql
 
@@ -27,10 +27,10 @@ Assign All Roles to User 'tocco'
       u.pk,
       true
     FROM
-      nice_role as r,
+      nice_role AS r LEFT OUTER JOIN nice_role_type AS rt ON r.fk_role_type = rt.pk,
       nice_principal as p,
       nice_business_unit as u
-    WHERE p.username = 'tocco'
+    WHERE p.username = 'tocco' AND rt.unique_id <> 'guest'
     ON CONFLICT DO NOTHING;
 
 Unblock User 'tocco'
