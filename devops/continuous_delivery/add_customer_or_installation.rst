@@ -47,7 +47,7 @@ Create a new Installation
    DOCKER_PULL_URL               Default values are [#f1]_:
 
                                  **production** systems:
-                                 ``registry.appuio.ch/toco-nice-%env.INSTALLATION%/%env.DOCKER_IMAGE%`` [#f3]_
+                                 ``registry.appuio.ch/toco-nice-%env.INSTALLATION%test/%env.DOCKER_IMAGE%`` [#f3]_
 
                                  **test** systems: ``""`` (empty)
    DUMP_MODE                     ``dump`` for production systems and ``no_dump`` for test systems [#f2]_
