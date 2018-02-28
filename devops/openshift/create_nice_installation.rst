@@ -153,13 +153,17 @@ Step by Step Instructions
     SOLR_DISK_SPACE        Persistent disk space available to :term:`Solr` (e.g. ``512Mi`` or ``5Gi``).
    ====================== ==========================================================================================
 
-..  _libpg - SSL Support:  https://www.postgresql.org/docs/current/static/libpq-ssl.html#LIBPQ-SSL-PROTECTION
+   ..  _libpg - SSL Support:  https://www.postgresql.org/docs/current/static/libpq-ssl.html#LIBPQ-SSL-PROTECTION
 
 #. Start Solr
 
    .. code::
 
        oc rollout latest solr
+
+#. For all customers with module **LMS**, a persistent volume must be created at ``/app/var/lms``
+
+     See :ref:`persistent-volume` for more details.
 
 #. Issue an SSL Certificate
 
