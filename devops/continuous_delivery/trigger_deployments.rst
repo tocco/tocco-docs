@@ -1,3 +1,5 @@
+.. _trigger-deployments:
+
 Automatically Trigger Deployments
 =================================
 

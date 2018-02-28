@@ -7,13 +7,13 @@ Create databases
 
    .. parsed-literal::
 
-         CREATE DATABASE dbrefactoring_existing\_\ **${NEW_VERSION}** WITH TEMPLATE dbrefactoring_existing_master OWNER 'test_user';
+         CREATE DATABASE dbrefactoring_existing\_\ **${NEW_VERSION}** WITH TEMPLATE dbrefactoring_existing_master;
 
 #. Copy local developer db from master
 
    .. parsed-literal::
 
-         CREATE DATABASE nice2_test\_\ **${NEW_VERSION}** WITH TEMPLATE nice2_test_master OWNER 'test_user'
+         CREATE DATABASE nice2_test\_\ **${NEW_VERSION}** WITH TEMPLATE nice2_test_master;
 
 Create branches
 ---------------
@@ -33,15 +33,15 @@ Teamcity -> Administration -> Nice2 DB-Refactoring
 
 Create new auto merge
 ---------------------
-- Create integration/${NEW_VERSION} -> release/${NEW_VERSION}
-- Create release/${NEW_VERSION} -> integration/master
-- Rename release/${LAST_VERSION} -> integration/{NEW_VERSION}
+- Create integration/releases/${NEW_VERSION} -> releases/${NEW_VERSION}
+- Create releases/${NEW_VERSION} -> integration/master
+- Rename releases/${LAST_VERSION} -> integration/releases/${NEW_VERSION}
 - Adjust parameters
 
 Create new test system
 ----------------------
 - Copy configuration from last version of Continuous Delivery
-- Adjust parameters, trigger
+- Adjust parameters, :ref:`triggers <trigger-deployments>`
 
 Change version in files
 -----------------------
