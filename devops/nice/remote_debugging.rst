@@ -5,10 +5,26 @@ Remote Debugging of Nice2
 
     **on OpenShift**:
 
-    .. code:: bash
+    #. switch project
 
-        oc project toco-nice-${INSTALLATION}
-        oc port-forward ${POD_NAME} 40200
+        .. parsed-literal::
+
+            $ oc project toco-nice-**${INSTALLATION}**
+
+    #. find running pod
+
+        .. parsed-literal::
+
+            $ oc get pods -l run=nice --show-all=false
+            NAME           READY     STATUS    RESTARTS   AGE
+            **nice-3-2nl1q**   2/2       Running   0          49m
+
+
+    #. forward port
+
+        .. parsed-literal::
+
+            $ oc port-forward **nice-3-2nl1q** 40200
 
     **on app servers** (legacy):
 
