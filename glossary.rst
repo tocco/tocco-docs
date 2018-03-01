@@ -57,6 +57,9 @@ Glossary
 
         This is configured in the :term:`deployment config`.
 
+    hibernate collection
+        A collection that is persisted to the database (a one-to-many or many-to-many association)
+
     image stream
     IS
         Describes a docker repository. Pushing a docker image to it can be used to trigger an automatic deployment.

@@ -8,8 +8,8 @@ EntityFacadeListener
 --------------------
 
 An :java:ref:`EntityFacadeListener<ch.tocco.nice2.persist.entity.events.EntityFacadeListener>` is called
-immediately after a certain entity operation (e.g. ``EntityManager#create()`` or ``Entity#setValue()``) and therefore
-this listener is independent of any hibernate action.
+immediately after certain entity operations (e.g. ``EntityManager#create()`` or ``Entity#setValue()``) and therefore
+this listener is independent of any hibernate functionality.
 
 Normally entity facade listeners are registered as hivemind services which then are injected into the
 :java:ref:`EntityFacadeListenerManagerImpl<ch.tocco.nice2.persist.hibernate.listener.EntityFacadeListenerManagerImpl>`,
@@ -29,9 +29,10 @@ and entity manager.
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 This event is fired directly after a new entity instance is created (no fields are set at this point) by the
-:java:ref:`EntityFactoryImpl<ch.tocco.nice2.persist.hibernate.pojo.EntityFactoryImpl>`. Because all entity instances
-are created by the entity factory (even those that are loaded from the database), the event is only fired when the
-primary key is not set yet.
+:java:ref:`EntityFactoryImpl<ch.tocco.nice2.persist.hibernate.pojo.EntityFactoryImpl>`. All entity instances
+are created by the entity factory (even those that are loaded from the database), but the event is only fired when a new instance
+is created by the user (not when an entity is loaded from the database). This is the case when no primary key is passed
+to the entity factory.
 
 ``entityDeleting`` event
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -57,8 +58,8 @@ An event is also always fired for the reverse side of the relation.
 
 See the chapter :doc:`abstract-pojo-entity` for a description when the ``adjusting`` flag is set to true.
 
-``entityReceivedValues`` event
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``entityReceivedValues`` event (deprecated)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This event is fired when a newly created entity receives its primary key after it was inserted into the database.
 See ``EntityTransactionContextImpl#executeEntityOperations``.
@@ -86,8 +87,8 @@ Listeners can either be contributed as hivemind services or registered temporari
 
 Hibernate does not fire a ``POST_COMMIT_UPDATE`` for an entity if the only change is in a collection and this collection is not the owning side of the association.
 For this special use case there is the :java:ref:`CustomFlushEntityEventListener<ch.tocco.nice2.persist.hibernate.listener.CustomFlushEntityEventListener>`.
-This is class is bound to the hibernate events ``FLUSH_ENTITY`` and checks every entity in the persistence context whether we
-need to fire this event manually.
+This is class is bound to the hibernate events ``FLUSH_ENTITY`` and checks every entity in the persistence context whether
+this event needs to be fired manually.
 If no event would be fired by hibernate but the entity has a change in (the non-owning side of) a collection, the listener
 registers a :java:extdoc:`AfterTransactionCompletionProcess<org.hibernate.action.spi.AfterTransactionCompletionProcess>`
 (the event should only be fired if the transaction was completed successfully),
