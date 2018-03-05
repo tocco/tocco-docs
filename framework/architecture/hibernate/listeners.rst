@@ -85,11 +85,11 @@ This class is bound to the hibernate events ``POST_COMMIT_INSERT``, ``POST_COMMI
 Listeners can either be contributed as hivemind services or registered temporarily through the ``Context`` or ``EntityManager``
 (same as the entity facade listener).
 
-Hibernate does not fire a ``POST_COMMIT_UPDATE`` for an entity if the only change is in a collection and this collection is not the owning side of the association.
+Hibernate does not fire a ``POST_COMMIT_UPDATE`` for an entity if the only change is in a :term:`collection <hibernate collection>` and this collection is not the owning side of the association.
 For this special use case there is the :java:ref:`CustomFlushEntityEventListener<ch.tocco.nice2.persist.hibernate.listener.CustomFlushEntityEventListener>`.
 This is class is bound to the hibernate events ``FLUSH_ENTITY`` and checks every entity in the persistence context whether
 this event needs to be fired manually.
-If no event would be fired by hibernate but the entity has a change in (the non-owning side of) a collection, the listener
+If no event would be fired by hibernate but the entity has a change in (the non-owning side of) a :term:`collection <hibernate collection>`, the listener
 registers a :java:extdoc:`AfterTransactionCompletionProcess<org.hibernate.action.spi.AfterTransactionCompletionProcess>`
 (the event should only be fired if the transaction was completed successfully),
 which fires the missing event manually, with the :java:extdoc:`ActionQueue<org.hibernate.engine.spi.ActionQueue>`.
