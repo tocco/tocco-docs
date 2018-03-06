@@ -195,6 +195,8 @@ In particular, these directories may be needed:
 ========================= ==============================================================================================
 
 
+.. _persistent-volume-creation:
+
 Creating a Persistent Volume
 ````````````````````````````
 
@@ -229,6 +231,8 @@ Here is how you copy the directory ``cms`` on your machine into a volume located
 
         oc cp -c nice cms **nice-169-v2vsx**:/app/var/cms
 
+
+.. _persistent-volume-removal:
 
 Removing a Persistent Volume
 ````````````````````````````
