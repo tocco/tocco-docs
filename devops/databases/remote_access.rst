@@ -31,7 +31,8 @@ Direct Access
 Using PSQL
 ``````````
 
-Download the **${CERT}** for `db1.tocco.cust.vshn.net`_ / `db2.tocco.cust.vshn.net`_ first.
+Download the **${CERT}** for :download:`db1.tocco.cust.vshn.net </_static/download/db1.tocco.cust.vshn.net.pem>` /
+:download:`db2.tocco.cust.vshn.net </_static/download/db2.tocco.cust.vshn.net.pem>` first.
 
 .. parsed-literal::
 
@@ -42,7 +43,8 @@ Download the **${CERT}** for `db1.tocco.cust.vshn.net`_ / `db2.tocco.cust.vshn.n
 Using Python
 ````````````
 
-Download the **CERT** for `db1.tocco.cust.vshn.net`_ / `db2.tocco.cust.vshn.net`_ first.
+Download the **CERT** for :download:`db1.tocco.cust.vshn.net </_static/download/db1.tocco.cust.vshn.net.pem>` /
+:download:`db2.tocco.cust.vshn.net </_static/download/db2.tocco.cust.vshn.net.pem>` first.
 
 .. code-block:: python3
 
@@ -65,9 +67,8 @@ There are many more libraries and tools that allow you to access a Postgres DB s
 enable SSL verification by default, **you must make sure SSL certificates are verified!**  Take a look at
 `libpq - SSL Support`_, most tools and libraries based on libpg. Thus, most of them use the same SSL settings.
 
-Certificates: `db1.tocco.cust.vshn.net`_ / `db2.tocco.cust.vshn.net`_
+Certificates: :download:`db1.tocco.cust.vshn.net </_static/download/db1.tocco.cust.vshn.net.pem>` /
+:download:`db2.tocco.cust.vshn.net </_static/download/db2.tocco.cust.vshn.net.pem>`
 
 
 .. _libpq - SSL Support: https://www.postgresql.org/docs/current/static/libpq-ssl.html
-.. _db1.tocco.cust.vshn.net: /_static/download/db1.tocco.cust.vshn.net.pem
-.. _db2.tocco.cust.vshn.net: /_static/download/db2.tocco.cust.vshn.net.pem

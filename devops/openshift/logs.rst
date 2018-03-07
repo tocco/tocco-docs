@@ -15,7 +15,7 @@ Getting Started
 
 #. Import *saved searches* (only after first login)
 
-   #. Download `this file </_static/download/kibana_searches.json>`__
+   #. Download :download:`this file </_static/download/kibana_searches.json>`
    #. Import it via *Settings* → *Objects* → *Import*
 
 #. Open *saved searches* menu
