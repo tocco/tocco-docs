@@ -30,6 +30,13 @@ Restore Database
 
         gzip -cd ${DUMP_FILE_PATH} | PGOPTIONS="-c synchronous_commit=off" pg_restore -j 4 -U postgres -h ${DB_SERVER} --role ${DB_USER} --no-owner --no-acl -d ${DB_NAME}
 
+.. hint::
+
+    For the restore commands above, You'll need the password for *postgres*  The current password can be found in the
+    `tocco_hieradata repository`_ (key: ``profile_postgresql::server::password``. If you're lacking access, ask
+    someone with the appropriate permissions for it.
+
+
 Copy database using WITH TEMPLATE
 ---------------------------------
 
@@ -90,3 +97,6 @@ This example assumes that the customer name is *tocco* and DB name *nice2_tocco*
         oc scale --replicas=\ **${N}** dc/nice
 
     Start **${N}** instances.
+
+
+.. _tocco_hieradata repository: https://git.vshn.net/tocco/tocco_hieradata/blob/master/database.yaml
