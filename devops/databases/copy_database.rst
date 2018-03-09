@@ -1,31 +1,43 @@
 Copy/Dump/Restore Database
 ==========================
 
+.. hint::
+
+        If you want restore a backup have a look at :doc:`../backups/database`.
 
 Dump Database
 -------------
 
-.. code:: bash
+.. code-block:: bash
 
     pg_dump -U postgres -h ${DB_SERVER} -Fc -f ~/_to_delete/nice2_${CUSTOMER}_$(date +"%Y_%m_%d").psql ${DATABASE};
 
 
+.. _restore-database:
+
 Restore Database
 ----------------
 
-.. code:: bash
+**\*.psql** files:
 
-    PGOPTIONS="-c synchronous_commit=off" pg_restore -j 4 -U postgres -h ${DB_SERVER} --role ${DB_USER} --no-owner --no-acl -d ${DB_NAME} ${DUMP_FILE_PATH}
+    .. code-block:: bash
 
+        PGOPTIONS="-c synchronous_commit=off" pg_restore -j 4 -U postgres -h ${DB_SERVER} --role ${DB_USER} --no-owner --no-acl -d ${DB_NAME} ${DUMP_FILE_PATH}
+
+**\*.dump.gz** files:
+
+    .. code-block:: bash
+
+        gzip -cd ${DUMP_FILE_PATH} | PGOPTIONS="-c synchronous_commit=off" pg_restore -j 4 -U postgres -h ${DB_SERVER} --role ${DB_USER} --no-owner --no-acl -d ${DB_NAME}
 
 Copy database using WITH TEMPLATE
 ---------------------------------
 
 This is the fastest way to copy a database. Alternatively, you can dump and then restore the database.
 
-.. code::
+.. parsed-literal::
 
-    CREATE DATABASE ${TARGET_DB} WITH TEMPLATE ${SOURCE_DB};
+    CREATE DATABASE **${TARGET_DB}** WITH TEMPLATE **${SOURCE_DB}**;
 
 .. warning::
 
@@ -39,27 +51,27 @@ This example assumes that the customer name is *tocco* and DB name *nice2_tocco*
 
 #. switch to the right project
 
-    .. code:: bash
+    .. code-block:: bash
 
         oc project toco-nice-${INSTALLATION}
 
 #. check how many instance are running
 
-    .. code:: bash
+    .. code-block:: bash
 
         oc get dc/nice -o go-template='{{.spec.replicas}}{{"\n"}}'
 
 #. stop instance (if required)
 
-    .. code:: bash
+    .. code-block:: bash
 
         oc scale --replicas=0 dc/nice
 
 #. copy database
 
-    .. code:: sql
+    .. parsed-literal:: sql
 
-        CREATE DATABASE ${NAME_OF_DB_COPY} WITH TEMPLATE ${SOURCE_DB_NAME};
+        CREATE DATABASE **${NAME_OF_DB_COPY}** WITH TEMPLATE **${SOURCE_DB_NAME}**;
 
     .. hint::
 
@@ -73,8 +85,8 @@ This example assumes that the customer name is *tocco* and DB name *nice2_tocco*
 
 5. restart instances (if previously stopped)
 
-    .. code:: bash
+    .. parsed-literal:: bash
 
-        oc scale --replicas=${N} dc/nice
+        oc scale --replicas=\ **${N}** dc/nice
 
-    Start ``${N}`` instances.
+    Start **${N}** instances.
