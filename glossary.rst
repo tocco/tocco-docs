@@ -28,6 +28,10 @@ Glossary
 
         Our Artifactory can be found at https://mvn.tocco.ch.
 
+    BURP
+
+        Backup archiving tool using on some of our servers. See https://burp.grke.org for details.
+
     continuous delivery
     CD
         Continuous delivery is used to deploy our Nice installations.
