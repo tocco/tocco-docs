@@ -281,7 +281,7 @@ First, you need to figure out why there aren't enough connections around. For th
 
                .. warning::
 
-                    Changing the leakDetectionThreshold automatically restarts Nice.
+                    Changing leakDetectionThreshold automatically restarts Nice.
 
 
 Possible Measurements
@@ -297,10 +297,12 @@ a) Increase connection pool
 
        .. warning::
 
-           Changing the maximumPoolSize automatically restarts Nice.
+           Changing maximumPoolSize automatically restarts Nice. Also, do not increase the limit unnecessarily, `a
+           higher pool size can decreases performance`_.
 
 b) Split transactions into multiple, small transactions
 
 
 .. _Lock Monitoring: https://wiki.postgresql.org/wiki/Lock_Monitoring
 .. _HikariCP's github page: https://github.com/brettwooldridge/HikariCP
+.. _a higher pool size decreases performance: https://github.com/brettwooldridge/HikariCP/wiki/About-Pool-Sizing
