@@ -305,4 +305,4 @@ b) Split transactions into multiple, small transactions
 
 .. _Lock Monitoring: https://wiki.postgresql.org/wiki/Lock_Monitoring
 .. _HikariCP's github page: https://github.com/brettwooldridge/HikariCP
-.. _a higher pool size decreases performance: https://github.com/brettwooldridge/HikariCP/wiki/About-Pool-Sizing
+.. _a higher pool size can decreases performance: https://github.com/brettwooldridge/HikariCP/wiki/About-Pool-Sizing
