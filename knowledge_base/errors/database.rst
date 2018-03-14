@@ -110,3 +110,199 @@ Once you figured out what's causing the issue, so it can be fixed later, you may
 .. parsed-literal::
 
     SELECT pg_terminate_backend(**${pid}**);
+
+
+Postgres Connection Timeout
+---------------------------
+
+Error
+^^^^^
+
+.. code::
+
+    HikariPool-1 - Connection is not available, request timed out after 30001ms.
+
+often seen in connection with:
+
+.. code::
+
+    PersistenceException: org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+
+
+Cause
+^^^^^
+
+HikariCP, the connection pool used by Nice, has a fixed number of connections available. The error tells us that no
+connection could be obtained from the pool because all of them are in use.
+
+
+Analysis
+^^^^^^^^
+
+First, you need to figure out why there aren't enough connections around. For that you best collect some data:
+
+.. hint::
+
+    For the following SQL statements, disable paging and enable extended output to get output that's easier to read and
+    copy paste:
+
+    .. code::
+
+        \pset pager off
+        \x on
+
+#. Check for custom HikariCP configurations:
+
+           .. parsed-literal::
+
+               $ oc set env dc/nice --list -c nice | grep '^NICE2_HIKARI_'
+               NICE2_HIKARI_dataSource__databaseName=nice_toccotest
+               NICE2_HIKARI_dataSource__password=************
+               NICE2_HIKARI_dataSource__serverName=db1.tocco.cust.vshn.net
+               NICE2_HIKARI_dataSource__user=nice_toccotest
+               **NICE2_HIKARI_maximumPoolSize**\ =12
+               NICE2_HIKARI_leakDetectionThreshold=30000
+
+           **NICE2_HIKARI_maximumPoolSize** is what you should care about most. It tells you how large the pool is
+           allowed to grow (=max. number of connections). If **NICE2_HIKARI_maximumPoolSize** doesn't appear in the
+           output, the default value configured in Nice is used (currently 6). Take a look at `HikariCP's github page`_
+           for information about available properties.
+
+#. Take a look at how the connections are used
+
+            .. code-block:: SQL
+
+                SELECT
+                    CASE WHEN state <> 'idle' THEN (now() - xact_start)::text ELSE 'idle' END AS "xact age",
+                    CASE WHEN state <> 'idle' THEN (now() - query_start)::text ELSE 'idle' END AS "query age",
+                    *
+                FROM
+                    pg_stat_activity
+                WHERE
+                    datname = current_database() AND pid <> pg_backend_pid()
+                ORDER BY
+                    greatest(query_start, xact_start) DESC;
+
+            Connections with state **active** and **idle in transaction** are the ones you should care about. Also, look
+            for unreasonably long-running queries and transactions (column **query age** and **xact age**).
+
+#. Check for deadlocks
+
+           If you suspect a deadlock, get the current state of the locks in addition.
+
+           The following SQL statement have been obtained from Postgres' `Lock Monitoring`_ wiki page and slightly
+           adjusted.
+
+           .. code-block:: SQL
+
+                SELECT blocked_locks.pid     AS blocked_pid,
+                       blocked_activity.usename  AS blocked_user,
+                       blocking_locks.pid     AS blocking_pid,
+                       blocking_activity.usename AS blocking_user,
+                       blocked_activity.query    AS blocked_statement,
+                       blocking_activity.query   AS current_statement_in_blocking_process
+                 FROM  pg_catalog.pg_locks         blocked_locks
+                  JOIN pg_catalog.pg_stat_activity blocked_activity  ON blocked_activity.pid = blocked_locks.pid
+                  JOIN pg_catalog.pg_locks         blocking_locks
+                      ON blocking_locks.locktype = blocked_locks.locktype
+                      AND blocking_locks.DATABASE IS NOT DISTINCT FROM blocked_locks.DATABASE
+                      AND blocking_locks.relation IS NOT DISTINCT FROM blocked_locks.relation
+                      AND blocking_locks.page IS NOT DISTINCT FROM blocked_locks.page
+                      AND blocking_locks.tuple IS NOT DISTINCT FROM blocked_locks.tuple
+                      AND blocking_locks.virtualxid IS NOT DISTINCT FROM blocked_locks.virtualxid
+                      AND blocking_locks.transactionid IS NOT DISTINCT FROM blocked_locks.transactionid
+                      AND blocking_locks.classid IS NOT DISTINCT FROM blocked_locks.classid
+                      AND blocking_locks.objid IS NOT DISTINCT FROM blocked_locks.objid
+                      AND blocking_locks.objsubid IS NOT DISTINCT FROM blocked_locks.objsubid
+                      AND blocking_locks.pid != blocked_locks.pid
+                  JOIN pg_catalog.pg_stat_activity blocking_activity ON blocking_activity.pid = blocking_locks.pid
+                 WHERE NOT blocked_locks.GRANTED;
+
+           .. code-block:: SQL
+
+                SET application_name='%your_logical_name%';
+                SELECT blocked_locks.pid     AS blocked_pid,
+                         blocked_activity.usename  AS blocked_user,
+                         blocking_locks.pid     AS blocking_pid,
+                         blocking_activity.usename AS blocking_user,
+                         blocked_activity.query    AS blocked_statement,
+                         blocking_activity.query   AS current_statement_in_blocking_process,
+                         blocked_activity.application_name AS blocked_application,
+                         blocking_activity.application_name AS blocking_application
+                  FROM  pg_catalog.pg_locks         blocked_locks
+                    JOIN pg_catalog.pg_stat_activity blocked_activity  ON blocked_activity.pid = blocked_locks.pid
+                    JOIN pg_catalog.pg_locks         blocking_locks
+                        ON blocking_locks.locktype = blocked_locks.locktype
+                        AND blocking_locks.DATABASE IS NOT DISTINCT FROM blocked_locks.DATABASE
+                        AND blocking_locks.relation IS NOT DISTINCT FROM blocked_locks.relation
+                        AND blocking_locks.page IS NOT DISTINCT FROM blocked_locks.page
+                        AND blocking_locks.tuple IS NOT DISTINCT FROM blocked_locks.tuple
+                        AND blocking_locks.virtualxid IS NOT DISTINCT FROM blocked_locks.virtualxid
+                        AND blocking_locks.transactionid IS NOT DISTINCT FROM blocked_locks.transactionid
+                        AND blocking_locks.classid IS NOT DISTINCT FROM blocked_locks.classid
+                        AND blocking_locks.objid IS NOT DISTINCT FROM blocked_locks.objid
+                        AND blocking_locks.objsubid IS NOT DISTINCT FROM blocked_locks.objsubid
+                        AND blocking_locks.pid != blocked_locks.pid
+                    JOIN pg_catalog.pg_stat_activity blocking_activity ON blocking_activity.pid = blocking_locks.pid
+                  WHERE NOT blocked_locks.GRANTED;
+
+           .. code-block:: SQL
+
+                SELECT a.datname,
+                         c.relname,
+                         l.transactionid,
+                         l.mode,
+                         l.GRANTED,
+                         a.usename,
+                         a.query,
+                         a.query_start,
+                         age(now(), a.query_start) AS "age",
+                         a.pid
+                    FROM  pg_stat_activity a
+                     JOIN pg_locks         l ON l.pid = a.pid
+                     JOIN pg_class         c ON c.oid = l.relation
+                    WHERE a.datname = current_database() AND a.pid <> pg_backend_pid()
+                    ORDER BY a.query_start;
+
+#. Find out where in Java the connections are used
+
+            These are the options available:
+
+            a) Create a thread dump (See :ref:`create-thread-dump`)
+            b) Terminate connections to get a stack trace in Java (See :ref:`force-close-db-connection`)
+            c) Enable leak detection:
+
+               .. code::
+
+                    oc set env -c nice dc/nice NICE2_HIKARI_leakDetectionThreshold=30000
+
+               This tells HikariCP to log connections that have been taken out of the pool for more than 30,000 ms.
+               HikariCP also logs a stack trace showing where the connection was obtained.
+
+               .. warning::
+
+                    Changing leakDetectionThreshold automatically restarts Nice.
+
+
+Possible Measurements
+^^^^^^^^^^^^^^^^^^^^^
+
+a) Increase connection pool
+
+       .. parsed-literal::
+
+           oc set env -c nice dc/nice NICE2_HIKARI_maximumPoolSize=\ **15**
+
+       This increases the connection pool to **15** connections.
+
+       .. warning::
+
+           Changing maximumPoolSize automatically restarts Nice. Also, do not increase the limit unnecessarily, `a
+           higher pool size can decreases performance`_.
+
+b) Split transactions into multiple, small transactions
+
+
+.. _Lock Monitoring: https://wiki.postgresql.org/wiki/Lock_Monitoring
+.. _HikariCP's github page: https://github.com/brettwooldridge/HikariCP
+.. _a higher pool size can decreases performance: https://github.com/brettwooldridge/HikariCP/wiki/About-Pool-Sizing

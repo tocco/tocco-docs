@@ -1,6 +1,8 @@
 Thread and Memory Dumps
 =======================
 
+.. _create-thread-dump:
+
 Creating a Thread Dump
 ----------------------
 
