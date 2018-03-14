@@ -1,11 +1,8 @@
-S3
-==
-
-Using Python / Boto
--------------------
+S3 in Python
+============
 
 Open a Connection
-^^^^^^^^^^^^^^^^^
+-----------------
 
 .. code:: python
 
@@ -19,7 +16,7 @@ Open a Connection
 
 
 List Buckets
-^^^^^^^^^^^^
+------------
 
     .. code:: python
 
@@ -27,7 +24,7 @@ List Buckets
 
 
 Get a Bucket
-^^^^^^^^^^^^
+------------
 
     .. code:: python
 
@@ -35,7 +32,7 @@ Get a Bucket
 
 
 Get an Object
-^^^^^^^^^^^^^
+-------------
 
     .. code:: python
 

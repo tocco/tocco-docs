@@ -1,5 +1,5 @@
-Nginx
-=====
+Nginx Caching
+=============
 
 What data is cached?
 --------------------
@@ -28,7 +28,7 @@ You'll usually see one of these values [#f1]_:
                (Nice returned code 304.)
 ============= ==================================================================
 
-.. figure:: img/nginx_x_cache.png
+.. figure:: resources/nginx_x_cache.png
 
     **Network** tab in **Inspector**
 
