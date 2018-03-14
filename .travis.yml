@@ -1,0 +1,12 @@
+language: python
+python: 3.4
+install:
+    - pip3 install -r requirements.txt
+    - pip3 install sphinx_rtd_theme
+script:
+    - sphinx-build -b dummy -a -q -w warnings . _build
+    - |
+      if [ $(wc -c <warnings) -ne 0 ]; then
+          echo -e "\\e[31mERROR: failing build due to build warnings (see above)\\e[0m"
+          false
+      fi

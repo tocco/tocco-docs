@@ -3,7 +3,6 @@
 - [ ] My contribution is **ready to be merged** as is
 - [ ] I verified the modifications **render properly**
 - [ ] I used **spell checking**
-- [ ] I introduced **no warnings** during build (`make -j8 clean html`)
 - [ ] I **used the styling and structure aids available** in [Sphinx/ResT](http://www.sphinx-doc.org/en/stable/rest.html). (Links use `` `…`_``, enumerations `#.`, lists `*`, code ``` ``…`` ```/`.. code::`, warnings .. `warning::`, etc.)
 - [ ] I reread the text keeping in mind that the text has to be **comprehended** fully **by the target audience**
 
