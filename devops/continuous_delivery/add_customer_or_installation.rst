@@ -44,12 +44,13 @@ Create a new Installation
 
    ============================  =======================================================================================
    CUSTOMER                      Customer name (e.g. agogis or smc but never :strike:`agogistest` or :strike:`smctest`)
-   DOCKER_PULL_URL               Default values are [#f1]_:
+   DOCKER_PULL_URL [#f1]_        For prod. systems where a test system exists [#f3]_:
 
-                                 **production** systems:
-                                 ``registry.appuio.ch/toco-nice-%env.INSTALLATION%test/%env.DOCKER_IMAGE%`` [#f3]_
+                                    ``registry.appuio.ch/toco-nice-%env.INSTALLATION%test/%env.DOCKER_IMAGE%``
 
-                                 **test** systems: ``""`` (empty)
+                                 For test systems as well as production system with no test system:
+
+                                    ``""`` (empty)
    DUMP_MODE                     ``dump`` for production systems and ``no_dump`` for test systems [#f2]_
    GIT_TREEISH                   Git branch (e.g. ``releases/2.13``). [#f1]_
    INSTALLATION                  Installation name (e.g. smc or smctest)
