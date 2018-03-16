@@ -10,5 +10,7 @@ DevOps Documentation
    mail/index
    nice/index
    openshift/index
+   s3/index
    solr/index
    backups/index
+   webserver/index
