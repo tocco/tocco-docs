@@ -155,12 +155,6 @@ Step by Step Instructions
 
    ..  _libpg - SSL Support:  https://www.postgresql.org/docs/current/static/libpq-ssl.html#LIBPQ-SSL-PROTECTION
 
-#. Start Solr
-
-   .. code::
-
-       oc rollout latest solr
-
 #. For all customers with module **LMS**, a persistent volume must be created at ``/app/var/lms``
 
      See :ref:`persistent-volume` for more details.

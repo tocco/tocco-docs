@@ -4,7 +4,7 @@
 
    framework/index
    devops/index
-   knowledge_base/index
+   error_database/index
 
 Indices and tables
 ==================

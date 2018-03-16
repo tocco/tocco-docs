@@ -9,7 +9,7 @@ Error
 
 HTTP requests fails with status code 504.
 
-.. figure:: ../img/504_timeout.png
+.. figure:: resources/504_timeout.png
 
     504 returned by *Nginx*
 
