@@ -159,11 +159,6 @@ Step by Step Instructions
 
      See :ref:`persistent-volume` for more details.
 
-#. Issue an SSL Certificate
-
-    Issue a SSL certificate for **${CUSTOMER}**.tocco.ch which is created by the template. See :ref:`issue-ssl-certificate`
-    for instructions.
-
 #. Add additional Routes / Hostnames if Needed
 
     See :ref:`add-route`
