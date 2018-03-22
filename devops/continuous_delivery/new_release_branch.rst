@@ -58,7 +58,7 @@ Change the database of the test customer:
 
     .. warning::
 
-      The commit will automaticly be merged into master and needs to be reverted there.
+      The commit will automatically be merged into master and needs to be reverted there.
 
 Sonar
 -----
@@ -79,5 +79,4 @@ Backoffice
 - Change branch of ${LAST_VERSION}
 - Add new Version
 - Set status of versions older than 6 versions to outdated
-- Check all installations if ${NEW_VERSION} is set
-
+- Check on all installations if ${NEW_VERSION} is set
