@@ -161,7 +161,7 @@ Step by Step Instructions
 
 #. Add additional Routes / Hostnames if Needed
 
-    See :ref:`add-route`
+    ${INSTALLATION}.tocco.ch is automatically created. If you need more routes see :ref:`add-route`.
 
 .. important::
 
