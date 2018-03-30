@@ -5,6 +5,7 @@
    framework/index
    devops/index
    error_database/index
+   release_notes
 
 Indices and tables
 ==================
