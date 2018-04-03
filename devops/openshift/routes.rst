@@ -43,7 +43,7 @@ Add Route / Hostname
 SSL Certificates
 ----------------
 
-SSL certificates are issued automatically for route with an appropriate annotation.
+SSL certificates are issued automatically for routes with an appropriate annotation.
 
 Adding the annotation:
 
