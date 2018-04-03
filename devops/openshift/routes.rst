@@ -40,24 +40,19 @@ Add Route / Hostname
 .. _Ansible Git Repository: https://git.tocco.ch/gitweb?p=ansible.git;a=blob;f=openshift/nice-route-template.yml
 
 
-.. _issue-ssl-certificate:
+SSL Certificates
+----------------
 
-Issue SSL Certificate
----------------------
+SSL certificates are issued automatically for routes with an appropriate annotation.
 
-.. hint::
+Adding the annotation:
 
-    * The :ref:`route <add-route>` and :doc:`DNS entry <dns>` must exist before you can issue a certificate.
-    * See `Let's Encrypt Integration`_ section in the Appuio Community Documentation for more details.
+.. parsed-literal::
 
-#. Go to ``https://letsencrypt.appuio.ch/${HOSTNAME}`` (e.g. https\://letsencrypt.appuio.ch/www.tocco.ch)
+    oc annotate route/**${ROUTE}** kubernetes.io/tls-acme=true
 
-#. Enter your OpenShift credentials
-
-#. Verify you see a success message
-
-.. _Let's Encrypt Integration: https://appuio-community-documentation.readthedocs.io/en/latest/letsencrypt-integration.html
-
+For Nice installations, the templates for creating new installations and new routes already set this annotation. No
+manual intervention is needed.
 
 Remove Routes
 -------------
