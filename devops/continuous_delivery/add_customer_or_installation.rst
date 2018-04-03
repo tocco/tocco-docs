@@ -62,9 +62,9 @@ Create a new Installation
 
 6. Check again what type of system your creating.
 
-   For test systems or stand-alone production system you mustn't set the DOCKER_PULL_URL parameter!
+   For test systems or stand-alone production system you mustn't set the **DOCKER_PULL_URL** parameter!
 
-   For production system where a test system exists you have to set the DOCKER_PULL_URL parameter!
+   For production system where a test system exists you have to set the **DOCKER_PULL_URL** parameter!
 
 .. important:: 
 
