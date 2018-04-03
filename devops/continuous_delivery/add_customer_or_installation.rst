@@ -44,7 +44,7 @@ Create a new Installation
 
    ============================  =======================================================================================
    CUSTOMER                      Customer name (e.g. agogis or smc but never :strike:`agogistest` or :strike:`smctest`)
-   DOCKER_PULL_URL [#f1]_        For prod. systems where a test system exists [#f3]_:
+   DOCKER_PULL_URL [#f1]_        For prod. systems where a test system exists: [#f3]_
 
                                     ``registry.appuio.ch/toco-nice-%env.INSTALLATION%test/%env.DOCKER_IMAGE%``
 
@@ -57,6 +57,12 @@ Create a new Installation
    ============================  =======================================================================================
 
    It shouldn't be necessary to touch any of the other parameters.
+
+6. **Check again what type of system your creating**
+
+   For test systems or stand-alone production system you mustn't set the DOCKER_PULL_URL parameter!
+
+   For production system where a test system exists you have to set the DOCKER_PULL_URL parameter!
 
 .. important:: 
 
