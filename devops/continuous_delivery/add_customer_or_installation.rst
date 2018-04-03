@@ -60,15 +60,13 @@ Create a new Installation
 
 |
 
-6. Check again what type of system your creating.
+6. Check again the **DOCKER_PULL_URL** for all the system of the customer you creating the system for.
 
-   For test systems or stand-alone production system you mustn't set the **DOCKER_PULL_URL** parameter!
+   If a test or pilot system already exists and you create the production system, make sure that the production system has set DOCKER_PULL_URL right and that is not set on the test or pilot system.
+ 
+   If you crating the initial installation e.g. test or pilot make sure DOCKER_PULL_URL isn't set, else it could pull it's own image during the deployment.
 
-   For production system where a test system exists you have to set the **DOCKER_PULL_URL** parameter!
-
-.. important:: 
-
-   If you add a test system for a customer who just has one production or pilot system you have to adjust the **DOCKER_PULL_URL**. A production system do always pull the image it uses from a test system!
+   Make sure that **GIT_TEEISH** is set right on the test system or pilot system.
 
 .. note::
 
