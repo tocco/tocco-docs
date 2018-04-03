@@ -57,8 +57,11 @@ Create a new Installation
    ============================  =======================================================================================
 
    It shouldn't be necessary to touch any of the other parameters.
+.. important:: 
 
-.. important::
+   If you add a test system for a customer who just has one production or pilot system you have to adjust the **DOCKER_PULL_URL**. A production system do always pull the image it uses from a test system!
+
+.. note::
 
     The installation needs also to be :doc:`created in OpenShift <../openshift/create_nice_installation>`.
 
