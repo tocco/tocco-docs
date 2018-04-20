@@ -61,12 +61,12 @@ A condition like ``field("name").is(value)`` might be mapped with a :java:extdoc
 even though the user specified the value directly. These parameters are collected and added to the query by the :java:ref:`ParameterCollector<ch.tocco.nice2.persist.impl.qb2.ParameterCollector>`.
 
 The parameter collector is a visitor for :java:ref:`Node<ch.tocco.nice2.conditionals.tree.Node>` objects. It sets an unique
-name to all parameter nodes and collects its value. The result can then be used to set the parameter values to the query.
+name to all parameter nodes and collects their values. The result can then be used to set the parameter values to the query.
 
 .. warning::
     It is important that only one parameter collector is used per query. Otherwise the parameter names are not unique and
     the parameter values get overwritten. This means that all :java:ref:`Node<ch.tocco.nice2.conditionals.tree.Node>` instances
-    passed to ``CriteriaQueryBuilder#addCondition()`` must not already be processed by a parameter collector.
+    passed to ``CriteriaQueryBuilder#addCondition()`` must not have been already be processed by a parameter collector.
 
 Ordering
 --------
@@ -145,13 +145,13 @@ and can manipulate the tree.
     It executes the fulltext search when the query is compiled and replaces the query function node with an ``IN`` condition
     that includes the primary keys of the results of the search.
 
-Query compiler
+Query Compiler
 --------------
 The :java:ref:`CriteriaQueryCompiler<ch.tocco.nice2.persist.hibernate.pojo.CriteriaQueryCompiler>` is responsible for creating a
 :java:ref:`Query<ch.tocco.nice2.persist.query.Query>` instance based on a :java:ref:`Node<ch.tocco.nice2.conditionals.tree.Node>`.
 
 The :java:ref:`QueryVisitor<ch.tocco.nice2.persist.hibernate.pojo.CriteriaQueryCompiler.QueryVisitor>` visits the node tree
-and creates :java:ref:`CriteriaQueryBuilder<ch.tocco.nice2.persist.hibernate.query.CriteriaQueryBuilder>`, which in turn will be
+and creates a :java:ref:`CriteriaQueryBuilder<ch.tocco.nice2.persist.hibernate.query.CriteriaQueryBuilder>`, which in turn will be
 wrapped in a :java:ref:`HibernateQueryAdapter<ch.tocco.nice2.persist.hibernate.pojo.HibernateQueryAdapter>` that is returned
 to the user.
 
@@ -238,7 +238,7 @@ These nodes represent an ``EXISTS`` subquery.
 
 The first child node is always a :java:ref:`PathNode<ch.tocco.nice2.conditionals.tree.PathNode>` that references the
 relation path which is queried by the subquery. Thus the ``visitPath()`` method first creates an instance of
-:java:extdoc:`Subquery<javax.persistence.criteria.Subquery>`. through the :java:ref:`SubqueryFactory<ch.tocco.nice2.persist.hibernate.query.PredicateBuilder.SubqueryFactory>`.
+:java:extdoc:`Subquery<javax.persistence.criteria.Subquery>` through the :java:ref:`SubqueryFactory<ch.tocco.nice2.persist.hibernate.query.PredicateBuilder.SubqueryFactory>`.
 
 The path node might contain multiple relation paths which leads to nested ``EXISTS`` subqueries.
 If there are nested ``EXISTS`` subqueries, the inner one is set as the condition of the outer one:
@@ -278,7 +278,7 @@ An equation node consists of two nodes and an operator that defines how the two 
 
 Currently one side of the equation needs to be either a :java:extdoc:`Path<javax.persistence.criteria.Path>` or a
 ``COUNT`` expression.
-The other side can be a literal or paramater node, another path or count expression or a jdbc function call.
+The other side can be a literal or paramater node, another path, count expression or a jdbc function call.
 
 If the type of the literal value does not match the type of the path or count expression, it is tried to convert
 the value using the :java:ref:`TypeManager<ch.tocco.nice2.types.TypeManager>`.
