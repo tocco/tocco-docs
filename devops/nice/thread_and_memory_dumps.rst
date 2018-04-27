@@ -118,7 +118,7 @@ Creating Memory Dump on OOM
 
 #. remove persistent volume for dumps
 
-    Remove previously created persistent volume for ``/app/var/heap_dumps``
+    Remove previously created persistent volume for ``/app/var/heap_dumps``:
 
     .. code::
 

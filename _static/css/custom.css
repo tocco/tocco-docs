@@ -18,3 +18,9 @@ div.figure img {
 .red {
     color: red;
 }
+
+pre.literal-block {
+    font-size: 12px;
+    line-height: normal;
+    padding: 12px !important;
+}
