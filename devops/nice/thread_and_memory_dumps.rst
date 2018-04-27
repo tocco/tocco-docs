@@ -74,7 +74,12 @@ Creating Memory Dump on OOM
 
 #. add persistent volume for dumps
 
-   Create an appropriately sized volume for ``/app/var/heap_dumps`` as described in :ref:`persistent-volume-creation`.
+   Create an appropriately sized volume for ``/app/var/heap_dumps``. Increase the size (**5G** in the example below)
+   if necessary:
+
+   .. parsed-literal::
+
+       oc volume dc/nice -c nice --add --name=oom --claim-name=oom --claim-size=\ **5G** --mount-path=/app/var/heap_dumps
 
 #. wait for OOM crash
 
@@ -113,5 +118,13 @@ Creating Memory Dump on OOM
 
 #. remove persistent volume for dumps
 
-    Remove previously created persistent volume for ``/app/var/heap_dumps`` as outlined in
-    :ref:`persistent-volume-removal`.
+    Remove previously created persistent volume for ``/app/var/heap_dumps``:
+
+    .. code::
+
+        oc volume dc/nice -c nice --remove --name=oom
+        oc delete pvc oom
+
+    .. warning::
+
+        This will restart Nice automatically!
