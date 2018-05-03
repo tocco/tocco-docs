@@ -12,12 +12,12 @@ Step by Step Instructions
 
     .. figure:: create_nice_installation/create_project.png
         :scale: 60%
-    
+
     #. The name of your account
 
     #. Project name ("nice-{$INSTALLATION}")
 
-    #. Check 
+    #. Check
 
     Go to the `Create Project`_ page of VSHN and create a new project [#f1]_.
 
@@ -65,7 +65,7 @@ Step by Step Instructions
         If you'd forget this step, don't worry: It will print this error during Deployment:
 
         .. code::
-           
+
            Error response from daemon: Get https://registry.appuio.ch/v2/: unauthorized: authentication required
 
         This error message doesn't always have to stem from the issue described.
@@ -158,6 +158,18 @@ Step by Step Instructions
 #. For all customers with module **LMS**, a persistent volume must be created at ``/app/var/lms``
 
      See :ref:`persistent-volume` for more details.
+
+#. Add SSL certificate for ${INSTALLATION}.tocco.ch
+
+   .. parsed-literal::
+
+        oc annotate route/nice kubernetes.io/tls-acme=true
+
+   .. warning::
+
+        The DNS entry for ${INSTALLATION} must exists and be correct at this point.
+
+   More details, including troubleshooting information, can be found in :ref:`ssl-certificates`.
 
 #. Add additional Routes / Hostnames if Needed
 
