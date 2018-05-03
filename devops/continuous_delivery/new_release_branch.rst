@@ -80,3 +80,18 @@ Backoffice
 - Add new Version
 - Set status of versions older than 6 versions to outdated
 - Check on all installations if ${NEW_VERSION} is set
+
+Documentation
+-------------
+- Create a new releases branch in gerrit on the project **«nice2_documentation»**. Use the Revision of the latest version branch as initial revision for the new branch.
+- Add a build config for the new version in Teamcity. Use the template **«nice_documentation_allversions»** to create it.
+- Create all files needed for Openshift to deploy the new version. You can find a template in the openshift directory in the ansible repository.
+
+     .. parsed-literal::
+    
+        oc process -f nice-documentation.yml INSTALLATION=${VERSION} | oc create -f -
+      
+.. attention::
+ 
+   You need the right permissions to create the branch in gerrit and the build config in Teamcity.
+
