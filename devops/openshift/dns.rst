@@ -102,7 +102,7 @@ Get **A** records for host:
 
 Verify output:
 
-    The ``ANWSER SECTION`` of the output must contain the following **A** entries::
+    The ``ANSWER SECTION`` of the output must contain the following **A** entries::
 
         ... IN A 5.102.151.2
         ... IN A 5.102.151.3
