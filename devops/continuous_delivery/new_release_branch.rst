@@ -85,10 +85,17 @@ Documentation
 -------------
 - Create a new releases branch in gerrit on the project **«nice2_documentation»**. Use the Revision of the latest version branch as initial revision for the new branch.
 - Add a build config for the new version in Teamcity. Use the template **«nice_documentation_allversions»** to create it.
+- Add the DNS entry for the new version ${VERSION}.docs.tocco.ch. DNS is available under cockpit.nine.ch (user:tocco/pw:standard-old).
 - Create all files needed for Openshift to deploy the new version. You can find a template in the openshift directory in the ansible repository.
 
      .. parsed-literal::
-    
+   
+	cd ${PATH_TO_ANSIBLE}/openshift/
+
+	oc login #enter you user name und you password as it will be prompted
+
+	oc project toco-nice-documentation
+ 
         oc process -f nice-documentation.yml INSTALLATION=${VERSION} | oc create -f -
       
 .. attention::
