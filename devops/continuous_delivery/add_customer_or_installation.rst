@@ -44,7 +44,7 @@ Create a new Installation
 
    ============================  =======================================================================================
    CUSTOMER                      Customer name (e.g. agogis or smc but never :strike:`agogistest` or :strike:`smctest`)
-   DOCKER_PULL_URL [#f1]_        For prod. systems where a test system exists [#f3]_:
+   DOCKER_PULL_URL [#f1]_        For prod. systems where a test system exists: [#f3]_
 
                                     ``registry.appuio.ch/toco-nice-%env.INSTALLATION%test/%env.DOCKER_IMAGE%``
 
@@ -58,7 +58,17 @@ Create a new Installation
 
    It shouldn't be necessary to touch any of the other parameters.
 
-.. important::
+|
+
+6. Check again the **DOCKER_PULL_URL** for all the systems of the customer you creating the system for.
+
+   If a test or pilot system already exists and you're creating the production system, make sure that the production system has set DOCKER_PULL_URL right and that is not set on the test or pilot system.
+
+   If you're creating the initial installation e.g. test or pilot make sure DOCKER_PULL_URL isn't set, else it could pull its own image during the deployment.
+
+   Make sure that **GIT_TEEISH** is set right on the test system or pilot system.
+
+.. note::
 
     The installation needs also to be :doc:`created in OpenShift <../openshift/create_nice_installation>`.
 
