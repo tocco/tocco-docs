@@ -97,6 +97,8 @@ Documentation
 	oc project toco-nice-documentation
  
         oc process -f nice-documentation.yml INSTALLATION=${VERSION} | oc create -f -
+
+- Site Search can be configured on http://control.freefind.com and is registered by toccosupport@gmail.com for https://documentation.tocco.ch. Please contact Peter Gerber or Niklaus Hug to get the password.
       
 .. attention::
  
