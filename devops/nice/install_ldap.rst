@@ -16,7 +16,7 @@ Create the Image with the Key
 
    You have to pull the ansible repository to access the files mentioned below. You can pull the project with the following command: **git clone ssh://${GERRIT_USERNAME}@git.tocco.ch:29418/ansible**
 
-1. Copy the key into the ldap-image diretory in the ansible project
+1. Copy the key into the ldap-image diretory in the ansible project. It has to be an SSL Private key in a Java keystore.
 
 .. code::
 
@@ -26,7 +26,7 @@ Create the Image with the Key
 
 .. code:: 
 
-   export PATHTOKEYFILE="/somepath/key.ks"
+   export PATHTOKEYFILE="/persists/${KEYFILE}"
 
 3. Build the docker image and push it.
 
@@ -58,30 +58,10 @@ Adjust the Deployment Config
 
 .. code:: 
 
-   - name: NICE2_APP_nice2__optional__ldapserver__enabled
-     value: "true"
-   - name: NICE2_APP_nice2__optional__ldapserver__port
-     value: "10389"
-   - name: NICE2_APP_nice2__optional__ldapserver__certificatePassword
-     value: ${CERTIFICATE_PASSWORD}
-   - name: NICE2_APP_nice2__optional__ldapserver__keyStoreFile
-     value: /persist/${KEYFILE}
+   oc set env dc/nice NICE2_APP_nice2__optional__ldapserver__enabled="true" NICE2_APP_nice2__optional__ldapserver__port="10389" NICE2_APP_nice2__optional__ldapserver__certificatePassword="${CERTIFICATE_PASSWORD}" NICE2_APP_nice2__optional__ldapserver__keyStoreFile="/persist/${KEYFILE}"
 
 2. Mount the Secret into the nice Container
 
 .. parsed-literal::
 
-    terminationMessagePath: /dev/termination-log
-    terminationMessagePolicy: File
-    volumeMounts:
-    - mountPath: /persist
-      name: ldap-secret
-  dnsPolicy: ClusterFirst
-  restartPolicy: Always
-  schedulerName: default-scheduler
-  securityContext: {}
-  terminationGracePeriodSeconds: 240
-  volumes:
-  - name: ldap-secret
-    persistentVolumeClaim:
-      claimName: ldap-secret
+   oc volume dc/nice -m /persist --secret-name ldap-secret --claim-name ldap-secret --add 
