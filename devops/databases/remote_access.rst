@@ -4,6 +4,9 @@ Postgres Remote Access
 Using SSH Port Forwarding
 -------------------------
 
+Forward Port
+````````````
+
 .. note::
 
     This requires ssh access to the DB server.
@@ -13,6 +16,35 @@ Using SSH Port Forwarding
     ssh ${USERNAME}@db1.tocco.cust.vshn.net -L 5432:localhost:5432 -N
 
 Now you should be able to connect to the DB server on **locahost:5432**.
+
+
+Connect Nice to remote DB
+`````````````````````````
+
+Once port forwarding is established, you can tell Nice to directly connect to a DB on the remote server.
+
+Obtain credentials:
+
+    .. parsed-literal::
+
+        $ oc project toco-nice-**${INSTALLATION}**
+        $ oc set env --list dc/nice \|grep ^NICE2_HIKARI_dataSource
+        NICE2_HIKARI_dataSource__databaseName=\ :green:`nice_tocco`
+        NICE2_HIKARI_dataSource__password=\ :red:`DAPVK11Zt9X1PtVv9ily`
+        NICE2_HIKARI_dataSource__serverName=db1.tocco.cust.vshn.net
+        NICE2_HIKARI_dataSource__user=\ :blue:`nice_tocco`
+        NICE2_HIKARI_dataSource__sslMode=require
+
+Now create or alter ``customer/${CUSTOMER}/etc/hikaricp.local.properties``:
+
+    Copy the necessary properties (colored) from above.
+
+    .. parsed-literal::
+
+        dataSource.serverName=localhost
+        dataSource.databaseName=\ :green:`nice_tocco`
+        dataSource.password=\ :red:`DAPVK11Zt9X1PtVv9ily`
+        dataSource.user=\ :blue:`nice_tocco`
 
 
 Direct Access
