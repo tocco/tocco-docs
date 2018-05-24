@@ -15,6 +15,10 @@ Forward Port
 
     ssh ${USERNAME}@db1.tocco.cust.vshn.net -L 5432:localhost:5432 -N
 
+.. hint::
+
+    ``${USERNAME}`` consist of ``first_name.last_name`` (e.g. ``jane.doe``)
+
 Now you should be able to connect to the DB server on **locahost:5432**.
 
 
