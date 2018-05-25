@@ -17,7 +17,7 @@ Forward Port
 
 .. hint::
 
-    ``${USERNAME}`` consist of ``first_name.last_name`` (e.g. ``jane.doe``)
+    ``${USERNAME}`` consists of ``first_name.last_name`` (e.g. ``jane.doe``)
 
 Now you should be able to connect to the DB server on **locahost:5432**.
 
