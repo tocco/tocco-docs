@@ -17,7 +17,22 @@ You need tho have this dependency installed:
 Now you can build the documentation using:
 
 ```
-    make html
+make html
 ```
 
-the generated file can be found in `_build/html/`.
+The generated file can be found in `_build/html/`.
+
+### Live reload while you type
+
+Install `sphinx-autobuild`:
+```
+pip install --user sphinx-autobuild
+```
+
+Then run with:
+```
+make livehtml
+```
+
+And then visit the webpage served at http://127.0.0.1:8000. Each time a change to the documentation source is detected,
+the HTML is rebuilt and the browser automatically reloaded.
