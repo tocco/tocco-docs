@@ -1,6 +1,11 @@
 Remote Debugging of Nice2
 =========================
 
+.. warning::
+
+   Always make sure you select **Suspend -> Thread** for breakpoints in IDEA,
+   so that you don't freeze the whole application during your debugging session.
+
 #. forward the debugging port to your machine
 
     **on OpenShift**:
