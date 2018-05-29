@@ -80,7 +80,7 @@ Simple example
 Have a look at this simple example from the `nice2-optional-correspondence` module which tests the following
 ACL declaration:
 
-.. code-block:: ACL
+.. code::
 
    entity(Serial_correspondence):
        grant access(read) except &anonymous if relSender.pk == principal.user_id
