@@ -9,9 +9,13 @@ The easiest way to test the ACL rules of a module is by extending
 Dependencies and plugins in pom.xml
 -----------------------------------
 
+Add the dependency ``nice2-persist-security-testlib`` and the test plugin as follows in the file
+``{NICE_MODULE_PATH}/module/pom.xml`` (so for example for the optional module `correspondence` this would be the file
+``optional/correspondence/module/pom.xml``).
+
 Required dependency ``nice2-persist-security-testlib``:
 
-.. code:: XML
+.. code-block:: XML
 
     <dependency>
       <groupId>ch.tocco.nice2.persist.security</groupId>
@@ -22,7 +26,7 @@ Required dependency ``nice2-persist-security-testlib``:
 
 Add test plugin:
 
-.. code:: XML
+.. code-block:: XML
 
     <build>
       <plugins>
@@ -280,5 +284,124 @@ ACL declaration:
 
        private EntityBuilder entity(String model) {
            return new EntityBuilder(context, model);
+       }
+   }
+
+Test ACL files from multiple modules
+------------------------------------
+
+This section shows an example with ACL rules from multiple modules. In our example here, the rules we need for our test
+are located in both the `dms` module and in the `optional/cms` module.
+
+Let's write tests for the following ACL rule from nice `optional-cms` module:
+
+.. code::
+
+   entityPath(Domain, label):
+       deny access(write) except redactor if relDomain_type.unique_id == "web";
+
+Since the `optional/cms` module depends heavily on the `dms` module, it makes no sense to test the ACL
+rules of the `optional/cms` module independently. We have to take the following steps to also include ``entity.acl``
+file from the `dms` module in our test in the `optional/cms` module (besides the ``entity.acl`` from the
+`optional/cms` module).
+
+First, we have to make the ACL files from the `dms` module available in the `optional/cms` module. To do this,
+we have to move the ACL files into a uniquely named directory within the `acl` directory. We call this directory
+"acl".
+
+Now, the `dms` module structure looks like this:
+
+.. figure:: resources/dms_module_structure.png
+
+Second, we have to create a separate JAR file containing just the ACL files from the `dms` module which we then
+include in the `optional/cms` module.
+
+dms/module/pom.xml:
+
+.. code-block:: XML
+
+   <build>
+     <plugins>
+       <plugin>
+         <groupId>org.apache.maven.plugins</groupId>
+         <artifactId>maven-jar-plugin</artifactId>
+         <version>3.0.2</version>
+         <executions>
+           <execution>
+             <phase>package</phase>
+             <goals>
+               <goal>jar</goal>
+             </goals>
+             <configuration>
+               <classifier>acl</classifier>
+               <includes>
+                 <include>acl/**</include>
+               </includes>
+             </configuration>
+           </execution>
+         </executions>
+       </plugin>
+     </plugins>
+   </build>
+
+optional/cms/module/pom.xml:
+
+.. code-block:: XML
+
+   <dependency>
+     <groupId>ch.tocco.nice2.dms</groupId>
+     <artifactId>nice2-dms-module</artifactId>
+     <classifier>acl</classifier>
+     <version>${project.version}</version>
+     <scope>test</scope>
+   </dependency>
+
+After that, we can write our tests in the `optional/cms` module and include the ``entity.acl`` file from the `dms`
+module by calling ``baseTestCase(...)`` with a list containing the path ``"/acl/dms/entity.acl"``. This file is
+now included besides the `entity.acl` file from the `optional/cms` module.
+
+.. code-block:: Java
+
+   package ch.tocco.nice2.optional.cms.acl.edit_alias;
+
+   import java.util.concurrent.Callable;
+
+   import org.testng.annotations.DataProvider;
+   import org.testng.annotations.Test;
+
+   import com.google.common.collect.ImmutableList;
+   import org.jetbrains.annotations.Nullable;
+
+   import ch.tocco.nice2.optional.cms.acl.AbstractCmsAclTest;
+   import ch.tocco.nice2.persist.entity.Entity;
+   import ch.tocco.nice2.persist.security.inject.AbstractCheckPermissionsTest;
+   import ch.tocco.nice2.persist.security.inject.AbstractModuleAclTest;
+   import ch.tocco.nice2.persist.testlib.EntityBuilder;
+   import ch.tocco.nice2.security.Principal;
+
+   public class DomainEditAliasTest extends AbstractModuleAclTest {
+
+       @Test(dataProvider = "testCases")
+       public void testPermissions(AbstractCheckPermissionsTest.ExpectedAccess expectedAccess,
+                                   Principal principal,
+                                   Callable<Entity> dataCreator,
+                                   @Nullable String[] fields) throws Exception {
+           baseTestCase(ImmutableList.of("/acl/dms/entity.acl"), expectedAccess, principal, dataCreator, fields);
+       }
+
+       @DataProvider
+       public Object[][] testCases() {
+           return new Object[][]{
+               // no write access for anonymous
+               {
+                   new AbstractCheckPermissionsTest.ExpectedAccess().withWrite(false),
+                   anonymousPrincipal(),
+                   (Callable<Entity>) () -> new EntityBuilder(context, "Domain")
+                       .field("label", "test")
+                       .get(),
+                   new String[]{"alias"}
+               },
+               // ...
+           };
        }
    }
