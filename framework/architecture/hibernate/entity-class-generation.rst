@@ -80,13 +80,38 @@ locking for this entity.
 
 **Text fields**
 
-.. todo::
-   Describe @Lob annotation for text fields
+The ``text`` datatype is a :java:extdoc:`String<java.lang.String>` that should be saved into a column with datatype
+``text``. To achieve this we add the :java:extdoc:`Lob<javax.persistence.Lob>` annotation to the property.
+
+.. note::
+    In Hibernate 5.2.10 a String property annotated with :java:extdoc:`Lob<javax.persistence.Lob>` was automatically
+    mapped to a ``text`` column in PostgreSQL.
+
+    However the behaviour changed in version 5.2.11 (see the `migration guide <https://github.com/hibernate/hibernate-orm/wiki/Migration-Guide---5.2>`_).
+    To be compatible with existing databases, we need the behaviour of 5.2.10. In order to accomplish this, a custom
+    :java:extdoc:`ClobTypeDescriptor<org.hibernate.type.descriptor.sql.ClobTypeDescriptor>` is registered in the :java:ref:`ToccoPostgreSQLDialect<ch.tocco.nice2.persist.hibernate.dialect.ToccoPostgreSQLDialect>`
+    which restores the behaviour of 5.2.10.
 
 **Counter fields**
 
-.. todo::
-   Describe @Counter annotation for text fields
+The ``counter`` datatype is a numeric type whose value is automatically generated. The value is incremented for every new entity instance.
+The counter values are managed in the ``nice_counter`` table.
+
+Counter fields are annotated with :java:ref:`Counter<ch.tocco.nice2.persist.hibernate.pojo.generator.Counter>`, which configures
+the :java:ref:`CounterGeneration<ch.tocco.nice2.persist.hibernate.pojo.generator.CounterGeneration>` value generator. This
+generator is only applied whenever a new entity is inserted (not when an entity is updated).
+
+If the value of a counter field is manually set in the transaction it will not be overwritten.
+
+At first, the counter entity (for the relevant entity type, field and business unit) is fetched from the database
+using the ``PESSIMISTIC_WRITE`` lock mode.
+The counter value is then updated using a `stateless session <http://docs.jboss.org/hibernate/orm/5.2/userguide/html_single/Hibernate_User_Guide.html#_statelesssession>`_ to make sure that
+database is updated immediately. This is necessary if the same counter is used multiple times in the same transaction.
+It is important that the connection of the current session is also used in the stateless session to make sure that they use
+the same database transaction.
+
+.. note::
+    It would probably make sense to use a database ``sequence`` for this purpose in the future.
 
 **Custom user types**
 
