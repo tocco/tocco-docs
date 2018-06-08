@@ -8,7 +8,7 @@ Usage
 Hierarchical business units can be used to restrict read- and write-access for specified entity models in a hierarchical
 business unit structure. How the read/write access is restricted is defined by the chosen strategy. There are two
 different strategies available. `hierarchical` and `self`. It is possible to choose different strategies for the read
-access and the write access for a single entity model.
+access and the write access for any entity model.
 
 **hierarchical** - With the hierarchical strategy the read/write access is restricted to entities in the
 current business unit and all child business units.
@@ -58,13 +58,13 @@ Assume we want to apply the hierarchical business unit handling to the entity mo
 Configure a hierarchical business unit structure
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Hierarchical business unit structures can easyily be configured by setting the relation ``relParent`` and ``relChildren``
+Hierarchical business unit structures can easily be configured by setting the relation ``relParent`` and ``relChildren``
 correctly on the business unit entities.
 
 Add relation ``relHierarchy_business_unit``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-It is necessary to add relation to the business unit for each entity model which should be applied to the hierarchical
+It is necessary to add a relation to the business unit for each entity model which should be applied to the hierarchical
 business unit handling. It is important to name the relation something different than `relBusiness_unit`. Otherwise
 the `counter fragment` creates a counter for each business unit for that entity model which is not desired.
 
@@ -162,4 +162,4 @@ by the :java:ref:`ch.tocco.nice2.businessunit.impl.hierarchy.strategies.Hierarch
 Miscellaneous
 -------------
 
-* If no business unit is set, the read- and write access is not restricted at all.
+* If no business unit is set, the read and write access is not restricted at all.
