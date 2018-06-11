@@ -16,8 +16,8 @@ current business unit and all child business units.
 **self** - With the self strategy the read/write access is restricted to the current business unit.
 
 .. warning::
-    A hierarchical business unit handling only can be applied to entities which are **not** business unit dependent.
-    Entity models which are defined with **business-unit="single"** can't be used for hierarchical business units.
+    These strategies (hierarchical, self) only can be applied to entities which are **not** business unit dependent.
+    Entity models which are defined with **business-unit="single"** can't be used for these strategies.
 
 Example
 ~~~~~~~
