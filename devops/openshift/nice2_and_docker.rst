@@ -16,7 +16,7 @@ Build Docker Image - the Manual Way
 
         rm nice2-customer-\*-1.0-SNAPSHOT.tar.gz
         mvn -pl customer/**${CUSTOMER}** -am clean install -T1.5C -DskipTests -P assembly
-        mv ./customer/tocco/target/nice2-customer-**${CUSTOMER}**-1.0-SNAPSHOT.tar.gz .
+        mv ./customer/**${CUSTOMER}**/target/nice2-customer-**${CUSTOMER}**-1.0-SNAPSHOT.tar.gz .
 
 #. Building the Docker image
 
@@ -129,7 +129,8 @@ Running the Image Locally
     docker run --rm -p 8080:8080 -e NICE2_HIKARI_dataSource.serverName=\ **${DB_SERVER}**
       -e NICE2_LOGBACK_CONFIG=\ **logback_terminal** -e NICE2_HIKARI_dataSource.databaseName=\ **${DB_NAME}** \
       -e NICE2_HIKARI_dataSource.user=\ **${DB_USER}** -e NICE2_HIKARI_dataSource.password=\ **${DB_PASSWORD}** \
-      -e NICE2_JAVA_OPT\_-Dch.tocco.nice2.runenv=\ **development** **${DOCKER_IMAGE_NAME}**
+      -e NICE2_JAVA_OPT\_-Dch.tocco.nice2.runenv=\ **development** -e NICE2_HIKARI_dataSource__sslMode=required \
+      **${DOCKER_IMAGE_NAME}**
 
 .. hint::
 
@@ -194,7 +195,8 @@ but execute the ``dbref`` command within the container.
     docker run --rm -p 8080:8080 -e NICE2_HIKARI_dataSource.serverName=${DB_SERVER}
       -e NICE2_LOGBACK_CONFIG=logback_terminal -e NICE2_HIKARI_dataSource.databaseName=${DB_NAME} \
       -e NICE2_HIKARI_dataSource.user=${DB_USER} -e NICE2_HIKARI_dataSource.password=${DB_PASSWORD} \
-      -e NICE2_JAVA_OPT\_-Dch.tocco.nice2.runenv=development ${DOCKER_IMAGE_NAME} **dbref**
+      -e NICE2_JAVA_OPT\_-Dch.tocco.nice2.runenv=development -e NICE2_HIKARI_dataSource__sslMode=required \
+      ${DOCKER_IMAGE_NAME} **dbref**
 
 
 Postgres
