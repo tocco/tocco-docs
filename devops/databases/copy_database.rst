@@ -18,17 +18,25 @@ Dump Database
 Restore Database
 ----------------
 
-**\*.psql** files:
+.. important::
+
+   Restore must be made into an **empty** database:
+
+   .. parsed-literal::
+
+       CREATE DATABASE **${DB_NAME}** WITH OWNER **${DB_USER}**;
+
+**\*.psql** and **\*.dump** files:
 
     .. code-block:: bash
 
-        PGOPTIONS="-c synchronous_commit=off" pg_restore -j 4 -U postgres -h ${DB_SERVER} --role ${DB_USER} --no-owner --no-acl -d ${DB_NAME} ${DUMP_FILE_PATH}
+        pg_restore -j 4 -U postgres -h ${DB_SERVER} --role ${DB_USER} --no-owner --no-acl -d ${DB_NAME} ${DUMP_FILE_PATH}
 
 **\*.dump.gz** files:
 
     .. code-block:: bash
 
-        gzip -cd ${DUMP_FILE_PATH} | PGOPTIONS="-c synchronous_commit=off" pg_restore -U postgres -h ${DB_SERVER} --role ${DB_USER} --no-owner --no-acl -d ${DB_NAME}
+        gzip -cd ${DUMP_FILE_PATH} | pg_restore -U postgres -h ${DB_SERVER} --role ${DB_USER} --no-owner --no-acl -d ${DB_NAME}
 
 .. hint::
 
