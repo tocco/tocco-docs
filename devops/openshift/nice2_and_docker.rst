@@ -126,10 +126,10 @@ Running the Image Locally
 
 .. parsed-literal::
 
-    docker run --rm -p 8080:8080 -e NICE2_HIKARI_dataSource.serverName=\ **${DB_SERVER}**
+    docker run --rm -p 8080:8080 -e NICE2_HIKARI_dataSource.serverName=\ **${DB_SERVER}** \
       -e NICE2_LOGBACK_CONFIG=\ **logback_terminal** -e NICE2_HIKARI_dataSource.databaseName=\ **${DB_NAME}** \
       -e NICE2_HIKARI_dataSource.user=\ **${DB_USER}** -e NICE2_HIKARI_dataSource.password=\ **${DB_PASSWORD}** \
-      -e NICE2_JAVA_OPT\_-Dch.tocco.nice2.runenv=\ **development** -e NICE2_HIKARI_dataSource__sslMode=required \
+      -e NICE2_JAVA_OPT\_-Dch.tocco.nice2.runenv=\ **development** -e NICE2_HIKARI_dataSource__sslMode=require \
       **${DOCKER_IMAGE_NAME}**
 
 .. hint::
@@ -137,7 +137,7 @@ Running the Image Locally
    If you run Postgres in a Docker container called *pg*, as described below, use this to link the Nice container to it::
 
        -e NICE2_HIKARI_dataSource.serverName=pg -e NICE2_HIKARI_dataSource.user=nice \
-       -e NICE2_HIKARI_dataSource.password=nice --link pg
+       -e NICE2_HIKARI_dataSource.password=nice -e NICE2_HIKARI_dataSource__sslMode=disable --link pg
 
    Linking container ``pg`` (``--link pg``) makes the container available with the host name ``pg`` within the Nice container.
 
@@ -192,10 +192,10 @@ but execute the ``dbref`` command within the container.
 
 .. parsed-literal::
 
-    docker run --rm -p 8080:8080 -e NICE2_HIKARI_dataSource.serverName=${DB_SERVER}
+    docker run --rm -p 8080:8080 -e NICE2_HIKARI_dataSource.serverName=${DB_SERVER} \
       -e NICE2_LOGBACK_CONFIG=logback_terminal -e NICE2_HIKARI_dataSource.databaseName=${DB_NAME} \
       -e NICE2_HIKARI_dataSource.user=${DB_USER} -e NICE2_HIKARI_dataSource.password=${DB_PASSWORD} \
-      -e NICE2_JAVA_OPT\_-Dch.tocco.nice2.runenv=development -e NICE2_HIKARI_dataSource__sslMode=required \
+      -e NICE2_JAVA_OPT\_-Dch.tocco.nice2.runenv=development -e NICE2_HIKARI_dataSource__sslMode=require \
       ${DOCKER_IMAGE_NAME} **dbref**
 
 
