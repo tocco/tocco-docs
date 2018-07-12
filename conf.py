@@ -30,6 +30,7 @@ import os
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    'sphinx.ext.extlinks',
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
     'javasphinx'
@@ -359,4 +360,8 @@ def setup(app):
 javadoc_url_map = {
     'org.hibernate' : ('http://docs.jboss.org/hibernate/orm/5.2/javadocs/', 'javadoc'),
     'javassist' : ('https://jboss-javassist.github.io/javassist/html', 'javadoc')
+}
+
+extlinks = {
+   'vshn': ('https://control.vshn.net/tickets/TOCO-%s', 'TOCO-')
 }
