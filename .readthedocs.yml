@@ -1,0 +1,4 @@
+python:
+  version: 3
+formats: []
+requirements_file: requirements.txt
