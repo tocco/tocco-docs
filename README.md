@@ -36,3 +36,28 @@ make livehtml
 
 And then visit the webpage served at http://127.0.0.1:8000. Each time a change to the documentation source is detected,
 the HTML is rebuilt and the page automatically reloaded.
+
+
+## Customizations
+
+This documentation offers the following extensions to Sphinx/reST:
+
+### `global.rst`
+
+The file [`global.rst`](global.rst) in the root directory is automatically included in all *.rst files. Use it for roles, links, etc. that need to be available globally.
+
+### "strike" Role
+
+Use ``:strike:`some text` `` to strike through ~~some text~~.
+
+### Color Roles
+
+Use ``:blue:`…` ``, ``:green:`…` `` or ``:red:`…` `` to color text.
+
+### "vshn" Role
+
+Use ``:vshn:`125` `` to reference ticket TOCO-125 in [VSHN's issue tracker](https://control.vshn.net/tickets).
+
+### Custom CSS
+
+CSS can be customized in [`_static/css/custom.css`](_static/css/custom.css) as needed.
