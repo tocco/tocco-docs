@@ -51,7 +51,7 @@ Glossary
         The deployment config describes the containers associated with it. This includes image sources, resource limits,
         open ports, roll out strategy, triggers, etc.
 
-         Accessible via ``oc (get|describe|edit|…) dc …``.
+         Accessible via ``oc {get|describe|edit|…} dc …``.
 
     docker image
         An image that contains an application and all run-time dependencies except the OS.
@@ -68,12 +68,12 @@ Glossary
     IS
         Describes a docker repository. Pushing a docker image to it can be used to trigger an automatic deployment.
 
-        Accessible via ``oc (get|describe|edit|…) is …``.
+        Accessible via ``oc {get|describe|edit|…} is …``.
 
     image stream tag
         Describes a docker image tag. Defaults to ``latest``.
 
-        Accessible via ``oc (get|describe|edit|…) imagestreamtag …``.
+        Accessible via ``oc {get|describe|edit|…} imagestreamtag …``.
 
     Nginx
        `Nginx`_ is the web server used for as reverse proxy in front of Nice.
@@ -86,13 +86,13 @@ Glossary
     PVC
         A persistent volume that can be mounted into one or more containers.
 
-        Accessible via ``oc (get|describe|edit|…) pvc …``.
+        Accessible via ``oc {get|describe|edit|…} pvc …``.
 
     pod
     PO
         A pod is one instance of the containers described in its :term:`deployment config`.
 
-        Accessible via ``oc (get|describe|edit|…) pod …``.
+        Accessible via ``oc {get|describe|edit|…} pod …``.
 
     pre-hook pod
         A pre-hook pod is a :term:`pod` that is executed during rollout, before executing the actual pod. In our setup,
@@ -107,12 +107,20 @@ Glossary
 
         Remote Repositories can be configured in **Admin** → **Remote**.
 
+    Replication Controller
+    RC
+        The replication controller is responsible to ensure the specified number of replicas is running at all times.
+
+        There is one RC per deployment. Use ``oc describe rc …`` to see the configuration (:term:`DC`) that was used for a deployment.
+
+        Accessible via ``oc {get|describe|edit|…} pod …``
+
     service
     SVC
         Used to make a service available in the network. It provides a DNS name for a service in a way that hides the
         fact that the service may be provided by several pods (multiple replicas).
 
-        Accessible via ``oc (get|describe|edit|…) svc …``.
+        Accessible via ``oc {get|describe|edit|…} svc …``.
 
     Solr
         Solr is a search engine, Nice uses it to provide full-text search.
@@ -122,7 +130,7 @@ Glossary
     route
         Provides a route to a service. This is used to make a service reachable via internet.
 
-        Accessible via ``oc (get|describe|edit|…) route …``.
+        Accessible via ``oc {get|describe|edit|…} route …``.
 
     wkhtmltopdf
         A command line tool for converting HTML into PDF. Within Nice it is used to generate PDF reports.
