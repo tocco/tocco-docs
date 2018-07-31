@@ -1,6 +1,12 @@
 Provided Services
 =================
 
+.. toctree::
+   :maxdepth: 1
+   :glob:
+
+   *
+
 The following table shows what server runs which service. Some of the services are passive.
 That means you do not use them active, e.g. The Teamcity-Agents.
 
