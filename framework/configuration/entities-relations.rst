@@ -172,7 +172,7 @@ Field-Types
 -----------
 binary
 ^^^^^^
-Field to store Binaries. It will be stored as nullable ``VARCHAR(40)`` in a postgres db.
+Field to store binaries. It will be stored as nullable ``VARCHAR(40)`` in a postgres db.
 
 birthdate
 ^^^^^^^^^
@@ -180,7 +180,7 @@ Date field that is used to store birthdays. It will be stored as ``DATE`` in a p
 
 boolean
 ^^^^^^^
-Field to store boolean values. In an edit-form this will be displayed as Checkbox. It will be stored as not null ``BOOLEAN``  in a postgres db.
+Field to store boolean values. In an edit-form this will be displayed as checkbox. It will be stored as not null ``BOOLEAN``  in a postgres db.
 
 counter
 ^^^^^^^
@@ -188,35 +188,35 @@ Long field that is automatically set to the next available number in the current
 
 date
 ^^^^
-Field to store Dates. In an edit-form this will be displayed as Datepicker. It will be stored as ``DATE`` in a postgres db.
+Field to store dates. In an edit-form this will be displayed as Datepicker. It will be stored as ``DATE`` in a postgres db.
 
 datetime
 ^^^^^^^^
-Field to store Datetimes. In an edit-form this will be displayed as Datetimepicker. It will be stored as ``TIMESTAMP`` in a postgres db.
+Field to store datetimes. In an edit-form this will be displayed as Datetimepicker. It will be stored as ``TIMESTAMP`` in a postgres db.
 
 document
 ^^^^^^^^
-Field to store Documents. It will be stored as nullable ``VARCHAR(40)`` in a postgres db.
+Field to store documents. It will be stored as nullable ``VARCHAR(40)`` in a postgres db.
 
 email
 ^^^^^
-Field to store E-Mail addresses. The content will be validated and needs to be a "real" E-Mail address. It will be stored as nullable ``VARCHAR(255)`` in a postgres db.
+Field to store e-mail addresses. The content will be validated and needs to be a "real" e-mail address. It will be stored as nullable ``VARCHAR(255)`` in a postgres db.
 
 phone
 ^^^^^
-Field to store Phone-Numbers. The content will be validated using our phone number library. It will be stored as nullable ``VARCHAR(255)`` in a postgres db.
+Field to store phone-numbers. The content will be validated using our phone number library. It will be stored as nullable ``VARCHAR(255)`` in a postgres db.
 
 serial
 ^^^^^^
-Long value that will be incremented automatically on the database. This is used for Primary Keys. It will be stored as ``BIGINT`` in a postgres db.
+Long value that will be incremented automatically on the database. This is used for primary keys. It will be stored as ``BIGINT`` in a postgres db.
 
 string
 ^^^^^^
-String field for short texts (e.g. Firstname, Lastname, Label, ...). These fields will be displayed as textfields. It will be stored as ``VARCHAR(255)`` in a postgres db.
+String field for short texts (e.g. firstname, fastname, label, ...). These fields will be displayed as textfields. It will be stored as ``VARCHAR(255)`` in a postgres db.
 
 text
 ^^^^
-String field for long texts (e.g. Description, ...). These fields will be displayed as Text-Areas. It will be stored as ``TEXT`` in a postgres db.
+String field for long texts (e.g. description, ...). These fields will be displayed as text-areas. It will be stored as ``TEXT`` in a postgres db.
 
 Field-Validation
 ----------------
