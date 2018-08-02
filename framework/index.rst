@@ -6,5 +6,6 @@ Tocco Framework
 
    architecture/index
    client/index
+   configuration/index
    rest/index
    modules/index
