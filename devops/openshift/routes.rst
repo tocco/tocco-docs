@@ -45,6 +45,8 @@ Add Route / Hostname
 SSL Certificates
 ----------------
 
+.. _ssl-cert-issuance:
+
 Issuance
 ^^^^^^^^
 
@@ -52,7 +54,7 @@ SSL certificates are issued automatically for routes with an appropriate annotat
 
 Obtain the name of the route (**${ROUTE}**)::
 
-    oc route get
+    oc get route
 
 Add the annotation:
 
