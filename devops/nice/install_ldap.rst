@@ -4,7 +4,7 @@ How to get LDAP running on Openshfit
 What is LDAP used for?
 ======================
 
-LDAP is used to expose certain directories from a Database to the outer world. In our case for example we expose credentials, so that you have the same login everywhere. 
+LDAP is used to expose certain directories from a Database to the outer world. In our case for example we expose credentials, so that you have the same login everywhere.
 
 Install LDAP on nice2
 =====================
@@ -14,23 +14,24 @@ Create the Image with the Key
 
 .. attention::
 
-   You have to pull the ansible repository to access the files mentioned below. You can pull the project with the following command: **git clone ssh://${GERRIT_USERNAME}@git.tocco.ch:29418/ansible**
+   You have to clone the ansible repository to access the files mentioned below. You can clone the project with the
+   following command: **git clone ssh://${GERRIT_USERNAME}@git.tocco.ch:29418/ansible**
 
 1. Copy the key into the ldap-image diretory in the ansible project. It has to be an SSL Private key in a Java keystore.
 
 .. code::
 
-   cp  ${PATH_TO_KEYFILE}/key.ks ${PATH_TO_ANSIBLE}/openshift/ldap-image 
+   cp  ${PATH_TO_KEYFILE}/key.ks ${PATH_TO_ANSIBLE}/openshift/ldap-image
 
 2. Set the right path for the key file inside the Dockerfile. Inside the Dockerfile the path of the key file is denoted as ${PATH_TO_KEYFILE}, so just execute the following
 
-.. code:: 
+.. code::
 
    export PATHTOKEYFILE="/persists/${KEYFILE}"
 
 3. Build the docker image and push it.
 
-.. code:: 
+.. code::
 
    docker built -t registry.appuio.ch/toco-nice-${INSTALLATION}/${CUSTOMER}:ldap .
 
@@ -39,7 +40,7 @@ Create the Image with the Key
 Add the Secret and Service to the Project
 -----------------------------------------
 
-1. Create a secret for to mount the key into the nice container. There is a yaml file as template, just execute it with oc process. 
+1. Create a secret for to mount the key into the nice container. There is a yaml file as template, just execute it with oc process.
 
 .. code::
 
@@ -49,14 +50,14 @@ Add the Secret and Service to the Project
 
 .. code::
 
-   oc process -f ldap-service-template.yml | oc create -f - 
+   oc process -f ldap-service-template.yml | oc create -f -
 
 Adjust the Deployment Config
 ----------------------------
 
-1. Add the following APP Parameters to the Deployment Config. 
+1. Add the following APP Parameters to the Deployment Config.
 
-.. code:: 
+.. code::
 
    oc set env dc/nice NICE2_APP_nice2__optional__ldapserver__enabled="true" NICE2_APP_nice2__optional__ldapserver__port="10389" NICE2_APP_nice2__optional__ldapserver__certificatePassword="${CERTIFICATE_PASSWORD}" NICE2_APP_nice2__optional__ldapserver__keyStoreFile="/persist/${KEYFILE}"
 
@@ -64,4 +65,4 @@ Adjust the Deployment Config
 
 .. parsed-literal::
 
-   oc volume dc/nice -m /persist --secret-name ldap-secret --claim-name ldap-secret --add 
+   oc volume dc/nice -m /persist --secret-name ldap-secret --claim-name ldap-secret --add
