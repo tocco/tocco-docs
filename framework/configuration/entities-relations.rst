@@ -218,8 +218,8 @@ text
 ^^^^
 String field for long texts (e.g. description, ...). These fields will be displayed as text-areas. It will be stored as ``TEXT`` in a postgres db.
 
-Field-Validation
-----------------
+Validation
+----------
 Validations can be defined for every field.
 
 .. code-block:: xml
@@ -400,3 +400,176 @@ Attributes of the diplay type:
 
 * **type** (string)
    Optional. If this is not set, the display will be used as default display. If an entity needs more than one display, they can be distinguished using the type attribute. Common types are ``tooltip``, ``search`` (Used for fulltext search results) and ``resourceCalendarTooltip`` (used in Ressource-Calendar).
+
+Relations
+---------
+The relation configuration consists of a `Source- & Target-Elements`_ configuration, the `Cardinality`_ and additional `Optional Configuration`_. This configuraiton is written in and must be stored in a file using the naming convention ``Entity_name_relRelation_target.xml`` in the ``relations`` subfolder of the model folder.
+
+.. tip::
+
+   In most cases the ``Relation_target`` is the entity name of the target entity.
+
+Example-Path in an optional module: ``optional/modulename/module/model/relations/Entity_name_relRelation_target.xml``
+
+Example-Path in a customer module: ``customer/customername/share/model/relations/Entity_name_relRelation_target.xml``
+
+
+.. code-block:: xml
+
+   <?xml version="1.0" encoding="UTF-8"?>
+   <relation xmlns="http://nice2.tocco.ch/schema/relation.xsd">
+     <source entity-model="User">
+       <delete cascade="no"/>
+       <display show="false"/>
+     </source>
+     <target entity-model="User_code1"/>
+     <cardinality>n:n</cardinality>
+   </relation>
+
+Source- & Target-Elements
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: xml
+
+   <source entity-model="Membership" name="relSingle_user">
+     <delete cascade="no"/>
+     <display show="false"/>
+   </source>
+   <target entity-model="User" name="relSingle_user_membership" label="">
+     <delete cascade="no"/>
+     <display show="true" order="30"/>
+   </target>
+   <cardinality>n:0..1</cardinality>
+
+Source- and Target-Elements define how the relation works. The source as well as the target element consists of attributes and child elements.
+
+**Attributes:**
+
+* entity-model
+   The entity-model-name this name refers to the names used in the entity-configurations.
+
+* name
+   The relation-name. If not specified, it will be ``relEntity_name``. The source/target-entity and the name of the relation identifies it. If you specify a relation on two or more locations, the configurations-system will merge it to a single relation.
+
+* label
+   A label for this relation. If nothing specified, it will be ``entities.{target/source-entity-name}.{relation-name}``.
+
+* lock
+   Does this relation lock the related entities if the source-entity is locked? Be careful to not cascade-lock the entire database. **When in doubt, leave it out.**
+
+**Child-Elements:**
+
+* delete
+   Specify the delete-behavior of this relation with the ``cascade`` and ``visualisation`` -attribute.  ``cascade`` defines wheter there will be cascading deletion or not, ``visualisation`` specifies how the cascading-deletion is presented to the user. Visualisation is mandatory if cascading delete is used and forbidden otherwise.
+
+   **cascade-options:**
+
+   * ``no``: no cascading delete (default)
+
+   * ``if_last``: only cascade-delete, if no other entity of this type refers to the same instance as the current entity does
+
+   * ``yes``: cascade-delete
+
+   * ``deny``: deny cascading delete
+
+   **visualisation-options:**
+
+   * ``silent``: the user doesn't see the cascade-deleted items
+
+   * ``warn``: the user sees the cascade-deleted items, but he cannot change it.
+
+   * ``editable``: the user sees the cascade-deleted items and can select and deselect it.
+
+* display
+   Specify wheter a tab of this relation should be shown on the respective entity. Display is configurable with the two attributes ``show`` (boolean) and ``order`` (int). ``show`` defines whether the relation tab will be shown or not. If it is shown, the position of the tab can be controlled with ``order`` (lower ``order`` tabs are further to the left).
+
+* selector
+   Selectors allow to select single entity when resolving a n:n or 1:n relation. This selected entity can then be used in forms. For instance, you could create selector 'current' which selects the current license and then reference it in a form like this: ``<field data="relLicense[current].valid_until">``
+
+.. code-block:: xml
+
+   <target entity-model="User" name="relSingle_user_membership">
+     <selector name="new" type="script:js">
+       <![CDATA[
+         function isSelected(model, source, target) {
+           return source.getKey() == null; // always create a new membership
+         }
+       ]]>
+     </selector>
+   </target>
+
+* visualisation
+   The visualisation element can be used to change how a relation is displayed (e.g. Radio buttons instead of a Combobox)
+
+.. code-block:: xml
+
+   <source entity-model="User">
+     <delete cascade="no"/>
+     <visualisation>
+       <select-box>
+         <layout>
+           <radio-group orientation="vertical" num-columns="1"/>
+         </layout>
+       </select-box>
+     </visualisation>
+   </source>
+
+Cardinality
+^^^^^^^^^^^
+Available cardinalities are ``n:0..1`` (optional), ``n:1`` (mandatory) and ``n:n``.
+
+Optional Configuration
+^^^^^^^^^^^^^^^^^^^^^^
+
+**Attributes:**
+
+* replace (true, *false*)
+   When true then this relation model replaces an already existing one. If false (default) then the relation is new or extends an existing relation, and may be overridden later.
+
+   .. code-block:: xml
+
+      <?xml version="1.0" encoding="UTF-8"?>
+      <relation xmlns="http://nice2.tocco.ch/schema/relation.xsd" replace="true">
+        ...
+      </relation>
+
+
+* disabled (true, *false*)
+   If this relation shall be ignored after loading. The syntax still has to validate, but after that it's as if it would not exist. The name of the entity may be the same as one of another file (no uniqueness enforced). This is useful for example when making a new version of an entity but not activating it yet.
+
+   .. warning::
+      This should probably never be used.
+
+
+**Elements:**
+
+* link
+   How do the source and target get linked together. This is very backend-specific.
+
+   JDBC:
+
+   * on n:n ``link_table:source_keyfields:target_keyfields``
+
+   .. code-block:: xml
+
+      <link>nice_event_to_address:fk_event:fk_address</link>
+
+   * on n:1 ``source_keyfields``
+
+   .. code-block:: xml
+
+      <link>fk_client</link>
+
+   * On multiple-keyfields, the field are comma-seperated. The system first tries to take the entity-names. If it fails, it takes the backend-names.
+
+   .. warning::
+      The link configuration should only be configured if it really needs to deviate from the default configuration!
+
+* default
+   Defines the default value for this relation. See `Default-Values`_.
+
+* validations
+   Can be used to make a ``n:n`` relation mandatory. See `Validation`_. **Most validation options won't work for relations.**
+
+   .. warning::
+      only use this for ``n:n`` relations. ``n:0..1`` should be changed to ``n:1`` if it needs to be mandatory.
