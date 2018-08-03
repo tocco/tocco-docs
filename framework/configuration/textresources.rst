@@ -14,7 +14,7 @@ Customer-Module Example (Locales ``de`` and ``fr`` installed):
 ``customer/customername/share/model/textresources/language_fr.properties``
 
 .. warning::
-In every ``textresources`` folder, each key must be on the same line in every textresource file available for the respective module.
+   In every ``textresources`` folder, each key must be on the same line in every textresource file available for the respective module.
 
 Example content:
 
