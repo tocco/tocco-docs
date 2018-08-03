@@ -73,19 +73,19 @@ Step by Step Instructions
 
 #. Clone the `Ansible Git Repository`_
 
-   .. parsed-literal::
+    .. parsed-literal::
 
-       git clone ssh://**${USER}**\ @git.tocco.ch:29418/ansible.git
+        git clone ssh://**${USER}**\ @git.tocco.ch:29418/ansible.git
 
 #. Go to the ``openshift`` directory within the repository.
 
-   .. code::
+    .. code::
 
-       cd ansible/openshift
+        cd ansible/openshift
 
 #. Ensure the repository is up-to-date
 
-   .. code::
+    .. code::
 
         git pull
 
@@ -103,77 +103,83 @@ Step by Step Instructions
 
 #. Create all resources required
 
-   .. parsed-literal::
+    .. parsed-literal::
 
-       oc process -f nice-template.yml CUSTOMER=\ **${CUSTOMER}** INSTALLATION=\ **${INSTALLATION}** RUN_ENV=\ **${RUN_ENV}** DB_PASS=\ **${DB_PASS}** | oc create -f -
+        oc process -f nice-template.yml CUSTOMER=\ **${CUSTOMER}** INSTALLATION=\ **${INSTALLATION}** RUN_ENV=\ **${RUN_ENV}** DB_PASS=\ **${DB_PASS}** | oc create -f -
 
-   Parameter are specified using ``KEY=VALUE``, this is the list of **mandatory** parameters:
+    Parameter are specified using ``KEY=VALUE``, this is the list of **mandatory** parameters:
 
-   =================== ===============================================================================================
-    Key                 Value
-   =================== ===============================================================================================
-    CUSTOMER            Name of the customer (e.g. agogis or ecap but never :strike:`agogistest` or
-                        :strike:`ecaptest`).
+    =================== ===============================================================================================
+     Key                 Value
+    =================== ===============================================================================================
+     CUSTOMER            Name of the customer (e.g. agogis or ecap but never :strike:`agogistest` or
+                         :strike:`ecaptest`).
 
-    INSTALLATION        Name of the installation (e.g. ecap or ecaptest)
+     INSTALLATION        Name of the installation (e.g. ecap or ecaptest)
 
-                        :subscript:`The name of a test system MUST end in "test"!`
+                         :subscript:`The name of a test system MUST end in "test"!`
 
-    RUN_ENV             Run environment which must be one of ``production`` or ``test``.
-   =================== ===============================================================================================
+     RUN_ENV             Run environment which must be one of ``production`` or ``test``.
+    =================== ===============================================================================================
 
-   Additionally, these optional parameters are available. **(Default values should suffice mostly.)**
+    Additionally, these optional parameters are available. **(Default values should suffice mostly.)**
 
-   ====================== ==========================================================================================
-    Key                    Value
-   ====================== ==========================================================================================
-    DB_PASS                Password for database access.
+    ====================== ==========================================================================================
+     Key                    Value
+    ====================== ==========================================================================================
+     DB_PASS                Password for database access.
 
-                           :subscript:`Randomly generated if left off.`
+                            :subscript:`Randomly generated if left off.`
 
-    DB_SERVER              URL to the Postgres database server.
+     DB_SERVER              URL to the Postgres database server.
 
-    DB_SSL_MODE            Postgres SSL mode as described in `libpg - SSL Support`_. Defaults to ``require``.
+     DB_SSL_MODE            Postgres SSL mode as described in `libpg - SSL Support`_. Defaults to ``require``.
 
-    DOCKER_REGISTRY_URL    URL to the Docker image registry.
+     DOCKER_REGISTRY_URL    URL to the Docker image registry.
 
-    HSTS_SECS              ``max-time`` used for Strict-Transport-Security HTTP header.
+     HSTS_SECS              ``max-time`` used for Strict-Transport-Security HTTP header.
 
-    NICE_MEMORY_LIMIT      Max. memory available to a nice :term:`pod`. See :ref:`nice-memory` for details.
+     NICE_MEMORY_LIMIT      Max. memory available to a nice :term:`pod`. See :ref:`nice-memory` for details.
 
-    NICE_REQUESTED_MEMORY  Memory requested from OpenShift for running a nice :term:`pod`. See :ref:`nice-memory` for
-                           details.
+     NICE_REQUESTED_MEMORY  Memory requested from OpenShift for running a nice :term:`pod`. See :ref:`nice-memory` for
+                            details.
 
-    SOLR_MEMORY_LIMIT      Max. memory available to the solr :term:`pod`. See :ref:`solr-memory` for details.
+     SOLR_MEMORY_LIMIT      Max. memory available to the solr :term:`pod`. See :ref:`solr-memory` for details.
 
-    SOLR_REQUESTED_MEMORY  Memory requested from OpenShift for running solr. See :ref:`solr-memory` for details.
+     SOLR_REQUESTED_MEMORY  Memory requested from OpenShift for running solr. See :ref:`solr-memory` for details.
 
-    SMTP_RELAY             Hostname of SMTP relay.
+     SMTP_RELAY             Hostname of SMTP relay.
 
-    SOLR_DISK_SPACE        Persistent disk space available to :term:`Solr` (e.g. ``512Mi`` or ``5Gi``).
-   ====================== ==========================================================================================
+     SOLR_DISK_SPACE        Persistent disk space available to :term:`Solr` (e.g. ``512Mi`` or ``5Gi``).
+    ====================== ==========================================================================================
 
-   ..  _libpg - SSL Support:  https://www.postgresql.org/docs/current/static/libpq-ssl.html#LIBPQ-SSL-PROTECTION
+    ..  _libpg - SSL Support:  https://www.postgresql.org/docs/current/static/libpq-ssl.html#LIBPQ-SSL-PROTECTION
 
 #. For all customers with module **LMS**, a persistent volume must be created at ``/app/var/lms``
 
-     See :ref:`persistent-volume` for more details.
+    See :ref:`persistent-volume` for more details.
 
 #. Add SSL certificate for ${INSTALLATION}.tocco.ch
 
-   .. parsed-literal::
+    .. parsed-literal::
 
         oc annotate route/nice kubernetes.io/tls-acme=true
 
-   .. warning::
+    .. warning::
 
         The DNS entry for ${INSTALLATION} must exists and be correct at this point.
 
-   More details, including troubleshooting information, can be found in :ref:`ssl-certificates`.
+    More details, including troubleshooting information, can be found in :ref:`ssl-certificates`.
 
 #. Add additional Routes / Hostnames if Needed
 
     ${INSTALLATION}.tocco.ch is automatically created. If you need more routes see :ref:`add-route`.
+
+#. Setup monitoring
+
+    Setup monitoring as described in the section "Nagios Monitoring einrichten" in
+    `this document <https://www.tocco.ch/intranet/tocco-workspace/prozesse-workflows/prozesse#detail&key=301>`__.
+
 
 .. important::
 
@@ -181,7 +187,7 @@ Step by Step Instructions
 
 .. note::
 
-  The installation is automatically started once :term:`CD` pushes an image to the Docker registry.
+    The installation is automatically started once :term:`CD` pushes an image to the Docker registry.
 
 
 .. rubric:: Footnotes
