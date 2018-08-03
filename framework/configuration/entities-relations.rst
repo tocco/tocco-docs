@@ -387,7 +387,7 @@ Attributes of the diplay type:
 
 Relations
 ---------
-The relation configuration consists of a `Source- & Target-Elements`_ configuration, the `Cardinality`_ and additional `Optional Configuration`_. This configuraiton is written in and must be stored in a file using the naming convention ``Entity_name_relRelation_target.xml`` in the ``relations`` subfolder of the model folder.
+The relation configuration consists of a `Source- & Target-Elements`_ configuration, the `Cardinality`_ and additional `Optional Configuration`_. This configuration is written in xml and must be stored in a file using the naming convention ``Entity_name_relRelation_target.xml`` in the ``relations`` subfolder of the model folder.
 
 .. tip::
 
@@ -434,6 +434,9 @@ Source- and Target-Elements define how the relation works. The source as well as
 
 * name
    The relation-name. If not specified, it will be ``relEntity_name``. The source/target-entity and the name of the relation identifies it. If you specify a relation on two or more locations, the configurations-system will merge it to a single relation.
+
+   .. tip::
+      If multiple relations to the same target entity are needed (e.g. a "target" User and an "apply" User on Licences), they have to be named accordingly.
 
 * label
    A label for this relation. If nothing specified, it will be ``entities.{target/source-entity-name}.{relation-name}``.
