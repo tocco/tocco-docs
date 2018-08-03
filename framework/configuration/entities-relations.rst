@@ -1,13 +1,13 @@
 Entities and Relations
 ======================
 
-Entities and Relations define the database model of an application. For each entity, a table will be created. Relations represented as either foreign keys (**n:1**, **n:0..1**) or connectivity tables (**n:n**).
+Entities and Relations define the database model of an application. For each entity, a table will be created. Relations are represented as either foreign keys (**n:1**, **n:0..1**) or connectivity tables (**n:n**).
 
 
 Entities
 --------
 
-The entity configuration consists of global attributes, a field- and a visualisation-configuration. This configuration is written in xml and must be stored in a file using the naming convention ``Entity_name.xml`` in the ``entities`` subfolder of the model folder.
+The entity configuration consists of global `Entity-Attributes`_, a `Field-Configuration`_ and a `Visualisation`_-Configuration. This configuration is written in xml and must be stored in a file using the naming convention ``Entity_name.xml`` in the ``entities`` subfolder of the model folder.
 
 Example-Path in an optional module: ``optional/modulename/module/model/entities/Entity_name.xml``
 Example-Path in a customer module: ``customer/customername/share/model/entities/Entity_name.xml``
@@ -71,7 +71,7 @@ Used for fulltext search (index)
 
 remote-field-new-button (*true*, false)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-If remotefields with the target equals this entity had the create button displayed per default or not
+Defines whether remotefields with the target equals this entity have the create button displayed per default or not.
 
 session-only (true, *false*)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -127,100 +127,84 @@ Differences between standard and lookup entities
 
 * Relations to lookup entities will be displayed in simple Comboboxes in an Edit-Form. Relations to standard entities will be displayed as Remote-Fields.
 
-Field-Attributes
-----------------
-Field-Attributes are attributes of the ``<field>`` tag.
+Field-Configuration
+-------------------
+The field configuration contains as well information used to create database columns as information used to initialize the corresponding frontend components.
 
 .. code-block:: xml
 
-   <field name="label" type="string" localized="true">
+   <field name="label" type="string" localized="true" xss-filter="false"/>
 
-name (string)
-^^^^^^^^^^^^^
-The name of the entity-field. This name has to be unique for this entity-model. If this name is specified in more than one configuration, the system will merge them to a single entity-field.
+Attributes
+^^^^^^^^^^
 
-label (string)
-^^^^^^^^^^^^^^
-The label of this field. If not specified it will be a textresource whith the key following the rule ``entities.EntityName.fieldName``
+* name (string)
+   The name of the entity-field. This name has to be unique for this entity-model. If this name is specified in more than one configuration, the system will merge them to a single entity-field.
 
-localized (true, *false*)
-^^^^^^^^^^^^^^^^^^^^^^^^^
-If the field is localized, a field for each locale will be created. These fields will be called ``name_locale`` (e.g. ``label_de``).
+* label (string)
+   The label of this field. If not specified it will be a textresource whith the key following the rule ``entities.EntityName.fieldName``
 
-doc (string)
-^^^^^^^^^^^^
-Documentation of the entity, describing its meaning, purpose and important information to mention regarding the usage of the model. The rendering process of the entity model's documentation merges documentation into extending models and supports Markdown syntax. Therefore, the usage of Markdown is recommended to highlight important information or so tag specific terms as code elements. supports Markdown syntax.
+* localized (true, *false*)
+   If the field is localized, a field for each locale will be created. These fields will be called ``name_locale`` (e.g. ``label_de``).
 
-xss-filter (*true*, false)
-^^^^^^^^^^^^^^^^^^^^^^^^^^
-XSS-filter activates XssProtectionFieldValidator. Activated by default on any string-based field.
+* doc (string)
+   Documentation of the entity, describing its meaning, purpose and important information to mention regarding the usage of the model. The rendering process of the entity model's documentation merges documentation into extending models and supports Markdown syntax. Therefore, the usage of Markdown is recommended to highlight important information or so tag specific terms as code elements. supports Markdown syntax.
 
-unique (true, *false*)
-^^^^^^^^^^^^^^^^^^^^^^
-Adds a validator that checks a field value for uniqueness.
+* xss-filter (*true*, false)
+   XSS-filter activates XssProtectionFieldValidator. Activated by default on any string-based field.
 
-type (string)
-^^^^^^^^^^^^^
-See `Field-Types`_.
+* unique (true, *false*)
+   Adds a validator that checks a field value for uniqueness.
 
-target (string)
-^^^^^^^^^^^^^^^
-The target of this field. For example the database-table-field. If this isn't specified, it will be the same as the name of the field.
+* type (string)
+   See `Field-Types`_.
+
+* target (string)
+   The target of this field. For example the database-table-field. If this isn't specified, it will be the same as the name of the field.
 
 
 Field-Types
------------
-binary
-^^^^^^
-Field to store binaries. It will be stored as nullable ``VARCHAR(40)`` in a postgres db.
+^^^^^^^^^^^
 
-birthdate
-^^^^^^^^^
-Date field that is used to store birthdays. It will be stored as ``DATE`` in a postgres db.
+* binary
+   Field to store binaries. It will be stored as nullable ``VARCHAR(40)`` in a postgres db. Binaries are stored as large objects in the postgres database and there is a reference table called ``_nice_binary`` which contains the hash and the large object id for each binary. The ``binary`` field, stores the 40 character hash of the binary.
 
-boolean
-^^^^^^^
-Field to store boolean values. In an edit-form this will be displayed as checkbox. It will be stored as not null ``BOOLEAN``  in a postgres db.
+* birthdate
+   Date field that is used to store birthdays. It will be stored as ``DATE`` in a postgres db.
 
-counter
-^^^^^^^
-Long field that is automatically set to the next available number in the current business unit. This uses the ``Counter`` entity to track the current counter value of each business-unit. It will be stored as ``BIGINT``  in a postgres db.
+* boolean
+   Field to store boolean values. In an edit-form this will be displayed as checkbox. It will be stored as not null ``BOOLEAN``  in a postgres db.
 
-date
-^^^^
-Field to store dates. In an edit-form this will be displayed as Datepicker. It will be stored as ``DATE`` in a postgres db.
+* counter
+   Long field that is automatically set to the next available number in the current business unit. This uses the ``Counter`` entity to track the current counter value of each business-unit. It will be stored as ``BIGINT``  in a postgres db.
 
-datetime
-^^^^^^^^
-Field to store datetimes. In an edit-form this will be displayed as Datetimepicker. It will be stored as ``TIMESTAMP`` in a postgres db.
+* date
+   Field to store dates. In an edit-form this will be displayed as Datepicker. It will be stored as ``DATE`` in a postgres db.
 
-document
-^^^^^^^^
-Field to store documents. It will be stored as nullable ``VARCHAR(40)`` in a postgres db.
+* datetime
+   Field to store datetimes. In an edit-form this will be displayed as Datetimepicker. It will be stored as ``TIMESTAMP`` in a postgres db.
 
-email
-^^^^^
-Field to store e-mail addresses. The content will be validated and needs to be a "real" e-mail address. It will be stored as nullable ``VARCHAR(255)`` in a postgres db.
+* document
+   Field to store documents. It will be stored as nullable ``VARCHAR(40)`` in a postgres db.
 
-phone
-^^^^^
-Field to store phone-numbers. The content will be validated using our phone number library. It will be stored as nullable ``VARCHAR(255)`` in a postgres db.
+* email
+   Field to store e-mail addresses. The content will be validated and needs to be a "real" e-mail address. It will be stored as nullable ``VARCHAR(255)`` in a postgres db.
 
-serial
-^^^^^^
-Long value that will be incremented automatically on the database. This is used for primary keys. It will be stored as ``BIGINT`` in a postgres db.
+* phone
+   Field to store phone-numbers. The content will be validated using our phone number library. It will be stored as nullable ``VARCHAR(255)`` in a postgres db.
 
-string
-^^^^^^
-String field for short texts (e.g. firstname, fastname, label, ...). These fields will be displayed as textfields. It will be stored as ``VARCHAR(255)`` in a postgres db.
+* serial
+   Long value that will be incremented automatically on the database. This is used for primary keys. It will be stored as ``BIGINT`` in a postgres db.
 
-text
-^^^^
-String field for long texts (e.g. description, ...). These fields will be displayed as text-areas. It will be stored as ``TEXT`` in a postgres db.
+* string
+   String field for short texts (e.g. firstname, fastname, label, ...). These fields will be displayed as textfields. It will be stored as ``VARCHAR(255)`` in a postgres db.
+
+* text
+   String field for long texts (e.g. description, ...). These fields will be displayed as text-areas. It will be stored as ``TEXT`` in a postgres db.
 
 Validation
 ----------
-Validations can be defined for every field.
+Validations can be defined for fields and relations.
 
 .. code-block:: xml
 
@@ -337,7 +321,7 @@ The default for this attribute is hard.
 
 set-on-template
 ^^^^^^^^^^^^^^^
-The default value for this attribute is ``no`` if the field is writable. On readonly fields, the default gets always set it the field is empty
+The default value for this attribute is ``no`` if the field is writable. On readonly fields, the default gets always set if the field is empty.
 
 * no
    Don't set the default value.
