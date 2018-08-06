@@ -56,3 +56,22 @@ If restarting Docker doesn't help either, try to restart the whole virtual machi
 
 .. parsed-literal::
    $ sudo reboot
+
+If you cannot access the virtual machine at all, try restarting/resetting the machine via the Proxmox web interface:
+
+1. Open Proxmox web interface in the browser: https://host03a:8006
+2. Log in with `root`
+3. Find the machine **115 (tcserver01)** in the navigation menu on the left
+4. Press the "Start" button on the right if the machine is not running or select "Reset" from the "Shutdown" menu
+
+Restart an agent
+""""""""""""""""
+
+If one of the agents is not available, check via Proxmox web interface if the virtual machine is running and restart
+it if necessary.
+
+1. Look up the host machine here: :doc:`index`
+2. Open Proxmox web interface in the browser: https://**${HOST}**:8006 (e.g. https://host03c:8006/ for TC-Agent-4)
+3. Log in with `root`
+4. Find the agent machine in the navigation menu on the left
+5. Press the "Start" button on the right if the machine is not running or select "Reset" from the "Shutdown" menu
