@@ -48,6 +48,12 @@ See `Elements and Attributes`_ for the full documentation.
 
 Add the menu in the ``menu.acl`` file of the module to define who can see it. See chapter :ref:`acl`.
 
+.. warning::
+   Make sure xml files are build into the snapshot by adding xml files as resource in the module pom.xml.
+
+   .. todo::
+      add reference as soon as modules chapter is written.
+
 .. hint::
    Module menu entries are not nested. This means no nested menu-tags.
 
@@ -109,6 +115,12 @@ A possible ``modules.extend.xml`` file could look like this:
 * settings->address->user->competence is a nested menu structure.
 
 Add the menu in the ``menu.acl`` file of the module to define who can see it. See chapter :ref:`acl`.
+
+.. warning::
+   Make sure xml files are build into the snapshot by adding xml files as resource in the module pom.xml.
+
+   .. todo::
+      add reference as soon as modules chapter is written.
 
 .. hint::
    Setting menu entries are often nested. This means nested menu-tags.
