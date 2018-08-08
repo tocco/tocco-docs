@@ -56,10 +56,8 @@ Entities
 Apart from the usual :java:extdoc:`Entity<javax.persistence.Entity>` annotation, the database table name is
 explicitly defined with the :java:extdoc:`Table<javax.persistence.Table>` annotation (we need to use the same
 naming strategy to be compatible with existing databases).
-A custom :java:extdoc:`EntityPersister<org.hibernate.persister.entity.EntityPersister>` is defined as well.
-
-.. todo::
-   Add link to persister chapter
+A custom :java:extdoc:`EntityPersister<org.hibernate.persister.entity.EntityPersister>` is defined as well (see
+:ref:`persister` for details).
 
 Fields
 ^^^^^^
@@ -166,10 +164,7 @@ However when a  :java:ref:`Relation<ch.tocco.nice2.persist.entity.Relation>` is 
 loaded from the database (because this was the behaviour of the old persistence implementation).
 To support this behaviour we use a custom collection type (:java:extdoc:`CollectionType<org.hibernate.annotations.CollectionType>`).
 
-.. todo::
-   Add link to collection chapter
+See :ref:`collections` chapter for more details.
 
-A custom :java:extdoc:`CollectionPersister<org.hibernate.persister.collection.CollectionPersister>` is also configured.
-
-.. todo::
-   Add link to persister chapter
+A custom :java:extdoc:`CollectionPersister<org.hibernate.persister.collection.CollectionPersister>` is also configured (see
+:ref:`persister` for details).
