@@ -49,7 +49,7 @@ See `Elements and Attributes`_ for the full documentation.
 Add the menu in the ``menu.acl`` file of the module to define who can see it. See chapter :ref:`acl`.
 
 .. warning::
-   Make sure xml files are build into the snapshot by adding xml files as resource in the module pom.xml.
+   Make sure xml files are built into the snapshot by adding xml files as resource in the module pom.xml.
 
    .. todo::
       add reference as soon as modules chapter is written.
