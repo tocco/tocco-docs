@@ -6,3 +6,4 @@ Configuration
    :glob:
 
    *
+   modules/index

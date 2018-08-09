@@ -1,0 +1,54 @@
+Different Module Types
+======================
+
+Nice2 is split into different type of modules.
+
+Core Modules
+^^^^^^^^^^^^
+
+Core modules provide the basic functionality of a Nice2 installation. All core modules are always installed on every
+installation. A Nice2 installation would not work without them.
+
+Core modules can be found in: ``nice2-project/*``
+
+Optional Modules
+^^^^^^^^^^^^^^^^
+
+Optional modules (also called marketing modules) are, as the name lets guess, optional. An optional module represents a
+feature or functionality which a customer can add to his installation depending on his demand.
+
+Optional modules can be found in: ``nice2-project/optional/*``
+
+Customer Modules
+^^^^^^^^^^^^^^^^
+
+For every customer installation a customer module exists. A customer module configures the installation of the customer.
+A customer module defines which optional modules (marketing modules) are installed. Also customer specific adjustments
+which only belong to the customer are done in customer modules.
+
+Customer modules can be found in: ``nice2-project/customer/*``
+
+Between Modules
+^^^^^^^^^^^^^^^
+
+A between module is always needed if a feature or functionality should be added **automatically** if two or more specific
+modules are installed and this new feature should **not be licenced separately**.
+For example if there are two modules ``A`` and ``B`` which both contain different entity models and a new action should
+be added which needs the entity models of both modules automatically if both modules are installed a ``between module``
+needs to be added which depends on the modules ``A`` and ``B``.
+
+If the feature would be licenced separately it could just be a new optional module with dependencies on the modules ``A``
+and ``B``.
+
+The name of a between module consists of the names of the depending modules. For example the module ``licencecorrespondence``
+depends on the modules ``licence`` and ``correspondence``.
+
+Between modules can be found in: ``nice2-project/optional/*``
+
+.. hint::
+**A between module**
+
+   * adds functionality automatically if at leas two other specific optional modules are installed
+   * depends on at least two other modules
+   * is not licenced separately (otherwise it could be an optional module)
+   * has a name that consists of the names of the depending modules

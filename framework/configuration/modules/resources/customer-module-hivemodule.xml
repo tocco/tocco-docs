@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<module id="nice2.customer.mynewcustomer" version="1.0.0" package="ch.tocco.nice2.customer.mynewcustomer">
+
+  <contribution configuration-id="hiveapp.ModuleInfo">
+    <info>
+      <description>
+        Customer mynewcustomer
+      </description>
+      <vendor>Tocco AG</vendor>
+      <copyright>Copyright (C) 2018 by Tocco AG. All rights reserved.</copyright>
+    </info>
+  </contribution>
+
+  <contribution configuration-id="hiveapp.ClassLoader">
+    <export package="ch.tocco.nice2.customer.mynewcustomer" version="1.0"/>
+    <import feature="org.postgresql" version="*"/>
+    <import feature="ch.tocco.nice2.persist.backend.jdbc.hikaricp" version="*"/>
+  </contribution>
+
+  <service-point id="DefaultDataSource" interface="javax.sql.DataSource">
+    <invoke-factory>
+      <construct class="ch.tocco.nice2.persist.backend.jdbc.hikaricp.HikariCPService">
+        <set-object property="defaultConf" value="vfs:[nice2.persist.backend.postgres]/hikaricp.properties"/>
+        <set-object property="applicationConf" value="vfs:[#etc]/hikaricp.properties"/>
+        <set-object property="localConf" value="vfs:[#etc]/hikaricp.local.properties"/>
+      </construct>
+    </invoke-factory>
+  </service-point>
+
+  <contribution configuration-id="hiveapp.DataSources">
+    <data-source id="default" source="service:DefaultDataSource"/>
+  </contribution>
+</module>
