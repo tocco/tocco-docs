@@ -1,3 +1,5 @@
+:orphan:
+
 .. _application-properties:
 
 Application Properties

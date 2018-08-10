@@ -46,7 +46,7 @@ depends on the modules ``licence`` and ``correspondence``.
 Between modules can be found in: ``nice2-project/optional/*``
 
 .. hint::
-**A between module**
+   **A between module**
 
    * adds functionality automatically if at leas two other specific optional modules are installed
    * depends on at least two other modules
