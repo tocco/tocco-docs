@@ -107,7 +107,7 @@ Documentation
 - Add the DNS entry for the new version ${VERSION}.docs.tocco.ch. DNS is available under cockpit.nine.ch
   (user:tocco/pw:standard-old).
 - Create all files needed for Openshift to deploy the new version. You can find a template in the openshift directory
-  in the ansible repository. Replace **${VERSION}** with the version number without all characters which aren't numeric
+  in the ansible repository. Replace **${VERSION}** with the version number without any characters which aren't numeric
   (e.g. 2.18 -> `218`).
 
      .. parsed-literal::
