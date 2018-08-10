@@ -1,5 +1,3 @@
-.. _Add Module with Script:
-
 Add Module with Script
 ----------------------
 

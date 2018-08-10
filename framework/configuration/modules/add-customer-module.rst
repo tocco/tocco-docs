@@ -2,9 +2,15 @@
 .. |pathToModuleModuleFolder| replace:: ``nice2-project/customer/mynewcustomer/module/module``
 .. |pathToModulePom| replace:: ``nice2-project/customer/mynewcustomer/pom.xml``
 .. |pathToModuleModulePom| replace:: ``nice2-project/customer/mynewcustomer/module/module/pom.xml``
+.. |pathToImplFolder| replace:: ``nice2-project/customer/mynewcustomer/module/impl``
+.. |pathToImplPom| replace:: ``nice2-project/customer/mynewcustomer/module/impl/pom.xml``
 
 Add Customer Module
 ===================
+
+.. hint::
+   This chapter describes how to add a new customer module manually. There is also a `script`_ which can be used to
+   generate the module.
 
 Adding a new module contains the following steps:
 
@@ -53,16 +59,16 @@ Open the file ``mynewcustomer/pom.xml`` and add the following content.
 .. literalinclude:: resources/customer-module-pom-1.xml
    :language: XML
 
-Open the file ``customermodule/module/module/pom.xml`` and add the following content.
+Open the file ``mynewcustomer/module/module/pom.xml`` and add the following content.
 
 .. literalinclude:: resources/customer-module-pom-2.xml
    :language: XML
 
-Open the file ``customermodule/module/module/hiveapp-mount.properties`` and add the following content.
+Open the file ``mynewcustomer/module/module/hiveapp-mount.properties`` and add the following content.
 
 .. literalinclude:: resources/customer-module-hiveapp-mount.properties
 
-Open the file ``mynewmodule/module/descriptor/hivemodules.xml`` and add the following content.
+Open the file ``mynewcustomer/module/module/descriptor/hivemodules.xml`` and add the following content.
 
 .. literalinclude:: resources/customer-module-hivemodule.xml
    :language: XML
@@ -76,6 +82,8 @@ the customer installation. Create a file ``application.properties`` in ``nice2-p
 add the following content.
 
 .. literalinclude:: resources/customer-module-application.properties
+
+For a full list of all application properties see :ref:`application-properties`.
 
 Add HikariCP Properties
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -115,11 +123,57 @@ Inside the resources folder JS files are placed. For actions and public flows.
 **outputtemplate**
 Inside this folder ``ftl`` templates are placed which for example can be used for reports.
 
-.. include:: add-java-source-folder.rst
+Add Java Source Folders
+^^^^^^^^^^^^^^^^^^^^^^^
+
+As soon as any Java code is needed (e.g. for listeners, actions, services, rest-resources, ...) a Java module has to
+be added to the module. There are three different types of Java modules which can be added.
+
+* api -> defines services which can be injected by other modules
+* spi -> defines classes which other modules can use or extend.
+* impl -> the implementation of the module specific Java code
+
+
+Add a new folder (impl, api or spi) to |pathToImplFolder| and add the following folder structure.
+
+.. figure:: resources/impl-folder-structure.png
+
+Open the file |pathToImplPom| and add the following content.
+
+.. literalinclude:: resources/customer-module-impl-pom.xml
+   :language: XML
+
+Now the impl module has to be added to the module pom. Open the file |pathToModulePom| and add the impl module to the
+modules element.
+
+.. code-block:: XML
+   :emphasize-lines: 3
+
+   <modules>
+     <module>module</module>
+     <module>impl</module>
+   </modules>
+
+Now the impl module also has to be added as dependency to the module pom. Open the file |pathToModuleModulePom| and add
+the impl module as dependency.
+
+.. code-block:: XML
+
+   <dependencies>
+     <dependency>
+       <groupId>ch.tocco.nice2.customer.mynewcustomer</groupId>
+       <artifactId>nice2-customer-mynewcustomer-impl</artifactId>
+       <version>${project.version}</version>
+       <type>jar</type>
+       <scope>compile</scope>
+     </dependency>
+   </dependencies>
+
+Now Java files can be added in the folder ``java``.
 
 .. include:: build-resources-into-target-snapshot.rst
 
 .. include:: add-module-with-script.rst
 
 .. _HikariCP: https://github.com/brettwooldridge/HikariCP
-
+.. _script: `Add Module with Script`_

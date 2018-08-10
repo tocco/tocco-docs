@@ -25,7 +25,7 @@
   </modules>
 
   <dependencies>
-    <!-- add all dependencies here -->
+    <!-- add all modules which the customer has installed here -->
   </dependencies>
 
   <build>

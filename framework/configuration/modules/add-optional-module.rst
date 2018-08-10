@@ -2,12 +2,15 @@
 .. |pathToModuleModuleFolder| replace:: ``nice2-project/optional/mynewmodule/module``
 .. |pathToModulePom| replace:: ``nice2-project/optional/mynewmodule/pom.xml``
 .. |pathToModuleModulePom| replace:: ``nice2-project/optional/mynewmodule/module/pom.xml``
+.. |pathToImplFolder| replace:: ``nice2-project/optional/mynewmodule/impl``
+.. |pathToImplPom| replace:: ``nice2-project/optional/mynewmodule/impl/pom.xml``
 
 Add Optional Module
 ===================
 
 .. hint::
-   This section explains how a new module is added manually. There is also a `script`_ which can be used to add a new module.
+   This chapter describes how to add a new optional module manually. There is also a `script`_ which can be used to
+   generate the module.
 
 Adding a new module contains the following steps:
 
@@ -158,7 +161,57 @@ Inside the resources folder JS files are placed. For actions and public flows.
 **outputtemplate**
 Inside this folder ``ftl`` templates are placed which for example can be used for reports.
 
-.. include:: add-java-source-folder.rst
+Add Java Source Folders
+^^^^^^^^^^^^^^^^^^^^^^^
+
+As soon as any Java code is needed (e.g. for listeners, actions, services, rest-resources, ...) a Java module has to
+be added to the module. There are three different types of Java modules which can be added.
+
+* api -> defines services which can be injected by other modules
+* spi -> defines classes which other modules can use or extend.
+* impl -> the implementation of the module specific Java code
+
+
+Add a new folder (impl, api or spi) to |pathToImplFolder| and add the following folder structure.
+
+.. figure:: resources/impl-folder-structure.png
+
+Open the file |pathToImplPom| and add the following content.
+
+.. literalinclude:: resources/optional-module-impl-pom.xml
+   :language: XML
+
+Now the impl module has to be added to the module pom. Open the file |pathToModulePom| and add the impl module to the
+modules element.
+
+.. code-block:: XML
+   :emphasize-lines: 3
+
+   <modules>
+     <module>module</module>
+     <module>impl</module>
+   </modules>
+
+Now the impl module also has to be added as dependency to the module pom. Open the file |pathToModuleModulePom| and add
+the impl module as dependency.
+
+.. code-block:: XML
+
+   <dependencies>
+     <dependency>
+       <groupId>ch.tocco.nice2.optional.mynewmodule</groupId>
+       <artifactId>nice2-optional-mynewmodule-impl</artifactId>
+       <version>1.0-SNAPSHOT</version>
+       <type>jar</type>
+       <scope>compile</scope>
+     </dependency>
+   </dependencies>
+
+Now Java files can be added in the folder ``java``.
+
+.. hint::
+   The process would be the same for an ``api`` or ``spi`` module.
+
 
 .. include:: build-resources-into-target-snapshot.rst
 
