@@ -9,8 +9,8 @@ Add Optional Module
 ===================
 
 .. hint::
-   This chapter describes how to add a new optional module manually. There is also a `script`_ which can be used to
-   generate the module.
+   This chapter describes how to add a new optional module manually. There is also a script which can be used to
+   generate the module. See `Add Module with Script`_.
 
 Adding a new module contains the following steps:
 
@@ -216,5 +216,3 @@ Now Java files can be added in the folder ``java``.
 .. include:: build-resources-into-target-snapshot.rst
 
 .. include:: add-module-with-script.rst
-
-.. _script: `Add Module with Script`_

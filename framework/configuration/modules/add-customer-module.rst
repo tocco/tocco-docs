@@ -9,8 +9,8 @@ Add Customer Module
 ===================
 
 .. hint::
-   This chapter describes how to add a new customer module manually. There is also a `script`_ which can be used to
-   generate the module.
+   This chapter describes how to add a new customer module manually. There is also a script which can be used to
+   generate the module. See `Add Module with Script`_.
 
 Adding a new module contains the following steps:
 
@@ -176,4 +176,3 @@ Now Java files can be added in the folder ``java``.
 .. include:: add-module-with-script.rst
 
 .. _HikariCP: https://github.com/brettwooldridge/HikariCP
-.. _script: `Add Module with Script`_

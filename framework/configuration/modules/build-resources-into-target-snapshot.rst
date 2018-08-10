@@ -4,7 +4,7 @@ Build Resources into Target Snapshot
 All resources must be built into the target snapshot. Otherwise the module would not work if it is deployed somewhere.
 Resources are files with the following endings ``*.xml``, ``*.acl``, ``*.properties``, ``*.js``, ``*.ftl``.
 
-To build static files into the target snapshot open the file |pathToModuleModulePom|.
+To build static files into the target snapshot open the ``pom.xml`` file inside the ``module`` folder.
 
 Add all resource types you have added in your module folder by appending them to the ``build`` element. Take a look at
 the following example:
