@@ -113,8 +113,22 @@ the same database transaction.
 
 **Custom user types**
 
-.. todo::
-   Describe how custom user types are defined and link to chapter that describes how to implement them.
+Per default Hibernate can map all primitive types (and its wrapper classes) as well as references to other entities.
+For all other classes that need to be mapped to the database an :java:extdoc:`UserType<org.hibernate.usertype.UserType>`
+must be implemented (for immutable types the base class :java:ref:`ImmutableUserType<ch.tocco.nice2.persist.hibernate.usertype.ImmutableUserType>`
+can be used). The user type contains the logic how a specific object should be read from the :java:extdoc:`ResultSet<java.sql.ResultSet>`
+and written to the :java:extdoc:`PreparedStatement<java.sql.PreparedStatement>`.
+
+For example the :java:ref:`Login<ch.tocco.nice2.types.Login>` class is mapped with a custom user type (:java:ref:`LoginUserType<ch.tocco.nice2.persist.hibernate.usertype.LoginUserType>`).
+A new user type can be registered with a bootstrap contribution (see :ref:`bootstrap`):
+
+.. code-block:: java
+
+    classLoaderService.addContribution(TypeContributor.class, ((typeContributions, serviceRegistry) -> {
+        typeContributions.contributeType(new BinaryUserType(binaryAccessProvider, binaryHashingService), Binary.class.getName());
+        typeContributions.contributeType(new LoginUserType(), Login.class.getName());
+        typeContributions.contributeType(new UuidToStringUserType(), UUID.class.getName());
+    }));
 
 **Other fields**
 
@@ -124,6 +138,8 @@ validation!
 The type ``decimal`` (without precision and scale) is handled specially, because Hibernate would use a default
 precision and scale, but in this case we want to use the column type ``decimal`` without any precision or scale.
 
+.. _generated-fields-annotations:
+
 Generated fields
 ^^^^^^^^^^^^^^^^
 
@@ -132,8 +148,7 @@ These fields are annotated either with the :java:ref:`AlwaysGeneratedValue<ch.to
 for fields which should be updated on create and update or the :java:ref:`InsertGeneratedValue<ch.tocco.nice2.persist.hibernate.pojo.generator.InsertGeneratedValue>`
 for fields which should only be updated when the entity is created.
 
-.. todo::
-   Link to chapter
+See :ref:`generated-values`.
 
 Associations
 ^^^^^^^^^^^^

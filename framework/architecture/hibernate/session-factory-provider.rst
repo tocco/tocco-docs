@@ -19,6 +19,8 @@ The Hibernate bootstrapping process is documented `here <http://docs.jboss.org/h
 This service is registered with private visibility and can only be used in the ``persist/core`` module, because if other modules
 would use the :java:extdoc:`SessionFactory<org.hibernate.SessionFactory>` directly, they could bypass the security layer.
 
+.. _bootstrap:
+
 Participate in the bootstrap process
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -29,6 +31,8 @@ to provide a priority to control the execution order of the different contributi
 This can for example be used for registering custom user types.
 
 The main configuration is done by :java:ref:`HibernateCoreBootstrapContribution<ch.tocco.nice2.persist.hibernate.bootstrap.HibernateCoreBootstrapContribution>`.
+
+.. _classLoaderService:
 
 ContributionClassLoaderService
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
