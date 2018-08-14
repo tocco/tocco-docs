@@ -8,7 +8,7 @@
         Customer mynewcustomer
       </description>
       <vendor>Tocco AG</vendor>
-      <copyright>Copyright (C) 2018 by Tocco AG. All rights reserved.</copyright>
+      <copyright>Copyright (C) CURRENT_YEAR by Tocco AG. All rights reserved.</copyright>
     </info>
   </contribution>
 
