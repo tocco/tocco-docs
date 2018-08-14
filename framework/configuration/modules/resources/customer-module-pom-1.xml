@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>ch.tocco.nice2.customer.mynewcustomer</groupId>
+  <artifactId>nice2-customer-lch</artifactId>
+  <packaging>pom</packaging>
+  <version>1.0-SNAPSHOT</version>
+
+  <name>nice2-customer-mynewcustomer</name>
+
+  <parent>
+    <groupId>ch.tocco.nice2</groupId>
+    <artifactId>nice2-customer</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+  <modules>
+    <module>module/module</module>
+  </modules>
+
+  <dependencies>
+    <!-- add all modules which the customer has installed here -->
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>ch.raffael.hiveapp</groupId>
+        <artifactId>maven-appmodule-plugin</artifactId>
+        <version>${hiveapp-plugin-version}</version>
+        <executions>
+          <execution>
+            <id>hiveapp-runenv</id>
+            <goals>
+              <goal>runenv</goal>
+            </goals>
+            <phase>package</phase>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>com.github.eirslett</groupId>
+        <artifactId>frontend-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>ensure-theme-base</id>
+            <phase>generate-resources</phase>
+          </execution>
+          <execution>
+            <id>build-assets-with-gulp</id>
+            <phase>generate-resources</phase>
+          </execution>
+          <execution>
+            <id>assemble-mutable-imports</id>
+            <phase>generate-resources</phase>
+          </execution>
+          <execution>
+            <id>build-tocco-theme-with-gulp</id>
+            <phase>generate-resources</phase>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+
+  <properties>
+    <propertyGulpCustomer>mynewcustomer</propertyGulpCustomer>
+  </properties>
+
+  <profiles>
+    <profile>
+      <id>assembly</id>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>assembly</id>
+                <goals>
+                  <goal>single</goal>
+                </goals>
+                <phase>package</phase>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+</project>

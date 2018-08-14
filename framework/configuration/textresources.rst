@@ -1,3 +1,5 @@
+.. _Text-Resources:
+
 Text-Resources
 ==============
 
