@@ -1,9 +1,9 @@
-.. |pathToModuleFolder| replace:: ``nice2-project/customer/mynewcustomer``
-.. |pathToModuleModuleFolder| replace:: ``nice2-project/customer/mynewcustomer/module/module``
-.. |pathToModulePom| replace:: ``nice2-project/customer/mynewcustomer/pom.xml``
-.. |pathToModuleModulePom| replace:: ``nice2-project/customer/mynewcustomer/module/module/pom.xml``
-.. |pathToImplFolder| replace:: ``nice2-project/customer/mynewcustomer/module/impl``
-.. |pathToImplPom| replace:: ``nice2-project/customer/mynewcustomer/module/impl/pom.xml``
+.. |pathToModuleFolder| replace:: ``path/to/nice2/customer/mynewcustomer``
+.. |pathToModuleModuleFolder| replace:: ``path/to/nice2/customer/mynewcustomer/module/module``
+.. |pathToModulePom| replace:: ``path/to/nice2/customer/mynewcustomer/pom.xml``
+.. |pathToModuleModulePom| replace:: ``path/to/nice2/customer/mynewcustomer/module/module/pom.xml``
+.. |pathToImplFolder| replace:: ``path/to/nice2/customer/mynewcustomer/module/impl``
+.. |pathToImplPom| replace:: ``path/to/nice2/customer/mynewcustomer/module/impl/pom.xml``
 
 Add Customer Module
 ===================
@@ -50,7 +50,7 @@ Create Basic Folder Structure
 
 Assume the new module is called ``mynewcustomer``.
 
-Add a new folder ``mynewcustomer``  inside ``nice2-project/customer`` with the following file structure
+Add a new folder ``mynewcustomer``  inside ``path/to/nice2/customer`` with the following file structure
 
   .. figure:: resources/basic-folder-structure-customer.png
 
@@ -78,7 +78,7 @@ Add Application Properties
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 For each customer module an ``application.properties`` file exists. The content of this file are properties which configure
-the customer installation. Create a file ``application.properties`` in ``nice2-project/customer/CUSTOMERNAME/etc`` and
+the customer installation. Create a file ``application.properties`` in ``path/to/nice2/customer/CUSTOMERNAME/etc`` and
 add the following content.
 
 .. literalinclude:: resources/customer-module-application.properties
@@ -90,7 +90,7 @@ Add HikariCP Properties
 
 `HikariCP`_ the JDBC connection pool used in Nice2. In order to work correctly with the customer installation, some
 database properties must be set. For each customer module a ``hikaricp.properties`` file exists. Create a file
-``hikaricp.properties`` in ``nice2-project/customer/CUSTOMERNAME/etc`` and add the following content.
+``hikaricp.properties`` in ``path/to/nice2/customer/CUSTOMERNAME/etc`` and add the following content.
 
 .. literalinclude:: resources/customer-module-hikaricp.properties
 

@@ -14,7 +14,7 @@ on the documented modules the pom.xml will be generated for customer modules.
 
   .. figure:: resources/modules-set-module-type.png
 
-* Add all depending modules. Depending modules are all modules which are used by the new module. This is important because
+* Add all required modules. Depending modules are all modules which are used by the new module. This is important because
   if this module later is added to a customer all depending modules also need to be added to the customer.
 
   .. figure:: resources/modules-depending-modules.png

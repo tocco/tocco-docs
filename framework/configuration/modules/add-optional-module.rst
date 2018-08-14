@@ -1,9 +1,9 @@
-.. |pathToModuleFolder| replace:: ``nice2-project/optional/mynewmodule``
-.. |pathToModuleModuleFolder| replace:: ``nice2-project/optional/mynewmodule/module``
-.. |pathToModulePom| replace:: ``nice2-project/optional/mynewmodule/pom.xml``
-.. |pathToModuleModulePom| replace:: ``nice2-project/optional/mynewmodule/module/pom.xml``
-.. |pathToImplFolder| replace:: ``nice2-project/optional/mynewmodule/impl``
-.. |pathToImplPom| replace:: ``nice2-project/optional/mynewmodule/impl/pom.xml``
+.. |pathToModuleFolder| replace:: ``path/to/nice2/optional/mynewmodule``
+.. |pathToModuleModuleFolder| replace:: ``path/to/nice2/optional/mynewmodule/module``
+.. |pathToModulePom| replace:: ``path/to/nice2/optional/mynewmodule/pom.xml``
+.. |pathToModuleModulePom| replace:: ``path/to/nice2/optional/mynewmodule/module/pom.xml``
+.. |pathToImplFolder| replace:: ``path/to/nice2/optional/mynewmodule/impl``
+.. |pathToImplPom| replace:: ``path/to/nice2/optional/mynewmodule/impl/pom.xml``
 
 Add Optional Module
 ===================
@@ -52,7 +52,7 @@ Create Basic Folder Structure
 
 Assume the new module is called ``mynewmodule``.
 
-Add a new folder ``mynewmodule``  inside ``nice2-project/optional`` with the following file structure
+Add a new folder ``mynewmodule``  inside ``path/to/nice2/optional`` with the following file structure
 
 .. figure:: resources/basic-folder-structure-optional.png
 
@@ -78,8 +78,8 @@ Open the file ``mynewmodule/module/descriptor/hivemodules.xml`` and add the foll
 Add new Module to the Root Pom
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Each module must be registered in the root pom file. Open the file ``nice2-project/pom.xml`` and add your module to it.
-The modules are ordered alphabetical and are separated by core and optional modules.
+Each module must be registered in the root pom file. Open the file ``path/to/nice2/pom.xml`` and add your module to it.
+The modules are ordered alphabetically and are separated by core and optional modules.
 
 .. code-block:: XML
    :emphasize-lines: 6
@@ -100,8 +100,8 @@ The modules are ordered alphabetical and are separated by core and optional modu
 Add new Module to the Test Customer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The test customer has all possible modules installed. So a newly created optional module must be added to it. Open the
-file ``nice2-project/customer/test/pom.xml`` and add the new module at the right place as dependency to it. All modules
+The test customer has all available modules installed. So a newly created optional module must be added to it. Open the
+file ``path/to/nice2/customer/test/pom.xml`` and add the new module at the right place as dependency to it. All modules
 are added in alphabetical order.
 
 .. code-block:: XML
@@ -172,7 +172,8 @@ be added to the module. There are three different types of Java modules which ca
 * impl -> the implementation of the module specific Java code
 
 
-Add a new folder (impl, api or spi) to |pathToImplFolder| and add the following folder structure.
+Add a new folder (impl, api or spi) to |pathToImplFolder| and add the following folder structure. If an api module has to
+be added, replace ``impl`` with ``api``.
 
 .. figure:: resources/impl-folder-structure.png
 
