@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<module id="nice2.optional.news" version="1.0.0" package="ch.tocco.nice2.optional.news">
+<module id="nice2.optional.mynewmodule" version="1.0.0" package="ch.tocco.nice2.optional.mynewmodule">
   <contribution configuration-id="hiveapp.ModuleInfo">
     <info>
       <description>
