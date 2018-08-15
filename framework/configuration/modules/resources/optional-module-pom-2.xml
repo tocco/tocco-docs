@@ -6,7 +6,7 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>ch.tocco.nice2.optional.news</groupId>
+  <groupId>ch.tocco.nice2.optional.mynewmodule</groupId>
   <artifactId>nice2-optional-mynewmodule-module</artifactId>
   <packaging>appmodule</packaging>
   <version>1.0-SNAPSHOT</version>
