@@ -60,7 +60,7 @@ Filename
 
 The name of a changelog file consists of the version (as specified in the ``current-version.txt`` file in the
 repository) the changelog will be run in, a name that describes the work the changesets do and the ending ``.xml``, all
-separated by underscores. Examples of a good filenames would be ``2.12.2_add_peer_mail_fks.xml`` or
+separated by underscores. Examples of a good filename would be ``2.12.2_add_peer_mail_fks.xml`` or
 ``2.4.50_change_education_amount_to_duration.xml``.
 
 Changeset-ID
@@ -204,7 +204,7 @@ Custom changes can be used in changesets to call some java logic with parameters
 information on what arguments each uses.
 
 * AddEntityDocChange
-    used to upload binaries and attach them to an entity as entitydocs
+    used to upload binaries and attach them to an entity
 * CopyToBusinessUnitChange
     copies entities between business units
 * LocalizeFieldChange
@@ -262,7 +262,7 @@ Others
 ^^^^^^
 
 * BusinessUnitChangelogPostProcessor
-    copies a changeset marked with ``runForEachBu="true"`` for each business unit and replaces any occurence of
+    copies a changeset marked with ``runForEachBu="true"`` for each business unit and replaces any occurrence of
     ``%BUSINESS_UNIT%`` with the unique id of the business unit it is copying to
 
 Examples
@@ -491,7 +491,7 @@ Migrate single relation to multi
     <dropColumn columnName="fk_absence_reason" tableName="nice_registration"/>
   </changeSet>
 
-Change datetype
+Change datatype
 ^^^^^^^^^^^^^^^
 
 .. code-block:: xml
