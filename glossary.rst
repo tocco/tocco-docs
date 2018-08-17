@@ -127,6 +127,9 @@ Glossary
 
         Every Nice installation runs exactly one Solr :term:`pod`.
 
+    Solr core
+        Indexes in :term:`Solr` are known as cores.
+
     route
         Provides a route to a service. This is used to make a service reachable via internet.
 
