@@ -108,8 +108,8 @@ This permission is checked when a new entity instance is created:
 entity
 ^^^^^^
 
-This domain controls the read and write access to persisted entities and provides the ``access`` permission.
-The ``access`` permission takes an optional parameter to specify whether the rule tagets read or write permission.
+This domain controls the read and write access to persisted entities and provides the ``access`` and ``delete`` permissions.
+The ``access`` permission takes an optional parameter to specify whether the rule targets read or write permission.
 If no parameter is given both read and write permissions are affected.
 
 For example this rule affects the write operation only:
@@ -182,7 +182,7 @@ entityPath
 ^^^^^^^^^^
 
 The ``entityPath`` domain is related to the ``entity`` domain as it also affects entity instances and provides the same
-``access`` permission.
+``access`` permission (but no ``delete`` permission).
 But while the latter affects entities as a whole, the former affects access to single fields or relations of an entity.
 
 The same :ref:`entity-conditions` are supported as for the ``entity`` domain (obviously referencing the
