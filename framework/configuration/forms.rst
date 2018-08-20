@@ -207,7 +207,8 @@ Is used to embed freemarker expressions into the form.
       ]]>
     </display>
 
-For more information see *Display Expressions*
+The `escape-html` attribute allows you to define if html is escaped in the resulting text. The `compressible` attribute
+allows you to define if whitespace should be compressed in the resulting text.
 
 <table> :green:`V2` 
 ^^^^^^^^^^^^^^^^^^^
