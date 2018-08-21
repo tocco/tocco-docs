@@ -24,8 +24,8 @@ A report is a combination of different entities. Reports consist of the followin
 * Corporate_design_business_unit
 
 It would be possible to create these entities manually in the admin view and add them by :ref:`Changesets` like initial
-values. But it is cumbersome to adjust report entities by changesets. It is even more cumbersome to review a changeset
-which adjusts a report. An initial values changeset for an output template looks like this.
+values. But it is cumbersome to adjust such entities by changesets. It is even more cumbersome to review a changeset
+which adjusts such an entity. An initial values changeset for an output template looks like this.
 
 .. code-block:: XML
    :emphasize-lines: 10, 11
@@ -97,7 +97,7 @@ does synchronize this entity.
 
 .. image:: resources/report-synchronization-synced-output-template.png
 
-**Example of an manually edited Output template**
+**Example of a manually edited Output template**
 
 The message on the top of the detail form displays if the output template was edited manually. The report synchronization
 does not synchronize this entity anymore.
@@ -107,19 +107,19 @@ does not synchronize this entity anymore.
 Reset a Manually Edited Entity
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To synchronize a manually edited entity call the action ``Restore`` in the detail from. After the entity was restored,
+To synchronize a manually edited entity call the action ``Restore`` in the detail form. After the entity was restored,
 the synchronization synchronizes this entity again.
 
 .. image:: resources/report-synchronization-restore.png
 
 .. warning::
-   All manual adjustments made by any user are lost if restore action is called.
+   All manual adjustments made by any user are lost if the restore action is called.
 
 Starting the Report Synchronization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The report synchronization is done with the :java:ref:`ReportSynchronizer<ch.tocco.nice2.reporting.impl.sync.ReportSynchronizer>`
-service. This service is registered as ``starter`` but synchronizes the reports only in the ``RunEnv`` mode
+service. This service is registered as ``starter`` but synchronizes the entities only in the ``RunEnv`` mode
 ``production`` and ``test`` during the start up.
 
 Starting Manually
@@ -178,8 +178,8 @@ Output templates are written in `Freemarker`_ and saved in ``*.ftl`` files. Outp
 
 .. image:: resources/report-synchronization-folder-structure-output-template.png
 
-An output template can be registered as follows in the file ``hivemodule.xml`` of the module where the report should be
-added.
+An output template can be registered as follows in the file ``hivemodule.xml`` of the module where the output template
+should be added.
 
 .. code-block:: XML
 
@@ -199,7 +199,7 @@ added.
    * - Attribute
      - Description
    * - id
-     - A unique id for the output template. This is the ``unique_id`` on the ``Output_template`` entity.
+     - A unique id for the output template. Will be mapped to the ``unique_id`` on the ``Output_template`` entity.
    * - label
      - A text resource key. The label of the output template will be set with the corresponding text resource.
    * - freemarker
@@ -227,8 +227,7 @@ Fields are written in `Freemarker`_ and saved in ``*.ftl`` files. Fields are loc
 * In optional modules: ``path/to/nice-project/optional/MODULE_NAME/module/outputtemplate/fields``
 * In customer modules: ``path/to/nice-project/customer/CUSTOMER_NAME/module/module/outputtemplate/fields``
 
-A field can be registered as follows in the file ``hivemodule.xml`` of the module where the report should be
-added.
+A field can be registered as follows in the file ``hivemodule.xml`` of the module where the field should be added.
 
 .. code-block:: XML
 
@@ -246,11 +245,11 @@ added.
    * - Attribute
      - Description
    * - uniqueId
-     - A unique id for the output template field. This is the ``unique_id`` on the ``Output_template_field`` entity.
+     - A unique id for the output template field. Will be mapped to the ``unique_id`` on the ``Output_template_field`` entity.
    * - outputTemplate
      - Defines to which output template this field belongs.
    * - snippetId
-     - Simple text which can be defined if the two fields with the same name must are used in the same output template.
+     - Simple text which can be defined if two or more fields with the same name are used in the same output template.
    * - title
      - A text resource key. The title of the output template field will be set with the corresponding text resource.
    * - sorting
@@ -269,8 +268,8 @@ Template snippets are written in `Freemarker`_ and saved in ``*.ftl`` files. Tem
 * In optional modules: ``path/to/nice-project/optional/MODULE_NAME/module/templatesnippet``
 * In customer modules: ``path/to/nice-project/customer/CUSTOMER_NAME/module/module/templatesnippet``
 
-A template snippet can be registered as follows in the file ``hivemodule.xml`` of the module where the report should be
-added.
+A template snippet can be registered as follows in the file ``hivemodule.xml`` of the module where the template snippet
+should be added.
 
 .. code-block:: XML
 
@@ -286,7 +285,7 @@ added.
    * - Attribute
      - Description
    * - uniqueId
-     - A unique id for the template snippet field. This is the ``unique_id`` on the ``Template_snippet`` entity.
+     - A unique id for the template snippet field. Will be mapped to the ``unique_id`` on the ``Template_snippet`` entity.
    * - freemarker
      - The path to the ``*.ftl`` file. The content of the ftl file will be set on the ``Template_snippet`` entity.
    * - categories
