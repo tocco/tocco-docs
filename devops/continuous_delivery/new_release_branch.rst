@@ -123,6 +123,10 @@ Documentation
 - Site Search can be configured on http://control.freefind.com and is registered by toccosupport@gmail.com for
   https://documentation.tocco.ch. Please contact Peter Gerber or Niklaus Hug to get the password.
 
+  1. Set an additional starting point in "/Build Index/Set starting point" to ensure that the subdomain is indexed.
+  2. Define a new subsection in "/Build Index/Define subsections" to ensure that user can search inside a specific documentation.
+  3. Restart indexing immediately by "/Build Index/Index now".
+
 .. attention::
 
    You need the right permissions to create the branch in gerrit and the build config in Teamcity.
