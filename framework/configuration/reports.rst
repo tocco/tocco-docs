@@ -173,7 +173,7 @@ A report can be registered as follows in the file ``hivemodule.xml`` of the modu
 
 Depending on the ``placement`` element, ``Report_placement`` entities will be generated. The above example defines that
 the report will be available on the list form of the ``User`` entity and placed before the report with the id
-``report.employeelist"
+``report.employeelist``
 
 .. list-table:: <placement/>
    :header-rows: 1
