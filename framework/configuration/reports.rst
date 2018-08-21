@@ -149,11 +149,15 @@ A report can be registered as follows in the file ``hivemodule.xml`` of the modu
      </report>
    </contribution>
 
-.. list-table::
+.. list-table:: <report/>
    :header-rows: 1
 
    * - Attribute
      - Description
+   * - active
+     - Sets the field ``active`` on the entity ``Report``.
+   * - description
+     - Sets the field ``description`` on the entity ``Report``.
    * - id
      - A unique id for the report. This is the ``unique_id`` on the ``Report`` entity.
    * - label
@@ -161,11 +165,27 @@ A report can be registered as follows in the file ``hivemodule.xml`` of the modu
    * - outputTemplate
      - The output template which is set on the report entity. See `Register Output Templates`_
    * - synchronize
-     - ``true`` if this report should be synchronized. ``false`` otherwise.
+     - ``true`` if this report should be synchronized. Default is ``false``.
    * - roles
      - If set, only users with these roles can generate the report. If not set, every user can generate this report.
    * - outputlanguagePath
      - Defines which locale is used to generate the report.
+
+Depending on the ``placement`` element, ``Report_placement`` entities will be generated. The above example defines that
+the report will be available on the list form of the ``User`` entity and placed before the report with the id
+``report.employeelist"
+
+.. list-table:: <placement/>
+   :header-rows: 1
+
+   * - Attribute
+     - Description
+   * - location
+     - Comma separated list of forms where the report will be included (list, detail).
+   * - entityModel
+     - The entity model on which the report should be included
+   * - sorting
+     - Can be used to place the report more specific.
 
 Register Output Templates
 -------------------------
@@ -193,7 +213,7 @@ should be added.
                      outputTemplateUsage="report"/>
    </contribution>
 
-.. list-table::
+.. list-table:: <outputTemplate/>
    :header-rows: 1
 
    * - Attribute
@@ -204,6 +224,8 @@ should be added.
      - A text resource key. The label of the output template will be set with the corresponding text resource.
    * - freemarker
      - The path to the ``*.ftl`` file. The content of the ftl file will be set on the ``Output_template`` entity.
+   * - less
+     - The path to the ``*.less`` file. The content of the less file will be set on the ``Output_template`` entity.
    * - fileFormat
      - Defines to what format the template will be rendered. Possible formats are ``wkhtmltopdf.pdf``, ``pdf``, ``xml``, ``csv``, ``xls``, ``taf``.
    * - outputTemplateFormat
@@ -212,9 +234,15 @@ should be added.
      - Defines layout in which the output template is wrapped in. See entity ``Output_template_layout`` for available values.
    * - outputTemplateUsage
      - Defines whether this output template is used in a report or correspondence.
+   * - hideLogoCheckbox
+     - Sets the field ``hide_logo_checkbox`` on the entity ``Output_template``. Default is ``false``
+   * - enableLogoCheckbox
+     - Sets the field ``enable_logo_checkbox`` on the entity ``Output_template``. Default is ``false``
+   * - fileFormat
+     - Sets the file format on the entity ``Output_template``. Default is ``pdf``
 
-Register Output Templates
--------------------------
+Register Output Template Layouts
+--------------------------------
 
 .. todo::
    Write chapter
@@ -231,15 +259,17 @@ A field can be registered as follows in the file ``hivemodule.xml`` of the modul
 
 .. code-block:: XML
 
-   <field outputTemplate="birthdaylist"
-          uniqueId="birthdaylist.firstname"
-          snippetId="birthdaysnippet"
-          title="report.birthdaylist.firstname"
-          sorting="20"
-          width="22"
-          freemarker="[#self]/outputtemplate/fields/birthdaylist.firstname.ftl"/>
+   <contribution configuration-id="nice2.reporting.OutputTemplateFields">
+     <field outputTemplate="birthdaylist"
+            uniqueId="birthdaylist.firstname"
+            snippetId="birthdaysnippet"
+            title="report.birthdaylist.firstname"
+            sorting="20"
+            width="22"
+            freemarker="[#self]/outputtemplate/fields/birthdaylist.firstname.ftl"/>
+   </contribution>
 
-.. list-table::
+.. list-table:: <field/>
    :header-rows: 1
 
    * - Attribute
@@ -278,8 +308,9 @@ should be added.
                        freemarker="[#self]/templatesnippet/Bill_address_recipient.ftl"
                        categories="finance_report"
                        label="templatesnippet.bill_address_recipient"/>
+   <contribution/>
 
-.. list-table::
+.. list-table:: <templateSnippets/>
    :header-rows: 1
 
    * - Attribute
