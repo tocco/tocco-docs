@@ -92,7 +92,7 @@ Move Solr Core from OpenShift to a Managed Server
         cd /var/lib/solr/data/nice-**${INSTALLATION}**/
         rm -rf conf
         cp -a ../nice-test212/conf .
-        echo -e "config=solrconfig.xml\nschema=schema.xml" | tee -a core.properties
+        echo -e "config=solrconfig.xml\\nschema=schema.xml" | tee -a core.properties
 
 #. Reload configuration
 
