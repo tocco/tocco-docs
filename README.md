@@ -8,11 +8,11 @@ This documentation is based [Sphinx](http://www.sphinx-doc.org/en/stable/) and
 
 ## Build Locally
 
-You need tho have this dependency installed:
+You need to install dependencies from requirements.txt using:
 
-* python3-sphinx
-* python3-sphinx-rtd-theme
-* javasphinx (`pip3 install --user javasphinx`)
+```
+pip3 install -r requirements.txt
+```
 
 Now you can build the documentation using:
 
