@@ -18,7 +18,7 @@ Creating a Thread Dump
 
     .. parsed-literal::
 
-        $ oc exec -c nice **nice-3-2nl1q** -- kill -SIGQUIT 1
+        $ oc exec -c nice **nice-3-2nl1q** -- sh -c 'kill -3 1'
 
 #. obtain thread dump
 
