@@ -62,6 +62,8 @@ In the ``hivemodule.xml`` of the module containing the validator, two ``ClassLoa
 .. code-block:: xml
 
    <contribution configuration-id="hiveapp.ClassLoader">
+     <import feature="ch.tocco.nice2.model.entity" version="*"/>
+     <import feature="ch.tocco.nice2.persist" version="*"/>
      <import feature="ch.tocco.nice2.textresources" version="*"/>
      <import feature="ch.tocco.nice2.validate" version="*"/>
    </contribution>
@@ -73,6 +75,18 @@ In the impl ``pom.xml`` of the module containing the validator, two dependencies
 
 .. code-block:: xml
 
+   <dependency>
+     <groupId>ch.tocco.nice2.model.entity</groupId>
+     <artifactId>nice2-model-entity-api</artifactId>
+     <version>${project.version}</version>
+     <scope>provided</scope>
+   </dependency>
+   <dependency>
+     <groupId>ch.tocco.nice2.persist.core</groupId>
+     <artifactId>nice2-persist-core-api</artifactId>
+     <version>${project.version}</version>
+     <scope>provided</scope>
+   </dependency>
    <dependency>
      <groupId>ch.tocco.nice2.textresources</groupId>
      <artifactId>nice2-textresources-api</artifactId>
