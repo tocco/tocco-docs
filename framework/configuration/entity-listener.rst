@@ -2,7 +2,7 @@ Entity Listener
 ===============
 
 Entity listener are used to make changes to entities or run logic when they get created, updated or deleted before the
-database transaction is committed. Listeners listen to events (create, update, delete) of defined entities. A listener
+database transaction is committed (except `CollectingAfterCommitListener`_). Listeners listen to events (create, update, delete) of defined entities. A listener
 is registered on at least one entity model. It is possible to register the same listener on multiple entity models.
 
 Listeners are hivemind services which are contributed to the configuration point ``nice2.persist.core.EntityListeners``.
