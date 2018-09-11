@@ -76,7 +76,7 @@ Please find below an example of a simple JavaScript action that calls a dwr serv
 DWR-Communication
 -----------------
 
-DWR_ is used to connect the ExtJs_ frontent with our java backend. If an action requires any backend interaction, i.e. if any
+DWR_ is used to connect the ExtJs_ frontend with our java backend. If an action requires any backend interaction, i.e. if any
 data should be checked or amended, it will be done using DWR.
 
 Java-Script
@@ -140,6 +140,8 @@ Please find below a minimal example with a method that takes a selection and ret
    }
 
 **hivemodule.xml registration**
+
+In ``hivemodule.xml`` a service point as well as a contribution to ``nice2.netui.RemoteServices`` is required.
 
 .. code-block:: xml
 
@@ -212,6 +214,12 @@ by creating a custom bean. These beans are simple pojo beans that are registered
 
 **hivemodule.xml registration**
 
+In ``hivemodule.xml`` a converter needs to be registered.
+
+* **class-pattern:** the java class that should be converted
+* **implementation:** the converter to be used. ``org.directwebremoting.convert.BeanConverter`` can be used for all simple bean conversions
+* **javascript:** the javascript "class" to be associated with the configured bean
+
 .. code-block:: xml
 
    <contribution configuration-id="nice2.netui.Converters">
@@ -235,7 +243,7 @@ by creating a custom bean. These beans are simple pojo beans that are registered
 Standard-Integration
 --------------------
 
-Adding an action to a form.xml is as easy defining an new ``<action>`` in the corresponding action group (usually ``actiongroup_actions``)
+Adding an action to a form.xml is as easy defining a new ``<action>`` in the corresponding action group (usually ``actiongroup_actions``)
 
 .. code-block:: xml
 
