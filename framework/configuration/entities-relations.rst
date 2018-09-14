@@ -389,7 +389,17 @@ Attributes of the diplay type:
    Defines which language is used to process the expression. Only freemarker should be used. ``javascript`` is **deprecated**.
 
 * **type** (string)
-   Optional. If this is not set, the display will be used as default display. If an entity needs more than one display, they can be distinguished using the type attribute. Common types are ``tooltip``, ``search`` (Used for fulltext search results) and ``resourceCalendarTooltip`` (used in Ressource-Calendar).
+   Optional. If this is not set, the display will be used as default display. If an entity needs more than one display,
+   they can be distinguished using the type attribute. Common types are ``tooltip`` (used in popup tooltips, ``search``
+   (Used for fulltext search results) and ``resourceCalendarTooltip`` (used in Ressource-Calendar).
+
+   Default displays are used to give a string representation of an entity to the user. They appear in a variety of
+   places, for instance as the display value of remote fields or the list of opened entities in the list.
+
+   .. figure:: resources/default_display.png
+    :alt: a default display in the list of open entities
+
+    Default display of an ``Address`` entity as evaluated in the list of open entities.
 
 Relations
 ---------
