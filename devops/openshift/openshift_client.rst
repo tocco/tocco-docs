@@ -1,52 +1,43 @@
 OpenShift Client / Basic Commands
 =================================
 
-Setting up oc
--------------
+Installation
+------------
 
-1. install oc
+See :ref:`setup-openshift-client`.
 
-   Download the client tools from the `OpenShift download page`_, extract it and move the ``oc`` binary into your ``$PATH``
-   (e.g. into ``~/bin/``).
+Login
+-----
 
-   .. _OpenShift download page: https://www.openshift.org/download.html
+.. code:: bash
 
-2. enable autocompletion
+    oc login https://console.appuio.ch
+    Username: <USERNAME>
+    Password: <PASSWORD>
 
-    On most Linux based systems:
+.. hint::
 
-    .. code::
+   You can also specify the username using ``-u $USERNAME``.
 
-        oc completion bash | sudo bash -c 'cat >/etc/bash_completion.d/oc'
-        exit # and open a new terminal
 
-    For non-Linux systems use ``oc completion --help`` for further information.
+Changing Current Project
+------------------------
 
-3. login
+Just like ``cd $DIR`` can be used to change your current directory,
+``oc project $PROJECT`` can be used to change the current project.
 
-   .. code:: bash
 
-       oc login https://console.appuio.ch
-       Username: <USERNAME>
-       Password: <PASSWORD>
+Switch to the Nice project of ${INSTALLATION}::
 
-   .. todo:: update endpoint for private cloud
+    oc project toco-nice-${INSTALLATION}
 
-4. switch to the right project
+Show current project::
 
-    switch to the Nice project of ${INSTALLATION}:
+    oc project
 
-    .. code::
+Show all projects::
 
-        oc project toco-nice-${INSTALLATION}
-
-    .. hint::
-
-        You can list all available projects like this:
-
-        .. code::
-
-            oc get projects
+    oc projects
 
 
 Resource Types
@@ -155,9 +146,9 @@ a Solr pod (has only one container).
 
 Copy File from Pod
 ------------------
-  
+
 .. code::
-  
+
     oc cp -c nice PODNAME:/path/to/file.txt ~/destination/folder/
 
 
@@ -165,7 +156,7 @@ Synchronize Folder with Pod
 ---------------------------
 
 .. code::
-  
+
     oc rsync -c nice PODNAME:/path/to/folder ~/destination/folder/
 
 
