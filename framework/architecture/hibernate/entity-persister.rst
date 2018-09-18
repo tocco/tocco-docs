@@ -23,6 +23,8 @@ ready as soon as possible.
 .. note::
     This can perhaps be removed when Hibernate is upgraded to 5.3+ (see HHH-12558).
 
+.. _persister-delete:
+
 Custom delete behaviour
 -----------------------
 
@@ -37,6 +39,8 @@ For each 'one to many' association (whose inverse side is nullable) the followin
     It is important that these queries are executed directly before the delete statements are executed
     (instead of for example doing it in :java:extdoc:`DeleteEventListener<org.hibernate.event.spi.DeleteEventListener>`.)
     Otherwise the ``NULL`` values might be overridden by an update statement.
+
+.. _persister-entity-instantiation:
 
 Entity instantiation
 --------------------
