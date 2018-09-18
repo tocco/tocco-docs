@@ -53,15 +53,8 @@ directly on the transaction control and is meant to be used by internal code and
 Transaction context
 -------------------
 
-The :java:ref:`EntityTransactionContext<ch.tocco.nice2.persist.hibernate.cascade.EntityTransactionContext>` collects
-entities that have been created or deleted during the transaction and applies these changes to the session.
+The :java:ref:`EntityTransactionContext<ch.tocco.nice2.persist.hibernate.cascade.EntityTransactionContext>` keeps
+track of all entities that are created or deleted during the transaction and executes these changes before the
+transaction is committed.
 
-All new entity instances are tracked automatically and the user of the API does not have to call ``Session#persist()``
-manually to add an entity to the persistence context.
-
-All calls to ``Entity#delete()`` are recorded and then executed before the transaction is committed. The calls
-will be reordered so that no constraint violations can occur on the database. That means it does not matter in which
-order the entities are deleted by the user.
-
-.. todo::
-  Link to chapter that explains the transaction context in detail
+See :ref:`transaction-context` for more details.
