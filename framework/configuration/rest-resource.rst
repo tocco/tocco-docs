@@ -36,7 +36,7 @@ The following paragraphs explain in detail how this is done.
 Add Maven Dependency
 --------------------
 
-Adding REST resources requires the following dependency in the ``pom.xml`` of the ``impl`` module.
+Adding REST resources requires the following dependencies in the ``pom.xml`` of the ``impl`` module.
 
 .. code-block:: XML
 
@@ -46,8 +46,18 @@ Adding REST resources requires the following dependency in the ``pom.xml`` of th
       <version>${project.version}</version>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.media</groupId>
+      <artifactId>jersey-media-json-jackson</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.ws.rs</groupId>
+      <artifactId>javax.ws.rs-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
 
-Additionally the module has to be imported in the file ``hivemodule.xml``
+Additionally the module ``ch.tocco.nice2.rest.core.spi`` has to be imported in the file ``hivemodule.xml``
 
 .. code-block:: XML
 
@@ -140,6 +150,10 @@ Swagger documentation
 
 There is a Swagger documentation available on ``/nice2/swagger``. Use the annotations ``@Operation`` and ``@Parameter``
 to describe the resource in this documentation.
+
+See the `Swagger API documentation`_ for more information about that.
+
+.. _Swagger API documentation: https://github.com/swagger-api/swagger-core/wiki/Swagger-2.X---Annotations
 
 Versioning
 ^^^^^^^^^^
