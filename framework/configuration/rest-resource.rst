@@ -188,6 +188,86 @@ Add the implementation for your resource by implementing your created interface 
        }
    }
 
+How to test your resource
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Test your resource by extending :java:ref:`ch.tocco.nice2.rest.testlib.AbstractInjectingJerseyTestCase`. Writing
+tests for your resource by extending this base class allows you to implement **end-to-end** tests which test the
+whole process including routing (via JAX-RS annotations on your interface) and error handling (via the exception
+mappers you contribute in the test).
+
+.. hint::
+
+   Compared to simple unit tests, this is the preferred way to test your resource. However, lower level unit tests
+   are important as well.
+
+Set up your test like any conventional :java:ref:`ch.tocco.nice2.persist.testlib.inject.AbstractInjectingTestCase`
+and additionally implement the abstract method :java:ref:`getRestResources():List<?>` and optionally
+:java:ref:`getExceptionMappers():List<ExceptionMapper>` to test error handling.
+
+First add the required test dependency in your ``pom.xml``:
+
+.. code-block:: XML
+
+   <dependency>
+     <groupId>ch.tocco.nice2.rest.testlib</groupId>
+     <artifactId>nice2-rest-testlib</artifactId>
+     <version>${project.version}</version>
+     <scope>test</scope>
+   </dependency>
+
+Then add your test class(es):
+
+.. code-block:: Java
+
+   import javax.ws.rs.client.Entity;
+   import javax.ws.rs.core.MediaType;
+   import javax.ws.rs.core.Response;
+   import javax.ws.rs.ext.ExceptionMapper;
+
+   import import ch.tocco.nice2.rest.testlib.AbstractInjectingJerseyTestCase;
+
+   public class AddEventTest extends AbstractInjectingJerseyTestCase {
+       @Resource
+       private EventsResourceImpl eventsResource;
+       @Resource
+       private List<ExceptionMapper> exceptionMappers;
+
+       @Override
+       protected void setupTestModules() {
+           install(FixtureModules.embeddedDbModules(false));
+           install(FixtureModules.createSchema());
+           install(RestCoreModules.main());
+           bind(EventsResource.class, EventsResourceImpl.class);
+           bindDataModel(MyTestDataModel.class);
+       }
+
+       @Override
+       protected List<?> getRestResources() {
+           return ImmutableList.of(
+               eventsResource
+           );
+       }
+
+       @Override
+       protected List<ExceptionMapper> getExceptionMappers() {
+           return exceptionMappers;
+       }
+
+       @Test
+       public void testAddEvent() throws Exception {
+           Entity entity = Entity.entity(new EventBean(), MediaType.APPLICATION_JSON_TYPE);
+           Response response = target("/events/zurich").request().post(entity);
+           assertEquals(response.getStatus(), 201);
+
+           String location = response.getHeaderString("Location");
+           assertNotNull(location);
+
+           assertEventExists(URI.create(location));
+       }
+   }
+
+
 Register resource
 -----------------
 
