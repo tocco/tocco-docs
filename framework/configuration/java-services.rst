@@ -1,26 +1,57 @@
 .. _Java-Services:
 
+.. _HiveMind-Services: https://hivemind.apache.org/hivemind1/services.html
+.. _HiveMind-Configuration-Points: https://hivemind.apache.org/hivemind1/configurations.html
+
 Java-Services
 =============
-A service in tocco is a piece of code that may be reused in another service. Services consist of an interface that defines
-which methods of a service may be called externally and a respective implementation. Services are instantiated by hivemodule,
-that means we have no direct control over what to pass to a service in its constructor or how long an instance lives. The constructor
-of a service may only contain other services that are available in the respective module. These services will automatically be passed
-to the constructor when instantiating the service (autowiring).
+In HiveMind, a service is simply an object that implements a particular interface, the service interface.
+You supply the service interface (packaged as part of a module). You supply the core implementation of the interface
+(in the same module, or in a different module). At runtime, HiveMind puts it all together.
+
+Please see the HiveMind-Services_ documentation for a more detailed description on how this works. This documentation will
+only contain some tocco specific examples and tipps.
 
 .. figure:: resources/service-location.png
 
 Depending on where from the service needs to be accessed, the interface can be put in the ``impl`` (only used in the current module)
 the ``spi`` or the ``api`` module. The implementation should always be in the ``impl`` module.
 
+.. figure:: resources/module-example.png
+
+Hivemodule-Registration
+-----------------------
+
+Services can be registered in ``hivemodule.xml`` as shown below.
+
+.. code-block:: xml
+
+   <service-point id="AcceptConflictService" interface="ch.tocco.nice2.optional.reservation.impl.actions.AcceptConflictService">
+     <invoke-factory>
+       <construct class="ch.tocco.nice2.optional.reservation.impl.actions.AcceptConflictServiceImpl"/>
+     </invoke-factory>
+   </service-point>
+
+Invoke-Factory
+^^^^^^^^^^^^^^
+
+Invoke factories are usually used to instantiate services in nice2. The two most commonly used models in nice2 are ``singelton`` and
+``threaded``. For other ways of instantiating services please see the HiveMind-Services_ documentation.
+
+* **<invoke-factory model="singelton">** the service will be instantiated as soon as it is first called (Singleton). This is the default behaviour. If no model is defined ``singleton`` will be used.
+* **<invoke-factory model="threaded">** the service will be instantiated once per request. This is for example required for ``CollectingEntityListeners``.
+
 .. warning::
-   As most services are quasi singletons, they should always be stateless. (E.g. we should never hold any data in member variables)
+   Most services are singeltons and singletons should always be stateless. (E.g. we should never hold any data in member variables)
 
 Accessing a Service
 -------------------
 
-Services can only be accessed from other services. If another service is required, it can be injected by just defining it as
-constructor parameter as seen in the example below:
+The two most common ways of accessing services in tocco are by autowiring and by passing it to a ``hivemodule.xml`` contribution.
+
+Autowiring works with all singleton services that have exatly one implementation. These services may just be listed in the constructor
+of another service and HiveMind / hiveapp will try to automatically provide these services. For it to work your service needs access
+to the service-interface that is to be injected.
 
 .. code-block:: java
 
@@ -38,37 +69,80 @@ constructor parameter as seen in the example below:
       }
    }
 
-If there are multiple implementation of an interface, the service will not be autowired. If one of those services is required,
-it may be added manually. See Service-Configuration_.
+To get access to a service from another module, the interface of the other service needs to be in the ``api`` or ``spi`` module. This module
+needs to be added as a dependency to the ``pom.xml`` of the target module. Furthermode the dependency needs to be resolved in ``hivemodule.xml``.
+This is most commonly done by defining a feature to export in the source module (e.g. ``nice2.types``) and importing this feature in the target
+module.
 
-
-Hivemodule-Registration
------------------------
-
-To register a service in ``hivemodule.xml`` it needs to be added as ``service-point`` as shown below.
+**pom.xml dependency**
 
 .. code-block:: xml
 
-   <service-point id="AcceptConflictService" interface="ch.tocco.nice2.optional.reservation.impl.actions.AcceptConflictService">
-     <invoke-factory>
-       <construct class="ch.tocco.nice2.optional.reservation.impl.actions.AcceptConflictServiceImpl"/>
-     </invoke-factory>
-   </service-point>
+   <dependency>
+     <groupId>ch.tocco.nice2.types</groupId>
+     <artifactId>nice2-types-api</artifactId>
+     <version>${project.version}</version>
+     <scope>provided</scope>
+   </dependency>
 
-Invoke-Factory
-^^^^^^^^^^^^^^
+**defining the feature (source module)**
 
-The invoke factory defines how the service will be instantiated.
+.. code-block:: xml
 
-* **<invoke-factory>** the service will be instantiated normally (Singleton)
-* **<invoke-factory model="threaded">** the service will be instantiated once per request. This is for example required for ``CollectingEntityListeners``.
+   <contribution configuration-id="hiveapp.ClassLoader">
+     <!-- directly exporting packages -->
+     <export package="ch.tocco.nice2.types" version="1.0"/>
+     <export package="ch.tocco.nice2.types.spi" version="1.0"/>
+     <export package="ch.tocco.nice2.types.spi.password" version="1.0"/>
+     <export package="ch.tocco.nice2.types.spi.geolocation" version="1.0"/>
+     <export package="ch.tocco.nice2.types.test" version="1.0"/>
 
+     <!-- defining features containing packages -->
+     <feature name="ch.tocco.nice2.types" version="1.0">
+       <package name="ch.tocco.nice2.types"/>
+     </feature>
+     <feature name="ch.tocco.nice2.types.spi" version="1.0">
+       <package name="ch.tocco.nice2.types.spi"/>
+       <package name="ch.tocco.nice2.types.spi.password"/>
+       <package name="ch.tocco.nice2.types.spi.geolocation"/>
+     </feature>
+
+     <!-- exporting packages in a group -->
+     <group id="impl">
+       <export package="ch.tocco.nice2.types.impl" version="1.0"/>
+       <export package="ch.tocco.nice2.types.impl.config" version="1.0"/>
+       <export package="ch.tocco.nice2.types.impl.conversions" version="1.0"/>
+       <export package="ch.tocco.nice2.types.impl.handlers" version="1.0"/>
+       <export package="ch.tocco.nice2.types.impl.typeadapters" version="1.0"/>
+     </group>
+
+     <!-- defining a feature containing a group -->
+     <feature name="ch.tocco.nice2.types.impl" version="1.0">
+       <group id="impl"/>
+     </feature>
+   </contribution>
+
+**importing the feature (target module)**
+
+.. code-block:: xml
+
+   <contribution configuration-id="hiveapp.ClassLoader">
+     <import feature="ch.tocco.nice2.types" version="*"/>
+   </contribution>
+
+.. tip:: If the maven dependency is not correct, there will be compile time errors. If the hivemodule dependencies are not
+   configured correctly, runtime errors will be thrown.
+
+.. warning:: Circular dependencies are illegal and will lead to build errors.
 
 Service-Configuration
 ---------------------
 
 Further configuration can be provided to a service by providing it in the ``hivemodule.xml``. This can be used to pass fixed
-values (e.g. Configuration Files, Services, application.properties, ...) or contributions.
+values or contributions.
+
+Please read the official documentation on HiveMind-Configuration-Points_ for more informations on configuration points and contributions.
+This chapter will contain some hiveapp / tocco specific informaiton and examples.
 
 Contributions are used to add configuration that depends on other installed modules. Contributions may be made from any module
 that has a dependency to the module containing the configuration point. Generally speaking, if a configuration-point is in a core module,
@@ -84,7 +158,7 @@ is configured, a seter ``public void setLimit(Type limit)`` must exists.
 
 .. tip::
 
-   If a configuration does not work, it is always a good idea to set a breakpoint on the firstline of the respective seter.
+   If a configuration does not work, it is always a good idea to set a breakpoint on the first line of the respective setter.
 
 Fixed-Values
 ^^^^^^^^^^^^
