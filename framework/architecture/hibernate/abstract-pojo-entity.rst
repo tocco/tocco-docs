@@ -244,3 +244,83 @@ also implements the :java:ref:`EntityHolder<ch.tocco.nice2.persist.entity.Entity
 correctly, the iterators of the entity lists had to be extended, so that they do not wrap an entity, if the entity
 already implements the :java:ref:`EntityHolder<ch.tocco.nice2.persist.entity.EntityList.EntityHolder>` interface
 (see :java:ref:`EntityHolderIteratorWrapper<ch.tocco.nice2.persist.entity.EntityHolderIteratorWrapper>`).
+
+EntityInterceptor
+-----------------
+
+The :java:ref:`EntityInterceptor<ch.tocco.nice2.persist.hibernate.EntityInterceptor>` interface allows
+customizing the core entity functionality. The following functions can be intercepted:
+
+    * Reading and writing fields
+    * Deleting entities
+    * Modifying relations
+
+An entity interceptor instance is injected into every entity by the :java:ref:`EntityFactoryImpl<ch.tocco.nice2.persist.hibernate.pojo.EntityFactoryImpl>`.
+The instance is created by the :java:ref:`EntityInterceptorFactoryImpl<ch.tocco.nice2.persist.hibernate.interceptor.EntityInterceptorFactoryImpl>`
+which combines all interceptor contributions into an interceptor chain.
+The inner most interceptor (which actually accesses the entity fields and so on) is provided by the entity itself
+(``AbstractHibernateEntity#getInnerInterceptor()``).
+
+.. note::
+
+    The inner interceptor is wrapped in a :java:ref:`LazyInterceptor<ch.tocco.nice2.persist.hibernate.interceptor.EntityInterceptorFactoryImpl.LazyInterceptor>`
+    to avoid recursive proxy initialization (``Entity#getValue()`` -> ``proxy initialization`` ->
+    ``EntityFactory#createInstance()`` -> ``Entity#getInnerInterceptor()`` -> ``proxy initialization`` ...).
+
+
+Accessing values
+^^^^^^^^^^^^^^^^
+
+The method ``EntityInterceptor#accessField()`` can be used to intercept read or write access to a field.
+It is always called when a value is accessed by the entity (typically when ``Entity#get/setValue()`` is called).
+
+The default inner interceptor simply resolves the :java:extdoc:`Attribute<javax.persistence.metamodel.Attribute>`
+with the given field name using the :java:ref:`FieldResolver<ch.tocco.nice2.persist.hibernate.interceptor.FieldResolver>`. If write access is requested it additionally checks if the field is not a primary key
+or other generated field.
+
+The :java:ref:`SecurityEntityInterceptorContribution<ch.tocco.nice2.persist.security.hibernate.SecurityEntityInterceptorContribution>`
+uses this method to check the read or write permission of the given field. If the given field is a localized field, the base field (``label``
+instead of ``label_de``) is used to check permissions.
+
+Deleting entities
+^^^^^^^^^^^^^^^^^
+
+``EntityInterceptor#deleteEntity()`` is called when an entity is deleted (``Entity#delete()``).
+The inner interceptor fires an ``EntityFacadeListener#entityDeleting()`` event and (unless the entity is unsaved)
+schedules the entity for deletion with the :java:ref:`EntityTransactionContext<ch.tocco.nice2.persist.hibernate.cascade.EntityTransactionContext>`.
+
+In addition the :java:ref:`SecurityEntityInterceptorContribution<ch.tocco.nice2.persist.security.hibernate.SecurityEntityInterceptorContribution>`
+checks if the ``delete`` permission is granted for the current user.
+
+Modifying relations
+^^^^^^^^^^^^^^^^^^^
+
+A :java:ref:`RelationInterceptor<ch.tocco.nice2.persist.hibernate.RelationInterceptor>` can be obtained from
+the entity interceptor using ``createRelationInterceptor()``. The relation interceptor can be used to intercept
+:java:ref:`Relation<ch.tocco.nice2.persist.entity.Relation>` modifications.
+
+The inner interceptors are provided by the :java:ref:`AbstractRelationAdapter<ch.tocco.nice2.persist.hibernate.pojo.relation.AbstractRelationAdapter>`
+implementations. These update the relation value or collection and fire an ``EntityFacadeListener#entityRelationChanging()`` event.
+
+In addition the :java:ref:`SecurityEntityInterceptorContribution<ch.tocco.nice2.persist.security.hibernate.SecurityEntityInterceptorContribution>`
+checks if the current user is allowed to modify a relation.
+
+The :java:ref:`BusinessUnitEntityInterceptor<ch.tocco.nice2.businessunit.impl.intercept.BusinessUnitEntityInterceptorContribution.BusinessUnitEntityInterceptor>`
+checks if the business unit of an entity may be manually changed by the user (only business unit types ``MANUAL_SET``
+and ``NONE`` may be changed by the user).
+
+FieldResolver
+^^^^^^^^^^^^^
+
+The :java:ref:`FieldResolverImpl<ch.tocco.nice2.persist.hibernate.interceptor.FieldResolverImpl>` resolves a field name
+to an :java:extdoc:`Attribute<javax.persistence.metamodel.Attribute>`. It is used to resolve a field
+name to an actual column.
+Usually this a simple operation, however there are two exceptions:
+
+    * Localized fields: if the base field of a localized field is requested (e.g. ``label``) it is resolved to the
+      field of the current locale (e.g. ``label_de``).
+    * There is a custom implementation for session only entities, because the properties of these entities are not
+      mapped by a JPA :java:extdoc:`Attribute<javax.persistence.metamodel.Attribute>`.
+
+It is called whenever a field is accessed or referenced by name, for example when reading or writing fields or when compiling
+queries.
