@@ -126,10 +126,10 @@ Running the Image Locally
 
 .. parsed-literal::
 
-    docker run --rm -p 8080:8080 -e NICE2_HIKARI_dataSource.serverName=\ **${DB_SERVER}** \
-      -e NICE2_LOGBACK_CONFIG=\ **logback_terminal** -e NICE2_HIKARI_dataSource.databaseName=\ **${DB_NAME}** \
-      -e NICE2_HIKARI_dataSource.user=\ **${DB_USER}** -e NICE2_HIKARI_dataSource.password=\ **${DB_PASSWORD}** \
-      -e NICE2_JAVA_OPT\_-Dch.tocco.nice2.runenv=\ **development** -e NICE2_HIKARI_dataSource__sslMode=require \
+    docker run --rm -p 8080:8080 -e NICE2_HIKARI_dataSource.serverName=\ **${DB_SERVER}** \\
+      -e NICE2_LOGBACK_CONFIG=\ **logback_terminal** -e NICE2_HIKARI_dataSource.databaseName=\ **${DB_NAME}** \\
+      -e NICE2_HIKARI_dataSource.user=\ **${DB_USER}** -e NICE2_HIKARI_dataSource.password=\ **${DB_PASSWORD}** \\
+      -e NICE2_JAVA_OPT\_-Dch.tocco.nice2.runenv=\ **development** -e NICE2_HIKARI_dataSource__sslMode=require \\
       **${DOCKER_IMAGE_NAME}**
 
 .. hint::
@@ -192,10 +192,10 @@ but execute the ``dbref`` command within the container.
 
 .. parsed-literal::
 
-    docker run --rm -p 8080:8080 -e NICE2_HIKARI_dataSource.serverName=${DB_SERVER} \
-      -e NICE2_LOGBACK_CONFIG=logback_terminal -e NICE2_HIKARI_dataSource.databaseName=${DB_NAME} \
-      -e NICE2_HIKARI_dataSource.user=${DB_USER} -e NICE2_HIKARI_dataSource.password=${DB_PASSWORD} \
-      -e NICE2_JAVA_OPT\_-Dch.tocco.nice2.runenv=development -e NICE2_HIKARI_dataSource__sslMode=require \
+    docker run --rm -p 8080:8080 -e NICE2_HIKARI_dataSource.serverName=${DB_SERVER} \\
+      -e NICE2_LOGBACK_CONFIG=logback_terminal -e NICE2_HIKARI_dataSource.databaseName=${DB_NAME} \\
+      -e NICE2_HIKARI_dataSource.user=${DB_USER} -e NICE2_HIKARI_dataSource.password=${DB_PASSWORD} \\
+      -e NICE2_JAVA_OPT\_-Dch.tocco.nice2.runenv=development -e NICE2_HIKARI_dataSource__sslMode=require \\
       ${DOCKER_IMAGE_NAME} **dbref**
 
 
@@ -204,10 +204,43 @@ Postgres
 
 If you need Postgres on your machine, A simple solution is to run Postgres in Docker.
 
-.. hint::
+Available Postgres Images
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
-   A custom Postgres image is used here, checkout the `git repository <https://gitlab.com/toccoag/nice2-postgres>`_ for more details about the image.
+Base images:
 
+========== =================================================== ================================================
+ Postgres   Git Repository and Branch                           Docker Image URL
+========== =================================================== ================================================
+ 9.5        `nice2-postgres`_:9.5                               registry.gitlab.com/toccoag/nice2-postgres:9.5
+ 11         `nice2-postgres`_:11                                registry.gitlab.com/toccoag/nice2-postgres:11
+            ... (See `available branches on nice2-postgres`_    ...
+ ...        for a complete list)
+========== =================================================== ================================================
+
+Extended images for testing and testing only:
+
+========== ======================= =============================================================== ==================================================================================
+ Postgres   Included Database       Git Repository and Branch                                       Docker Image URL
+========== ======================= =============================================================== ==================================================================================
+ 9.5        *none*                 `nice2-postgres-for-tests`_:postgres-9.5                         registry.gitlab.com/toccoag/nice2-postgres-for-tests:postgres-9.5
+ 9.5        demo.tocco.ch (v2.17)  `nice2-postgres-for-tests`_:postgres-9.5-nice-2.17-demo          registry.gitlab.com/toccoag/nice2-postgres-for-tests:postgres-9.5-nice-2.17-demo
+ 11         *none*                 `nice2-postgres-for-tests`_:postgres-11                          registry.gitlab.com/toccoag/nice2-postgres-for-tests:postgres-11
+ 11         demo.tocco.ch (v2.17)  `nice2-postgres-for-tests`_:postgres-11-nice-2.17-demo           registry.gitlab.com/toccoag/nice2-postgres-for-tests:postgres-11-nice-2.17-demo
+ ...        ...                    ... (See `available branches on nice2-postgres-for-tests`_
+                                   for a complete list)
+========== ======================= =============================================================== ==================================================================================
+
+.. important::
+
+   The ``nice2-postgres-for-tests`` images are far faster but the have certain safety features like ``fsync`` disabled.
+   Use them only if complete data loss is acceptable.
+
+
+.. _nice2-postgres-for-tests: https://gitlab.com/toccoag/nice2-postgres-for-tests
+.. _nice2-postgres: https://gitlab.com/toccoag/nice2-postgres
+.. _available branches on nice2-postgres-for-tests: https://gitlab.com/toccoag/nice2-postgres-for-tests/branches
+.. _available branches on nice2-postgres: https://gitlab.com/toccoag/nice2-postgres/branches
 
 Start Postgres
 ^^^^^^^^^^^^^^
@@ -217,10 +250,10 @@ You can start Postgres locally using Docker like this:
 .. code-block:: bash
 
     mkdir dumps/
-    docker run --rm --name pg -d -p 5432 -v "$PWD/data:/data" -v "$PWD/dumps:/dumps" registry.gitlab.com/toccoag/nice2-postgres:9.5
+    docker run --rm --name pg -d -p 5432:5432 -v "$PWD/data:/data" -v "$PWD/dumps:/custom_dumps" registry.gitlab.com/toccoag/nice2-postgres:9.5
 
-This uses the directory ``data/`` in the current directory to store the database. Additionally, ``dumps/`` in the currrent
-directory is made available as ``/dumps/`` in the container.
+This uses the directory ``data/`` in the current directory to store the database. Skip it if you have no need for the data to be persistent.
+Additionally, ``custom_dumps/`` in the current directory is made available as ``/custom_dumps/`` in the container.
 
 
 SQL Console
@@ -230,7 +263,7 @@ Once postgres is running you can open an SQL console (``psql``):
 
 .. parsed-literal::
 
-    docker exec -it -w /dumps pg **psql**
+    docker exec -it pg **psql**
 
 Here you can create DB for instance:
 
@@ -240,10 +273,10 @@ Here you can create DB for instance:
 
 Or you can restore a dump that you copied into the ``dumps/`` directory::
 
-    $ ls -lh dumps/
+    $ ls -lh custom_dumps/
     total 20M
     -rw-r--r-- 1 user user 20M Jun 29 15:12 dump.psql
-    docker exec -it -w /dumps pg pg_restore --role --no-owner --no-acl nice -d DB dump.psql
+    docker exec -it -w /custom_dumps pg pg_restore --role --no-owner --no-acl nice -d DB dump.psql
 
 .. hint::
 
@@ -263,3 +296,7 @@ You connect to Postgres on host ``localhost`` port ``5432``:
    dataSource.databaseName=\ **${DB_NAME}**
    dataSource.password=nice
    dataSource.user=nice
+
+.. hint::
+
+   For images with test data, the password of all users, including user *tocco*, is **nice**.
