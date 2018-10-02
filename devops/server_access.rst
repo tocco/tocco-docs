@@ -40,18 +40,18 @@ SSH Access
 Allow SSH Access using Ansible
 ``````````````````````````````
 
-Access can can be granted via `/playbooks/ssh_key_sync/ssh_keys`_ in the Ansible repository.
+Access can can be granted via `roles/ssh-key-sync/files/ssh_keys`_ in the Ansible repository.
 
 Changes can be deployed via Ansible::
 
     cd ${ANSIBLE_GIT_ROOT}
-    ansible-playbook -i inventory playbooks/ssh_key_sync/main.yml
+    ansible-playbook -i inventory playbook.yml
 
 .. hint::
 
     Users with role ``@user`` have access as user tocco. User with role ``@root`` as tadm and tocco.
 
-.. _/playbooks/ssh_key_sync/ssh_keys: https://git.tocco.ch/gitweb?p=ansible.git;a=blob;f=playbooks/ssh_key_sync/ssh_keys
+.. _roles/ssh-key-sync/files/ssh_keys: https://git.tocco.ch/gitweb?p=ansible.git;a=blob;f=roles/ssh-key-sync/files/ssh_keys
 
 
 .. _Puppet:
