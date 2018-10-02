@@ -14,7 +14,7 @@ only contain some tocco specific examples and tipps.
 
 .. figure:: resources/service-location.png
 
-Depending on where from the service needs to be accessed, the interface can be put in the ``impl`` (only used in the current module)
+Depending on where the service needs to be accessed from, the interface can be put in the ``impl`` (only used in the current module)
 the ``spi`` or the ``api`` module. The implementation should always be in the ``impl`` module.
 
 .. figure:: resources/module-example.png
@@ -35,21 +35,21 @@ Services can be registered in ``hivemodule.xml`` as shown below.
 Invoke-Factory
 ^^^^^^^^^^^^^^
 
-Invoke factories are usually used to instantiate services in nice2. The two most commonly used models in nice2 are ``singelton`` and
+Invoke factories are usually used to instantiate services in nice2. The two most commonly used models in nice2 are ``singleton`` and
 ``threaded``. For other ways of instantiating services please see the HiveMind-Services_ documentation.
 
-* **<invoke-factory model="singelton">** the service will be instantiated as soon as it is first called (Singleton). This is the default behaviour. If no model is defined ``singleton`` will be used.
+* **<invoke-factory model="singleton">** the service will be instantiated lazily when it is accessed for the first time. This is the default behaviour. If no model is defined ``singleton`` will be used.
 * **<invoke-factory model="threaded">** the service will be instantiated once per request. This is for example required for ``CollectingEntityListeners``.
 
 .. warning::
-   Most services are singeltons and singletons should always be stateless. (E.g. we should never hold any data in member variables)
+   Most services are singletons and singletons should always be stateless. (E.g. we should never hold any data in member variables)
 
 Accessing a Service
 -------------------
 
 The two most common ways of accessing services in tocco are by autowiring and by passing it to a ``hivemodule.xml`` contribution.
 
-Autowiring works with all singleton services that have exatly one implementation. These services may just be listed in the constructor
+Autowiring works with all singleton services that have exactly one implementation. These services may just be listed in the constructor
 of another service and HiveMind / hiveapp will try to automatically provide these services. For it to work your service needs access
 to the service-interface that is to be injected.
 
@@ -141,8 +141,8 @@ Service-Configuration
 Further configuration can be provided to a service by providing it in the ``hivemodule.xml``. This can be used to pass fixed
 values or contributions.
 
-Please read the official documentation on HiveMind-Configuration-Points_ for more informations on configuration points and contributions.
-This chapter will contain some hiveapp / tocco specific informaiton and examples.
+Please read the official documentation on HiveMind-Configuration-Points_ for more information on configuration points and contributions.
+This chapter will contain some hiveapp / tocco specific information and examples.
 
 Contributions are used to add configuration that depends on other installed modules. Contributions may be made from any module
 that has a dependency to the module containing the configuration point. Generally speaking, if a configuration-point is in a core module,
@@ -153,140 +153,12 @@ a visualisation for the configuration-point ``OrderGeneratorTaskContribution`` t
 .. figure:: resources/module-dependencies.png
 
 All additional service configuration may be set by adding subelements to the ``<construct>`` element. These subelements consist of
-the ``property`` attribute and a value. The service must contain a seter for each property that should be set. For example: if ``property=limit``
-is configured, a seter ``public void setLimit(Type limit)`` must exists.
+the ``property`` attribute and a value. The service must contain a setter for each property that should be set. For example: if ``property=limit``
+is configured, a setter ``public void setLimit(Type limit)`` must exists.
 
 .. tip::
 
    If a configuration does not work, it is always a good idea to set a breakpoint on the first line of the respective setter.
-
-Fixed-Values
-^^^^^^^^^^^^
-
-Fixed values can be set by adding ``<set>`` or ``<set-object>`` subelements to the ``<construct>`` element.
-
-The following types of Fixed-Values may be passed to a service:
-
-* File-References_
-* Application-Properties_
-* Other services using the ``service:ServiceName`` annotation
-
-Please find below an example of a fictional service that is configured by all these
-
-.. code-block:: xml
-
-   <service-point id="TestService" interface="ch.tocco.nice2.optional.test.TestService">
-     <invoke-factory>
-       <construct class="ch.tocco.nice2.optional.test.impl.TestServiceImpl">
-         <set property="limit" value="${nice2.dms.FolderSizeBatchJob.limit}"/> <!-- application.properties value -->
-         <set-object property="customerResource" value="vfs:[#etc]/hikaricp.properties"/> <!-- file reference -->
-         <set-object property="defaultBuilder" value="service:DefaultChildOfConditionBuilder"/> <!-- specific service -->
-       </construct>
-     </invoke-factory>
-   </service-point>
-
-Application-Properties
-^^^^^^^^^^^^^^^^^^^^^^
-
-Application-Properties are automatically mapped as hivemodule symbols and may be passed to a service using the ``${key}`` notation.
-
-For each application property a default value can be defined by contributing to ``hivemind.FactoryDefaults``.
-
-**Example:**
-
-**application.properties:**
-
-.. code-block:: text
-
-   nice2.testservice.limit=10000
-
-**default value contribution**
-
-.. code-block:: xml
-
-  <contribution configuration-id="hivemind.FactoryDefaults">
-    <default symbol="nice2.testservice.limit" value="5000"/>
-  </contribution>
-
-**passing the value to a service**
-
-.. code-block:: xml
-
-   <service-point id="TestService" interface="ch.tocco.nice2.optional.test.TestService">
-     <invoke-factory>
-       <construct class="ch.tocco.nice2.optional.test.impl.TestServiceImpl">
-         <set property="limit" value="${nice2.testservice.limit}"/>
-       </construct>
-     </invoke-factory>
-   </service-point>
-
-**using the value**
-
-.. code-block:: java
-
-   public class TestServiceImpl implements TestService {
-       private long limit;
-
-       @Override
-       public boolean isLimitExceeded(long actualSize) {
-           return actualSize > limit;
-       }
-
-       @SupressWarning("unused")
-       public void setLimit(long limit) {
-           this.limit = limit;
-       }
-   }
-
-File-References
-^^^^^^^^^^^^^^^
-
-Files can be passed to a service using ``vfs`` references.
-
-``vfs`` references are references to a file in the project structure. 
-
-* ``[#etc]`` - the ``etc`` directory of the currently running customer
-* ``[#share]`` - the ``share`` directory of the currently running customer
-* ``[#self]`` - the ``module`` directory of the current module
-* ``[nice2.any.module]`` - the module directory of any given module (e.g. ``[nice2.persist.backend.postgres]``)
-
-**Examples:**
-
-* ``vfs:[nice2.persist.backend.postgres]/hikaricp.properties``
-* ``vfs:[#etc]/hikaricp.properties``
-
-**hivemodule.xml:**
-
-.. code-block:: xml
-
-   <service-point id="HibernatePropertiesProvider" interface="ch.tocco.nice2.persist.hibernate.HibernatePropertiesProvider">
-     <invoke-factory>
-       <construct class="ch.tocco.nice2.persist.hibernate.bootstrap.HibernatePropertiesProviderImpl">
-         <set-object property="baseResource" value="vfs:[nice2.persist.backend.postgres]/hikaricp.properties"/>
-         <set-object property="customerResource" value="vfs:[#etc]/hikaricp.properties"/>
-         <set-object property="localResource" value="vfs:[#etc]/hikaricp.local.properties"/>
-       </construct>
-     </invoke-factory>
-   </service-point>
-
-**Java:**
-
-.. code-block:: java
-
-   @SuppressWarnings("unused")
-   public void setBaseResource(Resource baseResource) {
-       this.baseResource = baseResource;
-   }
-
-   @SuppressWarnings("unused")
-   public void setCustomerResource(Resource customerResource) {
-       this.customerResource = customerResource;
-   }
-
-   @SuppressWarnings("unused")
-   public void setLocalResource(Resource localResource) {
-       this.localResource = localResource;
-   }
 
 Simple Configuration-Point
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -601,4 +473,132 @@ of the element are read. The ``create-object`` defines which element will be map
                this.file = file;
            }
        }
+   }
+
+Fixed-Values
+^^^^^^^^^^^^
+
+Fixed values can be set by adding ``<set>`` or ``<set-object>`` subelements to the ``<construct>`` element.
+
+The following types of Fixed-Values may be passed to a service:
+
+* File-References_
+* Application-Properties_
+* Other services using the ``service:ServiceName`` annotation
+
+Please find below an example of a fictional service that is configured by all these
+
+.. code-block:: xml
+
+   <service-point id="TestService" interface="ch.tocco.nice2.optional.test.TestService">
+     <invoke-factory>
+       <construct class="ch.tocco.nice2.optional.test.impl.TestServiceImpl">
+         <set property="limit" value="${nice2.dms.FolderSizeBatchJob.limit}"/> <!-- application.properties value -->
+         <set-object property="customerResource" value="vfs:[#etc]/hikaricp.properties"/> <!-- file reference -->
+         <set-object property="defaultBuilder" value="service:DefaultChildOfConditionBuilder"/> <!-- specific service -->
+       </construct>
+     </invoke-factory>
+   </service-point>
+
+Application-Properties
+^^^^^^^^^^^^^^^^^^^^^^
+
+Application-Properties are automatically mapped as hivemodule symbols and may be passed to a service using the ``${key}`` notation.
+
+For each application property a default value can be defined by contributing to ``hivemind.FactoryDefaults``.
+
+**Example:**
+
+**application.properties:**
+
+.. code-block:: text
+
+   nice2.testservice.limit=10000
+
+**default value contribution**
+
+.. code-block:: xml
+
+  <contribution configuration-id="hivemind.FactoryDefaults">
+    <default symbol="nice2.testservice.limit" value="5000"/>
+  </contribution>
+
+**passing the value to a service**
+
+.. code-block:: xml
+
+   <service-point id="TestService" interface="ch.tocco.nice2.optional.test.TestService">
+     <invoke-factory>
+       <construct class="ch.tocco.nice2.optional.test.impl.TestServiceImpl">
+         <set property="limit" value="${nice2.testservice.limit}"/>
+       </construct>
+     </invoke-factory>
+   </service-point>
+
+**using the value**
+
+.. code-block:: java
+
+   public class TestServiceImpl implements TestService {
+       private long limit;
+
+       @Override
+       public boolean isLimitExceeded(long actualSize) {
+           return actualSize > limit;
+       }
+
+       @SupressWarning("unused")
+       public void setLimit(long limit) {
+           this.limit = limit;
+       }
+   }
+
+File-References
+^^^^^^^^^^^^^^^
+
+Files can be passed to a service using ``vfs`` references.
+
+``vfs`` references are references to a file in the project structure. 
+
+* ``[#etc]`` - the ``etc`` directory of the currently running customer
+* ``[#share]`` - the ``share`` directory of the currently running customer
+* ``[#self]`` - the ``module`` directory of the current module
+* ``[nice2.any.module]`` - the module directory of any given module (e.g. ``[nice2.persist.backend.postgres]``)
+
+**Examples:**
+
+* ``vfs:[nice2.persist.backend.postgres]/hikaricp.properties``
+* ``vfs:[#etc]/hikaricp.properties``
+
+**hivemodule.xml:**
+
+.. code-block:: xml
+
+   <service-point id="HibernatePropertiesProvider" interface="ch.tocco.nice2.persist.hibernate.HibernatePropertiesProvider">
+     <invoke-factory>
+       <construct class="ch.tocco.nice2.persist.hibernate.bootstrap.HibernatePropertiesProviderImpl">
+         <set-object property="baseResource" value="vfs:[nice2.persist.backend.postgres]/hikaricp.properties"/>
+         <set-object property="customerResource" value="vfs:[#etc]/hikaricp.properties"/>
+         <set-object property="localResource" value="vfs:[#etc]/hikaricp.local.properties"/>
+       </construct>
+     </invoke-factory>
+   </service-point>
+
+**Java:**
+
+.. code-block:: java
+
+   @SuppressWarnings("unused")
+   public void setBaseResource(Resource baseResource) {
+       this.baseResource = baseResource;
+   }
+
+   @SuppressWarnings("unused")
+   public void setCustomerResource(Resource customerResource) {
+       this.customerResource = customerResource;
+   }
+
+   @SuppressWarnings("unused")
+   public void setLocalResource(Resource localResource) {
+       this.localResource = localResource;
    }
