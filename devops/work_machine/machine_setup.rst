@@ -237,7 +237,7 @@ Setup OpenShift Client
 Install Client
 ``````````````
 
-Download the client from the `OpenShift download page <https://www.openshift.org/download.html>`__, extract it and
+Download the client from the `OpenShift download page <https://www.okd.io/download.html>`__, extract it and
 move the ``oc`` binary into ``$PATH``:
 
 .. code-block:: bash

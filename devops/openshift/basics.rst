@@ -15,15 +15,15 @@ Here's what's important:
 
 Here are a few resources that help you understand the core concepts:
 
-* `High level architecture of OpenShift <https://docs.openshift.org/latest/architecture/index.html>`_.
+* `High level architecture of OpenShift <https://docs.okd.io/latest/architecture/index.html>`_.
 * `An introduction to Docker <https://en.wikipedia.org/wiki/Docker_(software)>`_.
 
 Have a look at the full `OpenShift documentation`_ and `Docker documentation`_ if you want to know all the details.
 
 .. _Docker: https://www.docker.com/
 .. _Docker documentation: https://docs.docker.com/
-.. _OpenShift: https://www.openshift.org/
-.. _OpenShift documentation: https://docs.openshift.org/latest/
+.. _OpenShift: https://www.okd.io/
+.. _OpenShift documentation: https://docs.okd.io/latest/welcome/index.html
 
 
 Projects

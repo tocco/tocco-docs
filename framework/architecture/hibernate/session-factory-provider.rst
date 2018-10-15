@@ -14,7 +14,7 @@ This is done by the :java:ref:`SessionFactoryProvider<ch.tocco.nice2.persist.hib
 which is a hivemind :java:ref:`ServiceImplementationFactory<org.apache.hivemind.ServiceImplementationFactory>`. This is a sort of a factory service that can be used to
 inject the generated object (in this case the :java:extdoc:`SessionFactory<org.hibernate.SessionFactory>`) into other services.
 
-The Hibernate bootstrapping process is documented `here <http://docs.jboss.org/hibernate/orm/5.2/userguide/html_single/Hibernate_User_Guide.html#bootstrap-native>`_.
+The Hibernate bootstrapping process is documented `here <https://docs.jboss.org/hibernate/orm/5.2/userguide/html_single/Hibernate_User_Guide.html#bootstrap-native>`_.
 
 This service is registered with private visibility and can only be used in the ``persist/core`` module, because if other modules
 would use the :java:extdoc:`SessionFactory<org.hibernate.SessionFactory>` directly, they could bypass the security layer.

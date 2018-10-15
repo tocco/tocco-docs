@@ -99,7 +99,7 @@ Glossary
         it is used for :term:`DB refactoring` and some startup checks. For more details, see
         `Pod-based Lifecycle Hook`_ in the OpenShift documentation.
 
-        .. _Pod-based Lifecycle Hook: https://docs.openshift.org/latest/dev_guide/deployments/deployment_strategies.html#pod-based-lifecycle-hook
+        .. _Pod-based Lifecycle Hook: https://docs.okd.io/latest/dev_guide/deployments/deployment_strategies.html#pod-based-lifecycle-hook
 
     Remote Repository
         In :term:`Artifactory`, Remote Repositories can be configured. For such repositories, Artifactory will forward

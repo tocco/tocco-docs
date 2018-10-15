@@ -77,7 +77,7 @@ This error can also appear during ``pg_restore``\s.
 Cause
 ^^^^^
 
-There is a `fixed, global limit of locks <https://www.postgresql.org/docs/9.1/static/runtime-config-locks.html#UC-MAX-LOCKS-PER-TRANSACTION>`_
+There is a `fixed, global limit of locks <https://www.postgresql.org/docs/9.5/static/runtime-config-locks.html#GUC-MAX-LOCKS-PER-TRANSACTION>`_
 in Postgres. This error simply means that there are no more locks available. Usually, this is caused by poor code that
 acquires hundreds of thousands of locks in a single transaction.
 

@@ -178,7 +178,7 @@ Step by Step Instructions
 #. Setup monitoring
 
     Setup monitoring as described in the section "Nagios Monitoring einrichten" in
-    `this document <https://www.tocco.ch/intranet/tocco-workspace/prozesse-workflows/prozesse#detail&key=301>`__.
+    `this document <https://www.tocco.ch/intranet/Tocco-Workspace/prozesse#detail&key=301&name=Einrichten%20einer%20Kundeninstallation>`__.
 
 
 .. important::
