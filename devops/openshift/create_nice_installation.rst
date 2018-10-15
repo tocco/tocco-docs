@@ -169,6 +169,10 @@ Step by Step Instructions
 
         The DNS entry for ${INSTALLATION} must exists and be correct at this point.
 
+    .. warning::
+
+        Issuing a certificate can take several minutes.
+
     More details, including troubleshooting information, can be found in :ref:`ssl-certificates`.
 
 #. Add additional Routes / Hostnames if Needed
