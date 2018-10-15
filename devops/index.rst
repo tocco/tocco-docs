@@ -15,4 +15,3 @@ DevOps
    solr/index
    backups/index
    webserver/index
-   work_machine/index
