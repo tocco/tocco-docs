@@ -81,7 +81,7 @@ List all routes in a project with paused SSL issuance:
 
         .. code-block:: bash
 
-           oc get route -o json | jq '.items[]|[.metadata.name, .spec.host, .metadata.annotations."kubernetes.io/tls-acme-paused"//"false" ]'
+           oc get route -o json | jq '.items[]|if .spec.path//"/" == "/" then [.metadata.name, .spec.host, .metadata.annotations."kubernetes.io/tls-acme-paused"//"false" ] else empty end'
 
     Sample output:
 
@@ -90,28 +90,32 @@ List all routes in a project with paused SSL issuance:
         .. code-block:: javascript
 
            [
-             "nice",
+             "nice",               // <-- ${ROUTE}
              "tocco.tocco.ch",
-             "true"
+             "true"                // <-- paused
            ],
            [
-             "nice-tocco.ch",
+             "nice-tocco.ch",      // <-- ${ROUTE}
              "tocco.ch",
-             "true"
+             "true"                // <-- paused
            ],
            [
-             "nice-www.tocco.ch",
+             "nice-www.tocco.ch", // <-- ${ROUTE}
              "www.tocco.ch",
-             "false"
+             "false"              // <-- not paused
            ]
 
-In case a route is paused, ensure the DNS entry is correct and then remove the paused annotation to force a retry.
+In case a route is paused, ensure :ref:`the DNS entry is correct <verify-dns-records>` and then remove the paused annotation to force a retry.
 
 Remove paused annotation:
 
 .. parsed-literal::
 
     oc annotate route **${ROUTE}** kubernetes.io/tls-acme-paused-
+
+.. warning::
+
+   Issuing a certificate can take several minutes.
 
 
 Remove Route

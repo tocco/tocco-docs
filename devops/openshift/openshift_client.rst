@@ -224,6 +224,47 @@ Use this command to scale Nice instances:
 
 This scales Nice to ``N`` replicas. Use 0 to stop all instances.
 
+Restart a Nice Instance
+-----------------------
+
+List pods:
+
+.. parsed-literal::
+
+    $ oc get pod
+    NAME            READY     STATUS    RESTARTS   AGE
+    nice-61-6wlvx   2/2       Running   0          8d
+    solr-6-c6t2t    1/1       Running   0          9d
+
+To restart the nice instance, we have to delete the pod called ``nice-61-6wlvx`` in this example.
+
+.. parsed-literal::
+
+    $ oc delete pod nice-61-6wlvx
+    pod "nice-61-6wlvx" deleted
+
+If we list the pods again, we see that the deleted pod is terminating and a new one has been created (``nice-61-pkksw``):
+
+.. parsed-literal::
+
+    $ oc get pod
+    NAME            READY     STATUS              RESTARTS   AGE
+    nice-61-6wlvx   1/2       Terminating         0          8d
+    nice-61-pkksw   0/2       ContainerCreating   0          4s
+    solr-6-c6t2t    1/1       Running             0          9d
+
+The new instance is not fully ready and, therefore, not reachable yet.
+
+If we check again a few minutes later, the old instance has disappeared. Also, the new instance should be fully ready
+(and we should be able to access it again via browser):
+
+.. parsed-literal::
+
+    $ oc get pod
+    NAME            READY     STATUS    RESTARTS   AGE
+    nice-61-pkksw   2/2       Running   0          7m
+    solr-6-c6t2t    1/1       Running   0          9d
+
 Start PSQL
 ----------
 
