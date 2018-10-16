@@ -71,7 +71,7 @@ If one of the agents is not available, check via Proxmox web interface if the vi
 it if necessary.
 
 1. Look up the host machine here: :doc:`index`
-2. Open Proxmox web interface in the browser: https://**${HOST}**.tocco.ch (e.g. https://host03c.tocco.ch for TC-Agent-4)
+2. Open Proxmox web interface in the browser: https\://**${HOST}**.tocco.ch (e.g. https://host03c.tocco.ch for TC-Agent-4)
 3. Log in with `root`
 4. Find the agent machine in the navigation menu on the left
 5. Press the "Start" button on the right if the machine is not running or select "Reset" from the "Shutdown" menu

@@ -14,8 +14,8 @@ There are two different :java:extdoc:`EntityMode<org.hibernate.EntityMode>` in h
 As the two modes cannot be mixed and we would like to be able to use typed entities (instead of just the
 :java:ref:`Entity<ch.tocco.nice2.persist.entity.Entity>` interface) in the future we need to dynamically generate classes for the entity models.
 
-The `javassist <http://jboss-javassist.github.io/javassist/>`_ library is used to generate the classes. The same
-library is used by  Hibernate 5.2.x itself to generate proxy classes. `Bytebuddy <http://bytebuddy.net/>`_ would
+The `javassist <https://www.javassist.org/>`_ library is used to generate the classes. The same
+library is used by  Hibernate 5.2.x itself to generate proxy classes. `Bytebuddy <https://bytebuddy.net/>`_ would
 be a more modern alternative, but the newest version is much `slower <https://stackoverflow.com/questions/45456076/bytebuddy-performance-in-hibernate>`_ than javassist.
 
 Class generation
@@ -103,7 +103,7 @@ If the value of a counter field is manually set in the transaction it will not b
 
 At first, the counter entity (for the relevant entity type, field and business unit) is fetched from the database
 using the ``PESSIMISTIC_WRITE`` lock mode.
-The counter value is then updated using a `stateless session <http://docs.jboss.org/hibernate/orm/5.2/userguide/html_single/Hibernate_User_Guide.html#_statelesssession>`_ to make sure that
+The counter value is then updated using a `stateless session <https://docs.jboss.org/hibernate/orm/5.2/userguide/html_single/Hibernate_User_Guide.html#_statelesssession>`_ to make sure that
 database is updated immediately. This is necessary if the same counter is used multiple times in the same transaction.
 It is important that the connection of the current session is also used in the stateless session to make sure that they use
 the same database transaction.

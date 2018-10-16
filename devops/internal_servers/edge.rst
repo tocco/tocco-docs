@@ -79,7 +79,8 @@ Installation
 #. Download drivers for the VirtIO network device.
 
    The VM is now ready to boot, but we need the drivers for the network device else we won't have any connection to the network.
-   Fedora provides the driver for Windows. It can be found `on the fedora project website <https://fedoraproject.org/wiki/Windows_Virtio_Drivers#Direct_download>`_.
+   Fedora provides the driver for Windows. It can be found `on the fedora project website
+   <https://docs.fedoraproject.org/en-US/quick-docs/creating-windows-virtual-machines-using-virtio-drivers/index.html#virtio-win-direct-downloads>`_.
 
    We have to upload the driver the same way we did it with the image file, see step 3.
    Before we can start the VM, we need to add the drivers to a virtual drive, so that you can access it inside the VM.

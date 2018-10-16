@@ -505,4 +505,4 @@ Change datatype
 
 
 .. _Liquibase: https://www.liquibase.org/
-.. _`Liquibase documentation`: http://www.liquibase.org/documentation/
+.. _`Liquibase documentation`: https://www.liquibase.org/documentation/
