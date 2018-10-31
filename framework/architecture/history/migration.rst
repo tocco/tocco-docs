@@ -95,6 +95,6 @@ the history migration.
 
 .. note::
 
-    This executes a ``DELETE`` (instead of a ``DROP TABLE`` directly) statement on the ``nice_history_binary`` and ``nice_history_domain_entity``
-    tables to make sure the ``ON DELETE`` trigger is executed and the binary reference count is updated correctly. The binaries
-    itself are then removed by the batch job.
+    This drops the four ``nice_history_*`` tables. However the triggers which update the reference counters on the
+    ``_nice_binary`` table are *not* executed this way (and executing a ``DELETE`` beforehand would be way too slow).
+    Instead the reference counters are reset to -1 and need to be recalculated. The binaries itself are then removed by the batch job.
