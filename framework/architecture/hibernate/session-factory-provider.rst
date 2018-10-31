@@ -52,7 +52,7 @@ Several user extensions are registered with the :java:ref:`ContributionClassLoad
 
     - For each custom user type a :java:extdoc:`TypeContributor<org.hibernate.boot.model.TypeContributor>` is contributed.
       There are some default types (for example ``binary`` or ``datetime``) that are always registered, but other modules can
-      contribute user types as well.
+      contribute user types as well (see :ref:`user-types`).
     - :java:ref:`FieldGenerator<ch.tocco.nice2.persist.hibernate.pojo.FieldGenerator>` contributions (fields that are set
       automatically by the framework, like the create/update timestamps and users).
 
