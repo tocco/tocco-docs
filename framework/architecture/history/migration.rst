@@ -1,5 +1,5 @@
-Migration to a dedicated data store
-===================================
+Migration to a dedicated data store (Nice v2.19)
+================================================
 
 Database initialization
 -----------------------
@@ -42,6 +42,18 @@ As the data volume is quite large and the migration takes a long time a dedicate
 implemented.
 
 .. _migration tool: https://git.tocco.ch/#/admin/projects/history-migration
+
+There are several ways to run this tool:
+
+- Check out the tool and run it locally
+- Use the prebuilt Docker image which is published on ``toccoag/history-migration-2.19``
+
+Check out the tool and run it locally
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Check out the `migration tool project`_.
+
+.. _migration tool project: https://git.tocco.ch/#/admin/projects/history-migration
 
 An executable jar can be built using the following command on the root folder of the migration project:
 
@@ -98,3 +110,49 @@ the history migration.
     This drops the four ``nice_history_*`` tables. However the triggers which update the reference counters on the
     ``_nice_binary`` table are *not* executed this way (and executing a ``DELETE`` beforehand would be way too slow).
     Instead the reference counters are reset to -1 and need to be recalculated. The binaries itself are then removed by the batch job.
+
+Use the prebuilt Docker image
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+There is a prebuilt Docker image available: ``toccoag/history-migration-2.19``
+
+For Nice installations which run in our OpenShift cluster, the migration image can be run very easily.
+
+Head over to the `APPUiO platform`_ and select the project of the installation to migrate.
+
+.. _APPUiO platform: https://console.appuio.ch
+
+.. figure:: resources/screenshot1.png
+
+    Detail page of the installation project (before the Docker image has been deployed)
+
+Select **Add to Project** → **Deploy Image** in the top right corner and fill in the Image Name and the environment
+variables as shown in the following screenshots. Please adjust the environment variables according to your current
+project. Note that the environment variables correspond to the properties described in the chapter
+`Check out the tool and run it locally`_ (simply written upper case and ``.`` replaced with ``_``).
+
+.. figure:: resources/screenshot2.png
+.. figure:: resources/screenshot3.png
+
+Hit the **Deploy** button and switch to the Logs panel of the deployment to see what's happening inside the Docker
+container.
+
+Most probably you're going to run the migration a few days before the actual update of the Nice installation to
+v2.19. Once this pre-migration has completed, scale down to 0 pods. Leave the deployed image there for the
+after-migration, once the Nice installation has been updated to v2.19.
+
+Once the Nice installation has been updated to v2.19, scale to 1 pod again to restart the migration. This time,
+you can also set the additional environment variable ``MIGRATION_DROP_SOURCE_TABLES=true`` to automatically
+delete the old tables after the migration (**Caution:** As the name of the variable states, the old history tables
+really will be deleted. **Never** use this variable before the installation has been updated to v2.19).
+
+.. note::
+
+    If you'd like to build your own Docker image from the source code (see above), you can use the command
+    ``./gradlew build docker`` in the project root directory.
+
+.. note::
+
+    If the installation you're migrating doesn't run in our OpenShift cluster, you can still use the prebuilt
+    Docker image. Simply pull it from Docker hub and run it in your local Docker installation using the
+    environment variables as shown above.
