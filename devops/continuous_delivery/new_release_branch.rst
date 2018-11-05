@@ -15,6 +15,12 @@ Create databases
 
          CREATE DATABASE nice2_test\_\ **${NEW_VERSION}** WITH TEMPLATE nice2_test_master;
 
+#. Copy local customer history db from master
+
+   .. parsed-literal::
+
+         CREATE DATABASE nice2_test\_\ **${NEW_VERSION}**\_\history WITH TEMPLATE nice2_test_master_history;
+
 .. note::
 
    Kill database connections if necessary
@@ -63,7 +69,8 @@ Change version in these files in the **master** branch:
 Change the database of the test customer in the created **release** branch:
 
 - Change test customer db to **${NEW_VERSION}**: *customer/test/etc/hikaricp.properties*
-- Example commit: Ifae0bf7c18ebe0f9810e898c1bca747dc30da0bd
+- Change test customer history db to **${NEW_VERSION}**: *customer/test/etc/hikaricp.history.properties*
+- Example commits: Ifae0bf7c18ebe0f9810e898c1bca747dc30da0bd, 9a2f3bb9937cc5ed39efa66fa13e458a64b3c45d
 
     .. warning::
 
@@ -87,7 +94,7 @@ Backoffice
 ----------
 - Change branch of **${LAST_VERSION}**
 - Add new Version
-- Set status of versions older than 6 versions to outdated
+- Set status of versions older than 6 versions to outdated (on release date)
 - Check on all installations if **${NEW_VERSION}** is set
 
 Documentation
