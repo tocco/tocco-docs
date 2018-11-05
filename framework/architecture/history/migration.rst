@@ -148,6 +148,24 @@ really will be deleted. **Never** use this variable before the installation has 
 
 .. note::
 
+    Depending on the size of the source database, the deletion of the old history tables using the
+    ``MIGRATION_DROP_SOURCE_TABLES`` environment variable could be very slow.
+    In this case, you might want to delete the tables manually using the following SQL statements.
+
+
+    **Caution:** **Do not delete the tables** before the installation has been updated to v2.19 and the records
+    have been fully migrated!
+
+    .. code:: sql
+
+        DROP TABLE nice_history_domain_entity_to_history_binary;
+        DROP TABLE nice_history_binary;
+        DROP TABLE nice_history_domain_entity;
+        DROP TABLE nice_history_version;
+        UPDATE _nice_binary SET reference_count = -1;
+
+.. note::
+
     If you'd like to build your own Docker image from the source code (see above), you can use the command
     ``./gradlew build docker`` in the project root directory.
 
