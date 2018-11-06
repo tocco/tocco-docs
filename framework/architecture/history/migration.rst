@@ -148,8 +148,8 @@ really will be deleted. **Never** use this variable before the installation has 
 
 .. note::
 
-    Depending on the size of the source database, the deletion of the old history tables using the
-    ``MIGRATION_DROP_SOURCE_TABLES`` environment variable could be very slow.
+    Sometimes the deletion of the old history tables using the ``MIGRATION_DROP_SOURCE_TABLES`` environment variable
+    doesn't work properly.
     In this case, you might want to delete the tables manually using the following SQL statements.
 
 
