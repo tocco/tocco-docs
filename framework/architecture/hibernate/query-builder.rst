@@ -115,20 +115,35 @@ It is called for every query root and for every subquery and can add additional 
 
 Custom JDBC Functions
 ---------------------
-Custom query functions can be implemented using the :java:ref:`JdbcFunction<ch.tocco.nice2.persist.backend.jdbc.spi.function.JdbcFunction>` interface.
-We use a custom :java:extdoc:`Dialect<org.hibernate.dialect.Dialect>` implementation (:java:ref:`ToccoPostgreSQLDialect<ch.tocco.nice2.persist.hibernate.dialect.ToccoPostgreSQLDialect>`)
-to register the custom functions with hibernate.
+Custom query functions can be implemented using the :java:ref:`JdbcFunction<ch.tocco.nice2.persist.hibernate.query.JdbcFunction>` interface.
+The contributions are registered with the :java:extdoc:`SessionFactoryBuilder<org.hibernate.boot.SessionFactoryBuilder>` by the
+:java:ref:`HibernateCoreBootstrapContribution<ch.tocco.nice2.persist.hibernate.bootstrap.HibernateCoreBootstrapContribution>`.
 
 In addition to the contributed functions, the :java:ref:`GlobSqlFunction<ch.tocco.nice2.persist.hibernate.dialect.GlobSqlFunction>`
 is registered as well. It implements the ``glob`` function, which is internally used when the ``Operator#LIKE`` is specified.
 It uses ``LIKE`` internally but is also replacing ``*`` with ``%`` and ``?`` with ``_`` so that both placeholders are supported.
 
-The :java:ref:`ToccoDialectResolver<ch.tocco.nice2.persist.hibernate.dialect.ToccoDialectResolver>` is a custom
-:java:extdoc:`DialectResolver<org.hibernate.engine.jdbc.dialect.spi.DialectResolver>`, which makes sure that our custom dialects are used
-by hibernate. It is configured using the ``hibernate.dialect_resolvers`` property.
+Each function must provide a :java:extdoc:`SQLFunction<org.hibernate.dialect.function.SQLFunction>` which contains the SQL template.
+Typically the :java:extdoc:`SQLFunctionTemplate<org.hibernate.dialect.function.SQLFunctionTemplate>` can be used for this.
+An instance of :java:ref:`SqlWriter<ch.tocco.nice2.persist.query.SqlWriter>` is provided to facilitate writing the SQL query. The
+sql writer is obtained from ``Context#createSqlWriter()`` and is automatically configured based on the current :java:extdoc:`Dialect<org.hibernate.dialect.Dialect>`.
+
+The abstract base class :java:ref:`AbstractJdbcFunction<ch.tocco.nice2.persist.hibernate.query.AbstractJdbcFunction>` provides support
+to create the sql function templates:
+
+    * Find the correct hibernate :java:extdoc:`Type<org.hibernate.type.Type>` based on the nice :java:ref:`Type<ch.tocco.nice2.types.Type>`
+    * The ``writeArgument()`` method can be used to write a parameter placeholder into the sql string
+
+.. warning::
+
+    The arguments of the :java:ref:`Condition<ch.tocco.nice2.persist.qb2.Condition>` are passed to the criteria builder in the same order.
+    If the order of arguments is different in the sql template or a parameter is used multiple times, the ``argumentOrder()`` method
+    needs to be overwritten by the :java:ref:`JdbcFunction<ch.tocco.nice2.persist.hibernate.query.JdbcFunction>`. The arguments
+    are then reordered and/or duplicated by the :java:ref:`FuncallArgumentProcessor<ch.tocco.nice2.persist.hibernate.pojo.CriteriaQueryCompiler.FuncallArgumentProcessor>`
+    before the query is processed.
 
 .. note::
-    The :java:ref:`JdbcFunction<ch.tocco.nice2.persist.backend.jdbc.spi.function.JdbcFunction>` operates directly on the SQL level
+    The :java:ref:`JdbcFunction<ch.tocco.nice2.persist.hibernate.query.JdbcFunction>` operates directly on the SQL level
     and can be used to access database specific functions.
     An example is the :java:ref:`BirthdayQueryFunction<ch.tocco.nice2.persist.backend.jdbc.impl.functions.BirthdayQueryFunction>`
     that uses the ``extract`` PostgreSQL function.
@@ -197,7 +212,7 @@ A :java:ref:`FuncallNode<ch.tocco.nice2.conditionals.tree.FuncallNode>` may be a
     - ``EXISTS`` subquery
     - ``IN`` condition
     - ``COUNT`` subquery
-    - a :java:ref:`JdbcFunction<ch.tocco.nice2.persist.backend.jdbc.spi.function.JdbcFunction>` call
+    - a :java:ref:`JdbcFunction<ch.tocco.nice2.persist.hibernate.query.JdbcFunction>` call
 
 AbstractJoiningVisitor
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -284,7 +299,8 @@ If the type of the literal value does not match the type of the path or count ex
 the value using the :java:ref:`TypeManager<ch.tocco.nice2.types.TypeManager>`.
 
 The ``LIKE`` operator is handled specially as it is not translated into a SQL ``LIKE`` but mapped to our custom ``glob``
-:java:ref:`JdbcFunction<ch.tocco.nice2.persist.backend.jdbc.spi.function.JdbcFunction>`. Both sides of the equation are
+:java:extdoc:`SQLFunction<org.hibernate.dialect.function.SQLFunction>` (:java:ref:`GlobSqlFunction<ch.tocco.nice2.persist.hibernate.dialect.GlobSqlFunction>`).
+Both sides of the equation are
 converted to lower case to simulate ``ILIKE`` behaviour.
 
 Localized fields
