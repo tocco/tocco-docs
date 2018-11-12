@@ -358,7 +358,7 @@ def setup(app):
     app.add_stylesheet("css/custom.css")
 
 javadoc_url_map = {
-    'org.hibernate' : ('https://docs.jboss.org/hibernate/orm/5.2/javadocs/', 'javadoc'),
+    'org.hibernate' : ('https://docs.jboss.org/hibernate/orm/5.3/javadocs/', 'javadoc'),
     'javassist' : ('https://jboss-javassist.github.io/javassist/html', 'javadoc')
 }
 

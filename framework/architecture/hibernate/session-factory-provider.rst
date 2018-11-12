@@ -79,6 +79,10 @@ adds the connection options to the default properties. These are read from the d
 (base, customer and local).
 The properties need to be transformed to a different format as Hibernate uses different options than HikariCP.
 
+The :java:ref:`ToccoDialectResolver<ch.tocco.nice2.persist.hibernate.dialect.ToccoDialectResolver>` is a custom
+:java:extdoc:`DialectResolver<org.hibernate.engine.jdbc.dialect.spi.DialectResolver>`, which makes sure that our custom dialects are used
+by hibernate. It is configured using the ``hibernate.dialect_resolvers`` property.
+
 Injecting service factories
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
