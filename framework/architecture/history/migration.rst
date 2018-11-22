@@ -4,8 +4,16 @@ Migration to a dedicated data store (Nice v2.19)
 Database initialization
 -----------------------
 
-The dedicated history database needs to be initialized before the migration.
-This can be done either by running the :java:ref:`HistoryDataStoreFragment<ch.tocco.nice2.persist.history.impl.store.HistoryDataStoreFragment>`
+The dedicated history database needs to be created and initialized before the migration.
+
+The database has to be created as follows:
+
+- **Name:** Same name as the Nice database of the customer with the suffix ``_history`` (e.g. customer ``tocco`` with
+  Nice2 database name ``nice_tocco`` → name of the history database: ``nice_tocco_history``).
+- **Owner:** Must be equal to the database name (in the example above: ``nice_tocco_history``).
+- **Password for the owner:** Same password as for the owner of the Nice database.
+
+Initializing the database can be done either by running the :java:ref:`HistoryDataStoreFragment<ch.tocco.nice2.persist.history.impl.store.HistoryDataStoreFragment>`
 or by manually executing these statements:
 
 .. code:: sql
