@@ -6,5 +6,6 @@ Architecture
 
    hibernate/index
    history/index
+   s3/index
    acl/index
    businessunit/index
