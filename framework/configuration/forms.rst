@@ -239,6 +239,8 @@ If used in a sub-table, the ``{parentKey}`` placeholder can be used.
 Example:
 ``endpoint="entities/Requirement/{parentKey}/entitydocs"``
 
+GET http method is used to call the endpoint.
+
 show-search-form (true, *false*)
 ++++++++++++++++++++++++++++++++++
 Whether a search form is displayed or not.
