@@ -52,9 +52,9 @@ that can be passed to ``CriteriaQueryBuilder#addPredicate()``. The :java:extdoc:
 :java:extdoc:`Root<javax.persistence.criteria.Root>` and :java:ref:`SubqueryFactory<ch.tocco.nice2.persist.hibernate.query.PredicateBuilder.SubqueryFactory>`
 are passed as parameters into the lambda expression.
 
-``Node`` API
-^^^^^^^^^^^^
-:java:ref:`Node<ch.tocco.nice2.conditionals.tree.Node>` instances created by the :java:ref:`Conditions<ch.tocco.nice2.persist.qb2.Conditions>` API
+``Node`` / ``Condition`` API
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+:java:ref:`Node<ch.tocco.nice2.conditionals.tree.Node>` or (:java:ref:`Condition<ch.tocco.nice2.persist.qb2.Condition>`) instances (created by the :java:ref:`Conditions<ch.tocco.nice2.persist.qb2.Conditions>` API)
 can also be passed to ``CriteriaQueryBuilder#addCondition()``. This API is also used by the security conditions.
 
 A condition like ``field("name").is(value)`` might be mapped with a :java:extdoc:`ParameterExpression<javax.persistence.criteria.ParameterExpression>`
@@ -84,6 +84,10 @@ The query is not executed yet.
 .. note::
     The query interceptors are applied during the configuration phase and not when the query is actually executed!
 
+The query wrapper offers a ``distinct()`` method which allows to specify if a query should be
+executed with the ``DISTINCT`` keyword. This only affects queries with a custom selection, queries for entire entities
+are always executed distinct (primarily to be compatible with the old API).
+
 The query wrapper wraps an instance of :java:extdoc:`CriteriaQuery<javax.persistence.criteria.CriteriaQuery>`.
 The wrapper configures the query instance (selection, predicates, ordering etc) and reuses it for different
 purposes (``getResultList()`` or ``count()``).
@@ -94,14 +98,17 @@ If the parameter values do not match the referenced type it is tried to convert 
 Ordering
 ^^^^^^^^
 If no explicit ordering is defined for the query, the default ordering defined in the entity model is used.
+In addition, the primary key is always added as the last sorting parameter (unless it already is part of the sorting clause).
+This is necessary to guarantee a consistent ordering when ``LIMIT`` or ``OFFSET`` is used (otherwise the order might be
+partially random if there are many rows with same value in the order column).
+
 According to the SQL Standard all columns that are part of the ``ORDER BY`` clause must also be part of the select clause
 if it is a ``DISTINCT`` query.
 
-If the user specifies a custom selection, it is his responsibility to build a valid query.
-But for 'normal' queries that select entire entities, this should be handled automatically.
-This is the case if the ordering contains a column of a different entity.
+This is handled automatically for queries both with or without custom selection.
 The additional columns are added to the selection are discarded again when the results are processed
-(see :java:ref:`EntityCriteriaQueryWrapper<ch.tocco.nice2.persist.hibernate.query.CriteriaQueryBuilder.EntityCriteriaQueryWrapper>`).
+(see methods ``expandSelection(List<Order> order)`` and ``unwrapResults(List<?> results)`` in
+:java:ref:`EntityCriteriaQueryWrapper<ch.tocco.nice2.persist.hibernate.query.CriteriaQueryBuilder.EntityCriteriaQueryWrapper>`).
 
 
 Query Builder Interceptor
