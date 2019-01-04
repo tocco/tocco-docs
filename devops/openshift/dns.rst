@@ -11,17 +11,27 @@ DNS
 What DNS Records are Needed?
 ----------------------------
 
-Let's assume entries for ``tocco.ch``, ``www.tocco.ch`` and ``cockpit.tocco.ch`` are needed, they'd look like this:
+Let's assume a customer called **bmx** owns the domains bmx.ch, zero.net and wants ``bmx.ch``, ``www.bmx.ch``,
+ ``extranet.bmx.ch`` and ``extranet.zero.net`` to be served by Tocco:
 
 .. code-block:: ini
 
-    ; domain itself
-    tocco.ch          3600 IN A      5.102.151.2
-    tocco.ch          3600 IN A      5.102.151.3
+    ;;; ${CUSTOMER}.tocco.ch ;;;
+    ; All customers should have an *.tocco.ch entry
+    bmx.tocco.ch.      3600 IN CNAME  ha-proxy.tocco.ch
 
-    ; subdomains
-    www.tocco.ch      3600 IN CNAME  ha-proxy.tocco.ch
-    cockpit.tocco.ch  3600 IN CNAME  ha-proxy.tocco.ch
+    ;;; domain itself ;;;
+    ; CNAME not allowed on domains. Thus, IPs must be used.
+    bmx.ch.            3600 IN A      5.102.151.2
+    bmx.ch.            3600 IN A      5.102.151.3
+
+    ;;; subdomains ;;;
+    ; Point to domain, bmx.ch in this case, when possible.
+    www.bmx.ch.        3600 IN CNAME  bmx.ch.
+    extranet.bmx.ch.   3600 IN CNAME  bmx.ch.
+    ; Point to ${CUSOTMER}.tocco.ch if domain doesn't point to Tocco (no zero.net entry).
+    extranet.zero.net. 3600 IN CNAME  bmx.tocco.ch.
+                                                     
 
 Note that for domains themselves **two** ``A`` records are needed and for subdomains only one ``CNAME``.
 
@@ -70,7 +80,12 @@ Add DNS Record for a Domain managed by Us
        .. figure:: dns_static/nine_cname_record.png
            :scale: 60%
 
-           add record for subdomain (target ``ha-proxy.tocco.ch``)
+           add record for subdomain (target ``ha-proxy.tocco.ch`` or ``${DOMAIN}``)
+
+       If you add a subdomain and the domain itself is served by Tocco, use ``${DOMAIN}``
+       as target. For instance, if site.net is served by us and you add www.site.net set
+       *Target* to ``site.net``. For ``${CUSTOMER}.tocco.ch``, and other subdomains where
+       the domain points somewhere else, set *Target* to ``ha-proxy.tocco.ch``.
 
 #. Remove superfluous entries
 
