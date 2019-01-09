@@ -110,7 +110,7 @@ from the test system of the new version and stored on our SharePoint.
 .. _share point: https://tocco.sharepoint.com/:f:/s/Produkt-Gilde/EjCp-srbI5FNmAdoqZ94MRgB3BxJfc8vs0QgIXrVYhvc8A?e=QYThAB
 
 Compare two snapshots to view changes
-`````````````````````````````````````
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To view the differences between two model snapshots any text or JSON diffing tool can be used. However, keep in mind
 that the snapshot files can be quite big and that some tools might not be able to cope with that.
