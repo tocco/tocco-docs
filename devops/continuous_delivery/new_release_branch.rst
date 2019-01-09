@@ -97,6 +97,53 @@ Backoffice
 - Set status of versions older than 6 versions to outdated (on release date)
 - Check on all installations if **${NEW_VERSION}** is set
 
+Store entity model snapshot on SharePoint
+-----------------------------------------
+
+On the *release date* (not when the release branch is created), the current entity model snapshot should be obtained
+from the test system of the new version and stored on our SharePoint.
+
+#. Get the JSON snapshot from: https\://test\ **${VERSION}**.tocco.ch/nice2/rest/entities?_fullModel=true
+#. Save it as JSON file and put it into the corresponding release directory on our `share point`_. The file should
+   be called ``Entity_Model_${VERSION}.json``.
+
+.. _share point: https://tocco.sharepoint.com/:f:/s/Produkt-Gilde/EjCp-srbI5FNmAdoqZ94MRgB3BxJfc8vs0QgIXrVYhvc8A?e=QYThAB
+
+Compare two snapshots to view changes
+`````````````````````````````````````
+
+To view the differences between two model snapshots any text or JSON diffing tool can be used. However, keep in mind
+that the snapshot files can be quite big and that some tools might not be able to cope with that.
+
+One tool that works quite well is Meld. Meld is free to use and available for Windows, Linux and MacOS.
+
+Steps to compare two files using Meld:
+
+#. Get Meld from https://meldmerge.org
+#. Open Meld and press the button **File comparison**
+
+   .. figure:: compare_entity_models_static/meld1.png
+
+#. **Don't** select the snapshot files yet (leave the file selection fields empty with the placeholder "(None)")
+   and press **Compare**.
+
+   .. hint::
+
+     The reason for leaving the file selection fields empty is that Meld isn't able to detect the encoding correctly
+     if the files are selected already here.
+
+   .. figure:: compare_entity_models_static/meld2.png
+
+#. Select the old and the new snapshot file at the top of the two columns. Note that it can take two minutes or so to
+   load the files in Meld (loading state indicated by loading icon in the top right corner).
+
+   .. figure:: compare_entity_models_static/meld3.png
+
+#. Once both files are loaded, the differences are highlighted and can be spotted easily. Use the arrow buttons to
+   navigate between the differences.
+
+   .. figure:: compare_entity_models_static/meld4.png
+
 Documentation
 -------------
 
