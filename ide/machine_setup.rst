@@ -165,17 +165,33 @@ servers (i.e. ask in the operations channel to have your key added).
 Configure SSH
 `````````````
 
-.. code-block:: bash
+#. Clone the *toco-dotfiles* repository::
 
     cd ~/src
     git clone https://github.com/tocco/tocco-dotfiles
+
+#. Link ``authorized_keys_tocco`` into SSH config directory::
+
+    mkdir -p ~/.ssh
+    ln -s ~/src/ssh/known_hosts_tocco ~/.ssh/
+
+#. Include config and set user name::
+
     cat >>~/.ssh/config <<EOF
-    # overwrite settings here, *before* the "Include"
+    # First entry wins. So, override settings here, at the top.
+
+    Host *.tocco.cust.vshn.net
+        User ${FIRST_NAME}.${LAST_NAME}
+
+    # Comment in if you want to login as `tadm` by default instead as `tocco` (root permissions required).
+    # Host *.tocco.ch
+    #     User tadm
 
     Host *
         Include ~/src/tocco-dotfiles/ssh/config
     EOF
 
+Replace **${FIRST_NAME}**.**${LAST_NAME}** like this: **peter.gerber**.
 
 Setup Git
 ---------
