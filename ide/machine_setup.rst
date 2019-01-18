@@ -35,7 +35,19 @@ in ``~/install/``using ``ln -sfn ideaIC-XXXX.X.X idea``.
 
 Create Desktop Entry
 ````````````````````
-open ``idea`` and find **Tools** → **Create Desktop Entry…**
+
+open ``idea`` and find **Tools** → **Create Desktop Entry…** (or **Configure** → **Create Desktop Entry…** on
+the welcome screen).
+
+
+Generate GUI into Java Source Code
+``````````````````````````````````
+
+Find **File** → **Settings** (or **Configure** → **Settings** on welcome screen).
+
+.. figure:: resources/gui_designer_settings.png
+
+   Select "Generate GUI into: Java source code"
 
 
 Increase Memory Available to IDEA
@@ -69,6 +81,15 @@ Increase Watch Limit (Linux only)
 Install Java
 ------------
 
+Required Java versions:
+
+    ============== ===============
+     Java Version   Nice Versions
+    ============== ===============
+     8              2.9 - 2.19
+     10             2.20 -
+    ============== ===============
+
 Debian-Based Systems
 ````````````````````
 
@@ -94,8 +115,16 @@ Install default JDK:
     EOF
     apt update
 
-    # install Java 9
-    apt install openjdk-9-jdk
+    # install Java 11
+    apt install openjdk-11-jdk
+
+… or, use the ``openjdk-r`` PPA repository (Ubuntu-based only)
+
+   See `How To Install OpenJDK 11 In Ubuntu 18.04, 16.04 or 14.04 / Linux Mint 19, 18 or 17 <https://www.linuxuprising.com/2019/01/how-to-install-openjdk-11-in-ubuntu.html>`_
+
+   .. hint::
+
+       Use this PPA to install Java 11 on **Ubuntu 18.04** (codename bionic). Later version have Java 11 included in the official repository.
 
 
 Setup Maven
@@ -111,6 +140,26 @@ Debian-Based Systems
 
     apt install maven
 
+
+Support Multiple Java Versions
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Add aliases to ``~/.bash_aliases`` (adjust versions as needed)::
+
+    alias mvn8="JAVA_HOME='/usr/lib/jvm/java-8-openjdk-amd64" mvn'
+    alias mvn11="JAVA_HOME='/usr/lib/jvm/java-11-openjdk-amd64" mvn'
+
+This will allow you to run ``mvn`` using an explicit java version. Examples::
+
+    # Java 8
+    mvn8 -pl customer/test -am clean install -DskipTests
+
+    # Java 11
+    mvn11 -pl customer/test -am clean install -DskipTests
+
+.. hint::
+
+    Close and reopen the terminal for ``mvn8`` and ``mvn11`` to become available.
 
 Configure Maven
 ```````````````
@@ -139,6 +188,20 @@ Repository Access
         THE ACTUAL CONTENT THAT GOES HERE CONTAINS A PASSWORD, GET IT AT:
         https://wiki.tocco.ch/wiki/index.php/Maven_2#settings.xml
     EOF
+
+Increase Max. Number of Open Files
+``````````````````````````````````
+
+Create ``/etc/security/limits.d/open_file_limit.conf`` with this content::
+
+        *                -       nofile          1000000
+
+.. hint::
+
+    Only effective once you **logged out and in** again.
+
+If you encounter too-many-files-open errors during ``mvn build``, check out
+:ref:`too-many-open-files-maven`.
 
 
 Setup SSH
@@ -226,8 +289,8 @@ Test if Maven build works:
 .. code-block:: bash
 
     cd ~/src/nice2
-    mvn -am install -T1.5C -DskipTests  # add "-Dmac" on Mac
-
+    # Depending on the Java version required, use ``mvn8``, etc.
+    mvn11 -am install -T1.5C -DskipTests  # add "-Dmac" on Mac
 
 .. _setup-openshift-client:
 

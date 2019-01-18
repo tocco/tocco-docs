@@ -66,6 +66,27 @@ For instance, by adding this in your ``~/.profile`` (and restarting the terminal
 
 Alternatively, you can decrease the memory usage by decreasing the number of jobs as described in the previous section.
 
+.. _too-many-open-files-maven:
+
+"Too many open files" During Maven Build
+````````````````````````````````````````
+
+With the introduction of Java 11, far more files are opened at once during ``mvn build`` sometimes leading to the
+error "Too many open files". Increase the the max. number of open files in such a case.
+
+Increasing the limit on Linux:
+
+    Create ``/etc/security/limits.d/open_file_limit.conf`` with this content::
+
+        *                -       nofile          1000000
+
+    **Log out and in again** for this to become effective. Use ``ulimit -n`` to show the current limit.
+
+.. hint::
+
+    Should you have trouble increasing the limit, you can try decreasing the number of parallel jobs running
+    during the build using the ``-T`` flag. For instance, specify ``-T3`` to run three jobs or specify ``-T0.5C``
+    to run 0.5 jobs per CPU core.
 
 .. rubric:: Footnotes
 
