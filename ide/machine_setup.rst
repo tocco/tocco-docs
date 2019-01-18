@@ -87,7 +87,7 @@ Required Java versions:
      Java Version   Nice Versions
     ============== ===============
      8              2.9 - 2.19
-     10             2.20 -
+     11             2.20 -
     ============== ===============
 
 Debian-Based Systems
