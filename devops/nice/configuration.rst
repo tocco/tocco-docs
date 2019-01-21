@@ -204,7 +204,7 @@ This creates a :term:`PVC` of size 1 GiB called ``cms`` which is mounted in the 
 
 .. code::
 
-    oc volume dc/nice -c nice --add --name=cms --claim-name=cms --claim-size=1G --mount-path=/app/var/cms
+    oc set volume dc/nice -c nice --add --name=cms --claim-name=cms --claim-size=1G --mount-path=/app/var/cms
 
 You can list the PVCs using ``oc get pvc`` and you'll see the mounted volumes in the deployment config
 using ``oc describe dc ${POD}``, section *Mount*.
@@ -241,5 +241,5 @@ First remove the volume from the container. Then, remove the actual :term:`PVC`.
 
 .. code::
 
-        oc volume dc/nice -c nice --remove --name=cms
+        oc set volume dc/nice -c nice --remove --name=cms
         oc delete pvc cms

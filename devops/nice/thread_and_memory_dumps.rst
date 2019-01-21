@@ -79,7 +79,7 @@ Creating Memory Dump on OOM
 
    .. parsed-literal::
 
-       oc volume dc/nice -c nice --add --name=oom --claim-name=oom --claim-size=\ **5G** --mount-path=/app/var/heap_dumps
+       oc set volume dc/nice -c nice --add --name=oom --claim-name=oom --claim-size=\ **5G** --mount-path=/app/var/heap_dumps
 
 #. wait for OOM crash
 
@@ -122,7 +122,7 @@ Creating Memory Dump on OOM
 
     .. code::
 
-        oc volume dc/nice -c nice --remove --name=oom
+        oc set volume dc/nice -c nice --remove --name=oom
         oc delete pvc oom
 
     .. warning::
