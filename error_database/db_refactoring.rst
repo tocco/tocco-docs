@@ -26,7 +26,7 @@ Solution
 
            .. parsed-literal::
 
-                - name: NICE2_APP_nice2__dbrefactoring__businessunits
+                - name: NICE2_APP_nice2.dbrefactoring.businessunits
                   value: **bu1,bu2,…**
 
 Full Error Message

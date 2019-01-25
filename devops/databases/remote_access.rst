@@ -33,11 +33,11 @@ Obtain credentials:
 
         $ oc project toco-nice-**${INSTALLATION}**
         $ oc set env --list dc/nice \|grep ^NICE2_HIKARI_dataSource
-        NICE2_HIKARI_dataSource__databaseName=\ :green:`nice_tocco`
-        NICE2_HIKARI_dataSource__password=\ :red:`DAPVK11Zt9X1PtVv9ily`
-        NICE2_HIKARI_dataSource__serverName=db1.tocco.cust.vshn.net
-        NICE2_HIKARI_dataSource__user=\ :blue:`nice_tocco`
-        NICE2_HIKARI_dataSource__sslMode=require
+        NICE2_HIKARI_dataSource.databaseName=\ :green:`nice_tocco`
+        NICE2_HIKARI_dataSource.password=\ :red:`DAPVK11Zt9X1PtVv9ily`
+        NICE2_HIKARI_dataSource.serverName=db1.tocco.cust.vshn.net
+        NICE2_HIKARI_dataSource.user=\ :blue:`nice_tocco`
+        NICE2_HIKARI_dataSource.sslMode=require
 
 Now create or alter ``customer/${CUSTOMER}/etc/hikaricp.local.properties``:
 
