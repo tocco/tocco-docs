@@ -10,20 +10,15 @@ Custom HTTP headers can be configured using ``NGINX_HEADER_*`` env. variables.
 
 Set header for responses with **2XX status codes**::
 
-    NGINX_HEADER_Content__Security__Policy="default-src 'none'; block-all-mixed-content; connect-src 'self' example.net"
+    NGINX_HEADER_Content-Security-Policy="default-src 'none'; block-all-mixed-content; connect-src 'self' example.net"
 
 This creates a header called ``Content-Security-Policy`` with the value ``default-src 'none'; block-all-mixed-content; connect-src 'self' example.net``.
 
 Set header on **all** responses regardless of status code::
 
-    oc set env -c nginx dc/nice NGINX_ALWAYS_HEADER_Strict__Transport__Security='max-age=62208000'
+    oc set env -c nginx dc/nice NGINX_ALWAYS_HEADER_Strict-Transport-Security='max-age=62208000'
 
 This creates a header called ``Strict-Transport-Security`` with the value ``max-age=62208000``.
-
-.. hint::
-
-    OpenShift does not currently allow hyphens (``-``) to appear in keys of environment variables,
-    you need to use double underscores (``__``) instead. (See examples above.)
 
 
 IP Whitelisting
