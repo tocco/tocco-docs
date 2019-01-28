@@ -112,7 +112,7 @@ Move Solr Core from OpenShift to a Managed Server
 
     .. parsed-literal::
 
-       oc set env dc/nice -c nice NICE2_APP_nice2__enterprisesearch__solrUrl=https://solr\ **${N}**.tocco.cust.vshn.net:8983/solr/nice-**${INSTALLATION}**
+       oc set env dc/nice -c nice NICE2_APP_nice2.enterprisesearch.solrUrl=https://solr\ **${N}**.tocco.cust.vshn.net:8983/solr/nice-**${INSTALLATION}**
 
 #. Stop Solr on OpenShift
 

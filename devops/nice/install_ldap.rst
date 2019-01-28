@@ -59,7 +59,7 @@ Adjust the Deployment Config
 
 .. code::
 
-   oc set env dc/nice NICE2_APP_nice2__optional__ldapserver__enabled="true" NICE2_APP_nice2__optional__ldapserver__port="10389" NICE2_APP_nice2__optional__ldapserver__certificatePassword="${CERTIFICATE_PASSWORD}" NICE2_APP_nice2__optional__ldapserver__keyStoreFile="/persist/${KEYFILE}"
+   oc set env dc/nice NICE2_APP_nice2.optional.ldapserver.enabled="true" NICE2_APP_nice2.optional.ldapserver.port="10389" NICE2_APP_nice2.optional.ldapserver.certificatePassword="${CERTIFICATE_PASSWORD}" NICE2_APP_nice2.optional.ldapserver.keyStoreFile="/persist/${KEYFILE}"
 
 2. Mount the Secret into the nice Container
 

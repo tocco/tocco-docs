@@ -156,10 +156,10 @@ First, you need to figure out why there aren't enough connections around. For th
            .. parsed-literal::
 
                $ oc set env dc/nice --list -c nice | grep '^NICE2_HIKARI_'
-               NICE2_HIKARI_dataSource__databaseName=nice_toccotest
-               NICE2_HIKARI_dataSource__password=************
-               NICE2_HIKARI_dataSource__serverName=db1.tocco.cust.vshn.net
-               NICE2_HIKARI_dataSource__user=nice_toccotest
+               NICE2_HIKARI_dataSource.databaseName=nice_toccotest
+               NICE2_HIKARI_dataSource.password=************
+               NICE2_HIKARI_dataSource.serverName=db1.tocco.cust.vshn.net
+               NICE2_HIKARI_dataSource.user=nice_toccotest
                **NICE2_HIKARI_maximumPoolSize**\ =12
                NICE2_HIKARI_leakDetectionThreshold=30000
 

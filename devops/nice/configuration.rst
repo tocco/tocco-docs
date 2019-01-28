@@ -92,15 +92,15 @@ The env section looks something like this:
     containers:
       - name: nice
         env:
-        - name: NICE2_HIKARI_dataSource__databaseName
+        - name: NICE2_HIKARI_dataSource.databaseName
           value: nice_pege
-        - name: NICE2_HIKARI_dataSource__serverName
+        - name: NICE2_HIKARI_dataSource.serverName
           value: postgresqlssd
-        - name: NICE2_HIKARI_dataSource__user
+        - name: NICE2_HIKARI_dataSource.user
           value: nice_pege
-        - name: NICE2_JAVA_OPT____Dch__tocco__nice2__runenv
+        - name: NICE2_JAVA_OPT_-Dch.tocco.nice2.runenv
           value: production
-        - name: NICE2_APP_nice2__enterprisesearch__solrUrl
+        - name: NICE2_APP_nice2.enterprisesearch.solrUrl
           value: http://solr:8983/solr/nice2_index
 
 
@@ -113,24 +113,11 @@ NICE2_JAVA_PARAM_*   Pass custom parameters to Java.
 NICE2_NICE_ARG_*     Pass custom argument to Nice. (Not applied in :term:`pre-hook pod`)
 ===================  ===================================================================================================
 
-.. important::
+.. hint::
 
-    OpenShift does not currently allow ``.`` (period) or ``-`` (hyphen) to appear as key of an environment variable.
-    [#f2]_
-
-    As workaround:
-
-        ==============  ===========================
-        instead of      use
-        ==============  ===========================
-        ``.`` (period)  ``__`` (double underscore)
-        ``-`` (hyphen)  ``___`` (triple underscore)
-        ==============  ===========================
-
-    For instance, instead of:
-        ``NICE2_JAVA_OPT_-Dch.tocco.nice2.runenv=production``
-    use:
-        ``NICE2_JAVA_OPT____Dch__tocco__nice2__runenv=production`` [#f1]_
+   In some places, you may still find `__` used instead of `.` and `___` used instead
+   of `-`. This because older OpenShift versions didn't allow these characters to
+   appear in the name of an environment variable. [#f2]_
 
 Examples
 ````````
