@@ -13,12 +13,12 @@ Postgres Database
 ^^^^^^^^^^^^^^^^^
 
 Add the new databases to the `VSHN git Repository`_.
-The database will automatically be created after a few minutes.
+The database will be created automatically. This can take up to 40 minutes.
 
 .. _VSHN Git Repository: https://git.vshn.net/tocco/tocco_hieradata/edit/master/database/master.yaml
 
 | Use the same password for both databases of the installation
-| This password is also used to setup OpenShift.
+| This password needs to be used as DB_PASS parameter to oc process later on.
 | Generate a db password:
 
 .. code-block:: bash
@@ -27,7 +27,7 @@ The database will automatically be created after a few minutes.
 
 Main Database:
 
-.. code-block:: text
+.. code-block:: yaml
 
   nice_${CUSTOMER}:
     db_user: 'nice_${CUSTOMER}'
@@ -37,15 +37,13 @@ Main Database:
       - 'uuid-ossp'
 
 
-History Database (only version 2.19 and higher):
+History Database:
 
-.. code-block:: text
+.. code-block:: yaml
 
   nice_${CUSTOMER}_history:
     db_user: 'nice_${CUSTOMER}'
     db_password: '${DB_PASS}'
-    extensions:
-      - 'lo'
 
 S3 Bucket
 ^^^^^^^^^
@@ -62,7 +60,7 @@ Create in TeamCity
 
 :ref:`new-installation-cd`
 
-Final stepes
+Final Steps
 ------------
 
 #. Setup monitoring

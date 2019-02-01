@@ -1,4 +1,4 @@
-Business services
+Business Services
 =================
 
 .. toctree::

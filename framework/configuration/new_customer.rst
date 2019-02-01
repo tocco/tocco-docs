@@ -1,6 +1,6 @@
 .. _add_customer_module:
 
-Add new Customer module
+Add new Customer Module
 =======================
 
  1. Go into your nice git repository
