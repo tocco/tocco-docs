@@ -1,3 +1,5 @@
+.. _new-installation-cd:
+
 Add Customer / Installation
 ===========================
 

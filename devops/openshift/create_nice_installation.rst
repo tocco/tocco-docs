@@ -1,3 +1,5 @@
+.. _new-installation-openshift:
+
 Create a Nice Installation
 ==========================
 
@@ -178,12 +180,6 @@ Step by Step Instructions
 #. Add additional Routes / Hostnames if Needed
 
     ${INSTALLATION}.tocco.ch is automatically created. If you need more routes see :ref:`add-route`.
-
-#. Setup monitoring
-
-    Setup monitoring as described in the section "Nagios Monitoring einrichten" in
-    `this document <https://www.tocco.ch/intranet/Tocco-Workspace/prozesse#detail&key=301&name=Einrichten%20einer%20Kundeninstallation>`__.
-
 
 .. important::
 
