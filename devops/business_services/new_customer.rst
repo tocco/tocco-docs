@@ -12,38 +12,63 @@ Create Database/Storage
 Postgres Database
 ^^^^^^^^^^^^^^^^^
 
-Add the new databases to the `VSHN git Repository`_.
+Add the new databases to the :hierra-repo:`VSHN Git Repository <database/master.yaml>`.
 The database will be created automatically. This can take up to 40 minutes.
 
-.. _VSHN Git Repository: https://git.vshn.net/tocco/tocco_hieradata/edit/master/database/master.yaml
+Use the same password for both databases of the installation.
 
-| Use the same password for both databases of the installation
-| This password needs to be used as DB_PASS parameter to oc process later on.
-| Generate a db password:
+#. Generate a DB password::
 
-.. code-block:: bash
+       pwgen -s 20 1
 
-  pwgen -s 20 1
+   .. hint::
 
-Main Database:
+       This password has to be passed to ``oc process`` as ``DB_PASS`` parameter later on.
 
-.. code-block:: yaml
+#. Main Database
 
-  nice_${CUSTOMER}:
-    db_user: 'nice_${CUSTOMER}'
-    db_password: '${DB_PASS}'
-    extensions:
-      - 'lo'
-      - 'uuid-ossp'
+   .. code-block:: yaml
+
+       nice_${INSTALLATION}:
+         db_user: 'nice_${INSTALLATION}'
+         db_password: '${DB_PASS}'
+         extensions:
+           - 'lo'
+           - 'uuid-ossp'
 
 
-History Database:
+#. History Database
 
-.. code-block:: yaml
+   .. code-block:: yaml
 
-  nice_${CUSTOMER}_history:
-    db_user: 'nice_${CUSTOMER}'
-    db_password: '${DB_PASS}'
+       nice_${CUSTOMER}_history:
+         db_user: 'nice_${CUSTOMER}'
+         db_password: '${DB_PASS}'
+
+
+Create a Solr Core
+^^^^^^^^^^^^^^^^^^
+
+#. Generate ``${SOLR_PASSWORD}``::
+
+       pwgen -s 30 1
+
+   .. hint::
+
+       This password has to be passed to ``oc process`` as ``SOLR_PASS`` parameter later on.
+
+#. Add a new user and core in :hierra-repo:`infrastructure/solr.yaml`:
+
+   .. code-block:: yaml
+
+       profile_solr::basic_auth_users:
+         nice-${INSTALLATION}: ${SOLR_PASSWORD}
+
+   .. code-block:: yaml
+
+       profile_solr::hiera_cores:
+         nice-${INSTALLATION}:
+           ensure: present
 
 S3 Bucket
 ^^^^^^^^^
