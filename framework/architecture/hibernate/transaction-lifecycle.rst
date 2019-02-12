@@ -58,3 +58,16 @@ track of all entities that are created or deleted during the transaction and exe
 transaction is committed.
 
 See :ref:`transaction-context` for more details.
+
+Validation
+----------
+
+Entities that have been created or modified during a transaction will be validated before the transaction is committed.
+The validation is started by the :java:ref:`ValidationInterceptor<ch.tocco.nice2.persist.hibernate.validation.ValidationInterceptor>`
+(which is a Hibernate :java:extdoc:`Interceptor<org.hibernate.Interceptor>`).
+
+The ``onSave()`` event is called for every entity instance that is created during the transaction (before it is saved to the
+database using ``Session#save()`` by the :ref:`transaction-context` - not when the entity instance is created).
+
+All modified entities are validated by the ``preFlush()`` event that is called for all entities which are in the Hibernate session
+before the changes are flushed to the database. Only dirty entities will be validated.
