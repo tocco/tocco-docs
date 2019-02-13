@@ -97,6 +97,8 @@ The following principles apply:
 
     Can the same ordering code be used for both created and deleted entities?
 
+.. _delete_event_listener:
+
 Removal of deleted entities from associations
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
