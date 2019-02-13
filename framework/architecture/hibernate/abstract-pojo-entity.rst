@@ -135,8 +135,7 @@ To-many relations
 Collections are loaded lazily by default. We use a special implementation of the :java:extdoc:`PersistentSet<org.hibernate.collection.internal.PersistentSet>`
 that supports reloading a collection from the database.
 
-.. todo::
-    Link to chapter that explains reloading collections
+See :ref:`collection_reloading` for further information.
 
 Every time a to-many relation is resolved, it should be reloaded from the database (because this is the behaviour of the
 old persistence implementation).
@@ -185,8 +184,7 @@ side (see :doc:`entity-class-generation`).
 * If the reverse side is the owning side of many-to-many association, the collection must always be updated (and perhaps
   initialized). Otherwise the changes would not be persisted by hibernate.
 
-.. todo::
-    Link to chapter explaining the queued operations.
+See :ref:`delayed_operations` for further information about queued operations.
 
 .. note::
     In the future it might be worth to check if we want to explicitly map the mapping table with an entity class. This would allow

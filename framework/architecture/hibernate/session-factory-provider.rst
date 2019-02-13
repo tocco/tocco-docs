@@ -54,10 +54,7 @@ Several user extensions are registered with the :java:ref:`ContributionClassLoad
       There are some default types (for example ``binary`` or ``datetime``) that are always registered, but other modules can
       contribute user types as well (see :ref:`user-types`).
     - :java:ref:`FieldGenerator<ch.tocco.nice2.persist.hibernate.pojo.FieldGenerator>` contributions (fields that are set
-      automatically by the framework, like the create/update timestamps and users).
-
-.. todo::
-   Links to detailed chapters about these topics
+      automatically by the framework, like the create/update timestamps and users) (see :ref:`generated-values`).
 
 Generate entity classes
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -112,19 +109,13 @@ Event listener registration
 
 Multiple Hibernate listeners (see :java:extdoc:`EventType<org.hibernate.event.spi.EventType>`) are registered:
 
-    - :java:ref:`CascadingPersistEventListener<ch.tocco.nice2.persist.hibernate.cascade.CascadingPersistEventListener>` implements
-      a custom cascading behaviour when inserting entities. This is necessary to automatically save all new entities that
-      are created during a transaction.
     - :java:ref:`ExtendedInitializeCollectionEventListener<ch.tocco.nice2.persist.hibernate.interceptor.ExtendedInitializeCollectionEventListener>`
       initializes collections using a custom query which includes security and business unit predicates. See :doc:`collections`.
     - :java:ref:`CustomDeleteEventListener<ch.tocco.nice2.persist.hibernate.cascade.CustomDeleteEventListener>` makes sure
-      that deleted entities are automatically removed from many to many associations.
+      that deleted entities are automatically removed from many to many associations (see :ref:`delete_event_listener`).
     - :java:ref:`AfterCommitListener<ch.tocco.nice2.persist.hibernate.listener.AfterCommitListener>` and
       :java:ref:`CustomFlushEntityEventListener<ch.tocco.nice2.persist.hibernate.listener.CustomFlushEntityEventListener>`
-      are responsible for firing after commit events.
-
-.. todo::
-   Links to detailed chapters about these topics
+      are responsible for firing after commit events (see :ref:`Listeners`).
 
 Startup time improvements
 ^^^^^^^^^^^^^^^^^^^^^^^^^
