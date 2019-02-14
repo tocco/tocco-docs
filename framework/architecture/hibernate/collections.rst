@@ -61,9 +61,8 @@ It creates the same query as Hibernate would, using the reverse association of t
 However, because the query is executed through the :java:ref:`CriteriaQueryBuilder<ch.tocco.nice2.persist.hibernate.query.CriteriaQueryBuilder>`,
 the query is dynamically modified by all :java:ref:`QueryBuilderInterceptor<ch.tocco.nice2.persist.hibernate.query.QueryBuilderInterceptor>`, which
 add conditions depending on the current user roles and business units.
+See :ref:`query_builder` for more information about this topic.
 
-.. todo::
-    Add link to query builder chapter.
 
 There are special implementations for entity-docs collections for performance reasons.
 
@@ -78,6 +77,7 @@ There are special implementations for entity-docs collections for performance re
     * ``ExtendedBasicCollectionPersister#isAffectedByEnabledFilters``
     * ``ReloadablePersistentSet#isSnapshotEmpty``
 
+.. _collection_reloading:
 
 Collection reloading
 --------------------
@@ -115,6 +115,8 @@ of the Hibernate source code.
 * The collection needs to be evicted from the session (based on code from :java:extdoc:`EvictVisitor<org.hibernate.event.internal.EvictVisitor>`)
 * The collection needs to be loaded from the database and attached to the session again
 * Uncommitted changes must be applied again
+
+.. _delayed_operations:
 
 Delayed operation
 ^^^^^^^^^^^^^^^^^
