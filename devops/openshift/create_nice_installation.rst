@@ -107,7 +107,7 @@ Step by Step Instructions
 
     .. parsed-literal::
 
-        oc process -f nice-template.yml CUSTOMER=\ **${CUSTOMER}** INSTALLATION=\ **${INSTALLATION}** RUN_ENV=\ **${RUN_ENV}** DB_PASS=\ **${DB_PASS}** | oc create -f -
+        oc process -f nice-template.yml CUSTOMER=\ **${CUSTOMER}** INSTALLATION=\ **${INSTALLATION}** RUN_ENV=\ **${RUN_ENV}** DB_PASS=\ **${DB_PASS}** SOLR_PASS=**${SOLR_PASS}** | oc create -f -
 
     Parameter are specified using ``KEY=VALUE``, this is the list of **mandatory** parameters:
 
@@ -130,6 +130,10 @@ Step by Step Instructions
      Key                    Value
     ====================== ==========================================================================================
      DB_PASS                Password for database access.
+
+                            :subscript:`Randomly generated if left off.`
+
+     SOLR_PASS              Password for Solr core access.
 
                             :subscript:`Randomly generated if left off.`
 

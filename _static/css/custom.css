@@ -19,6 +19,12 @@ div.figure img {
     color: red;
 }
 
+.large-and-bold {
+    color: red;
+    font-weight: bold;
+    font-size: 200%;
+}
+
 pre.literal-block {
     font-size: 12px;
     line-height: normal;

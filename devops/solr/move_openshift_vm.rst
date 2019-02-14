@@ -4,7 +4,7 @@ Move Solr Core from OpenShift to a Managed Server
 
 #. Add :term:`core <Solr core>` to Puppet config
 
-   Add a new core to section ``profile_solr::hiera_cores`` in the `Puppet configuration <https://git.vshn.net/tocco/tocco_hieradata/blob/master/infrastructure/solr.yaml>`_.
+   Add a new core to section ``profile_solr::hiera_cores`` in the :hierra-repo:`Puppet configuration <infrastructure/solr.yaml>`.
 
    .. hint::
 
@@ -72,13 +72,13 @@ Move Solr Core from OpenShift to a Managed Server
         mkdir index
         cd index
         tar xf ../index.tar.gz
-        curl --insecure -s "https\://localhost:8983/solr/nice-**${INSTALLATION}**/replication?command=restore&location=$(pwd)&name=snapshot"
+        curl -u tocco:\ **${TOCCO_PASSWORD}** --insecure -s "https\://localhost:8983/solr/nice-**${INSTALLATION}**/replication?command=restore&location=$(pwd)&name=snapshot"
 
 #. Check if restore succeeded
 
-    .. code::
+    .. parsed-literal::
 
-       curl --insecure -s "https://localhost:8983/solr/nice-toccotest/replication?command=restorestatus"
+       curl -u tocco:\ **${TOCCO_PASSWORD}** --insecure -s "https\://localhost:8983/solr/nice-toccotest/replication?command=restorestatus"
 
     .. note::
 
@@ -96,9 +96,9 @@ Move Solr Core from OpenShift to a Managed Server
 
 #. Reload configuration
 
-    .. code::
+    .. parsed-literal::
 
-       curl --insecure -s "https://localhost:8983/solr/admin/cores?action=RELOAD&core=nice-${INSTALLATION}"
+       curl -u tocco:\ **${TOCCO_PASSWORD}** --insecure -s "https\://localhost:8983/solr/admin/cores?action=RELOAD&core=nice-${INSTALLATION}"
 
     This should output status code 0::
 
@@ -112,7 +112,8 @@ Move Solr Core from OpenShift to a Managed Server
 
     .. parsed-literal::
 
-       oc set env dc/nice -c nice NICE2_APP_nice2.enterprisesearch.solrUrl=https://solr\ **${N}**.tocco.cust.vshn.net:8983/solr/nice-**${INSTALLATION}**
+       oc set env dc/nice -c nice NICE2_APP_nice2__enterprisesearch__solrUrl- NICE2_APP_nice2__enterprisesearch__solrPassword- NICE2_APP_nice2__enterprisesearch__solrUsername-
+       oc set env dc/nice -c nice NICE2_APP_nice2.enterprisesearch.solrUrl=https://solr\ **${N}**.tocco.cust.vshn.net:8983/solr/nice-**${INSTALLATION}** NICE2_APP_nice2.enterprisesearch.solrUsername=nice-\ **${INSTALLATION}** NICE2_APP_nice2__enterprisesearch__solrPassword=\ **${PASSWORD}**
 
 #. Stop Solr on OpenShift
 

@@ -16,6 +16,9 @@
 .. role:: red
     :class: red
 
+.. role:: large-and-bold
+    :class: large-and-bold
+
 .. global links
 .. ------------
 

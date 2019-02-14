@@ -1,6 +1,15 @@
 Solr Configuration
 ==================
 
+.. caution::
+
+   :large-and-bold:`Deprecation Warning`
+
+   This document describes how to adjust Solr running on OpenShift. This setup is depricated and Solr
+   is now running on a server managed :hierra-repo:`via Puppet <infrastructure/solr.yaml>`. Unless
+   there is a solr pod running in a project, this document is moot.
+
+
 .. _solr-memory:
 
 Solr Memory
