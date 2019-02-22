@@ -44,7 +44,7 @@ Entity factory
 
 All :java:ref:`Entity<ch.tocco.nice2.persist.entity.Entity>` instances are instantiated by the :java:ref:`EntityFactoryImpl<ch.tocco.nice2.persist.hibernate.pojo.EntityFactoryImpl>`:
 
-    * All entities created by the user are delegated from ``PersistService#create()`` to the entity factory.
+    * All entities created by the user are delegated from ``PersistenceService#create()`` to the entity factory.
     * Entities that are instantiated by Hibernate (for example as a result of a query) are also delegated to
       the entity factory by the :java:ref:`CustomEntityPersister<ch.tocco.nice2.persist.hibernate.CustomEntityPersister>` (see :ref:`persister-entity-instantiation`).
 
@@ -97,6 +97,19 @@ The following principles apply:
 
     Can the same ordering code be used for both created and deleted entities?
 
+Batch deletion
+^^^^^^^^^^^^^^
+Using ``addDeletedEntityBatch()`` a list of entities can be scheduled for deletion with a single statement. This is more
+efficient than executing a single query for each entity.
+
+The entities are deleted using a :java:extdoc:`CriteriaDelete<javax.persistence.criteria.CriteriaDelete>` query.
+
+Because this deletes the entities directly from the database, we need to remove the deleted entities from the session manually.
+First the entities are removed from loaded collections in the session (see ``DeleteEntityHelper#removeFromLoadedCollections()``)
+and then the entities itself are detached from the session.
+
+And finally the after commit event must be manually triggered as well (see ``AfterCommitListener#registerEntityDeletedEvent()``).
+
 .. _delete_event_listener:
 
 Removal of deleted entities from associations
@@ -116,4 +129,4 @@ which is a subclass of Hibernate's default :java:extdoc:`DefaultDeleteEventListe
     of the owning side is very large (because it needs to be loaded to remove the deleted entity).
 
 Before an entity is deleted, all nullable references to this entity will be set to ``NULL``. See :ref:`persister-delete`
-for details.
+for details. This also applies for batch deletions.
