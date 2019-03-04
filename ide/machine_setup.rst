@@ -146,8 +146,8 @@ Support Multiple Java Versions
 
 Add aliases to ``~/.bash_aliases`` (adjust versions as needed)::
 
-    alias mvn8="JAVA_HOME='/usr/lib/jvm/java-8-openjdk-amd64" mvn'
-    alias mvn11="JAVA_HOME='/usr/lib/jvm/java-11-openjdk-amd64" mvn'
+    alias mvn8="JAVA_HOME='/usr/lib/jvm/java-8-openjdk-amd64' mvn"
+    alias mvn11="JAVA_HOME='/usr/lib/jvm/java-11-openjdk-amd64' mvn"
 
 This will allow you to run ``mvn`` using an explicit java version. Examples::
 
