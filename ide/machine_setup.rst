@@ -242,7 +242,7 @@ Configure SSH
 #. Link ``authorized_keys_tocco`` into SSH config directory::
 
     mkdir -p ~/.ssh
-    ln -s ~/src/ssh/known_hosts_tocco ~/.ssh/
+    ln -s ~/src/tocco-dotfiles/ssh/known_hosts_tocco ~/.ssh/
 
 #. Include config and set user name::
 
