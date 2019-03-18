@@ -6,3 +6,4 @@ Modules
    :glob:
 
    *
+   drools/index.rst
