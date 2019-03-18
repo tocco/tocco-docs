@@ -295,3 +295,13 @@ Use it
 Now start the application and send an HTTP request to `${HOST}/nice2/rest/events/zurich`. If you send a GET request
 (i.e. by simply entering the URL in your browser), ``getEvents()`` should be called and you should receive a JSON
 representation of events which take place in Zürich.
+
+Enable cross-origin access (optional)
+-------------------------------------
+
+By default, the REST resources cannot be accessed from another domain outside the domain from which the REST API is
+served (forbidden by the `same-origin security policy`_).
+
+Follow the steps described in :doc:`../rest/cors/index` if access from other domains should be enabled.
+
+.. _same-origin security policy: https://en.wikipedia.org/wiki/Same-origin_policy
