@@ -1,4 +1,4 @@
-.. _commands-scripts:
+.. _commandsscripts:
 
 ============================
 Commands Scripts (Postgress)
