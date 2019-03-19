@@ -12,8 +12,8 @@ packages of rules. All our base rules are defined in the ``input-calculate.drl``
 Facts
 -----
 
-A summary for the available and most often facts in the qualification context. See the integration handbook for detailed
-documentation.
+A summary of the available and most often used facts in the qualification context. See the integration handbook for
+detailed documentation.
 
 Node
 ^^^^
@@ -72,12 +72,12 @@ ArrayList and then checked for its calculations.
 Utils
 -----
 
-A summary for the available utility classes in the qualification context. See the integration handbook for detailed
-documentation.
+A summary for the available utility classes in the qualification Drools context. See the integration handbook for
+detailed documentation.
 
 ConclusionFactory
 ^^^^^^^^^^^^^^^^^
 
-This class is used together with the ``Status`` facts to set a promotion status for the current evaluation. The final
-status is decided by prioritizing all inserted status by their weights, filtering out any that where inserted with a
-negative flag and picking the first remaining one.
+This class is used together with ``Status`` facts to set a promotion status for the current evaluation. The final status
+is decided by prioritizing all inserted status by their weights, filtering out any that where inserted with a negative
+flag and picking the first remaining one.
