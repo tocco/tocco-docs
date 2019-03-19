@@ -26,7 +26,7 @@ evaluation was started and the ``User`` they belong to will always be inserted i
 Utilities
 ---------
 
-A summary for the available utility classes in the educationrequirement context. See the integration handbook for
+A summary for the available utility classes in the educationrequirement Drools context. See the integration handbook for
 detailed documentation.
 
 EntitiesContext
