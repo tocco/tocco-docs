@@ -5,8 +5,6 @@ Commands Scripts (Postgress)
 ============================
 
 
-**Some scripts are available to facilitate various tasks**
-
 
 n2sql-on-all-dbs
 ^^^^^^^^^^^^^^^^

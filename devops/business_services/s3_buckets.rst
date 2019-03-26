@@ -1,17 +1,27 @@
 S3 Buckets
 ==========
 
-To create buckets in S3, you need an Access to access the Web client.
+
+Conventionen for S3
+-------------------
+
+S3 User-Name: **nice-[clientname]**
+S3 Bucket-Name : **tocco-[S3 User-Name]**
+
+
+
+
+To create buckets in S3, you need an access to access the web client.
 With the following URl: the client can be called: ``https://control.cloudscale.ch/objects``
 
 
 .. figure:: resources/s3_cloudscale_webclient.png
 
-Create new S3 user
+Create a new S3 user
 ------------------
 
-Press the Button on top-right ``Create a new Object User``
-Add a locical username.
+Press the button ``Create a new Object User`` at the top-right.
+For the name, use the convention listed above.
 
 .. figure:: resources/create_new_user.png
 
@@ -25,6 +35,8 @@ This is especially useful when many users need to be created.
 
 Check the access-key and security-Key
 -------------------------------------
+
+Press the blue button in the upper right corner. There is a blue panel on which the S3 Keys are stored.
 
 .. figure:: resources/check_keys.png
 

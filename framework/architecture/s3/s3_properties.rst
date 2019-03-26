@@ -25,7 +25,7 @@ The S3 datastorage is created for Tocco with the following buckets.
 S3 Integration details
 ^^^^^^^^^^^^^^^^^^^^^^
 
-In the Tocco framework, the method ``createClient()`` is called from the file
+In the Tocco framework, ``createClient()`` is called from
 src/nice2/optional/s3storage/impl/src/main/ java/ch/tocco/nice2/optional/s3/storage/S3AccessProvider.java  
 overrides the bucket for the overlay.
 
@@ -33,14 +33,9 @@ overrides the bucket for the overlay.
 To get access to the overlay bucket, a valid credential-file must be located locally in the folder ``~/.aws``
 
 .. note::
-    Credentials from environment variables have precedence over
-    credentials from the shared credentials and AWS CLI config file.
-    Credentials specified in the shared credentials file have
-    precedence over credentials in the AWS CLI config file.
-    If AWS_PROFILE environment variable is set and the
-    AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY environment variables are
-    set, then the credentials provided by AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY
-    will override the credentials located in the profile provided by AWS_PROFILE.
+
+    The credentials that are specified in the shared credentials file include
+    Priority over credentials in the AWS CLI configuration file.
 
 
 View the S3 Architecture :ref:`s3_properties`

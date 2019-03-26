@@ -4,7 +4,7 @@ S3 Properties
 =============
 
 
-Example for the properties file: s3-properties
+Example for the properties file: s3.properties
 Framework/src/nice2/customer/test/etc/s3.properties
 
 .. Note::
