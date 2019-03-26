@@ -18,7 +18,7 @@ With the following URl: the client can be called: ``https://control.cloudscale.c
 .. figure:: resources/s3_cloudscale_webclient.png
 
 Create a new S3 user
-------------------
+--------------------
 
 Press the button ``Create a new Object User`` at the top-right.
 For the name, use the convention listed above.
