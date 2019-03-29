@@ -1,19 +1,51 @@
+.. _Coding-Styleguide:
+
 Coding Styleguide
 =================
 
 General
 -------
 
-**ESlint** Most code styles are enforced by eslint. The Travis CI build
+ESlint
+^^^^^^
+Most code styles are enforced by eslint. The Travis CI build
 will fail if not every ESlint rule is fulfilled. Active ESlint rules can
 be seen here:
 https://github.com/tocco/tocco-client/blob/master/.eslintrc
 
+
+To show current linting errors and warnings:
+
+.. code-block:: console
+
+  yarn lint
+
+
+To try auto-fix them:
+
+.. code-block:: console
+
+  yarn lint:fix
+
+
+.. note::
+
+  Eslint command will run as a git pre commit hook. It isn't possible to commit anything as long as there are linting errors.
+  Lint will also be executed automatically on our CI.
+
+
+**Setup Linting with IntelliJ**
+
+* Install ESLint Plugin
+* Settings (Preferences on OS X) | Languages & Frameworks | JavaScript |  Code Quality Tools --enable
+* Settings (Preferences on OS X) | Editor | Inspections | Code Style Issues | Unterminated statement -- disable
+
+
 Folders and structure
 ---------------------
 
-Naming conventions folders
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Naming conventions for folders
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ========== ====== ==============
 What       Case   Example
@@ -24,8 +56,11 @@ Module     Camel  searchForm
 Any other  Kebab  test-data
 ========== ====== ==============
 
+
+Javascript
+----------
 Actions
--------
+^^^^^^^
 
 -  Wrap arguments in payload attribute
 -  Use arrow functions
@@ -50,7 +85,7 @@ Actions
        }
 
 Reducers
---------
+^^^^^^^^^
 
 -  Use arrow functions
 -  Use destructuring assignment
@@ -71,7 +106,7 @@ Reducers
      }
 
 Tests
------
+^^^^^
 
 -  Group tests hierarchically according to directory structure starting
    with the package-name
@@ -101,7 +136,7 @@ Tests
      // Not so good
      expect(withTitle.find(LoginFormContainer).prop('showTitle')).to.equal(true)
 
--  If enzyme is used to load a component, name the variable wrapper
+-  If enzyme is used to load a component, name the variable ``wrapper``
    whenever possible
 
 .. code-block:: js
