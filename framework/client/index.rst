@@ -1,6 +1,8 @@
 Client
 ======
 
+Test 
+
 .. toctree::
    :maxdepth: 2
    :glob:
