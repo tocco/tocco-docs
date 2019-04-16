@@ -267,6 +267,20 @@ Then add your test class(es):
        }
    }
 
+.. warning::
+
+   When targeting an url with query parameters, the query params should not be added to the path but attached with
+   `.queryParams` or the response will most likely be `404 - Not Found`.
+
+   **NO** 
+
+   :java:ref:`Response response = target("/location/suggestions?city=Züri").get();`
+
+   **YES** 
+
+   :java:ref:`Response response = target("/location/suggestions").queryParam("city", "Züri").request().get();`
+
+   
 
 Register resource
 -----------------
