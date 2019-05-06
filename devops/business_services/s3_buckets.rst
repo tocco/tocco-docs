@@ -11,8 +11,7 @@ S3 Bucket-Name : **tocco-[S3 User-Name]**
 
 
 
-To create buckets in S3, you need an access to access the web client.
-With the following URl: the client can be called: ``https://control.cloudscale.ch/objects``
+To create buckets, access the control panel at ``https://control.cloudscale.ch/objects``
 
 
 .. figure:: resources/s3_cloudscale_webclient.png
@@ -43,7 +42,7 @@ Press the blue button in the upper right corner. There is a blue panel on which 
 Create new S3-Bucket
 --------------------
 
-presss the button ``add a bucket`` and insert a logical bucketname.
+press the button ``add a bucket`` and insert a logical bucketname.
 
 .. figure:: resources/add_bucket.png
 
