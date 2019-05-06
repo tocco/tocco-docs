@@ -16,7 +16,7 @@ Delete Client-System on "Nine.ch"
 
 6. Wait at least one day for the automatic backup to run.
 
-7. Now you can access the rename databases "del_...." delete.
+7. Now you can access the rename databases `del_...` delete.
 
 8. Remove the project project of Client in Teamcity.
 
@@ -45,7 +45,7 @@ Delete Client-System on "VSHN"
 
 6. Wait at least one day for the automatic backup to run.
 
-7. Now you can access the rename databases "del_...." delete.
+7. Now you can access the rename databases `del_....` delete.
 
 8. Remove the project project of Client in Teamcity.
 
