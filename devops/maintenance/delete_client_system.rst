@@ -22,7 +22,7 @@ Delete Client-System on "Nine.ch"
 
 9. Update status to "veraltet" in the Tocco BackOffice.
 
-10. Backoffice: Set business services project (maintenance project) that is linked to the installation to "Archived
+10. Set the customer module that is linked to the installation to "Obsolete
 
 11. Delete the Customer's Maven module from the Nice2-Git repository (if there are no other installations that require the Customer module)
 
@@ -51,7 +51,7 @@ Delete Client-System on "VSHN"
 
 9. Update status to "veraltet" in the Tocco BackOffice.
 
-10. Backoffice: Set business services project (maintenance project) that is linked to the installation to "Archived
+10. Set the customer module that is linked to the installation to "Obsolete
 
 11. Delete the Customer's Maven module from the Nice2-Git repository (if there are no other installations that require the Customer module)
 
