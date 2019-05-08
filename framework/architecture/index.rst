@@ -8,3 +8,4 @@ Architecture
    history/index
    acl/index
    businessunit/index
+   dependencies/index
