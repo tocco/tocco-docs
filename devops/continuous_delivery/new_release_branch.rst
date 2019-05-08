@@ -97,6 +97,16 @@ Backoffice
 - Set status of versions older than 6 versions to outdated (on release date)
 - Check on all installations if **${NEW_VERSION}** is set
 
+Create task to update outdated Maven dependencies
+-------------------------------------------------
+
+It's important to keep external dependencies up to date and it makes sense to update them at the very beginning
+of a release development cycle (to be able to spot problems early during the development cycle).
+
+Therefore, **create a task** to update the outdated dependencies in one of the first sprints.
+
+See chapter :ref:`Update dependencies on a regular basis` to learn where you get the list of outdated dependencies from.
+
 Store entity model snapshot on SharePoint
 -----------------------------------------
 
