@@ -52,6 +52,8 @@ The dependency would be included as follows:
    variable for that version number in the ``<properties>`` block in the root ``pom.xml`` which can be used for all
    dependencies in the ``<dependencyManagement>`` block.
 
+.. _update_dependencies_on_a_regular_basis:
+
 Update dependencies on a regular basis
 --------------------------------------
 
