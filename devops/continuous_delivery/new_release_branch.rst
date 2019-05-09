@@ -105,7 +105,7 @@ of a release development cycle (to be able to spot problems early during the dev
 
 Therefore, **create a task** to update the outdated dependencies in one of the first sprints.
 
-See chapter :ref:`Update dependencies on a regular basis` to learn where you get the list of outdated dependencies from.
+See chapter :ref:`update_dependencies_on_a_regular_basis` to learn where you get the list of outdated dependencies from.
 
 Store entity model snapshot on SharePoint
 -----------------------------------------
