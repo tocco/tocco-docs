@@ -62,7 +62,7 @@ list of all dependencies which are out of date. The task runs every Saturday.
 
 .. _weekly task in TeamCity: https://tc.tocco.ch/viewType.html?buildTypeId=Nice2_OutdatedDependencies
 
-The generated list containing all outdated dependencies can be found in ``outdated_depdencies.txt`` in the `Artifacts`
+The generated list containing all outdated dependencies can be found in ``outdated_dependencies.txt`` in the `Artifacts`
 tab of the latest job run (see Screenshot below).
 
 .. figure:: resources/outdated_dependencies_artifact.png
