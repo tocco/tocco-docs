@@ -80,7 +80,7 @@ Close all connections to DB ``DB_NAME``.
 Execute SQL on Multiple Databases
 ---------------------------------
 
-See the command description here for the scripts commands :ref:`commandsscripts`
+See :ref:`scripts` for a full description of the command.
 
 
 There is a script called `n2sql-on-all-dbs`_ for executing a query on all databases at once.

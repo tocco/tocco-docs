@@ -1,57 +1,60 @@
-Delete Tocco client-system
+Delete Tocco System
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Delete Client-System on "Nine.ch"
-=================================
+Delete System on "Nine.ch"
+==========================
 
-1. Remove monitoring.
+#. Remove monitoring.
 
-2. Remove in the mgrctl the part of client.
+#. Remove in the installation from``~tocco/manager/etc/manager.xml``.
 
-3. Test config with mgrctl restart.
+#. Reload config with mgrctl restart.
 
-3. Remove DNS.
+#. Remove DNS (https://cockpit.nine.ch).
 
-5. Rename the databases ([client], [client]test, [client]_history and [client]_test_history) on the databaseserver to del_nice_CLIENTNAME
+#. Rename the databases::
 
-6. Wait at least one day for the automatic backup to run.
+    ALTER DATABASE nice2_${INSTALLATION} RENAME TO del_nice2_${INSTALLATION}
+    ALTER DATABASE nice2_${INSTALLATION}_history RENAME TO del_nice2_${INSTALLATION}_history
 
-7. Now you can access the rename databases `del_...` delete.
+#. Wait at least one day for the automatic backup to run.
 
-8. Remove the project project of Client in Teamcity.
+#. Now you can delete the renamed databases ``del_...``.
 
-9. Update status to "veraltet" in the Tocco BackOffice.
+#. Remove the project of installation in Teamcity.
 
-10. Set the customer module that is linked to the installation to "Obsolete
+#. Update status on the installation to "veraltet" in the Tocco BackOffice.
 
-11. Delete the Customer's Maven module from the Nice2-Git repository (if there are no other installations that require the Customer module)
+#. Set the customer module that is linked to the installation to "Obsolete"
+
+#. Delete the Customer's Maven module from the Nice2-Git repository (if there are no other installations that require the Customer module)
 
 
 
 Delete Client-System on "VSHN"
 ==============================
 
-1. Remove monitoring
+#. Remove monitoring
 
-3. Remove DNS
+#. Remove DNS
 
-2. Cloudscale: scale the project to be deleted to 0 instanzes.
+#. Cloudscale: scale the project to be deleted to 0 instanzes (``oc scale --replaces 0 dc/nice``).
 
-3. Git.vshn.net: Go "Repository" and click "Files".
+#. Remove the database from `the puppet config <https://git.vshn.net/tocco/tocco_hieradata/blob/master/database/master.yaml>`__
 
-4. Remove the code part of client conf for the database from the "Puppet-Config"
+#. Rename the databases::
 
-5. Rename the databases ([client], [client]test, [client]_history and [client]_test_history) on the databaseserver to del_nice_CLIENTNAME
+    ALTER DATABASE nice_${INSTALLATION} RENAME TO del_nice_${INSTALLATION}
+    ALTER DATABASE nice_${INSTALLATION} RENAME TO del_nice_${INSTALLATION}
 
-6. Wait at least one day for the automatic backup to run.
+#. Wait at least one day for the automatic backup to run.
 
-7. Now you can access the rename databases `del_....` delete.
+#. Now you can access the rename databases ``del_....`` delete.
 
-8. Remove the project project of Client in Teamcity.
+#. Remove the project of installation in Teamcity.
 
-9. Update status to "veraltet" in the Tocco BackOffice.
+#. Update status on the installation to "veraltet" in the Tocco BackOffice.
 
-10. Set the customer module that is linked to the installation to "Obsolete
+#. Set the customer module that is linked to the installation to "Obsolete"
 
-11. Delete the Customer's Maven module from the Nice2-Git repository (if there are no other installations that require the Customer module)
-
+#. Delete the Customer's Maven module from the Nice2-Git repository (if there are no other installations that require the Customer module)

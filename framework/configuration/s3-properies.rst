@@ -4,11 +4,10 @@ S3 Properties
 =============
 
 
-Example for the properties file: s3.properties
-Framework/src/nice2/customer/test/etc/s3.properties
+Example for the properties file: ``customer/${CUSTOMER}/etc/s3.properties``
 
 .. Note::
-    The propertie-file contains the access to the default tocco bucket
+    The properties file contains the credentials to the default tocco bucket.
 
 
 .. code-block:: java

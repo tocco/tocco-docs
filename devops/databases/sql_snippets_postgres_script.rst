@@ -1,8 +1,8 @@
-.. _commandsscripts:
+.. _scripts:
 
-============================
-Commands Scripts (Postgress)
-============================
+==================
+Scripts (Postgres)
+==================
 
 
 
@@ -10,6 +10,7 @@ n2sql-on-all-dbs
 ^^^^^^^^^^^^^^^^
 
 Name of Scripts : n2sql-on-all-dbs
+Location: installed on all DB servers
 Description :
 
 
@@ -34,6 +35,7 @@ n2change-db-owner
 ^^^^^^^^^^^^^^^^^
 
 Name of Scripts : n2change-db-owner
+Location: installed on all DB servers
 Description : Change owner of DATABASE including all tables, sequences and large objects.
 
 **Command: n2change-db-owner**
@@ -47,6 +49,7 @@ n2passwd
 ^^^^^^^^
 
 Name of Scripts : n2passwd
+Location: installed on all DB servers
 Description :
 
 **Command: n2passwd**
