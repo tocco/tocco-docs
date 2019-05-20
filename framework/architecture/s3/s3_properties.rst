@@ -26,8 +26,7 @@ S3 Integration details
 ^^^^^^^^^^^^^^^^^^^^^^
 
 In the Tocco framework, ``createClient()`` is called from
-src/nice2/optional/s3storage/impl/src/main/ java/ch/tocco/nice2/optional/s3/storage/S3AccessProvider.java   and
-overrides the bucket for the overlay.
+src/nice2/optional/s3storage/impl/src/main/ java/ch/tocco/nice2/optional/s3/storage/S3AccessProvider.java   and overrides the bucket for the overlay.
 
 
 To get access to the overlay bucket, a valid credentials file must be located locally in the folder ``~/.aws``
