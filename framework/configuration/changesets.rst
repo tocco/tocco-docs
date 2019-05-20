@@ -7,6 +7,13 @@ We use Liquibase_ to create our database, adjust the database schema, insert ini
 Liquibase runs so called changelog files. These are versioned XML files and they contain all instructions necessary for
 a database to be created or updated.
 
+.. warning::
+
+    While initial values used to be handled through Liquibase, we have since decided to switch to storing the initial
+    values in separate files. These provide a more consistent way of defining initial values at any given point in time.
+    All functionality in this documentation about initial value changesets still work, but should not be used anymore.
+    See :ref:`InitialValues` for further information.
+
 The `Liquibase documentation`_ provides details on all its capabilities, although most parts of the changelogs can be
 created automatically (see `Automatic creation`_).
 

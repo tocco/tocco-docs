@@ -12,7 +12,7 @@ There are several ways to start a transaction:
 
 * using the :java:ref:`TxInvoker<ch.tocco.nice2.persist.impl.entity.TxInvoker>` obtained from ``Context#tx()``
 * using the :java:ref:`TransactionManager<ch.tocco.nice2.persist.tx.TransactionManager>` directly
-* using the :java:ref:`PersistService<ch.tocco.nice2.persist.hibernate.PersistService>` of the new API
+* using the :java:ref:`PersistenceService<ch.tocco.nice2.persist.hibernate.PersistenceService>` of the new API
 
 Independently of how the transaction was started, in the background an instance of :java:ref:`TransactionControl<ch.tocco.nice2.persist.hibernate.TransactionControl>`
 will be created. No matter through which API the transaction is accessed, always the same transaction control instance

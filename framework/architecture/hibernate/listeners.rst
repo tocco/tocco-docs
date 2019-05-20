@@ -110,7 +110,7 @@ all commit listeners by session in a map, it is important that they will be remo
 To avoid memory leaks when the user forgets to remove a commit listener, a :java:extdoc:`SessionEventListener<org.hibernate.SessionEventListener>`,
 which removes all commit listeners when the session ends, is registered once per session.
 
-The events are fired by the :java:ref:`TransactionControlImpl<ch.tocco.nice2.persist.hibernate.PersistServiceImpl.TransactionControlImpl>` (see :doc:`transaction-lifecycle`)
+The events are fired by the :java:ref:`TransactionControlImpl<ch.tocco.nice2.persist.hibernate.PersistenceServiceImpl.TransactionControlImpl>` (see :doc:`transaction-lifecycle`)
 just before or after the database transaction is committed. ``CommitListener#onAfterCommit()`` is only called if the commit
 was successful.
 

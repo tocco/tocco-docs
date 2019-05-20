@@ -4,9 +4,9 @@ Query Builder
 =============
 
 Queries can be executed through the :java:ref:`CriteriaQueryBuilder<ch.tocco.nice2.persist.hibernate.query.CriteriaQueryBuilder>`,
-which can be obtained from ``PersistService#createQueryBuilder(java.lang.Class<T>)``.
+which can be obtained from ``PersistenceService#createQueryBuilder(java.lang.Class<T>)``.
 The argument passed to that method defines which entity should be queried.
-The query builder can also be obtained from a second method (``PersistService#createQueryBuilder(java.lang.Class<?>, java.lang.Class<T>)``)
+The query builder can also be obtained from a second method (``PersistenceService#createQueryBuilder(java.lang.Class<?>, java.lang.Class<T>)``)
 that needs to be used if a custom selection is specified (e.g. only some fields should be returned and not the entire entity) and the return type is not the same as the entity that is being queried.
 
 Internally, JPA Criteria Queries are used. The reason for the :java:ref:`CriteriaQueryBuilder<ch.tocco.nice2.persist.hibernate.query.CriteriaQueryBuilder>`
@@ -19,6 +19,25 @@ A tutorial can be found here: https://www.ibm.com/developerworks/java/library/j-
 .. note::
     The metamodel classes are currently not available, which means typesafe queries are not possible
     at the moment.
+
+Implementation
+--------------
+There are currently three different types of query builders that share some common functionality:
+
+    * :java:ref:`CriteriaQueryBuilder<ch.tocco.nice2.persist.hibernate.query.CriteriaQueryBuilder>` is the main implementation
+      which can be used to query entities from the database.
+    * :java:ref:`CriteriaDeleteBuilder<ch.tocco.nice2.persist.hibernate.query.CriteriaDeleteBuilder>` can be used to efficiently
+      delete multiple entities using a query.
+    * :java:ref:`SubqueryBuilder<ch.tocco.nice2.persist.hibernate.query.SubqueryBuilder>` can be used to create subqueries. An
+      instance of this can be acquired from the :java:ref:`SubqueryFactory<ch.tocco.nice2.persist.hibernate.query.PredicateBuilder.SubqueryFactory>`
+      of another query builder.
+
+The base class for all query builders is the :java:ref:`QueryBuilderBase<ch.tocco.nice2.persist.hibernate.query.QueryBuilderBase>`.
+It manages and builds all the query :java:extdoc:`Predicate<javax.persistence.criteria.Predicate>` instances and applies the
+:java:ref:`QueryBuilderInterceptor<ch.tocco.nice2.persist.hibernate.query.QueryBuilderInterceptor>`.
+
+The query and delete builder share an abstract superclass: :java:ref:`AbstractCriteriaBuilder<ch.tocco.nice2.persist.hibernate.query.AbstractCriteriaBuilder>`
+which includes the parameter handling and implementation of the :java:ref:`SubqueryFactory<ch.tocco.nice2.persist.hibernate.query.PredicateBuilder.SubqueryFactory>`.
 
 Selection
 ---------
@@ -39,12 +58,18 @@ The Predicate can be constructed using the :java:extdoc:`CriteriaBuilder<javax.p
 :java:extdoc:`Root<javax.persistence.criteria.Root>` and :java:ref:`SubqueryFactory<ch.tocco.nice2.persist.hibernate.query.PredicateBuilder.SubqueryFactory>`
 that can be obtained from the CriteriaQueryBuilder.
 
-.. note::
-    The ``SubqueryFactory`` can be used to create :java:extdoc:`Subquery<javax.persistence.criteria.Subquery>` instances.
-    It was introduced to hide the query internals from the user and to make sure that the interceptors cannot be bypassed.
-    It is primarily used to create ``EXISTS`` subqueries.
-    The factory automatically calls the :java:ref:`QueryBuilderInterceptor<ch.tocco.nice2.persist.hibernate.query.QueryBuilderInterceptor>`
-    for the subquery type and correlates the subquery with the related association.
+Subqueries
+^^^^^^^^^^
+Subqueries can created using the :java:ref:`SubqueryFactory<ch.tocco.nice2.persist.hibernate.query.PredicateBuilder.SubqueryFactory>`.
+There are two different options:
+
+    * ``createSubquery()`` creates a subquery that is correlated to main query (based on a given association). This can for example be used
+      to create ``EXISTS`` subqueries.
+    * ``createUncorrelatedSubquery()`` can be used to create any other subquery that is not correlated to the main query. The selection and
+      target entity can be freely chosen.
+
+Both methods return an instance of :java:ref:`SubqueryBuilder<ch.tocco.nice2.persist.hibernate.query.SubqueryBuilder>` which supports
+similar functionality as the standard query builder.
 
 PredicateBuilder
 ^^^^^^^^^^^^^^^^
@@ -59,16 +84,30 @@ are passed as parameters into the lambda expression.
 :java:ref:`Node<ch.tocco.nice2.conditionals.tree.Node>` or (:java:ref:`Condition<ch.tocco.nice2.persist.qb2.Condition>`) instances (created by the :java:ref:`Conditions<ch.tocco.nice2.persist.qb2.Conditions>` API)
 can also be passed to ``CriteriaQueryBuilder#addCondition()``. This API is also used by the security conditions.
 
+Parameter handling
+^^^^^^^^^^^^^^^^^^
 A condition like ``field("name").is(value)`` might be mapped with a :java:extdoc:`ParameterExpression<javax.persistence.criteria.ParameterExpression>`
 even though the user specified the value directly. These parameters are collected and added to the query by the :java:ref:`ParameterCollector<ch.tocco.nice2.persist.impl.qb2.ParameterCollector>`.
 
 The parameter collector is a visitor for :java:ref:`Node<ch.tocco.nice2.conditionals.tree.Node>` objects. It sets an unique
-name to all parameter nodes and collects their values. The result can then be used to set the parameter values to the query.
+name to all parameter nodes and collects their values.
 
 .. warning::
     It is important that only one parameter collector is used per query. Otherwise the parameter names are not unique and
     the parameter values get overwritten. This means that all :java:ref:`Node<ch.tocco.nice2.conditionals.tree.Node>` instances
-    passed to ``CriteriaQueryBuilder#addCondition()`` must not have been already be processed by a parameter collector.
+    passed to ``CriteriaQueryBuilder#addCondition()`` must not have been already been processed by a parameter collector.
+
+Before the query is executed the parameters collected by the :java:ref:`ParameterCollector<ch.tocco.nice2.persist.impl.qb2.ParameterCollector>`
+as well as parameters that are manually passed to ``AbstractCriteriaBuilder#addParameter#addParameter()`` are applied to the
+:java:extdoc:`Query<org.hibernate.query.Query>` instance (see ``AbstractCriteriaBuilder#applyParametersToQuery()``).
+
+If the parameter value does not match the parameter type it is attempted to convert the value using ``TypeManager#convert()``.
+If a :java:extdoc:`Collection<java.util.Collection>` is used as a parameter value ``Query#setParameterList()`` is used which can be
+substantially faster for large parameter lists.
+
+There are also global parameters that are applied to every query if a parameter with a certain name exists.
+These are provided by the :java:ref:`ParameterProvider<ch.tocco.nice2.persist.hibernate.query.ParameterProvider>` interface.
+An example would be the parameter ``currentUser`` (see :java:ref:`PrincipalNameFactory<ch.tocco.nice2.userbase.impl.ArgumentFactories.PrincipalNameFactory>`).
 
 Ordering
 --------
@@ -90,12 +129,13 @@ The query wrapper offers a ``distinct()`` method which allows to specify if a qu
 executed with the ``DISTINCT`` keyword. This only affects queries with a custom selection, queries for entire entities
 are always executed distinct (primarily to be compatible with the old API).
 
+.. note::
+    Because a join in TQL is always a ``LEFT JOIN`` all standard queries need to be executed ``DISTINCT``
+    to avoid duplicate results.
+
 The query wrapper wraps an instance of :java:extdoc:`CriteriaQuery<javax.persistence.criteria.CriteriaQuery>`.
 The wrapper configures the query instance (selection, predicates, ordering etc) and reuses it for different
 purposes (``getResultList()`` or ``count()``).
-
-If the parameter values do not match the referenced type it is tried to convert them using the
-:java:ref:`TypeManager<ch.tocco.nice2.types.TypeManager>`.
 
 Ordering
 ^^^^^^^^
@@ -110,8 +150,7 @@ if it is a ``DISTINCT`` query.
 This is handled automatically for queries both with or without custom selection.
 The additional columns are added to the selection are discarded again when the results are processed
 (see methods ``expandSelection(List<Order> order)`` and ``unwrapResults(List<?> results)`` in
-:java:ref:`EntityCriteriaQueryWrapper<ch.tocco.nice2.persist.hibernate.query.CriteriaQueryBuilder.EntityCriteriaQueryWrapper>`).
-
+:java:ref:`AbstractCriteriaQueryWrapper<ch.tocco.nice2.persist.hibernate.query.CriteriaQueryBuilder.AbstractCriteriaQueryWrapper>`).
 
 Query Builder Interceptor
 -------------------------
@@ -121,6 +160,15 @@ It is called for every query root and for every subquery and can add additional 
 
     - ``BusinessUnitQueryBuilderInterceptor`` makes sure that only entities belonging to the current business unit are returned
     - ``SecureQueryInterceptor`` adds additional conditions based on the security policy
+
+The interceptor takes an instance of :java:ref:`QueryBuilderType<ch.tocco.nice2.persist.hibernate.query.QueryBuilderInterceptor.QueryBuilderType>`
+which signifies by what kind of query builder it is called. Currently ``READ`` and ``DELETE`` are supported. The
+``SecureQueryInterceptor`` uses this information to apply the correct security conditions depending on the query type.
+
+.. note::
+    The interceptors should be applied when the query builder is created; not when it is executed. For example it is expected
+    that if a query that is created in privileged mode, it should remain privileged even if the privileged mode is no longer active
+    when the query is executed.
 
 Custom JDBC Functions
 ---------------------
@@ -265,18 +313,10 @@ relation path which is queried by the subquery. Thus the ``visitPath()`` method 
 :java:extdoc:`Subquery<javax.persistence.criteria.Subquery>` through the :java:ref:`SubqueryFactory<ch.tocco.nice2.persist.hibernate.query.PredicateBuilder.SubqueryFactory>`.
 
 The path node might contain multiple relation paths which leads to nested ``EXISTS`` subqueries.
-If there are nested ``EXISTS`` subqueries, the inner one is set as the condition of the outer one:
-
-.. code:: java
-
-    if (subquery != null) {
-        subquery.where(criteriaBuilder.exists(newSubquery));
-    }
-
-The predicate that is returned from this visitor is always the outermost ``EXISTS`` predicate.
-
-After the subqueries have been created the (optional) condition is parsed and added to the innermost subquery
-as additional condition.
+All exists predicates are collected on a stack until the path is parsed completely. The (optional)
+condition is added to the top element of the stack (the one that was added last). While the predicates are removed
+from the stack an exists condition is added (referencing the predicate that was removed before itself).
+The last element removed from the stack is returned from the visitor.
 
 InNodeVisitor
 ^^^^^^^^^^^^^
@@ -320,3 +360,20 @@ which is executed before the query is parsed by the predicate factory.
 
 All path nodes are processed by the :java:ref:`FieldResolver<ch.tocco.nice2.persist.hibernate.interceptor.FieldResolver>`
 and all virtual fields are replaced.
+
+Delete query builder
+====================
+The :java:ref:`CriteriaDeleteBuilder<ch.tocco.nice2.persist.hibernate.query.CriteriaDeleteBuilder>` is a special query builder
+implementation that can be used to delete multiple entities by query without the need to load every single entity.
+
+The query selects the primary keys of all entities that may be deleted (the correct security conditions are added by the
+``SecureQueryInterceptor``).
+For each result a proxy is created, marked as deleted and the ``entityDeleting()`` event is fired. The reason for the proxy is
+to avoid loading the entire entity unless it is absolutely necessary (for example when the entity data is accessed by a listener).
+
+Note that ``Entity#markDeleted()`` is used. This is an internal method that can be invoked without initializing the proxy
+(as opposed to ``delete()``) and causes ``getState()`` to correctly return ``PHANTOM``.
+
+After the invocation of the listeners the proxy instances are scheduled for deletion with the :java:ref:`EntityTransactionContext<ch.tocco.nice2.persist.hibernate.cascade.EntityTransactionContext>`.
+Note that the ``addDeletedEntityBatch()`` method is used that deletes the entire batch with one delete statement (as opposed to
+the normal behaviour which fires a delete statement for every deleted entity).

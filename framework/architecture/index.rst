@@ -9,3 +9,5 @@ Architecture
    acl/index
    businessunit/index
    s3/index
+   dependencies/index
+
