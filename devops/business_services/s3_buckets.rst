@@ -2,7 +2,7 @@ S3 Buckets
 ==========
 
 
-Naming Conventionen for S3
+Naming conventions for S3
 --------------------------
 
 S3 User-Name: **nice-[clientname]**

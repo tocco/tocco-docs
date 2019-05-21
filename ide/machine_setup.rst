@@ -155,8 +155,6 @@ This will allow you to run ``mvn`` using an explicit java version. Examples::
 
     # The two links are helpful for building without tests
 
-    TODO: ref:``
-
     #https://tocco-docs.readthedocs.io/en/latest/ide/machine_setup.html#support-multiple-java-versions
     #http://localhost:63342/tocco-docs/_build/html/ide/maven.html#eirslett
 
@@ -165,6 +163,8 @@ This will allow you to run ``mvn`` using an explicit java version. Examples::
 
     # Java 11
     mvn11 -pl customer/test -am clean install -DskipTests
+
+See :ref:`Maven_Eirslett` about Eirslett.
 
 .. hint::
 

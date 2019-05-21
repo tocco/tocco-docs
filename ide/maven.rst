@@ -1,3 +1,5 @@
+.. _Maven_Eirslett:
+
 Maven
 =====
 
