@@ -1,6 +1,12 @@
 Form
 =====
 
+Introduction
+-------------
+
+  Forms in the tocco-client are an essential part. This documentation describes what main parts play together to make
+  a form work. The three modules are formField, form and formData. Each of them are described by subfiles and components.
+
 formField
 ----------
 
@@ -43,15 +49,15 @@ formField
 4. FormFieldFactory
 ~~~~~~~~~~~~~~~~~~~~
 
-  FormFieldFactory receives the data for identifying the correct field from the redux-store through a redux container and
-  provides it to ``<ValueField/>``. The react-redux container is FormDataContainer (point 9). ``<ValueField/>`` returns the specific field
+  FormFieldFactory receives the mapping, data and resources by props to determine which field gets rendered. The information
+  about the field and the data from FormDataContainer are passed to ``<ValueField/>`` which returns the specific field
   accessed through the mapping of the given type of the field.
 
 5. typeEditables
 ~~~~~~~~~~~~~~~~~
 
   The typeEditables directory contains files for different field types like ‘remote’. The files contain methods to overwrite
-  the default behaviour. This can be done through methods that get the events, value and options or data for
+  the default behaviour for each type. This can be done through methods that get the events, value and options or data for
   editableValueFactory. The data then is provided to each ``<EditableValue/>`` field.
 
 form
@@ -130,7 +136,7 @@ Example remote-field:
 
 
   2. The prop formFieldMapping is set with defaultMapping (point 2). In defaultMappings exported object the call to
-  editableValueFactory with type ‘remote’ is mapped to the string 'remote'.
+  editableValueFactory with type ‘remote’ is mapped to the string 'single-remote-field'.
 
   3. In editableValueFactory (point 1) the component ``<EditableValue>`` is returned with prop options from typeEditables remote
   (point 5).
@@ -143,8 +149,8 @@ Example remote-field:
   such as dirty or touched. Then ``<ReduxFormFieldAdapter/>`` returns the call to formFieldFactory (point 7) with formFieldMapping
   and formFieldData as arguments.
 
-  6. In ``<FormFieldFactory/>`` the ``<ValueField/>`` component gets returned and receives data provided by the redux-store through
-  FormDataContainer (point 9). For the remote-field the prop modelField points to an entity where the remote-field gets its
+  6. In ``<FormFieldFactory/>`` the ``<ValueField/>`` component gets returned and receives data provided by props.
+  For the remote-field the prop modelField points to an entity where the remote-field gets its
   data from e.g. the User entity.
 
   (This image below was made with draw.io. To edit the image, open `draw.io <https://www.draw.io/>`_, download
