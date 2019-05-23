@@ -17,3 +17,4 @@ DevOps
    backups/index
    webserver/index
    maintenance/index
+   ditac_manual/index
