@@ -73,7 +73,6 @@ Create a Solr Core
 S3 Bucket
 ^^^^^^^^^
 
-If the customer uses S3, ask operations to create a customer bucket.
 
 Create in OpenShift
 --------------------

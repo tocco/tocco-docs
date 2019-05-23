@@ -80,6 +80,9 @@ Close all connections to DB ``DB_NAME``.
 Execute SQL on Multiple Databases
 ---------------------------------
 
+See :ref:`scripts` for a full description of the command.
+
+
 There is a script called `n2sql-on-all-dbs`_ for executing a query on all databases at once.
 
 
@@ -88,6 +91,8 @@ It is installed and updated via Ansible **on all DB servers**:
     * execute given SQL on all Nice databases::
 
         n2sql-on-all-dbs 'SELECT count(*) from _nice_binary'
+
+
 
     * execute sql in file **query.sql** on all Nice databases``::
 

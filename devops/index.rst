@@ -16,4 +16,5 @@ DevOps
    solr/index
    backups/index
    webserver/index
+   maintenance/index
    ditac_manual/index

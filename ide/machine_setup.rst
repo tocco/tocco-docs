@@ -146,16 +146,25 @@ Support Multiple Java Versions
 
 Add aliases to ``~/.bash_aliases`` (adjust versions as needed)::
 
-    alias mvn8="JAVA_HOME='/usr/lib/jvm/java-8-openjdk-amd64" mvn'
-    alias mvn11="JAVA_HOME='/usr/lib/jvm/java-11-openjdk-amd64" mvn'
+    alias mvn8="JAVA_HOME='/usr/lib/jvm/java-8-openjdk-amd64' mvn"
+
+
+    alias mvn11="JAVA_HOME='/usr/lib/jvm/java-11-openjdk-amd64' mvn"
 
 This will allow you to run ``mvn`` using an explicit java version. Examples::
+
+    # The two links are helpful for building without tests
+
+    #https://tocco-docs.readthedocs.io/en/latest/ide/machine_setup.html#support-multiple-java-versions
+    #http://localhost:63342/tocco-docs/_build/html/ide/maven.html#eirslett
 
     # Java 8
     mvn8 -pl customer/test -am clean install -DskipTests
 
     # Java 11
     mvn11 -pl customer/test -am clean install -DskipTests
+
+See :ref:`Maven_Eirslett` about Eirslett.
 
 .. hint::
 
@@ -236,7 +245,7 @@ Configure SSH
 #. Link ``authorized_keys_tocco`` into SSH config directory::
 
     mkdir -p ~/.ssh
-    ln -s ~/src/ssh/known_hosts_tocco ~/.ssh/
+    ln -s ~/src/tocco-dotfiles/ssh/known_hosts_tocco ~/.ssh/
 
 #. Include config and set user name::
 
