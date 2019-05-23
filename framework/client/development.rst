@@ -23,6 +23,15 @@ Just install `Yarn`_ and execute the following commands:
   yarn setup
 
 
+For some packages/components you may need secret keys or passwords you can't commit or save in the codebase. In such cases
+you can set your secret environment variables in a ``/.env`` and add documentation to the Plop template.
+
+Enter this command to create your ``/.env`` file:
+
+.. code-block:: console
+
+  yarn plop Env
+
 
 Start a package
 ----------------
@@ -107,7 +116,8 @@ The project provides some code generators. Generators are developed with `Plop`_
 
   yarn plop
 
-At the moment there is a generator to create a react-component, to add a redux-action and to create a package.
+At the moment there is a generator to create a react-component, to add a redux-action, to create a package
+and to initiate a .env file with your environment keys.
 
 .. _Plop: https://github.com/amwmedia/plop
 
