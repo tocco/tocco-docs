@@ -4,11 +4,28 @@ Form
 Introduction
 -------------
 
-  Forms in the tocco-client are an essential part. This documentation describes what main parts play together to make
-  a form work. The three modules are formField, form and formData. Each of them are described by subfiles and components.
+  Forms such as detail or search in the tocco-client are an essential part. This documentation describes what main parts
+  play together to make a form work. The three modules are formField, form and formData. Each of them are described by
+  subfiles and components.
+
+
+.. note::
+
+  All the images were made with draw.io. You edit them by opening `draw.io <https://www.draw.io/>`_, downloading the corresponding
+  :download:`xml file </_static/download/remote-field-form.xml>` and importing the xml file into draw.io.
+  After you edited it export it as xml and png and replace it in _static/download and framework/client/resources respectively
 
 formField
 ----------
+
+  As the name indicates this module is all about the individual field in the form. What attributes, actions and components
+  are behind each field is regulated here. I/O of data on the field level gets handled too.
+
+  :download:`formField.xml </_static/download/formField.xml>`
+
+  .. image:: ./resources/formField.png
+    :width: 800
+    :alt: formField
 
 1. editableValueFactory
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -63,6 +80,15 @@ formField
 form
 -----
 
+  This module regulates how the form gets put together. It processes the data from the backend and returns the requested
+  form.
+
+  :download:`form.xml </_static/download/form.xml>`
+
+  .. image:: ./resources/form.png
+    :width: 800
+    :alt: form
+
 6. FormBuilder
 ~~~~~~~~~~~~~~~
 
@@ -81,6 +107,14 @@ form
 
 formData
 ---------
+
+  This module handles the data from the redux-store. It serves as an intermediate layer between the store and the form.
+
+  :download:`formData.xml </_static/download/formData.xml>`
+
+  .. image:: ./resources/formData.png
+    :width: 800
+    :alt: formData
 
 8. formData
 ~~~~~~~~~~~~~
@@ -153,8 +187,7 @@ Example remote-field:
   For the remote-field the prop modelField points to an entity where the remote-field gets its
   data from e.g. the User entity.
 
-  (This image below was made with draw.io. To edit the image, open `draw.io <https://www.draw.io/>`_, download
-  :download:`this xml file </_static/download/remote-field-form.xml>` and import the xml file into draw.io.)
+  :download:`this file </_static/download/remote-field-form.xml>`
 
 .. image:: ./resources/remote-field-form.png
   :width: 800
