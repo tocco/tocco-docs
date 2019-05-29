@@ -74,13 +74,17 @@ Tests are using following tools and libraries:
 * `Sinon`_
 * `Chai`_
 * `Enzyme`_
+* `Cypress`_
 
 .. _Jest: https://jestjs.io/
 .. _Sinon: http://sinonjs.org/
 .. _Chai: http://chaijs.com/
 .. _Enzyme: https://github.com/airbnb/enzyme
+.. _Cypress: https://www.cypress.io/
 
 
+Unit Tests
+^^^^^^^^^^^
 Run unit tests with Jest
 
 .. code-block:: console
@@ -97,6 +101,25 @@ Optional parameters
 
 .. note::
  If working with IntelliJ single tests or test-suites can be run in the IDE directly. Just set the jest.config.js file in the Jest run configuration. 
+
+
+End-to-End Tests
+^^^^^^^^^^^^^^^^^
+End-to-End (e2e) tests are written and run with cypress. 
+
+.. code-block:: console
+
+  yarn cypress:localhost
+
+This command will run all e2e test connecting to storybook (http://localhost:3003).
+A .env file in the root folder containing CYPRESS_USER and CYPRESS_PASSWORD variables that authenticate with https://master.tocco.ch is needed.
+For more about environment variables see `Setup`_.
+
+.. code-block:: console
+
+  yarn cypress:master
+
+This command will connect to master storybook deployment on github pages. This is useful to reproduce a failing CI run.
 
 
 Code Generators
