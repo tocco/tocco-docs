@@ -3,6 +3,22 @@ Nginx Configuration
 
 This document describes the available configuration for the `Docker image used on OpenShift <https://github.com/tocco/openshift-nginx>`__.
 
+Log Levels
+----------
+
+The env. variable ``NGINX_LOG_LEVEL`` allows picking from three levels:
+
+
+=============  ===================================================================================
+ Level          Description
+=============  ===================================================================================
+ ``default``    Some requests are not logged like request fonts, css, icons, etc. Failed requests
+                (=code >=300) are logged unconditionally.
+ ``verbose``    All requests but requests to status pages are logged.
+ ``all``        All requests are logged.
+=============  ===================================================================================
+
+
 Custom HTTP Headers
 -------------------
 
