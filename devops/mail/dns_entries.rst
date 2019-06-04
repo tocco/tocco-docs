@@ -43,7 +43,7 @@ See wikipedia entry on `DKIM`_ for more details.
 .. hint::
 
    In case the selector name ``default`` is already in use, a different selector can be configured for a domain. See
-   :vshn:`23` for details.
+   :vshn:`TOCO-23` for details.
 
 .. figure:: nine_dkim.png
     :scale: 60%

@@ -54,9 +54,13 @@ Use ``:strike:`some text` `` to strike through ~~some text~~.
 
 Use ``:blue:`…` ``, ``:green:`…` `` or ``:red:`…` `` to color text.
 
+### "ticket" Role
+
+Use ``:ticket:`OPS-24` `` to reference a ticket [in Jira](https://toccoag.atlassian.net).
+
 ### "vshn" Role
 
-Use ``:vshn:`125` `` to reference ticket TOCO-125 in [VSHN's issue tracker](https://control.vshn.net/tickets).
+Use ``:vshn:`TOCO-125` `` to reference ticket TOCO-125 in [VSHN's issue tracker](https://control.vshn.net/tickets).
 
 ### Custom CSS
 
