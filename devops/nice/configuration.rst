@@ -115,9 +115,22 @@ NICE2_NICE_ARG_*     Pass custom argument to Nice. (Not applied in :term:`pre-ho
 
 .. hint::
 
-   In some places, you may still find `__` used instead of `.` and `___` used instead
-   of `-`. This because older OpenShift versions didn't allow these characters to
-   appear in the name of an environment variable. [#f2]_
+   Environment variable keys must match the regex ``[-._a-zA-Z][-._a-zA-Z0-9]*``. Other characters must
+   be encoded using percentage encoding where two periods are used instead of a percentage sign.
+
+   Example:
+
+   Wanted character: ``:``
+   Percentage encoded: ``%2B``
+   Double-period encoded: ``..2B``
+
+   You can use Python to encode the string::
+
+       $ python3 -c 'import urllib.parse, sys; print(urllib.parse.quote(sys.argv[1]).replace("%", "..")' 'string:to+encode'
+       string..3Ato..2Bencode
+
+   In some places, you may still find `__` used instead of `.` and `___` used instead of `-`. This form
+   of encoding is deprecated and should no longer be used.
 
 Examples
 ````````
@@ -155,13 +168,6 @@ Examples
 
         Environment variable:
             ``NICE2_NICE_ARG_-logConfig=/app/etc/custom_logback.xml``
-
-
-.. rubric:: Footnotes
-
-.. [#f1] Replacement is done from right to left, preferring the longest possible replacement. Replacing only the three
-         rightmost underscores in a quadruple underscore.
-.. [#f2] https://github.com/openshift/origin/issues/8771
 
 
 .. _persistent-volume:
