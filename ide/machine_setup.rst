@@ -110,9 +110,10 @@ Install default JDK:
 
 .. code-block:: bash
 
-    cat >>/etc/apt/source.list.d/backports <EOF
+    cat >>/etc/apt/source.list.d/backports <<EOF
     deb http://ftp.debian.org/debian $(lsb_release -cs)-backports main
     EOF
+
     apt update
 
     # install Java 11
@@ -253,9 +254,9 @@ Configure SSH
     # First entry wins. So, override settings here, at the top.
 
     Host *.tocco.cust.vshn.net
-        User ${FIRST_NAME}.${LAST_NAME}
+        User \${FIRST_NAME}.\${LAST_NAME}
 
-    # Comment in if you want to login as `tadm` by default instead as `tocco` (root permissions required).
+    # Comment in if you want to login as 'tadm' by default instead as 'tocco' (root permissions required).
     # Host *.tocco.ch
     #     User tadm
 
@@ -344,7 +345,7 @@ Enable Autocompletion
 .. code-block:: bash
 
     cat >>~/.bashrc <<EOF
-    eval $(oc completion bash)
+    eval \$(oc completion bash)
     EOF
 
 
