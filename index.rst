@@ -6,6 +6,7 @@
    devops/index
    error_database/index
    ide/index
+   organization/index
 
 Indices and tables
 ==================
