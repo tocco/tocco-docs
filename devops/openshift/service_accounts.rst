@@ -48,7 +48,7 @@ So you only need the token to login. The challenge here is to find the token, bu
 
    $ oc ge sa
 
-   $ oc desribe sa teamcity
+   $ oc describe sa teamcity
 
    Name:           teamcity
    Namespace:      toco-serviceaccoutns
@@ -65,7 +65,7 @@ So you only need the token to login. The challenge here is to find the token, bu
 
 .. parsed-literal::
 
-   $ oc desribe sercret **teamcity-token-fz73r**
+   $ oc describe secret **teamcity-token-fz73r**
 
    Name:           teamcity-token-fz73r
    Namespace:      toco-serviceaccoutns
