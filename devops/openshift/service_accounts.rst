@@ -46,7 +46,7 @@ So you only need the token to login. The challenge here is to find the token, bu
 
 .. parsed-literal::
 
-   $ oc ge sa
+   $ oc get sa
 
    $ oc describe sa teamcity
 
