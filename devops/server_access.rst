@@ -9,7 +9,7 @@ SSH Access
 ========================  ==============================  ================================================  =============
  \*.tocco.cust.vshn.net    | ${FIRST_NAME}.${LAST_NAME}    | ``ssh peter.gerber@db1.tocco.cust.vshn.net``    `Puppet`_
  \*.tocco.ch               | tocco (non-priviledged)       | ``ssh tocco@app01.tocco.ch``                    `Ansible`_
-                           | tadm (root via sudo)          | ``ssh tocco@app01.tocco.ch``
+                           | tadm (root via sudo)          | ``ssh tadm@app01.tocco.ch``
 ========================  ==============================  ================================================  =============
 
 .. hint::
