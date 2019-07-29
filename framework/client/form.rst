@@ -57,7 +57,7 @@ formField
 
   Example:
 
-  .. code:: js
+  .. code::
 
     ‘longitude’: editableValueFactory(‘coordinate’),
     ‘latitude’: editableValueFactory(‘coordinate’)
