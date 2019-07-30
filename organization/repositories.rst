@@ -26,3 +26,7 @@ List of all important repositories that require long term maintenance.
 | commit-info-service       | https://gitlab.com/toccoag/commit-info-service                  | Dev          | Service on https://commit-info-service.tocco.ch to retrieve        |
 |                           |                                                                 |              | information about commits                                          |
 +---------------------------+-----------------------------------------------------------------+--------------+--------------------------------------------------------------------+
+| atlassian-connect-        | https://gitlab.com/toccoag/atlassian-connect-integration        | Dev          | Service on https://commit-info-service.tocco.ch/jira/* for our     |
+| integration               |                                                                 |              | plugins which are integrated in our Jira cloud service (see        |
+|                           |                                                                 |              | https://commit-info-service.tocco.ch/atlassian-connect.json)       |
++---------------------------+-----------------------------------------------------------------+--------------+--------------------------------------------------------------------+
