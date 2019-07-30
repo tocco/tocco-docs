@@ -197,7 +197,7 @@ Documentation
         oc process -f nice-documentation.yml INSTALLATION=${VERSION} | oc create -f -
 
 - Site Search can be configured on https://control.freefind.com and is registered by toccosupport@gmail.com for
-  https\://documentation.tocco.ch. Please contact Peter Gerber or Niklaus Hug to get the password.
+  https\://documentation.tocco.ch. Username and password can be found in the Ansible Vault [#f1]_.
 
   1. Set an additional starting point in "/Build Index/Set starting point" to ensure that the subdomain is indexed.
   2. Define a new subsection in "/Build Index/Define subsections" to ensure that user can search inside a specific documentation.
@@ -211,3 +211,8 @@ Troubleshooting
 ^^^^^^^^^^^^^^^
 
 If SSL doesn't work correctly, make sure TLS integration has been enabled (See :ref:`ssl-cert-issuance`).
+
+
+.. rubric:: Footnotes
+
+.. [#f1] See section *Ansible Vault* in `this document <https://git.tocco.ch/gitweb?p=ansible.git;a=blob;f=docs/ansible/basics.rst>`_.
