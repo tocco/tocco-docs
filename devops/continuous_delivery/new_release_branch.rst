@@ -76,6 +76,18 @@ Change the database of the test customer in the created **release** branch:
 
       The commit will automatically be merged into master and needs to be reverted there.
 
+Create release branch in tocco-client repository
+------------------------------------------------
+Head over to the `tocco-client Repository`_ and create a new release branch based on the current master revision.
+Replace **${VERSION}** with the version number without any characters which aren’t numeric (e.g. 2.18 -> 218).
+
+.. _tocco-client Repository: https://github.com/tocco/tocco-client
+
+.. parsed-literal::
+
+   git checkout -b nice-releases/**${VERSION}** && git push
+
+
 Sonar
 -----
 Teamcity:
