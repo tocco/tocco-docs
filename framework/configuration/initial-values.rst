@@ -109,7 +109,7 @@ extension
 """""""""
 
 Set this to ``true`` if you need to extend an existing initial value from another module. A usual use case will be to
-add values for fields or relations that have been added in later modules. To extend another value, the ref:`identifier`
+add values for fields or relations that have been added in later modules. To extend another value, the :ref:`identifier`
 configuration and the identifier value itself of the source and extension value need to match.
 
 You are able to overwrite values form the source, but use this with caution. There is no guarantee for a deterministic
