@@ -8,11 +8,8 @@ will be updated in the database when they differ from each other, depending on h
 
 .. note::
 
-    To be able to create entities through initial values they need to fulfill a few requirements:
-
-    * Entities must be uniquely identifiable through some field. This must not be the primary key, as that is handled by
-      the database directly and should not be set to a fixed value.
-    * Entities must use the predefined nice fields, i.e. version, create_timestamp, et cetera.
+    To be able to create entities through initial values they need to be uniquely identifiable through some field. This
+    must not be the primary key, as that is handled by the database directly and should not be set to a fixed value.
 
 File location
 -------------
@@ -35,7 +32,7 @@ by a default value. Check the corresponding documentations under :ref:`Configura
             identifier: some_identifier # string, a field name
             update-mode: force_update | create_only | keep_changes
             business-unit-mode: create_for_all | use_field_value
-            order: 10
+            priority: 10
             extension: false
         fields:
             some_identifier: identifier
@@ -83,6 +80,9 @@ Define the mode that should be used to update existing records. Default is ``kee
     Checks that the ``_nice_version`` field of the existing record equals ``1``. If it is, update all fields to the
     value defined in the initial values. Otherwise, do nothing.
 
+Entities that do not use the nice version field, will logically also not be checked for any version changes. Your
+initial values will therefore always be updated, unless it is configured as a ``create_only`` value.
+
 business-unit-mode
 """"""""""""""""""
 
@@ -95,11 +95,15 @@ Define the mode that should be used when handling entities with business unit de
     Do not set the business unit relation automatically, but use whatever was defined in :ref:`relations` (or
     :ref:`fields`).
 
-order
-"""""
+priority
+""""""""
 
 This can be used when you need to ensure that certain initial values will be created in a given order. Initial values
-will be sorted descending by the order and then run in sequence. Any integer is a valid value. Default is ``0``.
+will be sorted descending by the priority and then run in sequence. Any integer is a valid value. Default is ``0``.
+
+In any given priority the initial values are sorted by their modules with full consideration for dependencies between
+modules. So you should be able to ignore the priority completely if you only depend on an initial values from a module
+you have a dependency on.
 
 extension
 """""""""
@@ -160,3 +164,20 @@ the table name of the target table and a ``WHERE`` condition that uniquely ident
 
     -- query that will be executed on the database
     SELECT pk FROM nice_target_table WHERE unique_id = 'identifier'
+
+Running initial values from changesets
+--------------------------------------
+
+It is possible to run specific initial values from changeset through the use of the
+:java:ref:`YamlInitialValueCustomChange<ch.tocco.nice2.dbrefactoring.impl.data.YamlInitialValueCustomChange>`. See the
+class for instructions how to use it, but make sure that you actually need to use it since it is a rather ugly fix for
+necessary interactions between existing changesets and new initial values.
+
+Migrating changesets to YAML initial values
+-------------------------------------------
+
+There is a action called :java:ref:`YamlLookupAction<ch.tocco.nice2.dbrefactoring.impl.yaml.YamlLookupAction>` that can
+be called directly by a developer. This will find all initial value changesets in the installed modules and will try to
+map them to new YAML initial values. It is not super cleanly implemented since it was mainly used to support a manual
+migration, so the results need to be checked carefully. But in general, most customers will not need to migrate their
+old changesets anyway.
