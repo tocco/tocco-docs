@@ -87,6 +87,17 @@ Replace **${VERSION}** with the version number without any characters which aren
 
    git checkout -b nice-releases/**${VERSION}** && git push
 
+TeamCity build configs in `developer dashboard`_
+------------------------------------------------
+
+Head over to the `tocco-dashboard Repository`_ and add the new build configs you created for the new release branch
+(for the DB refactorings, auto merge and for the deployment of the new test instance) in the file `apiCalls.js`
+
+Example commit: `30a39e1`_
+
+.. _developer dashboard: https://dashboard.tocco.ch
+.. _tocco-dashboard Repository: https://github.com/tocco/tocco-dashboard
+.. _30a39e1: https://github.com/tocco/tocco-dashboard/commit/30a39e1a72607c56156365a61f90ea8a796c7c17
 
 Sonar
 -----
