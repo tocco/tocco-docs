@@ -272,9 +272,8 @@ Accessing values
 The method ``EntityInterceptor#accessField()`` can be used to intercept read or write access to a field.
 It is always called when a value is accessed by the entity (typically when ``Entity#get/setValue()`` is called).
 
-The default inner interceptor simply resolves the :java:extdoc:`Attribute<javax.persistence.metamodel.Attribute>`
-with the given field name using the :java:ref:`FieldResolver<ch.tocco.nice2.persist.hibernate.interceptor.FieldResolver>`. If write access is requested it additionally checks if the field is not a primary key
-or other generated field.
+The default inner interceptor simply resolves the field name using the :java:ref:`FieldResolver<ch.tocco.nice2.persist.hibernate.interceptor.FieldResolver>`.
+If write access is requested it additionally checks if the field is not a primary key or other generated field.
 
 The :java:ref:`SecurityEntityInterceptorContribution<ch.tocco.nice2.persist.security.hibernate.SecurityEntityInterceptorContribution>`
 uses this method to check the read or write permission of the given field. If the given field is a localized field, the base field (``label``
@@ -310,15 +309,14 @@ and ``NONE`` may be changed by the user).
 FieldResolver
 ^^^^^^^^^^^^^
 
-The :java:ref:`FieldResolverImpl<ch.tocco.nice2.persist.hibernate.interceptor.FieldResolverImpl>` resolves a field name
-to an :java:extdoc:`Attribute<javax.persistence.metamodel.Attribute>`. It is used to resolve a field
-name to an actual column.
-Usually this a simple operation, however there are two exceptions:
+The :java:ref:`FieldResolverImpl<ch.tocco.nice2.persist.hibernate.interceptor.FieldResolverImpl>` resolves a property name
+to the name of the corresponding entity field.
+Usually the property name is equal to the entity field name, however there are two exceptions:
 
     * Localized fields: if the base field of a localized field is requested (e.g. ``label``) it is resolved to the
       field of the current locale (e.g. ``label_de``).
-    * There is a custom implementation for session only entities, because the properties of these entities are not
-      mapped by a JPA :java:extdoc:`Attribute<javax.persistence.metamodel.Attribute>`.
+    * When java reserved words are used as a field name in the entity model, the field name needs to be adjusted
+      (see ``PojoUtils.normalizeFieldName()``).
 
 It is called whenever a field is accessed or referenced by name, for example when reading or writing fields or when compiling
 queries.
