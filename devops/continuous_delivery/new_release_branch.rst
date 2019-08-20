@@ -223,6 +223,13 @@ Troubleshooting
 
 If SSL doesn't work correctly, make sure TLS integration has been enabled (See :ref:`ssl-cert-issuance`).
 
+Standard specification
+----------------------
+
+The standard specification is part of the **«nice2_documentation»** project and needs its own build config in TeamCity.
+
+Therefore, add a build config for the new version in Teamcity like you did for the documentation. Copy the build config
+for the previous version in the project **«Nice2 Specification»** and adjust the parameters accordingly.
 
 .. rubric:: Footnotes
 
