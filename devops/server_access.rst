@@ -9,7 +9,7 @@ SSH Access
 ========================  ==============================  ================================================  =============
  \*.tocco.cust.vshn.net    | ${FIRST_NAME}.${LAST_NAME}    | ``ssh peter.gerber@db1.tocco.cust.vshn.net``    `Puppet`_
  \*.tocco.ch               | tocco (non-priviledged)       | ``ssh tocco@app01.tocco.ch``                    `Ansible`_
-                           | tadm (root via sudo)          | ``ssh tocco@app01.tocco.ch``
+                           | tadm (root via sudo)          | ``ssh tadm@app01.tocco.ch``
 ========================  ==============================  ================================================  =============
 
 .. hint::
@@ -45,11 +45,12 @@ Access can can be granted via `roles/ssh-key-sync/files/ssh_keys`_ in the Ansibl
 Changes can be deployed via Ansible::
 
     cd ${ANSIBLE_GIT_ROOT}
-    ansible-playbook -i inventory playbook.yml
+    ansible-playbook -i inventory playbook.yml -t ssh-keys
 
 .. hint::
 
-    Users with role ``@user`` have access as user tocco. User with role ``@root`` as tadm and tocco.
+    Users with role ``@user`` have access as user *tocco* on some hosts. User with role ``@root`` have access as
+    *tadm* and *tocco* on all hosts.
 
 .. _roles/ssh-key-sync/files/ssh_keys: https://git.tocco.ch/gitweb?p=ansible.git;a=blob;f=roles/ssh-key-sync/files/ssh_keys
 
