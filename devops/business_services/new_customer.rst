@@ -1,3 +1,5 @@
+.. _create_new_customer:
+
 Create new Customer
 ===================
 
@@ -70,9 +72,12 @@ Create a Solr Core
          nice-${INSTALLATION}:
            ensure: present
 
-S3 Bucket
-^^^^^^^^^
+Create S3 Bucket
+^^^^^^^^^^^^^^^^
 
+You only need to create a bucket if the customer will be setup using S3.
+
+:ref:`s3-bucket`
 
 Create in OpenShift
 --------------------
