@@ -83,6 +83,11 @@ Define the mode that should be used to update existing records. Default is ``kee
 Entities that do not use the nice version field, will logically also not be checked for any version changes. Your
 initial values will therefore always be updated, unless it is configured as a ``create_only`` value.
 
+.. note::
+
+    Currently all initial values are defined as ``keep_changes``, as we do not want to ever overwrite customer specific
+    changes.
+
 business-unit-mode
 """"""""""""""""""
 
@@ -181,3 +186,23 @@ be called directly by a developer. This will find all initial value changesets i
 map them to new YAML initial values. It is not super cleanly implemented since it was mainly used to support a manual
 migration, so the results need to be checked carefully. But in general, most customers will not need to migrate their
 old changesets anyway.
+
+Special logic when upgrading a customer to new initial values
+-------------------------------------------------------------
+
+There is a special table ``initial_values_status`` that is used to keep track of the state of the initial values. If
+it is the first run of the initial values on this database, and it is not a new database, there is special handling for
+some initial value fields when inserting new values:
+
+* any ``active`` flag  is set to false
+* these default fields are set to false
+
+  * ``default_income`` and ``default_summary`` on ``Account``
+  * ``default_price_category`` on ``Price_category``
+  * ``default_payment_condition`` on ``Payment_condition``
+  * ``default_schedule`` on ``Payment_schedule``
+  * ``default_cost_center`` on ``Cost_center``
+  * ``default_vat_code`` on ``Vat_code``
+  * ``default_donation`` and ``default_connection`` on ``Esr_account``
+  * ``default_currency`` on ``Currency``
+  * ``standard`` on ``Voucher_type``
