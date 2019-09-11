@@ -9,6 +9,7 @@ DevOps
    internal_servers/index
    continuous_delivery/index
    databases/index
+   s3/index
    mail/index
    nice/index
    openshift/index

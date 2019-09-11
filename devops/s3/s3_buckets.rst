@@ -1,3 +1,5 @@
+.. _s3-bucket:
+
 S3 Buckets
 ==========
 
@@ -30,7 +32,9 @@ This is especially useful when many users need to be created.
 
 .. parsed-literal::
 
-        curl -i -H 'Authorization: Bearer **${MY_ACCESS_TOKEN}**' -F display_name=**${NEW_USERNAME}** https://api.cloudscale.ch/v1/objects-users;
+    curl -i -H 'Authorization: Bearer **${MY_ACCESS_TOKEN}**' -F display_name=**${NEW_USERNAME}** https://api.cloudscale.ch/v1/objects-users;
+
+.. _get_s3_acces_key:
 
 Check the access-key and security-Key
 -------------------------------------
@@ -46,3 +50,6 @@ press the button ``add a bucket`` and insert a bucket name.
 
 .. figure:: resources/add_bucket.png
 
+.. warning::
+
+    After you created a bucket for a nice installation you need to set the correct access policies on the bucket: :ref:`s3_policy`. Otherwise the developers will not be able to acces the bucket.

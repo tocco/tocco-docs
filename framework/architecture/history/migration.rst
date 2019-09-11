@@ -1,6 +1,10 @@
 Migration to a dedicated data store (Nice v2.19)
 ================================================
 
+.. warning::
+     This migration is now automated with a script.
+     If possible use the script as described here: :ref:`history_migration`
+
 Database initialization
 -----------------------
 

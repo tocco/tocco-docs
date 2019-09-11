@@ -1,0 +1,35 @@
+.. _s3_architecture:
+
+Architecture
+============
+
+An overlay bucket (`tocco-dev-nice-overlay`) is provided for the development environment.
+This prevents developers from writing data to the production bucket during development.
+
+For each installation there is a dedicated user and bucket.
+Example:
+
+* user:   `nice-agogistest`
+* bucket: `tocco-nice-agogistest`
+
+Each developer has a dedicated s3 user. Example: `dev-mawu`
+
+The installation user is the owner of the bucket and has all access rights.
+All the dev users have only read access on the installation buckets. This access is given by s3 policies and acl's. Here you see how to set the policies for an bucket: :ref:`s3_policy`.
+
+The access keys of an installation are set in the `s3.properties` file in the customer folder.
+
+For the development environment the connection information of the buckets is configured in the `s3.properties` file but the access keys aren't configured there. Each developer has it's own access keys. They are configured in the `~/.aws/credentials <https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html>`_ file::
+
+     [nice2]
+     aws_access_key_id=XXXXXXXXXXXXXXXXXXXX
+     aws_secret_access_key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+You can get the access keys for a developer :ref:`here <get_s3_acces_key>`.
+
+.. note::
+
+    The credentials that are specified in the properties (``s3.properties``) file have higher
+    Priority then the credentials in the AWS CLI configuration file (``~/.aws``).
+
+
