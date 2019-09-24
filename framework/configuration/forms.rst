@@ -301,6 +301,44 @@ Example:
 
 
 
-Actions
--------
-TODO
+Actions :green:`V2` 
+--------------------
+
+INCOMPLETE
+
+Actions can be included in any form in almost any place. An action can be be in an action-group or by itself. 
+Reports are a subset of Actions.
+
+
+Example:
+
+.. code-block:: xml
+
+    <action
+      group="formActionGroup"
+      default="formAction"
+    >
+    <action 
+        name="import_action"
+        label="incomingPayment_upload_action"
+        icon="upload"
+        endpoint="import/esr/file"
+        formDataEntityModel="Cash_management_upload_settings"
+      />
+      <report 
+        id="payment_journal"
+        label="report.payment_journal"
+      />
+    </action>
+
+
+
+<action>
+^^^^^^^^
+
+icon
+++++++
+The icon will be shown next to the label. A list of all icons can be found in the `IconShowcase`_ 
+
+.. _IconShowcase: https://tocco.github.io/tocco-client/master/?path=/story/tocco-ui-icon--icons
+
