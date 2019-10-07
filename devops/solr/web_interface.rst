@@ -35,7 +35,7 @@ is running on a managed server. This is the case when the solr URL is
 
 #. Login
 
-   Visit https\://\ **${host_name}** in the browser.
+   Visit https\://\ **${host_name}**\ :8983 in the browser.
 
    .. figure:: resources/solr_dashboard.png
       :scale: 60%
