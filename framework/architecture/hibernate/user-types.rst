@@ -88,4 +88,5 @@ If a hash code is used as a query parameter for a binary field, the string is co
 by the :java:ref:`StringToBinaryParameterConverter<ch.tocco.nice2.persist.hibernate.legacy.StringToBinaryParameterConverter>`.
 ``BinaryQueryParameter#mayBeStored()`` returns false so it can safely be used in queries.
 
+See chapter :ref:`large_objects` for more details about large objects.
 
