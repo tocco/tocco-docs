@@ -26,6 +26,22 @@ instances, there are other query builders that can select sub-paths directly and
 
 See :ref:`query_builder` for more information about this topic.
 
+PrimaryKeyLoader
+^^^^^^^^^^^^^^^^
+
+The :java:ref:`PrimaryKeyLoader<ch.tocco.nice2.persist.hibernate.interceptor.PrimaryKeyLoader>` is used to load
+an entity by primary key. It is used when ``PersistenceService#retrieve()`` or ``EntityManager#get()`` is called.
+
+The default implementation :java:ref:`DefaultPrimaryKeyLoader<ch.tocco.nice2.persist.hibernate.pojo.PersistenceServiceImpl.DefaultPrimaryKeyLoader>`
+uses the query builder to load the entity. This makes sure that the security conditions are always applied when an entity is loaded.
+
+We cannot use Hibernate's ``Session#get()`` directly (even is we use a custom event listener that adds security conditions),
+because it caches the results for the duration of the session. So if an entity is loaded in privileged mode first, it will
+always remain accessible even if the privileged mode has ended.
+
+There is also a special implementation for entity-docs (:java:ref:`EntityDocsPrimaryKeyLoader<ch.tocco.nice2.dms.impl.entitydocs.interceptor.EntityDocsPrimaryKeyLoader>`).
+They need to be treated separately, as there are no ACL rules for them.
+
 Metamodel
 ---------
 

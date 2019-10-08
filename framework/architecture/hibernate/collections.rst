@@ -52,23 +52,6 @@ Instead of using a :java:extdoc:`ResultSet<java.sql.ResultSet>` to initialize th
 are added by reflection. After all elements are set, the persistence context is informed that collection loading is
 completed.
 
-The loading of the collection elements is delegated to an instance of :java:ref:`CollectionInitializer<ch.tocco.nice2.persist.hibernate.interceptor.CollectionInitializer>`.
-Other modules can contribute collection initializer instances for specific relations to override the default behaviour.
-
-The default :java:ref:`CollectionInitializer<ch.tocco.nice2.persist.hibernate.interceptor.CollectionInitializer>` is the
-:java:ref:`DefaultCollectionInitializer<ch.tocco.nice2.persist.hibernate.interceptor.DefaultCollectionInitializer>`.
-It creates the same query as Hibernate would, using the reverse association of the loaded collection.
-However, because the query is executed through the :java:ref:`CriteriaQueryBuilder<ch.tocco.nice2.persist.hibernate.query.CriteriaQueryBuilder>`,
-the query is dynamically modified by all :java:ref:`QueryBuilderInterceptor<ch.tocco.nice2.persist.hibernate.query.QueryBuilderInterceptor>`, which
-add conditions depending on the current user roles and business units.
-See :ref:`query_builder` for more information about this topic.
-
-
-There are special implementations for entity-docs collections for performance reasons.
-
-.. todo::
-    Add link to entity-docs chapter.
-
 .. warning::
     An empty collection does not mean that the corresponding database table is empty as well (all rows might be filtered).
     Hibernate tries to use some shortcuts if a collection is empty (for example clearing a many to many mapping table).
@@ -76,6 +59,46 @@ There are special implementations for entity-docs collections for performance re
 
     * ``ExtendedBasicCollectionPersister#isAffectedByEnabledFilters``
     * ``ReloadablePersistentSet#isSnapshotEmpty``
+
+CollectionInitializer
+---------------------
+
+The loading of the collection elements is delegated to an instance of :java:ref:`CollectionInitializer<ch.tocco.nice2.persist.hibernate.interceptor.CollectionInitializer>`.
+
+The :java:ref:`ExtendedInitializeCollectionEventListener<ch.tocco.nice2.persist.hibernate.interceptor.ExtendedInitializeCollectionEventListener>`
+fetches the matching :java:ref:`CollectionInitializer<ch.tocco.nice2.persist.hibernate.interceptor.CollectionInitializer>` from the
+:java:ref:`CollectionInitializationService<ch.tocco.nice2.persist.hibernate.interceptor.CollectionInitializationService>`.
+
+A :java:ref:`CollectionInitializer<ch.tocco.nice2.persist.hibernate.interceptor.CollectionInitializer>` implementation
+can be enabled for a specific association using the ``supports()`` method. The ``priority()`` method should be overridden
+by more specific implementations so that they are selected before the more generic implementations.
+
+The :java:ref:`CollectionInitializer<ch.tocco.nice2.persist.hibernate.interceptor.CollectionInitializer>` provides two main
+methods:
+
+    * ``getCollectionElements()`` fetches all elements of a given association, including support for pagination and ordering
+    * ``countCollectionElements()`` counts the collection elements without loading them all
+
+The default :java:ref:`CollectionInitializer<ch.tocco.nice2.persist.hibernate.interceptor.CollectionInitializer>` is the
+:java:ref:`DefaultCollectionInitializer<ch.tocco.nice2.persist.hibernate.interceptor.DefaultCollectionInitializer>`.
+
+Most of the functionality is implemented in :java:ref:`AbstractCollectionInitializer<ch.tocco.nice2.persist.hibernate.interceptor.AbstractCollectionInitializer>`,
+which is the base class of all implementations.
+It uses the :java:ref:`CriteriaQueryBuilder<ch.tocco.nice2.persist.hibernate.query.CriteriaQueryBuilder>` to execute
+a query for the reverse relation.
+Since the query is dynamically modified by all :java:ref:`QueryBuilderInterceptor<ch.tocco.nice2.persist.hibernate.query.QueryBuilderInterceptor>`,
+security and business unit conditions are added as well (which would not be the case when using Hibernate collections directly).
+
+See :ref:`query_builder` for more information about this topic.
+
+Currently there are a couple of special implementations of :java:ref:`CollectionInitializer<ch.tocco.nice2.persist.hibernate.interceptor.CollectionInitializer>`:
+
+    * :java:ref:`AbstractEntityDocsCollectionInitializer<ch.tocco.nice2.dms.impl.entitydocs.interceptor.AbstractEntityDocsCollectionInitializer>`
+      is the base class for several entity-docs related collection initializers. There are no ACL rules for entity-docs, therefore a special
+      implementation is required for loading entity-docs collections.
+
+    * :java:ref:`NodeChildrenCollectionInitializer<ch.tocco.nice2.dms.impl.security.NodeChildrenCollectionInitializer>` is a
+      collection initializer that improves the performance of loading child nodes of ``Folder`` entities.
 
 .. _collection_reloading:
 
