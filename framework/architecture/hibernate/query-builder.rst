@@ -3,8 +3,7 @@
 Query Builder
 =============
 
-There are currently 4 different query builders for different query types (all of which can be obtained from the
-:java:ref:`PersistenceService<ch.tocco.nice2.persist.hibernate.PersistenceService>`):
+There are currently 4 different query builders for different query types:
 
     * The :java:ref:`EntityQueryBuilderImpl<ch.tocco.nice2.persist.hibernate.query.EntityQueryBuilderImpl>` builds queries that
       return :java:ref:`Entity<ch.tocco.nice2.persist.entity.Entity>` instances. It is convenient to use the :java:ref:`Entity<ch.tocco.nice2.persist.entity.Entity>`
@@ -13,7 +12,7 @@ There are currently 4 different query builders for different query types (all of
       fetch exactly one property or path of an entity (for example to get all primary keys of a given query). This avoids
       unnecessarily loading the entire :java:ref:`Entity<ch.tocco.nice2.persist.entity.Entity>`.
     * The :java:ref:`PathQueryBuilderImpl<ch.tocco.nice2.persist.hibernate.query.PathQueryBuilderImpl>` is similar to the :java:ref:`SinglePathQueryBuilderImpl<ch.tocco.nice2.persist.hibernate.query.SinglePathQueryBuilderImpl>`
-      but can select more than one path and always returns an ``Object[]`` as a result.
+      but can select more than one path and always returns a container object (currently ``Object[]`` and ``Map`` are supported)  as a result.
     * The :java:ref:`CriteriaCountQueryBuilder<ch.tocco.nice2.persist.hibernate.query.CriteriaCountQueryBuilder>` can be
       used to execute ``COUNT`` queries.
 
@@ -32,6 +31,10 @@ A tutorial can be found here: https://www.ibm.com/developerworks/java/library/j-
     The metamodel classes are currently not available, which means typesafe queries are not possible
     at the moment.
 
+All query builders can be obtained from the :java:ref:`PersistenceService<ch.tocco.nice2.persist.hibernate.PersistenceService>`.
+In addition the :java:ref:`QueryBuilderFactory<ch.tocco.nice2.persist.hibernate.query.builder.QueryBuilderFactory>` provides
+several helper methods to create query builders.
+
 Implementation
 --------------
 
@@ -40,17 +43,17 @@ ch.tocco.nice2.persist.hibernate.query.QueryBuilderBaseImpl
 
 The :java:ref:`QueryBuilderBaseImpl<ch.tocco.nice2.persist.hibernate.query.QueryBuilderBaseImpl>` is the base class for all query
 builders.
-It contains a list of :java:extdoc:`Predicate<javax.persistence.criteria.Predicate>` and provides several ways to add a
+It contains a list of :java:extdoc:`Predicate<javax.persistence.criteria.Predicate>` instances and provides several ways to add a
 condition to the query:
 
-    * Use ``QueryBuilderBase#addPredicate(Predicate)`` to add a JPA :java:extdoc:`Predicate<javax.persistence.criteria.Predicate>` instance
+    * Use ``QueryBuilderBase#where(Predicate...)`` to add a JPA :java:extdoc:`Predicate<javax.persistence.criteria.Predicate>` instance
     * The :java:ref:`PredicateBuilder<ch.tocco.nice2.persist.hibernate.query.PredicateBuilder>` is a functional interface that
       can be used to create :java:extdoc:`Predicate<javax.persistence.criteria.Predicate>` instances using lambda expressions
-      that can be passed to ``QueryBuilderBase#addPredicate(PredicateBuilder)``. The :java:extdoc:`CriteriaBuilder<javax.persistence.criteria.CriteriaBuilder>`,
-      :java:extdoc:`Root<javax.persistence.criteria.Root>`, :java:ref:`SubqueryFactory<ch.tocco.nice2.persist.hibernate.query.PredicateBuilder.SubqueryFactory>`
+      that can be passed to ``QueryBuilderBase#where(PredicateBuilder)``. The :java:extdoc:`CriteriaBuilder<javax.persistence.criteria.CriteriaBuilder>`,
+      :java:extdoc:`Root<javax.persistence.criteria.Root>`, :java:ref:`FieldAccessor<ch.tocco.nice2.persist.hibernate.query.ch.tocco.nice2.persist.hibernate.query.FieldAccessor>` :java:ref:`SubqueryFactory<ch.tocco.nice2.persist.hibernate.query.PredicateBuilder.SubqueryFactory>`
       and the query hints are passed as parameters into the lambda expression.
     * :java:ref:`Node<ch.tocco.nice2.conditionals.tree.Node>` or :java:ref:`Condition<ch.tocco.nice2.persist.qb2.Condition>` instances (created by the :java:ref:`Conditions<ch.tocco.nice2.persist.qb2.Conditions>` API)
-      can also be passed to ``QueryBuilderBase#addCondition()``. This API is also used by the security conditions.
+      can also be passed to ``QueryBuilderBase#where(Condition...)``. This API is also used by the security conditions.
       A :java:ref:`Condition<ch.tocco.nice2.persist.qb2.Condition>` is first converted into a :java:ref:`Node<ch.tocco.nice2.conditionals.tree.Node>`
       instance using the :java:ref:`ConditionFactory<ch.tocco.nice2.persist.query.ConditionFactory>` and then transformed into a
       :java:extdoc:`Predicate<javax.persistence.criteria.Predicate>` using the :java:ref:`PredicateFactory<ch.tocco.nice2.persist.hibernate.PredicateFactory>`.
@@ -59,7 +62,7 @@ It also invokes the ``QueryBuilderInterceptor#buildConditionFor()`` method of al
 the query initialization has been completed and adds the created conditions to the list of predicates.
 
 .. note::
-    This method should be called when the query builder is created; not when it is executed. For example it is expected
+    The ``QueryBuilderInterceptor#buildConditionFor()`` method should be called when the query builder is created; not when it is executed. For example it is expected
     that if a query that is created in privileged mode, it should remain privileged even if the privileged mode is no longer active
     when the query is executed.
 
@@ -138,6 +141,14 @@ The ordering can be defined through ``CriteriaQueryBuilderImpl#addOrder()``. Bot
 (can be created by the :java:extdoc:`CriteriaBuilder<javax.persistence.criteria.CriteriaBuilder>`)
 and the :java:ref:`Ordering<ch.tocco.nice2.persist.query.Ordering>` class of the persist API are accepted.
 
+There is a special ordering expression that can order the results by a given list of keys.
+This is created using ``OrderingUtils#orderByKeys()`` and results in a ``ORDER BY CASE WHEN ...`` clause.
+
+.. note::
+
+    ``OrderingUtils#orderByKeys()`` is only supported for non-distinct queries. However this should not be a problem
+    as this ordering is usually combined with a ``primaryKeyIn()`` condition.
+
 Query Wrappers
 ~~~~~~~~~~~~~~
 The :java:ref:`CriteriaQueryBuilderImpl<ch.tocco.nice2.persist.hibernate.query.CriteriaQueryBuilderImpl>` defines that all
@@ -151,9 +162,14 @@ The :java:ref:`CriteriaQueryWrapper<ch.tocco.nice2.persist.hibernate.query.Crite
 following methods:
 
     * ``getResultList()`` returns a list of results
+    * ``firstResult()`` returns the first result that was found
     * ``uniqueResult()`` returns exactly one result or null. If the query returns multiple rows, an exception will be thrown.
       Optionally a :java:extdoc:`LockModeType<javax.persistence.LockModeType>` can be passed to this method, which allows
       pessimistic locking of an entity.
+
+``firstResult()`` and  ``uniqueResult()`` will throw an exception if no result was found. However there are
+``firstResultOptional()`` and  ``uniqueResultOptional()`` methods for the case when a result is not required.
+
     * ``distinct()`` to configure if the query should be executed with the ``DISTINCT`` keyword. The default is true.
 
 .. note::
@@ -170,7 +186,7 @@ is the base implementation of :java:ref:`CriteriaQueryWrapper<ch.tocco.nice2.per
 the following functionality:
 
 It requires a transformation :java:extdoc:`Function<java.util.function.Function>` which converts a result row (which is always
-an ``Object[]``) into the desired target type.
+an ``Object[]``) into the desired target type (subclasses must override ``createMapperFunction()``).
 
 When ``getResultList()`` is called, the following steps are taken:
 
@@ -211,12 +227,13 @@ for query builders that use a :java:ref:`CustomSelection<ch.tocco.nice2.persist.
 This means that they do not return entity instances, but only certain paths.
 
 It provides a method called ``clearSelection()`` that re-initializes the selection. However this method cannot remove joins that
-were created by the previous selection and it often makes sense to just create a new query builder instance.
+were created by the previous selection and is used internally only.
 
 This class also provides the :java:ref:`CriteriaQueryWrapper<ch.tocco.nice2.persist.hibernate.query.CriteriaQueryWrapper>` implementation
 for its subclasses: :java:ref:`CustomSelectionCriteriaQueryWrapper<ch.tocco.nice2.persist.hibernate.query.AbstractPathQueryBuilder.CustomSelectionCriteriaQueryWrapper>`.
-``getSelection()`` returns the selection created by ``CustomSelection#toJpaSelection()`` and it overrides the methods
-``internalGetResultList()`` and ``internalUniqueResult()`` and processes the query results using ``CustomSelection#mapResults()``.
+``getSelection()`` returns the selection created by ``CustomSelection#toJpaSelection()``.
+
+It provides a protected method ``mapResults()`` that initializes the result structure and processes the query results using ``CustomSelection#mapResults()``.
 This is necessary because the :java:ref:`CustomSelection<ch.tocco.nice2.persist.hibernate.query.selection.CustomSelection>`
 may add additional paths (for internal processing) and some paths need to evaluated in an additional query (to-many paths for example).
 
@@ -235,11 +252,33 @@ An exception is also thrown if ``setPath(String)`` is never called.
 It returns a :java:ref:`CustomSelectionCriteriaQueryWrapper<ch.tocco.nice2.persist.hibernate.query.AbstractPathQueryBuilder.CustomSelectionCriteriaQueryWrapper>`
 from its ``build()`` method with a mapping function that returns the first element of the result array.
 
+It also provides a simple implementation of :java:ref:`ResultRowMapper<ch.tocco.nice2.persist.hibernate.query.mapper.ResultRowMapper>`.
+Because the result is always the selected path of type ``T`` the ``mapToOnePath()`` and ``mapToManyPath()`` methods can simply return
+the values provided by the given :java:ref:`ValueProvider<ch.tocco.nice2.persist.hibernate.query.mapper.ResultRowMapper.ValueProvider>`.
+
+See :ref:`custom_selection` for more information about the :java:ref:`ResultRowMapper<ch.tocco.nice2.persist.hibernate.query.mapper.ResultRowMapper>`
+class.
+
 ch.tocco.nice2.persist.hibernate.query.PathQueryBuilderImpl
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The :java:ref:`PathQueryBuilderImpl<ch.tocco.nice2.persist.hibernate.query.PathQueryBuilderImpl>` can be used to
-query for multiple paths of an entity and always returns an ``Object[]``.
+query for multiple paths of an entity and always returns a container type like ``Object[]`` or ``Map``.
+
+The constructor of this class requires an instance of :java:ref:`ResultRowMapper<ch.tocco.nice2.persist.hibernate.query.mapper.ResultRowMapper>`
+that supports the return type ``T``.
+
+There currently are two different implementations available:
+
+    * :java:ref:`ArrayResultRowMapper<ch.tocco.nice2.persist.hibernate.query.mapper.ArrayResultRowMapperFactory.ArrayResultRowMapper>` converts
+      query results into a flat structure using an ``Object[]``. The order in the array depends on the order the paths were given
+      to ``addPathToSelection()``.
+    * :java:ref:`MapResultRowMapper<ch.tocco.nice2.persist.hibernate.query.mapper.MapResultRowMapperFactory.MapResultRowMapper>` converts each row
+      into a :java:extdoc:`Map<java.util.Map>`. This creates a nested structure and is useful to group fields by their relation paths.
+
+The ``PersistenceService#createPathQueryBuilder()`` methods builds an instance of :java:ref:`ResultRowMapper<ch.tocco.nice2.persist.hibernate.query.mapper.ResultRowMapper>`
+using contributed :java:ref:`ResultRowMapperFactory<ch.tocco.nice2.persist.hibernate.query.mapper.ResultRowMapperFactory>` instances, based on the
+requested result type.
 
 The method ``addPathToSelection()`` can be called multiple times to add paths to the selection.
 At least one path needs to be added otherwise an exception will be thrown.
@@ -252,6 +291,8 @@ executes ``COUNT`` queries and always returns a :java:extdoc:`Long<java.lang.Lon
 
 It inherits directly from :java:ref:`AbstractCriteriaBuilder<ch.tocco.nice2.persist.hibernate.query.AbstractCriteriaBuilder>`
 because it does not return an ``Object[]`` and also returns a different object from its ``build()`` method.
+
+.. _custom_selection:
 
 Custom Selection
 ----------------
@@ -291,7 +332,25 @@ as an argument and can be used to add all necessary query paths to the query.
 ``SelectionPathHandler#processResults()`` is called after the query has been executed. Both the list of results of the query
 and the target (that will be returned from the query builder) are passed as arguments. The task of the handler is to
 copy the query results into the target array. The :java:ref:`SelectionRegistry<ch.tocco.nice2.persist.hibernate.query.selection.SelectionRegistry>`
-contains the source and target indices of the paths.
+contains the source and target indices of the paths. In addition an instance of :java:ref:`ResultRowMapper<ch.tocco.nice2.persist.hibernate.query.mapper.ResultRowMapper>`
+is passed to this method as well.
+
+The :java:ref:`ResultRowMapper<ch.tocco.nice2.persist.hibernate.query.mapper.ResultRowMapper>`
+does the actual mapping to the final result structure and has the following methods:
+
+    * ``createInstanceOfResultType()`` creates an instance of the result container (like ``Object[]``, ``Map``). May also
+      be null if there is only a single value and no container.
+    * ``mapToOnePath()`` maps to-one paths to the result container. It has the following parameters:
+
+        * ``paths`` all the paths that should be mapped
+        * ``queryResultProvider`` an instance of :java:ref:`ValueProvider<ch.tocco.nice2.persist.hibernate.query.mapper.ResultRowMapper.ValueProvider>`
+          that allows to access the result of the current row for a given path
+        * ``result`` an instance of the result container. The results should be mapped to this object.
+        * ``rootSelectionRegistry`` can be used to access the index of a given path to be able to insert it in the correct
+          position of the result container
+
+    *   ``mapToManyPath()`` maps to-many paths to the result container. It has the same parameters as ``mapToOnePath()``, except
+        that it receives a list of :java:ref:`ValueProvider<ch.tocco.nice2.persist.hibernate.query.mapper.ResultRowMapper.ValueProvider>`
 
 The :java:ref:`SelectionPathHandler<ch.tocco.nice2.persist.hibernate.query.selection.SelectionPathHandler>` are also
 responsible for calling the :java:ref:`QueryBuilderInterceptor<ch.tocco.nice2.persist.hibernate.query.QueryBuilderInterceptor>`
@@ -559,3 +618,17 @@ Note that ``Entity#markDeleted()`` is used. This is an internal method that can 
 After the invocation of the listeners the proxy instances are scheduled for deletion with the :java:ref:`EntityTransactionContext<ch.tocco.nice2.persist.hibernate.cascade.EntityTransactionContext>`.
 Note that the ``addDeletedEntityBatch()`` method is used that deletes the entire batch with one delete statement (as opposed to
 the normal behaviour which fires a delete statement for every deleted entity).
+
+QueryDefinition / QueryConfigurator
+===================================
+
+The :java:ref:`QueryDefinition<ch.tocco.nice2.persist.query.QueryDefinition>` contains all necessary information
+to build a query. It is used as a bridge between the legacy :java:ref:`Query<ch.tocco.nice2.persist.query.Query>`
+and the new query builders.
+
+An instance can be obtained from the method ``Query#toQueryDefinition()`` which can then be converted to a
+:java:ref:`QueryConfigurator<ch.tocco.nice2.persist.hibernate.query.builder.QueryConfigurator>` which can be
+applied to the new query builder using ``CriteriaQueryBuilder#applyConfiguration()``.
+
+This was primarily developed to be able to combine the :java:ref:`EntityExplorerActionSelectionService<ch.tocco.nice2.netui.actions.entityoperation.EntityExplorerActionSelectionService>`
+with the new query builders.

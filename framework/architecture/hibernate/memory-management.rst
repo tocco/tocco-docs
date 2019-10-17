@@ -59,3 +59,82 @@ into partitions of the given transaction size.
 For each partition a new :java:ref:`Context<ch.tocco.nice2.persist.Context>` created. Then the input transformation function
 is applied and the inner task is executed.
 After that the output transformation is applied to the result and the context is closed.
+
+EntityList
+----------
+
+The behaviour of the different :java:ref:`EntityList<ch.tocco.nice2.persist.entity.EntityList>` implementations is a
+bit different compared to the old persistence layer.
+
+EntityListImpl
+^^^^^^^^^^^^^^
+
+The :java:ref:`EntityListImpl<ch.tocco.nice2.persist.hibernate.pojo.EntityListImpl>` is the default implementation.
+It is based on a :java:extdoc:`List<java.util.List>` of :java:ref:`Entity<ch.tocco.nice2.persist.entity.Entity>` instances.
+These entities are already loaded, that means this implementation should not be used for very large lists, otherwise a lot of
+memory will be required.
+
+The :java:ref:`EntityListImpl<ch.tocco.nice2.persist.hibernate.pojo.EntityListImpl>` is mainly used as a result of the
+``execute()`` method of the :java:ref:`Query<ch.tocco.nice2.persist.query.Query>` class.
+
+.. note::
+
+    Queries that are expected to have a lot of result rows should not use the ``execute()`` method. Instead ``getKeys()``
+    or the :java:ref:`PathQueryBuilder<ch.tocco.nice2.persist.hibernate.query.builder.PathQueryBuilder>` should be used
+    (perhaps in combination with a :java:ref:`PartitionedTask<ch.tocco.nice2.persist.exec.PartitionedTask>`).
+
+LazyEntityList
+^^^^^^^^^^^^^^
+
+The :java:ref:`LazyEntityList<ch.tocco.nice2.persist.hibernate.LazyEntityList>` is based on a :java:ref:`PrimaryKeyList<ch.tocco.nice2.persist.entity.PrimaryKeyList>`.
+No entities are loaded unless required and ``getKeys()`` can be called without any additional queries.
+
+When an :java:ref:`Entity<ch.tocco.nice2.persist.entity.Entity>` is accessed, a number (see ``setPageSize()``) of entities
+is loaded together.
+
+This implementation works well, when only ``getKeys()`` (or only a few entities) are accessed. Also, it does not unnecessarily
+load all entities, even when they are never used later.
+
+However the loaded entities are always referenced by the list (and context) and high memory usage is still possible when
+the entire list is loaded.
+
+The :java:ref:`LazyEntityList<ch.tocco.nice2.persist.hibernate.LazyEntityList>` is returned from ``EntityManager#createEntityList(PrimaryKey...)``
+and ``PrimaryKeyList#toEntityList()``.
+
+MemoryEfficientLazyEntityList
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The :java:ref:`MemoryEfficientLazyEntityList<ch.tocco.nice2.persist.hibernate.MemoryEfficientLazyEntityList>` is also based on a
+:java:ref:`PrimaryKeyList<ch.tocco.nice2.persist.entity.PrimaryKeyList>` and is based on pages like the
+:java:ref:`LazyEntityList<ch.tocco.nice2.persist.hibernate.LazyEntityList>`.
+
+The difference is that in the :java:ref:`MemoryEfficientLazyEntityList<ch.tocco.nice2.persist.hibernate.MemoryEfficientLazyEntityList>`
+only one page is loaded at the same time. Each page is loaded with a new :java:ref:`Context<ch.tocco.nice2.persist.Context>`,
+the previous :java:ref:`Context<ch.tocco.nice2.persist.Context>` is closed as soon as a new page is loaded.
+
+This implementation implements the :java:extdoc:`AutoCloseable<java.lang.AutoCloseable>` interface and should be used with the
+try-with-resources pattern so that the last :java:ref:`Context<ch.tocco.nice2.persist.Context>` is closed properly.
+
+This list can be used with very large sizes, because the memory of the previous page is freed when a new page is loaded
+(or ``close()`` is called on the list).
+
+.. warning::
+
+    This list is only efficient when its elements are accessed in the given order. If the elements are accessed randomly,
+    too many data is loaded from the database.
+
+    :java:ref:`Entity<ch.tocco.nice2.persist.entity.Entity>` instances obtained from this list should only be used within
+    the loop and primarily for read-only operations. As soon as its :java:ref:`Context<ch.tocco.nice2.persist.Context>`
+    is closed, it's no longer possible to participate in a transaction or to load associations.
+
+PrimaryKeyList
+^^^^^^^^^^^^^^
+
+The :java:ref:`PrimaryKeyList<ch.tocco.nice2.persist.entity.PrimaryKeyList>` is basically a ``List<PrimaryKey>``
+with the following additional methods:
+
+    * ``getModel()`` returns the corresponding :java:ref:`EntityModel<ch.tocco.nice2.persist.model.EntityModel>`
+    * ``toEntityList()`` returns a :java:ref:`LazyEntityList<ch.tocco.nice2.persist.hibernate.LazyEntityList>` based on the keys of the list
+
+It should be used where it can be expected that the size of the list is potentially very large, to indicate to the developer
+that it's probably not a good idea to load all entities at once.
