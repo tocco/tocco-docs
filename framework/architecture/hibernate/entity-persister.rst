@@ -33,7 +33,7 @@ to avoid constraint violations.
 This was introduced in order to be compatible with existing code (as it is the default behaviour of the old persistence
 framework).
 For each 'one to many' association (whose inverse side is nullable) the following query is executed:
-``UPDATE nice_entity SET relReverse = NULL WHERE relReverse = :obj`` (``:obj`` is the entity to be deleted).
+``UPDATE nice_entity SET relReverse = NULL WHERE relReverse = IN (:obj)`` (``:obj`` are the entities to be deleted).
 
 .. note::
     It is important that these queries are executed directly before the delete statements are executed

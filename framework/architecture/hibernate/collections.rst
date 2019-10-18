@@ -11,7 +11,7 @@ In order to provide the same behaviour for collections as in the old API, some e
 Collection filtering
 --------------------
 
-All collection will be lazily initialized, this happens when a to many relation is resolved. However, we don't just want
+All collections will be lazily initialized, this happens when a to many relation is resolved. However, we don't just want
 to return all rows in the database. The elements in the collection should be filtered depending on, for example, the
 current business unit or security.
 

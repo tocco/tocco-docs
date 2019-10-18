@@ -575,18 +575,33 @@ The :java:ref:`IsTrueNodeVisitor<ch.tocco.nice2.persist.hibernate.PredicateFacto
 Either based on a :java:extdoc:`Path<javax.persistence.criteria.Path>` that points to a boolean or a literal expression.
 The latter may be used by the security framework to deny any access (``AND false``).
 
+JpaIntegrationNodeVisitor
+^^^^^^^^^^^^^^^^^^^^^^^^^
+The :java:ref:`JpaIntegrationNode<ch.tocco.nice2.persist.hibernate.query.JpaIntegrationNode>` contains a
+:java:ref:`PredicateBuilder<ch.tocco.nice2.persist.hibernate.query.PredicateBuilder>` which allows to create a
+condition using the new query builder features (for example uncorrelated subqueries).
+
+This makes it possible to integrate the new features with the old query builder (this was primarily created for the
+:java:ref:`PermissionMatrixEvaluationService<ch.tocco.nice2.dms.security.policyprocessor.PermissionMatrixEvaluationService>`).
+
 EquationNodeHandler
 ^^^^^^^^^^^^^^^^^^^
 The :java:ref:`EquationNodeHandler<ch.tocco.nice2.persist.hibernate.EquationNodeHandler>` converts an
 :java:ref:`EquationNode<ch.tocco.nice2.conditionals.tree.EquationNode>` into a :java:extdoc:`Predicate<javax.persistence.criteria.Predicate>`.
 An equation node consists of two nodes and an operator that defines how the two nodes can be compared.
 
-Currently one side of the equation needs to be either a :java:extdoc:`Path<javax.persistence.criteria.Path>` or a
-``COUNT`` expression.
-The other side can be a literal or paramater node, another path, count expression or a jdbc function call.
+Currently the following nodes are supported:
 
-If the type of the literal value does not match the type of the path or count expression, it is tried to convert
-the value using the :java:ref:`TypeManager<ch.tocco.nice2.types.TypeManager>`.
+    * ``PathNode`` represents a path to a certain field
+    * A count expression represented by a ``FuncallNode``
+    * ``LiteralNode`` represents an explicit literal expression
+    * ``ParameterNode`` represents a parameter expression
+    * ``FuncallNode`` represents any sql function call
+
+Obviously both nodes need to be of the same type, otherwise hibernate will throw an exception.
+Since both the ``ParameterNode`` and the ``LiteralNode`` can be converted to a different type (if a suitable converter
+exists), the 'other side' of the equation is evaluated first and then it is attempted to convert the literal or parameter
+using the :java:ref:`TypeManager<ch.tocco.nice2.types.TypeManager>` to the type of the 'other side' (if necessary).
 
 The ``LIKE`` operator is handled specially as it is not translated into a SQL ``LIKE`` but mapped to our custom ``glob``
 :java:extdoc:`SQLFunction<org.hibernate.dialect.function.SQLFunction>` (:java:ref:`GlobSqlFunction<ch.tocco.nice2.persist.hibernate.dialect.GlobSqlFunction>`).
@@ -632,3 +647,18 @@ applied to the new query builder using ``CriteriaQueryBuilder#applyConfiguration
 
 This was primarily developed to be able to combine the :java:ref:`EntityExplorerActionSelectionService<ch.tocco.nice2.netui.actions.entityoperation.EntityExplorerActionSelectionService>`
 with the new query builders.
+
+Query hints
+===========
+
+When a query builder instance is created using the :java:ref:`PersistenceService<ch.tocco.nice2.persist.hibernate.PersistenceService>`
+it is possible to pass query hints in the form of a ``Map<String, ?>``.
+:java:ref:`QueryHints<ch.tocco.nice2.persist.hibernate.query.QueryHints>` are additional information for the query builder which can lead to an optimized query.
+
+Currently there is only one supported hint: ``QUERY_BY_KEYS``.
+
+``QUERY_BY_KEYS`` defines all primary keys which might possibly be returned from the query. It is usually combined with a
+``primaryKeyIn()`` condition.
+
+The hints are passed to the :java:ref:`PredicateBuilder<ch.tocco.nice2.persist.hibernate.query.PredicateBuilder>`
+which can use it build an optimized condition.

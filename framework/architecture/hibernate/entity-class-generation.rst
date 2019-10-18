@@ -31,7 +31,7 @@ The generated classes contain the following:
 
 * a private field of the corresponding type for each field and relation
 * a getter and setter for each field
-* JPA annotations, which define the hibernate data model, on the getter methods
+* JPA annotations, which define the hibernate data model, on the fields
 
 If the annotations are placed on the fields (instead of the getters), hibernate reads and writes from the fields
 directly, without using the setters and getters.

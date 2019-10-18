@@ -16,62 +16,41 @@ An instance of :java:ref:`PrimaryKey<ch.tocco.nice2.persist.entity.PrimaryKey>` 
 is called for the first name. The key is cached so that always the same instance is returned, which is expected by
 some of the business code.
 
-Dirty checking
---------------
-
-The :java:ref:`Entity<ch.tocco.nice2.persist.entity.Entity>` interface differentiates between ``touched`` and ``changed``
-properties. A field is touched when ``setValue()`` has been called at least once for that field, even if the value is still the same.
-As this distinction rarely makes sense, we no longer support it - only ``changed`` fields are returned from the
-dirty checking methods (for example ``Entity#getChangedFields()`` or ``Entity#getTouchedFields()``).
-
-The dirty fields are managed by the abstract base class :java:ref:`AbstractDirtyCheckingEntity<ch.tocco.nice2.persist.hibernate.pojo.AbstractDirtyCheckingEntity>`.
-All calls to the setter methods are intercepted. If the value to be set is different from the `Old value`_, the field
-is marked as changed.
-To check for modified collections (to-many relations) we can simply use the ``isDirty()`` method of the
-:java:extdoc:`PersistentCollection<org.hibernate.collection.spi.PersistentCollection>`.
-
-The list of changed fields needs to be reset when the changes are flushed to the database. This is done by the
-:java:ref:`ValidationInterceptor<ch.tocco.nice2.persist.hibernate.validation.ValidationInterceptor>` after the entity
-validation has been completed.
-
-.. note::
-    Instead of manually keeping track of all the changes it would be possible to just always compare the current value
-    with the old value, when we need the changed fields. However this is a bit of a performance problem, because the
-    changed fields are needed quite often, especially by ``Entity#getState()`` to check if the current state is ``DIRTY``.
-
-.. todo::
-    Perhaps `hibernate bytecode enhancement <https://docs.jboss.org/hibernate/orm/5.2/topical/html_single/bytecode/BytecodeEnhancement.html>`_
-    may be used in the future.
-
-Old value
----------
-
-The :java:ref:`Entity<ch.tocco.nice2.persist.entity.Entity>` interface allows to query for the old value. This is the value
-of a certain property when it was loaded from the database at the beginning of the transaction, ignoring all
-uncommitted changes.
-
-This is achieved by checking the 'loaded state' of the :java:extdoc:`EntityEntry<org.hibernate.engine.spi.EntityEntry>`,
-which can be retrieved from the :java:extdoc:`PersistenceContext<org.hibernate.engine.spi.PersistenceContext>`.
-This is where hibernate stores the state of the entity when it is loaded and this state is also used for hibernate's
-default dirty checking mechanism.
-
 Accessing values
 ----------------
+
+PropertyAccessorService
+^^^^^^^^^^^^^^^^^^^^^^^
+
+The :java:ref:`PropertyAccessorServiceImpl<ch.tocco.nice2.persist.hibernate.pojo.PropertyAccessorServiceImpl>` efficiently
+reads and writes entity properties.
+
+Different strategies are used depending on the property type. For all persistent properties, the calls are delegated
+to Hibernate's :java:extdoc:`EntityPersister<org.hibernate.persister.entity.EntityPersister>`.
+
+Transient properties are manually accessed using reflection.
+
+.. warning::
+
+    It is important that all accessors are cached for
+    performance reasons.
 
 Reading values
 ^^^^^^^^^^^^^^
 
 All calls to the different ``Entity#getValue()`` methods are delegated to ``AbstractHibernateEntity#internalGetValue()``,
-where the actual field is resolved and read by reflection.
+where the actual field is resolved and read using the :java:ref:`PropertyAccessorService<ch.tocco.nice2.persist.hibernate.pojo.PropertyAccessorService>`.
 
 For backwards compatibility, the resulting value is passed to ``TypeManager#isolate()`` before it is returned
 (which creates a copy of :java:ref:`Binary<ch.tocco.nice2.persist.entity.Binary>` instances).
+
+It is also attempted to convert the value to the requested type.
 
 Writing values
 ^^^^^^^^^^^^^^
 
 All calls to the different ``Entity#setValue()`` methods are delegated to ``AbstractHibernateEntity#internalSetValue()``,
-where the actual field is resolved and updated by reflection.
+where the actual field is resolved and updated using the :java:ref:`PropertyAccessorService<ch.tocco.nice2.persist.hibernate.pojo.PropertyAccessorService>`.
 
 At first the value is converted to the required target type (if this is not already the case and a suitable
 :java:ref:`Converter<ch.tocco.nice2.types.spi.Converter>` exists).
@@ -85,8 +64,8 @@ After the value has been set, a ``EntityFacadeListener#entityChanging()`` event 
     normally required before calling these methods. It may be omitted for certain internal calls where the interceptors
     are not required.
 
-When Hibernate internally reads or writes the properties of an entity, the generated getter and setter methods are
-called directly.
+When Hibernate internally reads or writes properties of an entity, the field is accessed directly and no
+additional code is executed.
 
 Resolving relations
 -------------------
@@ -166,6 +145,12 @@ If an operation (``addEntity`` or ``removeEntity``) causes a change:
       all newly added entities. If an entity is part of the collection before and after the operation, no add or
       remove event should be fired for this entity. The ``adjusting`` is always false, except for the very last event.
 
+.. note::
+
+    ``size()`` does not initialize the collection, but executes a ``COUNT`` query. This is important if the collection is
+    large. However this means that ``size()`` should not be called when the collection is going to be initialized anyway
+    (for example when ``iterator()`` or ``toList()`` is called), because that would lead to an unnecessary query.
+
 Syncing inverse associations
 ----------------------------
 
@@ -227,21 +212,46 @@ The states are checked in the following order (important):
 
     * If all other states do not apply, the entity must be clean (that means persisted and unchanged).
 
-EntityHolder
-------------
+Dirty checking
+--------------
 
-The :java:ref:`EntityHolder<ch.tocco.nice2.persist.entity.EntityList.EntityHolder>` is an interface that
-is returned from :java:ref:`EntityList<ch.tocco.nice2.persist.entity.EntityList>` or :java:ref:`Relation<ch.tocco.nice2.persist.entity.Relation>`
-that wraps an entity. This interface is deprecated and should not be used anymore, but it is still necessary to support it,
-as it is still referenced in a lot of existing code.
-Normally an instance of an entity holder just delegates all calls to the wrapped entity. However Hibernate cannot work with these
-wrapped entities, because they do not have the generated getters and setters.
+The :java:ref:`Entity<ch.tocco.nice2.persist.entity.Entity>` interface differentiates between ``touched`` and ``changed``
+properties. A field is touched when ``setValue()`` has been called at least once for that field, even if the value is still the same.
+As this distinction rarely makes sense, we no longer support it - only ``changed`` fields are returned from the
+dirty checking methods (for example ``Entity#getChangedFields()`` or ``Entity#getTouchedFields()``).
 
-The solution to this problem is that the :java:ref:`AbstractPojoEntity<ch.tocco.nice2.persist.hibernate.pojo.AbstractPojoEntity>`
-also implements the :java:ref:`EntityHolder<ch.tocco.nice2.persist.entity.EntityList.EntityHolder>` interface. For this to work
-correctly, the iterators of the entity lists had to be extended, so that they do not wrap an entity, if the entity
-already implements the :java:ref:`EntityHolder<ch.tocco.nice2.persist.entity.EntityList.EntityHolder>` interface
-(see :java:ref:`EntityHolderIteratorWrapper<ch.tocco.nice2.persist.entity.EntityHolderIteratorWrapper>`).
+The dirty fields are managed by the abstract base class :java:ref:`AbstractDirtyCheckingEntity<ch.tocco.nice2.persist.hibernate.pojo.AbstractDirtyCheckingEntity>`
+in the ``changedFields`` property.
+All calls to the setter methods are intercepted using a custom :java:ref:`PropertyAccessorService<ch.tocco.nice2.persist.hibernate.pojo.PropertyAccessorService>`.
+If the value to be set is different from the `Old value`_, the field is marked as changed.
+
+To check for modified collections (to-many relations) we can simply use the ``isDirty()`` method of the
+:java:extdoc:`PersistentCollection<org.hibernate.collection.spi.PersistentCollection>`.
+
+The list of changed fields needs to be reset when the changes are flushed to the database. This is done by the
+:java:ref:`ValidationInterceptor<ch.tocco.nice2.persist.hibernate.validation.ValidationInterceptor>` after the entity
+validation has been completed.
+
+.. note::
+    Instead of manually keeping track of all the changes it would be possible to just always compare the current value
+    with the old value, when we need the changed fields. However this is a bit of a performance problem, because the
+    changed fields are needed quite often, especially by ``Entity#getState()`` to check if the current state is ``DIRTY``.
+
+.. todo::
+    Perhaps `hibernate bytecode enhancement <https://docs.jboss.org/hibernate/orm/5.2/topical/html_single/bytecode/BytecodeEnhancement.html>`_
+    may be used in the future.
+
+Old value
+---------
+
+The :java:ref:`Entity<ch.tocco.nice2.persist.entity.Entity>` interface allows to query for the old value. This is the value
+of a certain property when it was loaded from the database at the beginning of the transaction, ignoring all
+uncommitted changes.
+
+This is achieved by checking the 'loaded state' of the :java:extdoc:`EntityEntry<org.hibernate.engine.spi.EntityEntry>`,
+which can be retrieved from the :java:extdoc:`PersistenceContext<org.hibernate.engine.spi.PersistenceContext>`.
+This is where hibernate stores the state of the entity when it is loaded and this state is also used for hibernate's
+default dirty checking mechanism.
 
 EntityInterceptor
 -----------------

@@ -83,10 +83,9 @@ by hibernate. It is configured using the ``hibernate.dialect_resolvers`` propert
 Injecting service factories
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-We use custom implementations of some factories (:java:extdoc:`PersisterFactory<org.hibernate.persister.spi.PersisterFactory>` and
-:java:extdoc:`DialectFactory<org.hibernate.engine.jdbc.dialect.spi.DialectFactory>`). This allows (manually) injecting
-hivemind services or contributions into a custom persister or dialect. Without using a custom factory, Hibernate
-just calls the default constructor.
+We use a custom implementation of :java:extdoc:`PersisterFactory<org.hibernate.persister.spi.PersisterFactory>`.
+This allows (manually) injecting hivemind services or contributions into a custom persister or dialect.
+Without using a custom factory, Hibernate just calls the default constructor.
 
 Hibernate interceptor
 ^^^^^^^^^^^^^^^^^^^^^
@@ -97,12 +96,16 @@ In order to be able to split up the functionality of the interceptor into differ
 is used (as it is not possible to register multiple interceptors). This class then delegates the events to the
 actual interceptor implementations.
 
-Currently two interceptors are used:
+Currently only one interceptor is used:
 
     - :java:ref:`ValidationInterceptor<ch.tocco.nice2.persist.hibernate.validation.ValidationInterceptor>` which runs the
       entity validation before the changes are flushed to the database.
-    - :java:ref:`EntityInitializationInterceptor<ch.tocco.nice2.persist.hibernate.pojo.EntityInitializationInterceptor>` intercepts
-      the initialization of entity instances (when they are loaded from the database).
+
+JDBC function registration
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+All :java:ref:`JdbcFunction<ch.tocco.nice2.persist.hibernate.query.JdbcFunction>` are registered with the
+:java:extdoc:`SessionFactoryBuilder<org.hibernate.boot.SessionFactoryBuilder>`.
 
 Event listener registration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -113,6 +116,8 @@ Multiple Hibernate listeners (see :java:extdoc:`EventType<org.hibernate.event.sp
       initializes collections using a custom query which includes security and business unit predicates. See :doc:`collections`.
     - :java:ref:`CustomDeleteEventListener<ch.tocco.nice2.persist.hibernate.cascade.CustomDeleteEventListener>` makes sure
       that deleted entities are automatically removed from many to many associations (see :ref:`delete_event_listener`).
+    - :java:ref:`CustomFlushEntityEventListener<ch.tocco.nice2.persist.hibernate.listener.CustomFlushEntityEventListener>` handles
+      custom after commit events (see :ref:`flush_event`)
     - :java:ref:`AfterCommitListener<ch.tocco.nice2.persist.hibernate.listener.AfterCommitListener>` and
       :java:ref:`CustomFlushEntityEventListener<ch.tocco.nice2.persist.hibernate.listener.CustomFlushEntityEventListener>`
       are responsible for firing after commit events (see :ref:`Listeners`).
