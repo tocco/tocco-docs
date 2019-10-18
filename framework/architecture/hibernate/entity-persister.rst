@@ -1,14 +1,17 @@
 .. _persister:
 
+Custom persisters
+=================
+
 Custom entity persister
-=======================
+-----------------------
 
 The :java:extdoc:`EntityPersister<org.hibernate.persister.entity.EntityPersister>` interface contains information how to
 map an entity to the database table. There is one instance per mapped class.
 We extend Hibernate's default implementations to achieve some custom behaviour (:java:ref:`CustomEntityPersister<ch.tocco.nice2.persist.hibernate.CustomEntityPersister>`).
 
 Lazy initialization of UniqueEntityLoader cache
------------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Hibernate initializes an instance of :java:extdoc:`UniqueEntityLoader<org.hibernate.loader.entity.UniqueEntityLoader>`
 per :java:extdoc:`LockMode<org.hibernate.LockMode>`. This can use quite a lot of memory if there are a lot of entity classes.
@@ -26,7 +29,7 @@ ready as soon as possible.
 .. _persister-delete:
 
 Custom delete behaviour
------------------------
+^^^^^^^^^^^^^^^^^^^^^^^
 
 Before an entity is deleted the persister sets all (nullable) references (which point to the deleted entity) to ``NULL``
 to avoid constraint violations.
@@ -43,7 +46,7 @@ For each 'one to many' association (whose inverse side is nullable) the followin
 .. _persister-entity-instantiation:
 
 Entity instantiation
---------------------
+^^^^^^^^^^^^^^^^^^^^
 
 By default Hibernate instantiates entity classes by invoking their default constructor.
 Entity instantiation is intercepted by overriding ``EntityPersister#instantiate()``; the instantiation itself is then
@@ -55,13 +58,13 @@ Before the entity factory is called it is verified whether the entity to be crea
 Session/Context. This is important as otherwise the wrong Session/Context would be injected by the entity factory.
 
 Custom collection persister
-===========================
+---------------------------
 
 There is an instance of a :java:extdoc:`CollectionPersister<org.hibernate.persister.collection.CollectionPersister>` for
 every collection. Like with the entity persister, a customized implementation is used.
 
 Filtered collections
---------------------
+^^^^^^^^^^^^^^^^^^^^
 
 By always returning true from ``isAffectedByEnabledFilters()`` Hibernate assumes that the collection might be filtered.
 Even though we do not use Hibernate's filter feature we use a similar concept (see :ref:`collections`).
@@ -69,7 +72,7 @@ When filters are enabled certain shortcuts cannot be used by Hibernate (for exam
 mapping table, which might wrongfully remove filtered data from the database).
 
 Lazy initialization of CollectionInitializer
---------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The :java:extdoc:`CollectionInitializer<org.hibernate.loader.collection.CollectionInitializer>` instances are also lazily
 initialized for the same reasons as above (memory usage and startup performance).
