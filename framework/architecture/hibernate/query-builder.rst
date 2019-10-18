@@ -618,7 +618,7 @@ All path nodes are processed by the :java:ref:`FieldResolver<ch.tocco.nice2.pers
 and all virtual fields are replaced.
 
 Delete query builder
-====================
+--------------------
 The :java:ref:`CriteriaDeleteBuilderImpl<ch.tocco.nice2.persist.hibernate.query.CriteriaDeleteBuilderImpl>` is a special query builder
 implementation that can be used to delete multiple entities by query without the need to load every single entity.
 
@@ -635,7 +635,7 @@ Note that the ``addDeletedEntityBatch()`` method is used that deletes the entire
 the normal behaviour which fires a delete statement for every deleted entity).
 
 QueryDefinition / QueryConfigurator
-===================================
+-----------------------------------
 
 The :java:ref:`QueryDefinition<ch.tocco.nice2.persist.query.QueryDefinition>` contains all necessary information
 to build a query. It is used as a bridge between the legacy :java:ref:`Query<ch.tocco.nice2.persist.query.Query>`
@@ -649,7 +649,7 @@ This was primarily developed to be able to combine the :java:ref:`EntityExplorer
 with the new query builders.
 
 Query hints
-===========
+-----------
 
 When a query builder instance is created using the :java:ref:`PersistenceService<ch.tocco.nice2.persist.hibernate.PersistenceService>`
 it is possible to pass query hints in the form of a ``Map<String, ?>``.

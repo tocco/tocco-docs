@@ -62,7 +62,7 @@ When the ``reference_count`` is zero, the binary will automatically be deleted b
 The large object itself will be removed by the built-in ``lo_manage`` trigger.
 
 S3
-==
+--
 
 The :java:ref:`S3AccessProvider<ch.tocco.nice2.optional.s3.storage.S3AccessProvider>` is largely based on the functionality
 above, but there are some differences:
@@ -77,7 +77,7 @@ above, but there are some differences:
       nice installation.
 
 BinaryHashingService
-====================
+--------------------
 
 The :java:ref:`BinaryHashingService<ch.tocco.nice2.persist.binary.BinaryHashingService>` abstracts the conversion of a
 binary into its hash code. This allows different :java:ref:`BinaryAccessProvider<ch.tocco.nice2.persist.spi.binary.BinaryAccessProvider>`
@@ -87,7 +87,7 @@ to use different hashing strategies.
     * ``getStringGenerator()`` can be used to encode the hash (for example with BASE64)
 
 BinaryDataAccessor
-==================
+------------------
 
 The :java:ref:`BinaryDataAccessor<ch.tocco.nice2.persist.hibernate.binary.BinaryDataAccessor>` is a service to efficiently
 query the ``_nice_binary`` and ``nice_resource`` tables.
