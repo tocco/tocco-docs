@@ -73,5 +73,8 @@ The session of that context is then set to the :java:extdoc:`ThreadLocalSessionC
 Flush mode
 ----------
 
-.. todo::
-   Originally FlushMode.COMMIT was required because of the listeners. Check if that's still required.
+We use ``FlushMode.COMMIT`` so that all changes in the session are flushed to the database just before the transaction is
+committed.
+
+We currently cannot use ``FlushMode.AUTO`` (which flushes all changes before a query, to make sure the query will return
+up-to-date results), because we depend on commit listeners being executed before the changes are flushed to the database.

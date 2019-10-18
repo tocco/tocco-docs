@@ -68,6 +68,8 @@ See ``EntityTransactionContextImpl#executeEntityOperations``.
 This event is rarely used and mostly implemented for compatibility reasons. New listeners should not use this event
 anymore.
 
+.. _flush_event:
+
 EntityListener
 --------------
 
