@@ -216,7 +216,7 @@ Documentation
         oc process -f nice-documentation.yml INSTALLATION=${VERSION} | oc create -f -
 
 - Site Search can be configured on https://control.freefind.com and is registered by toccosupport@gmail.com for
-  https\://documentation.tocco.ch. Username and password can be found in the Ansible Vault [#f1]_.
+  https\://documentation.tocco.ch. Username and password can be found in the :term:`Ansible Vault`.
 
   1. Set an additional starting point in "/Build Index/Set starting point" to ensure that the subdomain is indexed.
   2. Define a new subsection in "/Build Index/Define subsections" to ensure that user can search inside a specific documentation.
@@ -238,7 +238,3 @@ The standard specification is part of the **«nice2_documentation»** project an
 
 Therefore, add a build config for the new version in Teamcity like you did for the documentation. Copy the build config
 for the previous version in the project **«Nice2 Specification»** and adjust the parameters accordingly.
-
-.. rubric:: Footnotes
-
-.. [#f1] See section *Ansible Vault* in `this document <https://git.tocco.ch/gitweb?p=ansible.git;a=blob;f=docs/ansible/basics.rst>`_.

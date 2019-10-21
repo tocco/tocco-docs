@@ -12,7 +12,7 @@ Add new Customer Module
     cd customer/${CUSTOMER}
     ../../src/bin/mkappmodule.sh
 
- 3. Generate the pom dependencies. In backoffice execute "Modul"->"Aktionen"->"Modulabhängigkeiten"->"POM generieren"
+ 3. Generate the pom dependencies. In :term:`Backoffice` execute "Modul"->"Aktionen"->"Modulabhängigkeiten"->"POM generieren"
 
   .. figure:: new_customer/modules.png
         :scale: 60%

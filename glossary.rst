@@ -5,6 +5,16 @@ Glossary
 
 .. glossary::
 
+    Ansible Vault
+        Used to store passwords and other secrets.
+
+        See section *Ansible Vault* in `this document <https://git.tocco.ch/gitweb?p=ansible.git
+        ;a=blob;f=docs/ansible/basics.rst>`_ for a detailed documentation.
+
+    BO
+    Backoffice
+        This is what we call our own installation of Nice2 that can be reached at https://www.tocco.ch/tocco.
+
     application property
         Application properties can be used to configure Nice. They are simple key, value pairs and look like this:
 
@@ -56,6 +66,13 @@ Glossary
     docker image
         An image that contains an application and all run-time dependencies except the OS.
 
+    Employee Short Name
+        Usually the first two letters of an employee's first and last name combined. For
+        instance, *Jane Doe* becomes *jado*.
+
+        These are the initials used in Slack and can also be found in :term:`BO` on *Person*
+        as *Kurzbez.*
+
     exposed port
         Port that is made available to other pods or services.
 
@@ -100,6 +117,10 @@ Glossary
         `Pod-based Lifecycle Hook`_ in the OpenShift documentation.
 
         .. _Pod-based Lifecycle Hook: https://docs.okd.io/latest/dev_guide/deployments/deployment_strategies.html#pod-based-lifecycle-hook
+
+    Operations Public channel
+        Slack channel `operations_public <https://app.slack.com/client/T0S4PA46T/C2R6SKHGC>`_ that can be used to contact
+        the operations team.
 
     Remote Repository
         In :term:`Artifactory`, Remote Repositories can be configured. For such repositories, Artifactory will forward
