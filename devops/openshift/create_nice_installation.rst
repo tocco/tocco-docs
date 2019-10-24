@@ -109,6 +109,10 @@ Step by Step Instructions
 
         oc process -f nice-template.yml CUSTOMER=\ **${CUSTOMER}** INSTALLATION=\ **${INSTALLATION}** RUN_ENV=\ **${RUN_ENV}** DB_PASS=\ **${DB_PASS}** SOLR_PASS=**${SOLR_PASS}** | oc create -f -
 
+    .. todo::
+
+        Once S3 is ready, add bucket name and key to template
+
     Parameter are specified using ``KEY=VALUE``, this is the list of **mandatory** parameters:
 
     =================== ===============================================================================================

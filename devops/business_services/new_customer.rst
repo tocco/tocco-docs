@@ -72,12 +72,19 @@ Create a Solr Core
          nice-${INSTALLATION}:
            ensure: present
 
-Create S3 Bucket
-^^^^^^^^^^^^^^^^
 
-You only need to create a bucket if the customer will be setup using S3.
+.. todo::
 
-:ref:`s3-bucket`
+    Once S3 is ready, comment in instruction for setting up S3
+
+..
+    Create S3 Bucket
+    ^^^^^^^^^^^^^^^^
+
+    You only need to create a bucket if the customer will be setup using S3.
+
+    :ref:`s3-bucket`
+
 
 Create in OpenShift
 --------------------
