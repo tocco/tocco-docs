@@ -31,6 +31,7 @@ import os
 # ones.
 extensions = [
     'sphinx.ext.extlinks',
+    'sphinx.ext.graphviz',
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
     'javasphinx'
@@ -351,7 +352,7 @@ texinfo_documents = [
 intersphinx_mapping = {'https://docs.python.org/': None}
 
 # added to all *.rst files
-rst_epilog = "\n.. include:: /global.rst"
+rst_prolog = ".. include:: /global.rst\n\n"
 
 # add custom style sheet
 def setup(app):
