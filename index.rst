@@ -2,6 +2,7 @@
    :caption: Tocco Documentation
    :maxdepth: 2
 
+   about
    framework/index
    devops/index
    error_database/index
