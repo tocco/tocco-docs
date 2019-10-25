@@ -99,19 +99,27 @@ Example commit: `30a39e1`_
 .. _tocco-dashboard Repository: https://github.com/tocco/tocco-dashboard
 .. _30a39e1: https://github.com/tocco/tocco-dashboard/commit/30a39e1a72607c56156365a61f90ea8a796c7c17
 
-Sonar
------
-Teamcity:
+New Sonar project
+-----------------
+
+Teamcity
+^^^^^^^^
 
 - Copy config from last version
-- Adjust parameters
-- Start manually
+- Adjust parameters (*git-branch-name* and *sonar-branch*)
+- Start manually (this will create the project in Sonar automatically)
 
-Sonar:
+Sonar
+^^^^^
 
-- Quality Gates -> copy Tocco
-- Copy values from last version ->  (*Blocker Issues*, *Critical Issues*)
-- Administration -> Projects -> Management -> Create Project
+    .. warning::
+
+      These tasks require Sonar admin rights.
+
+- Enter menu Quality Gates
+- Copy *Tocco Default* with new version name
+- Set values to those from the current analysis -> (*Blocker Issues*, *Critical Issues* and *Coverage*)
+- Connect the copied Quality Gate to the newly created project at the bottom
 
 Backoffice
 ----------
