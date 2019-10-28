@@ -46,12 +46,12 @@ So you only need the token to login. The challenge here is to find the token, bu
 
 .. parsed-literal::
 
-   $ oc ge sa
+   $ oc get sa
 
-   $ oc desribe sa teamcity
+   $ oc describe sa teamcity
 
    Name:           teamcity
-   Namespace:      toco-serviceaccoutns
+   Namespace:      toco-serviceaccounts
    Labels:         <none>
    Annotations:    <none>
 
@@ -65,10 +65,10 @@ So you only need the token to login. The challenge here is to find the token, bu
 
 .. parsed-literal::
 
-   $ oc desribe sercret **teamcity-token-fz73r**
+   $ oc describe secret **teamcity-token-fz73r**
 
    Name:           teamcity-token-fz73r
-   Namespace:      toco-serviceaccoutns
+   Namespace:      toco-serviceaccounts
    Labels:         <none>
    Annotations:    kubernetes.io/service-account.name=teamcity
                    kubernetes.io/service-account.uid=65638a57-c537-11e7-862d-fa163ec9e279
