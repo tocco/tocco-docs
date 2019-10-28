@@ -148,16 +148,12 @@ Support Multiple Java Versions
 Add aliases to ``~/.bash_aliases`` (adjust versions as needed)::
 
     alias mvn8="JAVA_HOME='/usr/lib/jvm/java-8-openjdk-amd64' mvn"
-
-
     alias mvn11="JAVA_HOME='/usr/lib/jvm/java-11-openjdk-amd64' mvn"
 
 This will allow you to run ``mvn`` using an explicit java version. Examples::
 
-    # The two links are helpful for building without tests
-
-    #https://tocco-docs.readthedocs.io/en/latest/ide/machine_setup.html#support-multiple-java-versions
-    #http://localhost:63342/tocco-docs/_build/html/ide/maven.html#eirslett
+    You may also want to use ``-DskipEirslett`` to speed up the build, see
+    `maven-eirslett`_.
 
     # Java 8
     mvn8 -pl customer/test -am clean install -DskipTests
