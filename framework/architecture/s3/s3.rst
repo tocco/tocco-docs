@@ -99,7 +99,7 @@ Using an overlay bucket, the object is searched in the overlay bucket first and 
 Write objects
 -------------
 
-When an overlay bucket is used, all object are written to it. None are written to the main bucket.
+When an overlay bucket is used, all objects are written to it. None are written to the main bucket.
 
 .. graphviz::
 
@@ -117,7 +117,7 @@ When an overlay bucket is used, all object are written to it. None are written t
 Object Removal / Retention
 ==========================
 
-Object are deduplicated by means of reference counting. Once the reference counter reaches
+Objects are deduplicated by means of reference counting. Once the reference counter reaches
 zero, the object is marked for removal. However, the object itself and the reference
 in the ``_nice_binary`` table are not removed immediately.
 
