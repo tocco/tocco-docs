@@ -3,11 +3,13 @@
 Maven
 =====
 
+.. _maven-eirslett:
+
 Eirslett
 --------
 
 .. hint::
-    You can disable the maven-frontend-plugin by disabling the eirslett prfile, either directly or by passing the
+    You can disable the maven-frontend-plugin by disabling the eirslett profile, either directly or by passing the
     ``skipEirslett`` argument. Use ``-DskipEirslett`` in the command line to do this.
 
 We use frontend-maven-plugin_ to run various npm tasks such as installing js polyfill packages or packages of the new
