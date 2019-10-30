@@ -231,8 +231,12 @@ Distribute Key
 
 Add key on https://git.tocco.ch (**Your name** (top right corner) → **Settings** → **SSH Public Keys** → **Add Key** …)
 
-You also want to give the content of **~/.ssh/id_rsa.pub** to someone of operations if you want SSH access to any of the
-servers (i.e. ask in the operations channel to have your key added).
+You also want to give the content of **~/.ssh/id_rsa.pub** to someone of operations. To that regard, you can
+post the **public** key in the :term:`Operations Public channel` and ask for it to be granted access.
+
+.. tip::
+
+    For admins: How to allow access is documented in :doc:`/devops/server_access`
 
 
 Configure SSH
@@ -353,3 +357,49 @@ Install Docker
 --------------
 
 Find your OS `here <https://docs.docker.com/install/#supported-platforms>`__ and follow the instructions.
+
+
+S3 Access Key
+-------------
+
+Ask operations (e.g. via :term:`Operations Public channel`) to issue you an access key for our S3 storage.
+Once you retrieved the key, add it to ``~/.aws/credentials`` like this::
+
+     [nice2]
+     aws_access_key_id=XXXXXXXXXXXXXXXXXXXX
+     aws_secret_access_key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+The section must be called *nice2*, the name is hardcoded in Nice2.
+
+.. tip::
+
+    For admins: how to issue a key is described in :doc:`/devops/s3/s3_bucket_for_dev`.
+
+
+S3 Access via ``s3cmd``
+-----------------------
+
+Install s3cmd::
+
+    apt install s3cmd
+
+Configure s3cmd::
+
+    s3cmd --configure
+
+Select the default for all options.
+
+Adjust the following configuration entries in ``~/.s3cfg``::
+
+    [default]
+    access_key = XXXXXXXXXXXXXXXXXXXX
+    secret_key = XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    host_base = objects.cloudscale.ch
+    host_bucket = %(bucket)s.objects.cloudscale.ch
+
+The access and secret keys are the keys you obtained in the previous step.
+
+Test access::
+
+    s3cmd info s3://tocco-dev-nice-overlay >/dev/null
+    # no output expected

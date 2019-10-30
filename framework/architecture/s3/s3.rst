@@ -1,35 +1,231 @@
-.. _s3_architecture:
+##########################
+S3 Storage Design Overview
+##########################
 
-Architecture
-============
+Buckets used by Production and Test Systems
+===========================================
 
-An overlay bucket (`tocco-dev-nice-overlay`) is provided for the development environment.
-This prevents developers from writing data to the production bucket during development.
+Every production and test installation has its own bucket.
 
-For each installation there is a dedicated user and bucket.
-Example:
+Configuration is done via the ``s3.properties`` file::
 
-* user:   `nice-agogistest`
-* bucket: `tocco-nice-agogistest`
+    s3.main.endpoint=https://objects.cloudscale.ch
+    s3.main.bucketName=XXXXXXX
+    s3.main.accessKeyId=XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    s3.main.secretAccessKey=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
-Each developer has a dedicated s3 user. Example: `dev-mawu`
+See :doc:`/devops/s3/s3_bucket_for_installation` for details about creating buckets
+and obtaining the necessary access keys.
 
-The installation user is the owner of the bucket and has all access rights.
-All the dev users have only read access on the installation buckets. This access is given by s3 policies and acl's. Here you see how to set the policies for an bucket: :ref:`s3_policy`.
 
-The access keys of an installation are set in the `s3.properties` file in the customer folder.
+OpenShift
+---------
 
-For the development environment the connection information of the buckets is configured in the `s3.properties` file but the access keys aren't configured there. Each developer has it's own access keys. They are configured in the `~/.aws/credentials <https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html>`_ file::
+On OpenShift the properties can be set via environment variables by prefixing ``NICE2_S3_`` to
+the property name.
+
+Example: set property::
+
+    oc -c nice set env dc/nice NICE2_S3_s3.main.bucketName=XXXXXXX
+
+Example: list properties::
+
+    oc -c nice set env dc/nice --list | grep ^NICE2_S3_
+
+
+Overlay Bucket for Local Development
+====================================
+
+For local development, the production bucket with an additional overlay bucket is used.
+
+Example configuration::
+
+    s3.main.endpoint=https://objects.cloudscale.ch
+    s3.main.bucketName=tocco-nice-bk
+    # s3.main.accessKeyId=      # Personal key from ~/.aws/credentials
+    # s3.main.secretAccessKey=  # is used.
+
+    s3.overlay.endpoint=https://objects.cloudscale.ch
+    s3.overlay.bucketName=tocco-dev-nice-overlay
+    # s3.overlay.accessKeyId=      # Personal key from ~/.aws/credentials
+    # s3.overlay.secretAccessKey=  # is used.
+
+
+The overlay bucket (`tocco-dev-nice-overlay`) is used for all local development; there
+is no separate overlay bucket per customer. When the overlay bucket is configured, for
+objects is searched in both buckets and writing is done on the overlay bucket exclusively.
+
+For local development, every developer has an own key to access the buckets. It needs
+to be configured in the `~/.aws/credentials`_ file::
 
      [nice2]
      aws_access_key_id=XXXXXXXXXXXXXXXXXXXX
      aws_secret_access_key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
-You can get the access keys for a developer :ref:`here <get_s3_acces_key>`.
+See :doc:`/devops/s3/s3_bucket_for_dev` for details about getting your own access key.
 
 .. note::
 
-    The credentials that are specified in the properties (``s3.properties``) file have higher
-    Priority then the credentials in the AWS CLI configuration file (``~/.aws``).
+    The credentials that are specified in the properties file (``s3.properties``) have higher
+    Priority than the credentials in the AWS CLI configuration file (``~/.aws/credentials``).
 
 
+Read objects
+------------
+
+Using an overlay bucket, the object is searched in the overlay bucket first and the in the main bucket.
+
+.. graphviz::
+
+      digraph {
+        Nice [ shape=house ]
+        overlay[ label="Is object in overlay bucket?", shape=diamond ]
+        in_overlay [ label="Yes" ]
+        not_in_overlay [ label="No" ]
+        main [ label="Is object in main bucket?", shape=diamond ]
+        in_main [ label="Yes" ]
+        not_in_main [ label="No" ]
+
+        Nice -> overlay [ label="read object" ]
+        overlay -> { in_overlay not_in_overlay }
+        in_overlay -> Nice [label="use object"]
+        not_in_overlay -> main
+        main -> { in_main, not_in_main }
+        in_main -> Nice [ label="use object" ]
+        not_in_main -> Nice [ label="not found" ]
+      }
+
+
+Write objects
+-------------
+
+When an overlay bucket is used, all objects are written to it. None are written to the main bucket.
+
+.. graphviz::
+
+      digraph {
+        Nice [ shape=house ]
+        overlay [ label="overlay bucket" ]
+        main [ label="main bucket" ]
+
+        { rank=same overlay main }
+
+        Nice -> overlay [ label="write" ]
+      }
+
+
+Object Removal / Retention
+==========================
+
+Objects are deduplicated by means of reference counting. Once the reference counter reaches
+zero, the object is marked for removal. However, the object itself and the reference
+in the ``_nice_binary`` table are not removed immediately.
+
+There are several reasons for this behavior:
+
+a) Removal of S3 objects is slow. Doing so synchronously would lead to delays.
+b) In case a backup of the database needs to be restored, there is no need
+   to restore a backup of the objects too.
+c) There is no way to create atomic and thus consistent backups, i.e. backups where the
+   database and S3 storage are guaranteed to contain the same set of objects.
+d) An overlay bucket, as described above, can be used when working with a local copy
+   of the production database without risking that removing binaries on the production
+   system will render objects unavailable locally.
+
+
+Permissions
+===========
+
+Installation User
+-----------------
+
+Every installation has a dedicated user whose access is restricted
+to the bucket of the respective installation.
+
+.. graphviz::
+
+     digraph {
+       rankdir=LR
+
+       user [ label="User of installation XY\n(tocco-nice-*)" ]
+       main [ label="Main bucket of installation XY" ]
+
+       user -> main [ label="read/write\naccess" ]
+     }
+
+
+Developer User
+--------------
+
+Every developer has an account that allows read-only access to all production and test
+buckets and, in addition, read/write access to the overlay bucket.
+
+.. graphviz::
+
+     digraph {
+       rankdir=LR
+
+       user [ label="Developer\n (dev-*)" ]
+       main_a [ label="Main bucket of installation A\n(tocco-nice-*)" ]
+       main_b [ label="Main bucket of installation B\n(tocco-nice-*)" ]
+       main_ellipsis [ label="Main bucket of installation …\n(tocco-nice-*)" ]
+       overlay [ label="Overlay bucket\n(tocco-dev-nice-overlay)" ]
+
+       user -> {
+         main_a [ label="read-only\naccess" ]
+         main_b [ label="read-only\naccess" ]
+         main_ellipsis [ label="read-only\naccess" ]
+         overlay [ label="read/write\naccess" ]
+       }
+     }
+
+
+Implementation of Access Permissions
+------------------------------------
+
+Access permissions are implemented using ACLs and policies. Installation Users own their
+buckets, and thus have full access, and Developers are granted permissions with additional
+ACLs and policies.
+
+Policies and ACLs can be set via the *s3policy* script, refer to :doc:`/devops/s3/policy` for details.
+
+
+Source of Credentials
+=====================
+
+Credentials can be configured in ``s3.[local.]properties``. Should no credential be found in
+said files, credentials from the ``[nice2]`` section in ``~/.aws/credentials`` are used.
+
+.. graphviz::
+
+     digraph {
+       start [ shape=circle ]
+       s3_local_prop [ shape=diamond, label="Does s3.local.properties\n contain security/access key?" ]
+       s3_local_prop_yes [ label="Yes"]
+       s3_local_prop_no [ label="No"]
+       s3_prop [ shape=diamond, label="Does s3.properties\n contain security/access key?" ]
+       s3_prop_yes [ label="Yes"]
+       s3_prop_no [ label="No"]
+       aws_cred [ shape=diamond, label="Does ~/.aws/credentials\ncontain a \"nice2\" section\nwith a security/access key?" ]
+       aws_cred_yes [ label="Yes"]
+       aws_cred_no [ label="No"]
+       end [ shape=circle ]
+
+       { rank=same aws_cred_yes aws_cred_no }
+       { rank=same s3_prop_yes s3_prop_no }
+       { rank=same s3_local_prop_yes s3_local_prop_no }
+
+       start -> s3_local_prop
+       s3_local_prop -> { s3_local_prop_yes s3_local_prop_no }
+       s3_local_prop_yes -> end [ label="use keys", color=green ]
+       s3_local_prop_no -> s3_prop
+       s3_prop -> { s3_prop_yes s3_prop_no }
+       s3_prop_yes -> end [ label="use keys", color=green ]
+       s3_prop_no -> aws_cred
+       aws_cred -> { aws_cred_yes aws_cred_no }
+       aws_cred_yes -> end [ label="use keys", color=green ]
+       aws_cred_no -> end [ label="no keys found", color=red ]
+     }
+
+
+.. _~/.aws/credentials: https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html

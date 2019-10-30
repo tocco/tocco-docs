@@ -1,7 +1,7 @@
 Add Module in Backoffice
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-Each existing module (core, optional and core) must be documented in our backoffice. This is important because depending
+Each existing module (core, optional and core) must be documented in our :term:`Backoffice`. This is important because depending
 on the documented modules the pom.xml will be generated for customer modules.
 
 * Open the Entity ``Module`` in the backoffice

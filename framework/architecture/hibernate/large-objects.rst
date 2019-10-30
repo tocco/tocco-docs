@@ -13,8 +13,8 @@ Currently there are two different implementations:
 
     * The :java:ref:`DbBinaryAccessProvider<ch.tocco.nice2.persist.backend.jdbc.impl.DbBinaryAccessProvider>` is the default
       and stores the data in a large object of Postgres.
-    * The :java:ref:`S3AccessProvider<ch.tocco.nice2.optional.s3.storage.S3AccessProvider>` is provided by the ``optional\s3storage``
-      module and can access any S3 compatible data store.
+    * The :java:ref:`S3AccessProvider<ch.tocco.nice2.optional.s3.storage.S3AccessProvider>` is provided by the ``optional/s3storage``
+      module and can access any S3 compatible data store. See also :doc:`../s3/s3`.
 
 The main task of a :java:ref:`BinaryAccessProvider<ch.tocco.nice2.persist.spi.binary.BinaryAccessProvider>` is to read,
 write and delete :java:ref:`Binary<ch.tocco.nice2.persist.entity.Binary>` instances.
@@ -58,11 +58,14 @@ Deleting
 Since we only save one copy of the same file to the data store, a row in ``_nice_binary`` might be referenced multiple times.
 In order to know when the row can be safely deleted, a ``reference_count`` column is maintained by a trigger (see ``binary_reference_trigger.sql``).
 
-When the ``reference_count`` is zero, the binary will automatically be deleted by the :java:ref:`DeleteUnreferencedBinariesBatchJob<ch.tocco.nice2.dms.impl.maintenance.DeleteUnreferencedBinariesBatchJob>`.
-The large object itself will be removed by the built-in ``lo_manage`` trigger.
+Objects Stored in DB
+^^^^^^^^^^^^^^^^^^^^
 
-S3
---
+When the ``reference_count`` is zero, the binary will automatically be deleted by the :java:ref:`DeleteUnreferencedBinariesBatchJob<ch.tocco.nice2.dms.impl.maintenance.DeleteUnreferencedBinariesBatchJob>`.
+The large object itself will be removed by the built-in `lo_manage`_ trigger.
+
+Objects Stored in S3
+^^^^^^^^^^^^^^^^^^^^
 
 The :java:ref:`S3AccessProvider<ch.tocco.nice2.optional.s3.storage.S3AccessProvider>` is largely based on the functionality
 above, but there are some differences:
@@ -70,9 +73,8 @@ above, but there are some differences:
     * Because S3 is independent of the JDBC transaction, there might be orphaned objects in the data store if the JDBC
       transaction is rolled back, after a new object has been stored.
     * When a binary is removed (by the :java:ref:`DeleteUnreferencedBinariesBatchJob<ch.tocco.nice2.dms.impl.maintenance.DeleteUnreferencedBinariesBatchJob>`)
-      it is only marked as deleted (column ``removed_at``) and removed later by an external tool (because it is not efficient to
-      frequently backup/restore the data store)
-    * S3 offers the possibility to create a pre-signed link to an object that is valid for a certain amount of time (see ``Binary.Store#getUrl()``),
+      it is only marked as deleted (column ``removed_at``) and removed later by an external tool.
+    * S3 offers the possibility to create a `pre-signed URL`_ to an object that is valid for a certain amount of time (see ``Binary.Store#getUrl()``),
       this allows downloading the object directly from the S3 server instead of causing unnecessary traffic for the
       nice installation.
 
@@ -98,3 +100,6 @@ be referenced by the query builder.
 It is used by the query builder, so that binary metadata can be queried efficiently without causing a query for every single
 binary.
 
+
+.. _lo_manage: https://www.postgresql.org/docs/9.5/lo.html
+.. _pre-signed URL: https://docs.aws.amazon.com/AmazonS3/latest/dev/ShareObjectPreSignedURL.html

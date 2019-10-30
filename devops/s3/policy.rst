@@ -1,5 +1,3 @@
-.. _s3_policy:
-
 S3 Policy + ACL
 ===============
 
@@ -19,4 +17,4 @@ Apply the policies and acl's to a newly created bucket::
    ./utils/s3/s3policy.py -b {BUCKET_NAME}
 
 
-For more details see :ref:`s3_architecture`.
+For more details see :doc:`/framework/architecture/s3/s3`.
