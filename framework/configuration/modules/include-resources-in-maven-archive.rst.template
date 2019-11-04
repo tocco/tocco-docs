@@ -1,13 +1,15 @@
-Build Resources into Target Snapshot
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Include Resources in Maven Archive
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-All resources must be built into the target snapshot. Otherwise the module would not work if it is deployed somewhere.
-Resources are files with the following endings ``*.xml``, ``*.acl``, ``*.properties``, ``*.js``, ``*.ftl``.
+All resources must be included in the `Maven Archive` to ensure they are shipped with the archive which is
+used to ship the application during deployments. Otherwise, resources may be missing during runtime.
+Usually, resources have one of these file extensions: ``*.xml``, ``*.acl``, ``*.properties``, ``*.js``,
+``*.ftl``.
 
-To build static files into the target snapshot open the ``pom.xml`` file inside the ``module`` folder.
+To include files or directories into the archive, declare the resources in |pathToModuleModuleFolder|.
 
-Add all resource types you have added in your module folder by appending them to the ``build`` element. Take a look at
-the following example:
+Add all resource types you have added in your module folder by appending them to the ``build`` element.
+Take a look at the following example:
 
 .. code-block:: XML
 
@@ -47,4 +49,4 @@ the following example:
 
 * create a ``resource`` element for each folder with resources
 * inside the ``directory`` element the folder which contains any resources must be set.
-* inside the ``include`` element it is specified what kind of files from this folder are built to the target snapshot.
+* inside the ``include`` element it is specified what kind of files from this folder are included in the archive.
