@@ -8,7 +8,8 @@ Migration
 
 The History migration is mandatory in 2.19.
 The S3 migration is optional and can be made in versions 2.19 or later.
-The empty history databases and S3 buckets for all existing customers have already been :ref:`created <create_new_customer>`.
+The empty history databases and S3 buckets for all existing customers have already been
+:doc:`created </framework/configuration/modules/add-customer-module>`.
 
 You can only do the S3 migration together with the history migration or after the history migration is done.
 

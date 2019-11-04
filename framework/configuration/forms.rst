@@ -182,7 +182,7 @@ If *yes* a special form text-resources is looked up:
 
 If not defined the entities field text-resource is used.
 
-For more information about text-resources see :ref:`Text-Resources`
+For more information about text-resources see :doc:`textresources`
 
 label (String)
 ++++++++++++++

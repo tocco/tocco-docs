@@ -1,5 +1,3 @@
-.. _Reports:
-
 Reports
 =======
 
@@ -23,7 +21,7 @@ A report is a combination of different entities. Reports consist of the followin
 * Corporate_design
 * Corporate_design_business_unit
 
-It would be possible to create these entities manually in the admin view and add them by :ref:`Changesets` like initial
+It would be possible to create these entities manually in the admin view and add them by :doc:`changesets` like initial
 values. But it is cumbersome to adjust such entities by changesets. It is even more cumbersome to review a changeset
 which adjusts such an entity. An initial values changeset for an output template looks like this.
 

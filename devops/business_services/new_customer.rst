@@ -1,12 +1,10 @@
-.. _create_new_customer:
-
 Create new Customer
 ===================
 
 Add Customer module
 -------------------
 
-:ref:`add_customer_module`
+:doc:`/framework/configuration/modules/add-customer-module`
 
 Create Database/Storage
 -----------------------

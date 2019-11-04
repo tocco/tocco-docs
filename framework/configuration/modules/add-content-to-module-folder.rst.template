@@ -1,0 +1,27 @@
+Add Content to module Folder
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Inside the module folder |pathToModuleModuleFolder| different folders which configure the module can
+be added. Here are the most common use cases:
+
+**model**
+
+The model folder must be added as soon as you need to
+
+* add or adjust entities or relations -> see :doc:`../entities-relations`
+* add or adjust text resources -> see :doc:`../textresources`
+* add or adjust forms (list, search, detail) -> see :doc:`../forms`
+* add or extend a menu (settings or modules) -> see :doc:`../menu`
+* add reports -> see :doc:`../reports`
+
+**db**
+Inside the db folder changesets are placed. See document :doc:`../changesets`.
+
+**acl**
+Inside the acl folder all acl rule files are located. See chapter :doc:`../acl`
+
+**resources**
+Inside the resources folder JS files are placed. For actions and public flows.
+
+**outputtemplate**
+Inside this folder :term:`FTL` templates are placed which for example can be used for reports.

@@ -1,5 +1,3 @@
-.. _Entities and Relations:
-
 Entities and Relations
 ======================
 

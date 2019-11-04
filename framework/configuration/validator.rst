@@ -12,7 +12,7 @@ throw error messages if something is not quite right.
 If a validator is required it can be created by implementing extending the ``AbstractEntityValidator`` class and implementing the ``validate``
 method. The java code evaluates a single entity (first parameter of the ``validate`` method). If the entity validates successfully, nothing should be done
 in the validator. If it does not validate the ``validationResult.setError`` can be used to cancel the transaction and show the given error message. The message
-can contain variables that may be filled in as described in :ref:`Text-Resources`.
+can contain variables that may be filled in as described in :doc:`textresources`.
 
 Please find below an example that validates ``entity`` and throws an error if ``relTest_status`` is not null and ``mandatory_if_status_set`` is not filled in.
 

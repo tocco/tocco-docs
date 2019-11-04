@@ -1,5 +1,3 @@
-.. _Changesets:
-
 Changesets
 ==========
 
@@ -147,7 +145,7 @@ Automatic creation
 ^^^^^^^^^^^^^^^^^^
 
 Writing changesets by hand can be tedious work. The better way to create changesets is to adjust the model however you
-want (see :ref:`Entities and Relations`) and then let the changesets be generated.
+want (see :doc:`entities-relations`) and then let the changesets be generated.
 
 The DevCon will show you any differences between the data model and the actual tables and columns in the database.
 From there you can select all changes you'd like to generate changesets for and press the ``Generate Changelog``

@@ -150,7 +150,7 @@ localized
 Define the text resources where localized values should be taken from. The key should be the name of the localized field
 **without** the locale part. For example, if your ``label`` field is localized, you'd use ``label`` as the key here,
 **not** ``label_de``, ``label_en``, etc. The value will be interpreted as a text resource key and read in each locale
-that is installed on the system. See :ref:`Text-Resources`.
+that is installed on the system. See :doc:`textresources`.
 
 .. _relations:
 

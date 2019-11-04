@@ -30,6 +30,22 @@ Glossary
         an ``application.local.properties`` in the same directory. Settings made the the *local* properties file
         override the settings in the regular properties file.
 
+    FTL
+    Freemarker
+    Freemarker Template Language
+        Templating language used throughout Nice2. In particular, report and mail content is mostly generated
+        using this language.
+
+    HiveApp
+        Extension of :term:`HiveMind`.
+
+    HiveMind
+        HiveMind is a service and configuration microkernel used within Nice2. The `official web page
+        <https://hivemind.apache.org/hivemind1/index.html>` has some more details.
+
+        Within Nice2 HiveMind is used to configure listeners, batch jobs, default property value, reports
+        and much more.
+
     JFrog's Artifactory
     Artifactory
         Tocco hosts its own JFrog's Artifactory, a Maven software repository. During build, all artifacts are fetched
@@ -91,6 +107,16 @@ Glossary
         Describes a docker image tag. Defaults to ``latest``.
 
         Accessible via ``oc {get|describe|edit|…} imagestreamtag …``.
+
+    Maven Archive
+        An archive (\*.tar.gz) of the whole application including all dependencies and other resources
+        needed to run the applicaiton.
+
+        Such an archive can be created using this command::
+
+            mvn -pl customer/${CUSTOMER} -am install -T1C -DskipTests -P assembly
+
+        See also `Apache Maven Assembly Plugin <https://maven.apache.org/plugins/maven-assembly-plugin/>`_.
 
     Nginx
        `Nginx`_ is the web server used for as reverse proxy in front of Nice.
