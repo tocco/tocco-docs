@@ -138,6 +138,13 @@ Therefore, **create a task** to update the outdated dependencies in one of the f
 
 See chapter :ref:`update_dependencies_on_a_regular_basis` to learn where you get the list of outdated dependencies from.
 
+Create task to update Hibernate documentation
+---------------------------------------------
+
+A new JIRA task should be created to keep the Hibernate documentation up to date.
+All changes in the ``persist/core`` module since the last release should be reviewed
+and the documentation should be adjusted if necessary.
+
 Store entity model snapshot on SharePoint
 -----------------------------------------
 
