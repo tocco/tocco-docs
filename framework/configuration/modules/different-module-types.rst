@@ -32,8 +32,7 @@ Intermediate Modules
 ^^^^^^^^^^^^^^^^^^^^
 
 A intermediate module is always needed if a feature or functionality should be added **automatically**
-[#f1]_ if two or more specific modules are installed and this new feature should **not be licensed
-separately**. If the feature is licensed separately, an optional module must be created instead.
+[#f1]_ if two or more specific modules are installed.
 
 **Example:**
 There are two modules ``donation`` and ``sms``. The module ``donation`` has an entity donation and a form ``donation_list.xml``
