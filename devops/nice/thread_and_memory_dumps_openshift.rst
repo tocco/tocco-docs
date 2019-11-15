@@ -1,5 +1,5 @@
-Thread and Memory Dumps
-=======================
+Thread and Memory Dumps (OpenShift)
+===================================
 
 .. _create-thread-dump:
 
