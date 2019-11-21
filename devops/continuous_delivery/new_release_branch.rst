@@ -128,8 +128,11 @@ Backoffice
 - Set status of versions older than 6 versions to outdated (on release date)
 - Check on all installations if **${NEW_VERSION}** is set
 
-Create task to update outdated Maven dependencies
--------------------------------------------------
+Create tasks
+------------
+
+To update outdated Maven dependencies
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 It's important to keep external dependencies up to date and it makes sense to update them at the very beginning
 of a release development cycle (to be able to spot problems early during the development cycle).
@@ -138,12 +141,43 @@ Therefore, **create a task** to update the outdated dependencies in one of the f
 
 See chapter :ref:`update_dependencies_on_a_regular_basis` to learn where you get the list of outdated dependencies from.
 
-Create task to update Hibernate documentation
----------------------------------------------
+To update Hibernate documentation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 A new JIRA task should be created to keep the Hibernate documentation up to date.
 All changes in the ``persist/core`` module since the last release should be reviewed
 and the documentation should be adjusted if necessary.
+
+For `toccotest.tocco.ch`_ migration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+`toccotest.tocco.ch`_ should be migrated to the new version as soon as possible after this branch has been created.
+This is done by the Tocco Dev team (not by the Business Services).
+
+A new JIRA task should be created in the `TOCBO`_ project and assigned to the Dev team.
+
+.. _TOCBO: https://toccoag.atlassian.net/projects/TOCBO
+.. _toccotest.tocco.ch: https://toccotest.tocco.ch
+
+For `www.tocco.ch`_ migration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Approximately one week before the release date, our Tocco Backoffice should be updated to the new version.
+This is done by the Tocco Business Services.
+
+A new JIRA task should be created in the `TOCBO`_ project and assigned to the Business Services team.
+
+.. _www.tocco.ch: https://www.tocco.ch
+
+For `demo.tocco.ch`_ migration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Approximately one week before the release date, our demo installation `demo.tocco.ch`_ should be updated to the new
+version. This is done by the Tocco Business Services.
+
+A new JIRA task should be created in the `TOCBO`_ project and assigned to the Business Services team.
+
+.. _demo.tocco.ch: https://demo.tocco.ch
 
 Store entity model snapshot on SharePoint
 -----------------------------------------
