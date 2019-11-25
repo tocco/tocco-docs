@@ -12,6 +12,14 @@ Dump Database
 
     pg_dump -U postgres -h ${DB_SERVER} -Fc -f ~/_to_delete/nice2_${CUSTOMER}_$(date +"%Y_%m_%d").psql ${DATABASE};
 
+.. tip::
+
+    In order to create a dumps without binaries, email archive and history, use these arguments additionally::
+
+        --table "nice*" --table "database*" --table "_nice*" --exclude-table-data "nice_email_archive" \
+        --exclude-table-data "nice_email_*_to_*" --exclude-table-data "nice_email_attachment" \
+        --exclude-table-data "nice_history*"
+
 
 .. _restore-database:
 
