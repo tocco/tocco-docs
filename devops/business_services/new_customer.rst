@@ -49,20 +49,7 @@ Use the same password for both databases of the installation.
 Create a Solr Core
 ^^^^^^^^^^^^^^^^^^
 
-#. Generate ``${SOLR_PASSWORD}``::
-
-       pwgen -s 30 1
-
-   .. hint::
-
-       This password has to be passed to ``oc process`` as ``SOLR_PASS`` parameter later on.
-
-#. Add a new user and core in :hierra-repo:`infrastructure/solr.yaml`:
-
-   .. code-block:: yaml
-
-       profile_solr::basic_auth_users:
-         nice-${INSTALLATION}: ${SOLR_PASSWORD}
+#. Add a new core in :hierra-repo:`infrastructure/solr.yaml`:
 
    .. code-block:: yaml
 

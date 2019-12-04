@@ -107,9 +107,14 @@ Step by Step Instructions
 
     .. parsed-literal::
 
-        oc process -f nice-template.yml CUSTOMER=\ **${CUSTOMER}** INSTALLATION=\ **${INSTALLATION}** RUN_ENV=\ **${RUN_ENV}** DB_PASS=\ **${DB_PASS}** SOLR_PASS=**${SOLR_PASS}** | oc create -f -
+        oc process -f nice-template.yml CUSTOMER=\ **${CUSTOMER}** INSTALLATION=\ **${INSTALLATION}** RUN_ENV=\ **${RUN_ENV}** DB_PASS=\ **${DB_PASS}** SOLR_PASS=\ **${SOLR_PASS}** | oc create -f -
 
-    Parameter are specified using ``KEY=VALUE``, this is the list of **mandatory** parameters:
+    .. tip::
+
+        **${SOLR_PASS}** is the password of user **tocco** which is defined in
+        :hierra-repo:`infrastructure/solr.yaml`.
+
+    Parameters are specified using ``KEY=VALUE``. This is the list of **mandatory** parameters:
 
     =================== ===============================================================================================
      Key                 Value
@@ -199,4 +204,3 @@ Step by Step Instructions
 .. [#f1] An unlimited number of project is included in dedicated APPUiO.
 
 .. [#f2] Nginx and Solr images, which are used by all Nice projects, are in toco-shared-imagestreams.
-
