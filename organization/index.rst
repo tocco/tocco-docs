@@ -3,5 +3,6 @@ Organization
 
 .. toctree::
    :maxdepth: 2
+   :glob:
 
-   repositories
+   *
