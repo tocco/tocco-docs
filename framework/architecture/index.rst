@@ -10,4 +10,4 @@ Architecture
    businessunit/index
    s3/index
    dependencies/index
-
+   reports/index

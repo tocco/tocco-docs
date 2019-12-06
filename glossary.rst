@@ -108,6 +108,12 @@ Glossary
 
         Accessible via ``oc {get|describe|edit|…} imagestreamtag …``.
 
+    JasperReports
+        `JasperReports`_ is a report technology still used by some legacy reports. The reports
+        use the \*.jrxml file extension.
+
+        New reports should use :term:`wkhtmltopdf`.
+
     Maven Archive
         An archive (\*.tar.gz) of the whole application including all dependencies and other resources
         needed to run the applicaiton.
@@ -148,6 +154,11 @@ Glossary
         Slack channel `operations_public <https://app.slack.com/client/T0S4PA46T/C2R6SKHGC>`_ that can be used to contact
         the operations team.
 
+    PD4ML
+        `PD4ML`_ is a Java-based HTML to PDF converter used by some legacy reports.
+
+        New reports should use :term:`wkhtmltopdf`.
+
     Remote Repository
         In :term:`Artifactory`, Remote Repositories can be configured. For such repositories, Artifactory will forward
         requests to the configured upstream repository and cache the result for later use.
@@ -185,6 +196,8 @@ Glossary
     wkhtmltopdf
         A command line tool for converting HTML into PDF. Within Nice it is used to generate PDF reports.
 
-        The `wkhtmltopdf-binary`_ wrapper is used to be able to call the tool from within Java.
+        See :doc:`/framework/architecture/reports/wkhtmltopdf` and :doc:`/framework/configuration/reports`.
 
-        .. _wkhtmltopdf-binary: https://github.com/tocco/wkhtmltopdf-binary
+
+.. _JasperReports: https://community.jaspersoft.com/project/jasperreports-library
+.. _PD4ML: https://pd4ml.com
