@@ -9,10 +9,33 @@ Development
 Setup
 -----
 
+.. warning::
+  The environment variable ``FONTAWESOME_NPM_AUTH_TOKEN`` has to be available otherwise
+  the setup command will fail.
+  With osx this can be done with:
+
+  .. code-block:: console
+    
+    launchctl setenv FONTAWESOME_NPM_AUTH_TOKEN {TOKEN}
+
+
+  or with linux: 
+
+  .. code-block:: console
+    
+    FONTAWESOME_NPM_AUTH_TOKEN={TOKEN}
+
+
+  Make sure to check if the variable is available. Maybe a restart is required.
+  The value of {TOKEN} can be found on `Sharepoint`_
+
+.. _Sharepoint: https://tocco.sharepoint.com/:w:/s/Technik/EVZGmuS-ok5PnEd6kJJMNcwBynYU4BZXu8TrjAzJQ26oQg?e=WrmATb
+  
+
+
 Just install `Yarn`_ and execute the following commands:
 
 .. _Yarn: https://yarnpkg.com/en/docs/install 
-
 
 
 .. code-block:: console
