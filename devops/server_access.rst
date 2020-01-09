@@ -4,13 +4,13 @@ Server Access (SSH/KVM/noVNC)
 SSH Access
 ----------
 
-========================  ==============================  ================================================  =============
+========================  ==============================  ================================================  =======================================
  Hosts                     Login                           Example                                           Management
-========================  ==============================  ================================================  =============
- \*.tocco.cust.vshn.net    | ${FIRST_NAME}.${LAST_NAME}    | ``ssh peter.gerber@db1.tocco.cust.vshn.net``    `Puppet`_
- \*.tocco.ch               | tocco (non-priviledged)       | ``ssh tocco@app01.tocco.ch``                    `Ansible`_
+========================  ==============================  ================================================  =======================================
+ \*.tocco.cust.vshn.net    | ${FIRST_NAME}.${LAST_NAME}    | ``ssh peter.gerber@db1.tocco.cust.vshn.net``    :ref:`Puppet <vshn-ssh-access>`
+ \*.tocco.ch               | tocco (non-priviledged)       | ``ssh tocco@app01.tocco.ch``                    `Ansible <_ssh-server-access-ansible>`
                            | tadm (root via sudo)          | ``ssh tadm@app01.tocco.ch``
-========================  ==============================  ================================================  =============
+========================  ==============================  ================================================  =======================================
 
 .. hint::
 
@@ -35,46 +35,17 @@ SSH Access
            User tocco
 
 
-.. _Ansible:
 
 Allow SSH Access using Ansible
 ``````````````````````````````
 
-Access can can be granted via `roles/ssh-key-sync/files/ssh_keys`_ in the Ansible repository.
+See :ref:`ssh-server-access-ansible`.
 
-Changes can be deployed via Ansible::
-
-    cd ${ANSIBLE_GIT_ROOT}
-    ansible-playbook -i inventory playbook.yml -t ssh-keys
-
-.. hint::
-
-    Users with role ``@user`` have access as user *tocco* on some hosts. User with role ``@root`` have access as
-    *tadm* and *tocco* on all hosts.
-
-.. _roles/ssh-key-sync/files/ssh_keys: https://git.tocco.ch/gitweb?p=ansible.git;a=blob;f=roles/ssh-key-sync/files/ssh_keys
-
-
-.. _Puppet:
 
 Allow SSH Access using Puppet
 ``````````````````````````````
 
-Puppet configuration can be found the `tocco_hieradata repository`_. Access is defined in the ``users`` section within
-the different config files (e.g. in ``database.yml`` for database servers and ``infrastructure/solr.yml`` for Solr
-servers).
-
-Users are managed via this files with exception of those in ``database.yml``. For those add the user in Ansible (see
-previous section) and generate the content for the YAML file::
-
-    cd ${ANSIBLE_REPOSITORY}
-    playbooks/ssh_key_sync/ssh-pubkey-parser hiera ${HIERADATA_REPOSITORY}/playbooks/ssh_key_sync/ssh_keys ~/src/vshn/tocco_hieradata/database.yaml
-
-.. hint::
-
-    Users that are part of the group ``toccoroot`` can use sudo to obtain root priviledges.
-
-.. _tocco_hieradata repository: https://git.vshn.net/tocco/tocco_hieradata/tree/master
+See :ref:`vshn-ssh-access`.
 
 
 KVM
