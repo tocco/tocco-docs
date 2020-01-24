@@ -210,6 +210,16 @@ If you encounter too-many-files-open errors during ``mvn build``, check out
 :ref:`too-many-open-files-maven`.
 
 
+Install Dependencies
+--------------------
+
+On **Ubuntu 18.04 and newer** install the following dependencies::
+
+    apt install libjpeg62 libpng16-16
+
+(libraries dynamically loaded by :term:`wkhtmltopdf`)
+
+
 Setup SSH
 ---------
 
