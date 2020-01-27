@@ -92,7 +92,7 @@ Allow Access
 ------------
 
 
-    Access can can be granted via `roles/ssh-key-sync/files/ssh_keys`_ in the Ansible repository.
+    Access can be granted via `roles/ssh-key-sync/files/ssh_keys`_ in the Ansible repository.
 
     Changes can be deployed via Ansible::
 
