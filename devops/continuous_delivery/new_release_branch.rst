@@ -279,3 +279,8 @@ The standard specification is part of the **«nice2_documentation»** project an
 
 Therefore, add a build config for the new version in Teamcity like you did for the documentation. Copy the build config
 for the previous version in the project **«Nice2 Specification»** and adjust the parameters accordingly.
+
+Setup Monitoring
+----------------
+
+Enable monitoring for the new test system and the documentation. See :ref:`monitoring-generate-checks`.
