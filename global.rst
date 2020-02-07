@@ -13,6 +13,9 @@
 .. role:: green
     :class: green
 
+.. role:: orange
+    :class: orange
+
 .. role:: red
     :class: red
 

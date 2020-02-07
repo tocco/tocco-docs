@@ -37,6 +37,8 @@ Add Route / Hostname
 
 #. Issue SSL Certificate as described in the next section.
 
+#. Update monitoring, see :ref:`monitoring-generate-checks`
+
 .. _Ansible Git Repository: https://git.tocco.ch/gitweb?p=ansible.git;a=blob;f=openshift/nice-route-template.yml
 
 
@@ -121,6 +123,11 @@ Remove paused annotation:
 Remove Route
 ------------
 
-.. code:: bash
+#. Remove monitoring for endpoint from `common.yaml`_
 
-    oc delete route tocco-www.tocco.ch
+#. Remove route::
+
+       oc delete route tocco-www.tocco.ch
+
+
+.. _common.yaml: https://git.vshn.net/tocco/tocco_hieradata/blob/master/common.yaml

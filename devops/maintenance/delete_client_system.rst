@@ -45,8 +45,6 @@ Delete System on "Nine.ch"
 Delete Client-System on "VSHN"
 ==============================
 
-#. Remove monitoring (Nagios)
-
 #. Remove monitoring (VSHN). Remove configuration in `common.yml`_
 
 #. Remove DNS

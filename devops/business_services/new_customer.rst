@@ -81,8 +81,11 @@ Create in TeamCity
 Final Steps
 ------------
 
-#. Setup monitoring
+#. Setup Monitoring
 
-        Setup monitoring as described in the section "Nagios Monitoring einrichten" in
-        `this document <https://www.tocco.ch/intranet/Tocco-Workspace/prozesse#detail&key=301&name=Einrich  ten%20einer%20Kundeninstallation>`__.
+   See :ref:`monitoring-generate-checks`
+
 #. Check installation entry in backoffice.
+
+
+.. _common.yaml: https://git.vshn.net/tocco/tocco_hieradata/blob/master/common.yaml

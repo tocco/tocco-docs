@@ -11,6 +11,7 @@ DevOps
    databases/index
    s3/index
    mail/index
+   monitoring/index
    nice/index
    openshift/index
    documents/index
