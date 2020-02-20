@@ -246,15 +246,18 @@ Documentation
   in the ansible repository. Replace **${VERSION}** with the version number without any characters which aren't numeric
   (e.g. 2.18 -> `218`).
 
-     .. parsed-literal::
+  .. parsed-literal::
 
-	cd ${PATH_TO_ANSIBLE}/openshift/
+      cd ${PATH_TO_ANSIBLE}/openshift/
+      oc login #enter you user name und you password as it will be prompted
+      oc project toco-nice-documentation
+      oc process -f nice-documentation.yml INSTALLATION=${VERSION} | oc create -f -
 
-	oc login #enter you user name und you password as it will be prompted
+- Issue TLS certificate::
 
-	oc project toco-nice-documentation
+      oc annotate route/documentation-${VERSION} kubernetes.io/tls-acme=true
 
-        oc process -f nice-documentation.yml INSTALLATION=${VERSION} | oc create -f -
+  Here again, ${VERSION} is *218* rather than *2.18*.
 
 - Site Search can be configured on https://control.freefind.com and is registered by toccosupport@gmail.com for
   https\://documentation.tocco.ch. Username and password can be found in the :term:`Ansible Vault`.
