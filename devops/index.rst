@@ -20,3 +20,4 @@ DevOps
    webserver/index
    maintenance/index
    ditac_manual/index
+   utils/index
