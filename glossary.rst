@@ -5,6 +5,12 @@ Glossary
 
 .. glossary::
 
+    Ansible Repository
+        Git repository describing the configuration of our servers in a format
+        that Ansible understands.
+
+        It can be found at https://git.tocco.ch/gitweb?p=ansible.git;a=summary.
+
     Ansible Vault
         Used to store passwords and other secrets.
 
