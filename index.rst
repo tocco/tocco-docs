@@ -3,6 +3,7 @@
    :maxdepth: 2
 
    about
+   bs/index
    framework/index
    devops/index
    error_database/index
