@@ -49,7 +49,7 @@ Generating the configuration:
 
 #. install *appuio_routes_monitoring*::
 
-     pip3 install --user appuio_routes_monitoring
+     pip3 install --user --upgrade appuio_routes_monitoring
 
 #. update repository::
 
