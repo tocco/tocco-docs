@@ -169,3 +169,13 @@ See :ref:`collections` chapter for more details.
 
 A custom :java:extdoc:`CollectionPersister<org.hibernate.persister.collection.CollectionPersister>` is also configured (see
 :ref:`persister` for details).
+
+Class loading
+-------------
+
+The :java:ref:`ClassUtils<ch.tocco.nice2.persist.hibernate.session.ClassUtils>` can be used to load the generated classes
+by name.
+The classes are retrieved from the hibernate :java:extdoc:`Metamodel<org.hibernate.Metamodel>`. The reason for this is that
+those classes are generated during the initialization of Hibernate and getting them from the Metamodel ensures
+that the classes have been properly initialized (in contrast to loading them directly from the class loader).
+
