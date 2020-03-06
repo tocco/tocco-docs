@@ -57,6 +57,9 @@ condition to the query:
       A :java:ref:`Condition<ch.tocco.nice2.persist.qb2.Condition>` is first converted into a :java:ref:`Node<ch.tocco.nice2.conditionals.tree.Node>`
       instance using the :java:ref:`ConditionFactory<ch.tocco.nice2.persist.query.ConditionFactory>` and then transformed into a
       :java:extdoc:`Predicate<javax.persistence.criteria.Predicate>` using the :java:ref:`PredicateFactory<ch.tocco.nice2.persist.hibernate.PredicateFactory>`.
+    * Conditions added through the ``whereInsecure()`` methods are allowed to use the ``insecure`` keyword for subqueries (see :java:ref:`SubqueryFactoryImpl<ch.tocco.nice2.persist.hibernate.query.AbstractCriteriaBuilder.SubqueryFactoryImpl>`).
+      If an insecure condition is added through the ``where()`` method, an exception will be thrown. This is necessary for security reasons, otherwise
+      any user could execute insecure queries, for example through the REST API.
 
 It also invokes the ``QueryBuilderInterceptor#buildConditionFor()`` method of all interceptors when
 the query initialization has been completed and adds the created conditions to the list of predicates.
@@ -444,6 +447,11 @@ to create the sql function templates:
     and can be used to access database specific functions.
     An example is the :java:ref:`BirthdayQueryFunction<ch.tocco.nice2.persist.backend.jdbc.impl.functions.BirthdayQueryFunction>`
     that uses the ``extract`` PostgreSQL function.
+
+.. note::
+    Each JDBC Function must implement the ``validateArguments()`` function which should check whether the given arguments (paths in particular)
+    are compatible with the function. If an incompatible path is given to the function, the content of that path might be visible in
+    the log file, which is a security issue.
 
 Query Functions
 ---------------

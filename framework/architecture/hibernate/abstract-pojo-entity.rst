@@ -67,6 +67,9 @@ After the value has been set, a ``EntityFacadeListener#entityChanging()`` event 
 When Hibernate internally reads or writes properties of an entity, the field is accessed directly and no
 additional code is executed.
 
+If no transaction is running when ``setValue()`` is called (or a relation is changed) an exception will be thrown,
+because otherwise these changes would be silently lost.
+
 Resolving relations
 -------------------
 
