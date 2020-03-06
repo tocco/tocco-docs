@@ -185,7 +185,7 @@ Store entity model snapshot on SharePoint
 On the *release date* (not when the release branch is created), the current entity model snapshot should be obtained
 from the test system of the new version and stored on our SharePoint.
 
-#. Get the JSON snapshot from: https\://test\ **${VERSION}**.tocco.ch/nice2/rest/entities?_fullModel=true
+#. Get the JSON snapshot from: https\://test\ **${VERSION}**.tocco.ch/nice2/rest/entities?_fullModel=true&_omitLinks=true
 #. Save it as JSON file and put it into the corresponding release directory on our `share point`_. The file should
    be called ``Entity_Model_${VERSION}.json``.
 
