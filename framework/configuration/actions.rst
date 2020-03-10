@@ -412,3 +412,17 @@ In the impl ``pom.xml`` of the module containing the action, the following depen
      <type>jar</type>
      <scope>provided</scope>
    </dependency>
+
+How to enable legacy actions in the new client
+----------------------------------------------
+
+Legacy actions are not enabled by default in the new client.
+
+Set the application property ``nice2.forms.legacyActionsEnabled=true`` to enable them.
+
+If legacy actions are enabled, disable specific legacy actions by adding them to the configuration point
+``nice2.model.form.DisabledLegacyActions`` (e.g. once they've been reimplemented with React).
+
+Customer legacy actions aren't enabled automatically even if ``nice2.forms.legacyActionsEnabled=true`` is set.
+You need to whitelist them **additionally** to the application property via the configuration point
+``nice2.model.form.EnabledCustomerLegacyActions``.
