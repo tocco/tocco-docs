@@ -3,13 +3,13 @@ Mail
 ####
 
 
-Mails End Up in Spam
-====================
+Mails End Up in Spam or Cannot be Delivered
+===========================================
 
 Before starting the investigation, inquire this information and
 write it down on the ticket:
 
-* When was the issue noticed first?
+* When was the issue noticed first and last?
 * What sender address(es) are affected?
 * What recipient address(es) are affected?
 * How was the mail sent? (manually, automated mail during
@@ -19,6 +19,8 @@ write it down on the ticket:
 * Who sent the mail(s) (login(s))?
 * Does the message end up in spam with a specific provider
   (e.g. Google, Bluewin, Gmx)?
+* Was a bounce mail returned (i.e. was a mail returned to the
+  sender about a failed delivery)? If so, get a copy.
 
 Analyzing the issue:
 
@@ -35,6 +37,9 @@ Common issues:
 
 Sender Address Selection
 ========================
+
+How the Sender Address is Selected
+----------------------------------
 
 It is possible for a user to select an arbitrary sender address. However,
 we are not necessarily allowed to send mails on behalf that domain. Thus,
@@ -58,12 +63,49 @@ we rewrite the sender to a fallback address:
         has_fallback_on_bu -> end [ label="no, use global default address" ]
     }
 
-Essentially, the entered sender address is only used if it's the configured list of allowed
+Essentially, the entered sender address is only used if it's in the configured list of allowed
 domains. Otherwise, a fallback address is used.
 
-TODO: How does BS 1st find out what domains are allowed?
+
+Show What Sender Address is Used
+--------------------------------
+
+If you want to find out what sender address is used effectively when
+sending a mail, the preview function of our e-mail action can be used:
+
+#. Open entity *Person*
+#. Select any person that has a e-mail address
+#. Open action *Communication* → *E-mail*
+#. Fill in the sender address and select preview:
+
+   .. figure:: resources/email_sender.png
+
+#. The sender shown in the preview is the sender used effectively:
+
+   .. figure:: resources/email_preview.png
+
 
 (:doc:`technical documentation </devops/mail/outgoing_mail_in_nice>`)
+
+
+Configure Allowed Domains
+-------------------------
+
+See :ref:`allowed-from-domains-regex`.
+
+
+Configure Default / Fallback Sender Address
+-------------------------------------------
+
+There is two ways to configure a default:
+
+* Set the default address on the business unit:
+
+  .. figure:: resources/email_default_on_bu.png
+
+* Set the application-wide default (only used when no default is set on BU):
+
+  See :ref:`default-sender-address`
 
 
 Create DKIM Record

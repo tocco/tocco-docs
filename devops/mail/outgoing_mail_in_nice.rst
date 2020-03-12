@@ -1,6 +1,8 @@
 Outgoing Mail in Nice
 ^^^^^^^^^^^^^^^^^^^^^
 
+.. _default-sender-address:
+
 Set Default Sender
 ------------------
 
@@ -11,6 +13,8 @@ whose sender domain isn't allowed, see next section, or if no sender address is 
 
     email.default.from=noreply@tocco.ch
 
+
+.. _allowed-from-domains-regex:
 
 Allow Domains in Outgoing Mails
 -------------------------------
