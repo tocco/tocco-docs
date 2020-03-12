@@ -43,8 +43,11 @@ Create new configs for db refactoring
 Teamcity -> Administration -> Nice2 DB-Refactoring
 
 - Copy *Nice2 DB-Refactoring new Database (master)*
+  * adjust parameter *BRANCH*: for v2.25 set it to *releases/2.25*
+  * adjust parameter *DATABASE*: for v2.25 set it to *dbrefactoring_new_225*
 - Copy *Nice2 DB-Refactoring new existing Database (master)*
-- adjust Parameters
+  * adjust parameter *BRANCH*: for v2.25 set it to *releases/2.25*
+  * adjust parameter *DATABASE*: for v2.25 set it to *dbrefactoring_existing_225*
 
 Create new auto merge
 ---------------------
