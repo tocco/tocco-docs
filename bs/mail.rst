@@ -123,6 +123,8 @@ Create DKIM Record
 
        default._domainkey IN TXT "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtcJL5NHfaftQTFV9BemWPckwBj3Npls3ghFeh8e9RUFSpztQSMYeYVxYVJA7Km8QRX3zt3u3QgbIzp1rEjouHh03K0OsoKtQdmlBneg798peHI/MMwMrOVa8HFMyHW9JhhHiLdYNar9H77Ob1ourB6cAmTWFlaFQcFMF+o05Fhy5NCSVnsy/EWBHhLEII0d3iCMQJe/O19375x YVoDF494B1r323x4fNrHuTQcnxORaSSppXsYmCJ+SNoG+fIuVHYpxq2RCk/p9kuB0pNZl+wW7p2sdeknaDo5CYiQt/Wy4nHDiobq6SLuZ9pOpC652OodFuvIYI10npE/jbRpTZaQIDAQAB"
 
+   There may be an additional *CNAME* entry included in the result.
+
    (The record is the same for all installations and domains.)
 
 3. Create/DNS record
@@ -140,8 +142,8 @@ Create DKIM Record
    If we don't manage DNS, inform the customer that the following changes are required:
 
        | fqdn: ``default._domainkey.operations-the-rat.ch`` (**example!**)
-       | type: ``TXT``
-       | value: ``v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtcJL5NHfaftQTFV9BemWPckwBj3Npls3ghFeh8e9RUFSpztQSMYeYVxYVJA7Km8QRX3zt3u3QgbIzp1rEjouHh03K0OsoKtQdmlBneg798peHI/MMwMrOVa8HFMyHW9JhhHiLdYNar9H77Ob1ourB6cAmTWFlaFQcFMF+o05Fhy5NCSVnsy/EWBHhLEII0d3iCMQJe/O19375x YVoDF494B1r323x4fNrHuTQcnxORaSSppXsYmCJ+SNoG+fIuVHYpxq2RCk/p9kuB0pNZl+wW7p2sdeknaDo5CYiQt/Wy4nHDiobq6SLuZ9pOpC652OodFuvIYI10npE/jbRpTZaQIDAQAB``
+       | type: ``CNAME``
+       | value: ``default._domainkey.tocco.ch``
 
 
 .. _create-adjust-spf-record:
