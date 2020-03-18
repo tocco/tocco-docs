@@ -30,11 +30,11 @@ Wikipedia has comprehensive article on `SPF`_ if more information is needed.
 Create DKIM Record
 ------------------
 
-A ``TXT`` entry for the name ``default._domainkey`` needs to be created.
+A ``CNAME`` record for the name ``default._domainkey`` needs to be created.
 
 .. code::
 
-    default._domainkey IN TXT "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtcJL5NHfaftQTFV9BemWPckwBj3Npls3ghFeh8e9RUFSpztQSMYeYVxYVJA7Km8QRX3zt3u3QgbIzp1rEjouHh03K0OsoKtQdmlBneg798peHI/MMwMrOVa8HFMyHW9JhhHiLdYNar9H77Ob1ourB6cAmTWFlaFQcFMF+o05Fhy5NCSVnsy/EWBHhLEII0d3iCMQJe/O19375x YVoDF494B1r323x4fNrHuTQcnxORaSSppXsYmCJ+SNoG+fIuVHYpxq2RCk/p9kuB0pNZl+wW7p2sdeknaDo5CYiQt/Wy4nHDiobq6SLuZ9pOpC652OodFuvIYI10npE/jbRpTZaQIDAQAB"
+    default._domainkey IN CNAME default._domainkey.tocco.ch.
 
 See wikipedia entry on `DKIM`_ for more details.
 
@@ -48,7 +48,7 @@ See wikipedia entry on `DKIM`_ for more details.
 .. figure:: nine_dkim.png
     :scale: 60%
 
-    Sample DKIM record in Nine web interface
+    Sample CNAME record in Nine web interface redirecting to our DKIM entry.
 
 
 Create DMARC Record
