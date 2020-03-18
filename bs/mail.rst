@@ -144,6 +144,8 @@ Create DKIM Record
        | value: ``v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtcJL5NHfaftQTFV9BemWPckwBj3Npls3ghFeh8e9RUFSpztQSMYeYVxYVJA7Km8QRX3zt3u3QgbIzp1rEjouHh03K0OsoKtQdmlBneg798peHI/MMwMrOVa8HFMyHW9JhhHiLdYNar9H77Ob1ourB6cAmTWFlaFQcFMF+o05Fhy5NCSVnsy/EWBHhLEII0d3iCMQJe/O19375x YVoDF494B1r323x4fNrHuTQcnxORaSSppXsYmCJ+SNoG+fIuVHYpxq2RCk/p9kuB0pNZl+wW7p2sdeknaDo5CYiQt/Wy4nHDiobq6SLuZ9pOpC652OodFuvIYI10npE/jbRpTZaQIDAQAB``
 
 
+.. _create-adjust-spf-record:
+
 Create / Adjust SPF Record
 ==========================
 
