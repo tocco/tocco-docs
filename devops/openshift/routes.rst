@@ -16,32 +16,6 @@ Show Routes
     tocco-www.webmodul.ch       www.webmodul.ch                      nice        80-tcp    edge/Redirect
 
 
-.. _add-route:
-
-Add Route / Hostname
---------------------
-
-#. A template is used to create a new routes. You have to get it from the `Ansible Git Repository`_.
-
-#. ``cd`` to the directory where ``nice-route-template.yml`` resides.
-
-#. Create route:
-
-    .. code::
-
-        oc process -f nice-route-template.yml HOSTNAME=www.tocco.ch | oc create -f -
-
-    ``HOSTNAME`` is the FQDN you want to add.
-
-#. Create DNS entry if needed, see :doc:`dns`.
-
-#. Issue SSL Certificate as described in the next section.
-
-#. Update monitoring, see :ref:`monitoring-generate-checks`
-
-.. _Ansible Git Repository: https://git.tocco.ch/gitweb?p=ansible.git;a=blob;f=openshift/nice-route-template.yml
-
-
 .. _ssl-certificates:
 
 SSL Certificates
@@ -51,6 +25,14 @@ SSL Certificates
 
 Issuance
 ^^^^^^^^
+
+.. admonition:: Deprecated
+   :class: deprecated
+
+   This is deprecated for use with Tocco but may still be used to enable
+   SSL for other applications.
+
+   To setup SSL for Tocco see :ref:`ansible-add-route`.
 
 SSL certificates are issued automatically for routes with an appropriate annotation.
 
@@ -69,6 +51,8 @@ Add the annotation:
 
     The DNS entry must exist and point to the right endpoint **before** adding the annotation.
 
+
+.. _acme-troubleshooting:
 
 Troubleshooting
 ^^^^^^^^^^^^^^^
@@ -118,16 +102,6 @@ Remove paused annotation:
 .. warning::
 
    Issuing a certificate can take several minutes.
-
-
-Remove Route
-------------
-
-#. Remove monitoring for endpoint from `common.yaml`_
-
-#. Remove route::
-
-       oc delete route tocco-www.tocco.ch
 
 
 .. _common.yaml: https://git.vshn.net/tocco/tocco_hieradata/blob/master/common.yaml

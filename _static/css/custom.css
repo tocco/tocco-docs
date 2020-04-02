@@ -34,3 +34,12 @@ pre.literal-block {
     line-height: normal;
     padding: 12px !important;
 }
+
+.rst-content .deprecated {
+ color: black;
+     background: #fc888a;
+}
+.deprecated > .admonition-title {
+     background: #d67173 !important;
+
+}

@@ -53,13 +53,14 @@ Obtain a list of DNS server for the domain:
         **${DOMAIN}** is the domain part only, e.g. tocco.ch and not :strike:`www.tocco.ch` or
         :strike:`cockpit.tocco.ch`.
 
+.. _dns-managed-by-us:
 
 Add DNS Record for a Domain managed by Us
 -----------------------------------------
 
 .. hint::
 
-        You probably want to add a :ref:`route <add-route>` first.
+        You probably want to add a :ref:`route <ansible-add-route>` first.
 
 #. Go to `Nine's Cockpit`_.
 
@@ -100,7 +101,7 @@ Add DNS Record for Domains Managed by a Third Party
 
 .. hint::
 
-        You probably want to add a :ref:`route <add-route>` first.
+        You probably want to add a :ref:`route <ansible-add-route>` first.
 
 Since we won't have any control over the DNS server, you'll have to communicate the customer the information in
 :ref:`what-dns-records-are-needed`, so they can ensure the entries are created.
