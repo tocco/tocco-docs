@@ -2,10 +2,11 @@
 S3 Storage Design Overview
 ##########################
 
-Buckets used by Production and Test Systems
-===========================================
+Buckets
+=======
 
-Every production and test installation has its own bucket.
+There is but **one bucket per customer**. Production, test system
+as well as when developing locally, the same bucket is used.
 
 Configuration is done via the ``s3.properties`` file::
 
@@ -14,104 +15,8 @@ Configuration is done via the ``s3.properties`` file::
     s3.main.accessKeyId=XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     s3.main.secretAccessKey=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
-See :doc:`/devops/s3/s3_bucket_for_installation` for details about creating buckets
-and obtaining the necessary access keys.
-
-
-OpenShift
----------
-
-On OpenShift the properties can be set via environment variables by prefixing ``NICE2_S3_`` to
-the property name.
-
-Example: set property::
-
-    oc -c nice set env dc/nice NICE2_S3_s3.main.bucketName=XXXXXXX
-
-Example: list properties::
-
-    oc -c nice set env dc/nice --list | grep ^NICE2_S3_
-
-
-Overlay Bucket for Local Development
-====================================
-
-For local development, the production bucket with an additional overlay bucket is used.
-
-Example configuration::
-
-    s3.main.endpoint=https://objects.cloudscale.ch
-    s3.main.bucketName=tocco-nice-bk
-    # s3.main.accessKeyId=      # Personal key from ~/.aws/credentials
-    # s3.main.secretAccessKey=  # is used.
-
-    s3.overlay.endpoint=https://objects.cloudscale.ch
-    s3.overlay.bucketName=tocco-dev-nice-overlay
-    # s3.overlay.accessKeyId=      # Personal key from ~/.aws/credentials
-    # s3.overlay.secretAccessKey=  # is used.
-
-
-The overlay bucket (`tocco-dev-nice-overlay`) is used for all local development; there
-is no separate overlay bucket per customer. When the overlay bucket is configured, for
-objects is searched in both buckets and writing is done on the overlay bucket exclusively.
-
-For local development, every developer has an own key to access the buckets. It needs
-to be configured in the `~/.aws/credentials`_ file::
-
-     [nice2]
-     aws_access_key_id=XXXXXXXXXXXXXXXXXXXX
-     aws_secret_access_key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-
-See :doc:`/devops/s3/s3_bucket_for_dev` for details about getting your own access key.
-
-.. note::
-
-    The credentials that are specified in the properties file (``s3.properties``) have higher
-    Priority than the credentials in the AWS CLI configuration file (``~/.aws/credentials``).
-
-
-Read objects
-------------
-
-Using an overlay bucket, the object is searched in the overlay bucket first and the in the main bucket.
-
-.. graphviz::
-
-      digraph {
-        Nice [ shape=house ]
-        overlay[ label="Is object in overlay bucket?", shape=diamond ]
-        in_overlay [ label="Yes" ]
-        not_in_overlay [ label="No" ]
-        main [ label="Is object in main bucket?", shape=diamond ]
-        in_main [ label="Yes" ]
-        not_in_main [ label="No" ]
-
-        Nice -> overlay [ label="read object" ]
-        overlay -> { in_overlay not_in_overlay }
-        in_overlay -> Nice [label="use object"]
-        not_in_overlay -> main
-        main -> { in_main, not_in_main }
-        in_main -> Nice [ label="use object" ]
-        not_in_main -> Nice [ label="not found" ]
-      }
-
-
-Write objects
--------------
-
-When an overlay bucket is used, all objects are written to it. None are written to the main bucket.
-
-.. graphviz::
-
-      digraph {
-        Nice [ shape=house ]
-        overlay [ label="overlay bucket" ]
-        main [ label="main bucket" ]
-
-        { rank=same overlay main }
-
-        Nice -> overlay [ label="write" ]
-      }
+All buckets are created by :doc:`Ansible </devops/app_management/ansible>`.
+There should be no need to change the configuration manuallly.
 
 
 Object Removal / Retention
@@ -128,72 +33,78 @@ b) In case a backup of the database needs to be restored, there is no need
    to restore a backup of the objects too.
 c) There is no way to create atomic and thus consistent backups, i.e. backups where the
    database and S3 storage are guaranteed to contain the same set of objects.
-d) An overlay bucket, as described above, can be used when working with a local copy
-   of the production database without risking that removing binaries on the production
-   system will render objects unavailable locally.
 
 
 Permissions
 ===========
 
-Installation User
------------------
-
-Every installation has a dedicated user whose access is restricted
-to the bucket of the respective installation.
-
 .. graphviz::
 
      digraph {
+       label="Users used for S3 access and their permissions."
        rankdir=LR
 
-       user [ label="User of installation XY\n(tocco-nice-*)" ]
-       main [ label="Main bucket of installation XY" ]
+       subgraph cluster1 {
+           label="Installations Accessing"
 
-       user -> main [ label="read/write\naccess" ]
-     }
+           subgraph cluster1a {
+               label="User \"abc\""
 
+               abc [ label="Installation \"abc\"" ]
+               abctest [ label="Installation \"abctest\"" ]
+           }
+           subgraph cluster1b {
+               label="User \"xyz\""
 
-Developer User
---------------
-
-Every developer has an account that allows read-only access to all production and test
-buckets and, in addition, read/write access to the overlay bucket.
-
-.. graphviz::
-
-     digraph {
-       rankdir=LR
-
-       user [ label="Developer\n (dev-*)" ]
-       main_a [ label="Main bucket of installation A\n(tocco-nice-*)" ]
-       main_b [ label="Main bucket of installation B\n(tocco-nice-*)" ]
-       main_ellipsis [ label="Main bucket of installation …\n(tocco-nice-*)" ]
-       overlay [ label="Overlay bucket\n(tocco-dev-nice-overlay)" ]
-
-       user -> {
-         main_a [ label="read-only\naccess" ]
-         main_b [ label="read-only\naccess" ]
-         main_ellipsis [ label="read-only\naccess" ]
-         overlay [ label="read/write\naccess" ]
+               xyz [ label=" Installation \"xyz\"" ]
+               xyztest [ label="Installation \"xyztest\"" ]
+           }
        }
+
+       subgraph cluster2 {
+           label="Deveopers Acessing"
+
+           dev_a [ label="Peter" ]
+           dev_b [ label="Adrian" ]
+           dev_c [ label="Juan" ]
+       }
+
+       bucket_abc [ label="Bucket of\ncustomer \"abc\"" ]
+       bucket_xyz [ label="Bucket of\ncustomer \"xyz\"" ]
+
+       { abc abctest } -> bucket_abc [ label="full access" ]
+       { xyz xyztest } -> bucket_xyz [ label="full access" ]
+       { bucket_abc bucket_xyz } -> { dev_a dev_b dev_c } [ dir=back label="restricted rw" ]
      }
+
+
+Installation User (Left-Hand Side on Graph)
+-------------------------------------------
+
+Every customer has a dedicated user whose access is restricted to their respective
+bucket. However, **all** installations of a customer, production or test, share that
+one bucket.
+
+
+Developer User (Right-Hand Side on Graph)
+-----------------------------------------
+
+Every developer has an account allowing read/write access to the buckets of all
+customers. However, some operation are restricted. For instance, developers cannot
+remove any objects or change permissions.
 
 
 Implementation of Access Permissions
 ------------------------------------
 
-Access permissions are implemented using ACLs and policies. Installation Users own their
-buckets, and thus have full access, and Developers are granted permissions with additional
-ACLs and policies.
-
-Policies and ACLs can be set via the *s3policy* script, refer to :doc:`/devops/s3/policy` for details.
+Permissions are granted via S3 policy. The policy itselfs is set by
+:doc:`Ansible </devops/app_management/ansible>`
 
 
 Source of Credentials
 =====================
 
-Credentials can be configured in ``s3.[local.]properties``. Should no credential be found in
+Credentials can be configured in ``s3.[local.]properties``. Should no credentials be found in
 said files, credentials from the ``[nice2]`` section in ``~/.aws/credentials`` are used.
 
 .. graphviz::
