@@ -417,46 +417,19 @@ Run Full Playbook (=Configure Everything)
     $ cd ${ANSIBLE_GIT_REPO}/tocco
     $ ansible-playbooka playbook.yml -l abbts
 
-``-l/--limit`` limits on which installations the playbook is
-executed. You may specify multiple installations and customers
-separated by comma::
-
-    -l abbts,customer-anavant
-
-This will execute the playbook on installation *abbts* and
-all installations of customer *anavant*.
-
-There are also dynamically generated groups for *location* and *type*
-of installations::
-
-    # Only installations at given location:
-
-    $ cd ${ANSIBLE_GIT_REPO}/tocco
-    ansible-playbook playbook.yml -l location-nine
-    
-    # only installations of given type:
-
-    $ cd ${ANSIBLE_GIT_REPO}/tocco
-    ansible-playbook playbook.yml -l type-production
 
 .. tip::
 
-    | **Available types**: *type-production* and *type-test*
-    | **Available locations**: *location-cloudscale* and *location-nine*
+    ``-l/--limit`` limits on which installations the playbook is
+    executed. You may specify multiple installations and customers
+    separated by comma::
 
-You can apply multiple ``--limit``\ s to further restrict the selection::
+        -l abbts,customer-anavant
 
-    # Only select production systems located at Cloudscale
+    This will execute the playbook on installation *abbts* and
+    all installations of customer *anavant*.
 
-    $ cd ${ANSIBLE_GIT_REPO}/tocco
-    ansible-playbook playbook.yml -l type-production -l location-cloudscale
-
-    # Only select test systems of customer abbts and agogis
-
-    $ cd ${ANSIBLE_GIT_REPO}/tocco
-    ansible-playbook playbook.yml -l type-test -l customer-abbts,customer-agogis
-
-Without ``-l/--limit`` the playbook is executed on all installations.
+    Without ``-l/--limit`` the playbook is executed on all installations.
 
 
 Run Playbook Partially (Tags)
