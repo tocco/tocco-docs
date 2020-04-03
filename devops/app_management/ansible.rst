@@ -70,7 +70,7 @@ concerns application running on OpenShift only.
 |               +----------------+-----------+----------+----------+---------------------------------------+
 |               | policy         | x         | n/a      | x        | Grant access for developers           |
 +               +----------------+-----------+----------+----------+---------------------------------------+
-|               | app config     | x         | n/a      | x        |                                       |
+|               | app config     | x         | n/a      | x³       |                                       |
 +---------------+----------------+-----------+----------+----------+---------------------------------------+
 | Mail          | configure mx   | x         | n/a      | x²       |                                       |
 |               +----------------+-----------+----------+----------+---------------------------------------+
@@ -81,6 +81,7 @@ concerns application running on OpenShift only.
 
 ¹ Only managed if ``db_server`` variable is set.
 ² Only managed if ``mail_domains`` variable is set.
+³ Only managed if ``app_server`` variable is set.
 
 
 Repository
