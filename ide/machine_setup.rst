@@ -409,3 +409,61 @@ Test access::
 
     s3cmd info s3://tocco-dev-nice-overlay >/dev/null
     # no output expected
+
+
+.. _setup-ansible:
+
+Setup Ansible
+-------------
+
+.. hint::
+
+    The following instruction have been tested on Debian, for other
+    operating systems make sure you have this installed:
+
+    * Python3
+    * Ansible
+
+    And these Python packages:
+
+    * dnspython
+    * boto3
+    * openshift
+
+
+#. Install Ansible and dependencies::
+
+    apt install ansible python3-pip python3-boto3 python3-dnspython
+    pip3 install openshift
+
+#. Clone the repository:
+
+   .. parsed-literal::
+
+       mkdir -p ~/src
+       cd ~/src
+       git clone "ssh://\ **pgerber** @git.tocco.ch:29418/ansible"
+       cd ansible
+       scp -p -P 29418 **pgerber**\ @git.tocco.ch:hooks/commit-msg ".git/hooks/"
+
+   Replace **pgerber** with your user name.
+
+#. Get Ansible Vault password(s)
+
+   Ansible Vault is used to store sensitive data (password, API keys) encrypted. You
+   need a password to access them.
+
+   There is two Vaults:
+
+   a) One Vault that expects a file containing the password at ``~/.ansible-password``. This
+      Vault is needed for server management and you generally **only need it if you're
+      a part of the operations team**.
+
+   b) The second Vault expects a file containing the password at ``~/.ansible-tocco-password``.
+      This Vault is need to manage our application and is generally needed by devs and ops.
+
+   Ask one of your colleagues to get the Vault passwords and store in said files. Be sure
+   to set proper permission on the files::
+
+       (umask 0077; echo ${PASSWORD_GOES_HERE} >~/.ansible-password)
+       (umask 0077; echo ${PASSWORD_GOES_HERE} >~/.ansible-tocco-password)

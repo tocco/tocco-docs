@@ -31,7 +31,8 @@ The syntax to create an account is very easy, but be sure that you are in the ri
      deployer   2         57d
      teamcity   2         2S
 
-How to add a service account to a project see :ref:`add-sa-reference-label`.
+An example for granting permission to a service account, namely for the teamcity account, can be
+found in the `Ansible Repository`_.
 
 Login With A Service Account
 ----------------------------
@@ -86,3 +87,6 @@ So you only need the token to login. The challenge here is to find the token, bu
 .. parsed-literal::
 
    oc login --token= **token**
+
+
+.. _Ansible Repository: https://git.tocco.ch/admin/repos/ansible

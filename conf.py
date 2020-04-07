@@ -366,7 +366,8 @@ javadoc_url_map = {
 extlinks = {
    'ticket': ('https://control.vshn.net/tickets/%s', ''),
    'vshn': ('https://control.vshn.net/tickets/%s', ''),
-   'ansible-repo': ('https://git.tocco.ch/gitweb?p=ansible.git;a=blob;f=%s', ''),
+   'ansible-repo-file': ('https://git.tocco.ch/gitweb?p=ansible.git;a=blob;f=%s', '/'),
+   'ansible-repo-dir': ('https://git.tocco.ch/gitweb?p=ansible.git;a=blob;a=tree;f=%s', '/'),
    'hierra-repo': ('https://git.vshn.net/tocco/tocco_hieradata/blob/master/%s', ''),
    'tocco-manual': ('https://223.docs.tocco.ch/en/%s', None)
 }

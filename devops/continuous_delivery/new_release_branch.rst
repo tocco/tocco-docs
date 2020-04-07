@@ -58,7 +58,7 @@ Create new auto merge
 
 Create new test system
 ----------------------
-- Copy configuration from last version of Continuous Delivery
+- Create new test system :doc:`via Ansible </devops/app_management/new_customer>`
 - Adjust parameters, :ref:`triggers <trigger-deployments>`
 
 Change version in files
