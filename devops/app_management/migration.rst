@@ -45,3 +45,22 @@ For bigger customers the migration takes multiple days. Because of this you have
 
     docker ps
     docker logs {CONTAINER_NAME}
+
+
+2.25: ReCaptcha
+---------------
+
+We now use `ReCaptcha v3 <https://www.google.com/recaptcha/intro/v3.html>`_ for a few use cases.
+For each installation a client key and a secret (server) key needs to be configured.
+Each key is tied to a set of URLs.
+
+The keys for development (``localhost`` only) are configured as default and won't work when deployed.
+There is a default set of keys for the ``tocco.ch`` domain (incl. subdomain).
+See the 2.25 Migration comments in Backoffice for the links.
+
+If the installation is running in a custom domain (anything other than *.tocco.ch) this additional domains
+need to be added to the ReCaptcha config. Currently this is only necessary when the login or password
+update dialog are used in the custom domain.
+
+The client key needs to be configured with the ``nice2.userbase.captcha.client.key`` property.
+The secret key needs to be configured with the ``nice2.userbase.captcha.secret`` property.
