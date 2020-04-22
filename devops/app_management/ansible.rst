@@ -257,6 +257,7 @@ In the above example, the result will be:
             nice2.pool_name: 'test'
             nice2.request.limit: null
         abctest:
+            nice2_request.limit: '2000'
 
 In the above example, the result will be:
 
@@ -268,16 +269,15 @@ In the above example, the result will be:
                     application_properties:
                       nice2.history.enabled: 'true'
                       nice2.pool_name: 'test'
-                      nice2.request.limit: '1000'
+
+                      # setting the value to null removes the item
+                      # nice2.request.limit: null
 
  abctest         .. code-block:: yaml
 
-                     application_properties:
-                       nice2.history.enabled: 'true'
-                       nice2.pool_name: 'test'
-
-                       # setting the value to null removes the item
-                       # nice2.request.limit: null
+                    application_properties:
+                      nice2.history.enabled: 'true'
+                      nice2_request.limit: '2000'
 =============== ===================================================
 
 **Limitations:**
@@ -353,7 +353,7 @@ Application properties can be set via *application_properties* variable:
         application_properties: !merge
           nice2.history.enabled: 'true'
 
-**Use ``!merge`` as described in `Merge Variables`_.**
+**Use !merge as described in** `Merge Variables`_.
 
 .. hint::
 
