@@ -422,18 +422,25 @@ Setup Ansible
     operating systems make sure you have this installed:
 
     * Python3
-    * Ansible
+    * Ansible >= 2.7
 
     And these Python packages:
 
     * dnspython
     * boto3
     * openshift
+    * psycopg2
 
+.. hint::
+
+    **Ubuntu 18.04 is not supported!** Upgrade to 19.10 or newer.
+
+    Ansible shipped with Ubuntu 18.04 as well as the official PPAs ship with
+    Python2. Our Ansible does not support this in any way.
 
 #. Install Ansible and dependencies::
 
-    apt install ansible python3-pip python3-boto3 python3-dnspython
+    apt install ansible python3-pip python3-boto3 python3-dnspython python3-psycopg2
     pip3 install openshift
 
 #. Clone the repository:
@@ -442,7 +449,7 @@ Setup Ansible
 
        mkdir -p ~/src
        cd ~/src
-       git clone "ssh://\ **pgerber** @git.tocco.ch:29418/ansible"
+       git clone "ssh://\ **pgerber**\ @git.tocco.ch:29418/ansible"
        cd ansible
        scp -p -P 29418 **pgerber**\ @git.tocco.ch:hooks/commit-msg ".git/hooks/"
 
@@ -467,3 +474,27 @@ Setup Ansible
 
        (umask 0077; echo ${PASSWORD_GOES_HERE} >~/.ansible-password)
        (umask 0077; echo ${PASSWORD_GOES_HERE} >~/.ansible-tocco-password)
+
+
+.. _setup-postgres:
+
+Setup Postgres (Optional)
+-------------------------
+
+If you wish to have Postgres running locally for development, you can setup Postgres
+like this.
+
+#. Install Postgres::
+
+       sudo apt install postgresql
+
+#. Setup Postgres for use with Ansible::
+
+        sudo apt install zstd
+        sudo -u postgres psql -c "CREATE ROLE \"$(id -un)\" WITH LOGIN SUPERUSER"
+        psql -c "CREATE DATABASE \"$(id -un)\"" postgres
+
+   The above is required to make sure :ref:`Ansible can be used to copy databases
+   <ansible-copy-db>`. This creates a Postgres user with admin rights and with the
+   same name as the Linux user. This allows to login via Unix socket without providing
+   credentials.
