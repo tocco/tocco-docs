@@ -239,8 +239,10 @@ Documentation
 
 - Create a new releases branch in gerrit on the project **«nice2_documentation»**. Use the Revision of the latest
   version branch as initial revision for the new branch.
-- Add a build config for the new version in Teamcity. Use the template **«nice_documentation_allversions»** to create
-  it.
+- Add a build config to the project **Nice2 Documentation** for the new version in Teamcity. Use the template
+  **«nice_documentation_allversions»** to create it.
+- Add a build config to the project **Nice2 Specification** for the new version in Teamcity. Use the template
+  **«nice2_specification»** to create it.
 - Run the first build in TeamCity. Please note that ${VERSION}.docs.tocco.ch won't serve any content before the first
   build has completed.
 - Add the DNS entry for the new version ${VERSION}.docs.tocco.ch. DNS is available under cockpit.nine.ch
