@@ -204,6 +204,92 @@ Example:
           db_server: db4.tocco.ch
 
 
+Merge Variables
+^^^^^^^^^^^^^^^
+
+**By default, variables are replaced rather than merged:**
+
+Example:
+
+.. code-block:: yaml
+
+    vars:
+      application_properties:
+        nice2.request.limit: '1000'
+    definitions:
+      abc:
+        application_properties:
+          nice2.history.enabled: 'true'
+        abc:
+          application_properties:
+            nice2.pool_name: 'test'
+        abctest:
+
+In the above example, the result will be:
+
+=============== =======================================
+ Installation    Resulting Value
+=============== =======================================
+ abc            .. code-block:: yaml
+
+                    application_properties:
+                      nice2.pool_name: 'test'
+
+ abctest         .. code-block:: yaml
+
+                     application_properties:
+                       nice2.history.enabled: 'true'
+=============== =======================================
+
+**This behavior can be changed using the !merge type:**
+
+.. code-block:: yaml
+
+    vars:
+      application_properties:
+        nice2.request.limit: '1000'
+    definitions:
+      abc:
+        application_properties: !merge
+          nice2.history.enabled: 'true'
+        abc:
+          application_properties: !merge
+            nice2.pool_name: 'test'
+            nice2.request.limit: null
+        abctest:
+            nice2_request.limit: '2000'
+
+In the above example, the result will be:
+
+=============== ===================================================
+ Installation    Resulting Value
+=============== ===================================================
+ abc            .. code-block:: yaml
+
+                    application_properties:
+                      nice2.history.enabled: 'true'
+                      nice2.pool_name: 'test'
+
+                      # setting the value to null removes the item
+                      # nice2.request.limit: null
+
+ abctest         .. code-block:: yaml
+
+                    application_properties:
+                      nice2.history.enabled: 'true'
+                      nice2_request.limit: '2000'
+=============== ===================================================
+
+**Limitations:**
+
+This is only implemented for dictionaries defined directly on the
+customer or installation.
+
+**Implementation:**
+
+The ``!merge`` type is implemented within the inventory script (``tocco/inventory.py``). It
+handles merging the dictionaries and hands the variables over to Ansible afterwards.
+
 Templating with Jinja2
 ^^^^^^^^^^^^^^^^^^^^^^
 
@@ -253,6 +339,27 @@ on the definitions in ``config.yml`` and can be used everywhere. (See ``inventor
 
 
 .. _ansible-add-route:
+
+
+Set Application Properties
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Application properties can be set via *application_properties* variable:
+
+.. code-block:: yaml
+
+    definitions:
+      abc:
+        application_properties: !merge
+          nice2.history.enabled: 'true'
+
+**Use !merge as described in** `Merge Variables`_.
+
+.. hint::
+
+    The value must be a string. Thus, use quotes where appropriate (i.e. ``'5'``,
+    ``'true'``).
+
 
 Add Routes / Endpoints
 ^^^^^^^^^^^^^^^^^^^^^^
