@@ -1,11 +1,6 @@
 Create new Customer
 ===================
 
-Add Customer module
--------------------
-
-:doc:`/framework/configuration/modules/add-customer-module`
-
 Add DNS Entry
 -------------
 
@@ -90,18 +85,27 @@ Create a Solr Core
          nice-${INSTALLATION}:
            ensure: present
 
-
-Final Steps
-------------
+Setup Monitoring
+----------------
 
 #. Setup Monitoring
 
    See :ref:`monitoring-generate-checks`
 
-#. Check installation entry in backoffice.
+Update and Verify Installation Entry in BO
+------------------------------------------
 
-   * update status
-   * set server
+* update status
+* set server
+
+
+Add Customer Module
+-------------------
+
+:doc:`/framework/configuration/modules/add-customer-module`
+
+(This is done last as one cannot start an installation localy without
+running Ansible first. It creates the S3 bucket used locally too.)
 
 
 .. _common.yaml: https://git.vshn.net/tocco/tocco_hieradata/blob/master/common.yaml
