@@ -50,7 +50,7 @@ concerns application running on OpenShift only.
 +---------------+----------------+-----------+----------+----------+---------------------------------------+
 | Openshift/    | project        | x         |          |          |                                       |
 | Kubernetes    +----------------+-----------+----------+----------+---------------------------------------+
-|               | config         | x         | n/a      |          |                                       |
+|               | config         | x         | n/a      | x⁴       |                                       |
 |               +----------------+-----------+----------+----------+---------------------------------------+
 |               | routes         | x         | n/a      |          | Including DNS verification            |
 |               +----------------+-----------+----------+----------+---------------------------------------+
@@ -62,7 +62,7 @@ concerns application running on OpenShift only.
 |               +----------------+-----------+----------+----------+---------------------------------------+
 |               | parameters     | x         | n/a      |          |                                       |
 +---------------+----------------+-----------+----------+----------+---------------------------------------+
-| Monitoring    |                |           |          |          |                                       |
+| Monitoring    |                | x         |          |          |                                       |
 +---------------+----------------+-----------+----------+----------+---------------------------------------+
 | S3            | user           | x         |          | x        |                                       |
 |               +----------------+-----------+----------+----------+---------------------------------------+
@@ -79,9 +79,10 @@ concerns application running on OpenShift only.
 |               | allowed sender | x         | n/a      | x²       | Including SPF and DKIM verification   |
 +---------------+----------------+-----------+----------+----------+---------------------------------------+
 
-¹ Only managed if ``db_server`` variable is set.
-² Only managed if ``mail_domains`` variable is set.
-³ Only managed if ``app_server`` variable is set.
+| ¹ Only managed if ``db_server`` variable is set.
+| ² Only managed if ``mail_domains`` variable is set.
+| ³ Only managed if ``app_server`` variable is set.
+| ⁴ Application properties, DB and S3 setting are managed.
 
 
 Repository
@@ -480,6 +481,36 @@ Configure Default Sender Addresses
     .. parsed-literal::
 
         ansible-playbook playbook.yml -t mail -l **${CUSTOMER}**
+
+
+Configure Monitoring
+^^^^^^^^^^^^^^^^^^^^
+
+There are three variables for configuring monitoring:
+
+============================= =======================================================
+ monitoring_enabled            | Whether to enabled monitoring.
+ monitoring_alert_tocco        | Whether to send alerts to Tocco. As of now, alerts
+                               | are mailed to the admin inbox.
+ monitoring_alert_vshn         | Whether VSHN should be alerted. (Currently unused)
+============================= =======================================================
+
+By default, monitoring is enabled and alerts are sent to Tocco. You can override the
+default per customer, installation or route:
+
+.. code-block:: yaml
+
+       definitions:
+         abc:
+           monitoring_enabled: false  # disable for customer
+           installations:
+             abc:
+               monitoring_enabled: true  # re-enable for installation
+               routes:
+                 abc.org:
+                 www.abc.org:
+                   monitoring_alert_tocco: false  # do not send alerts for www.abc.org
+             abctest:
 
 
 Usage
