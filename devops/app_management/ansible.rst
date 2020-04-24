@@ -177,6 +177,8 @@ Structure
             solr_core: nice-test                  #
 
 
+.. _ansible-variable-precedence:
+
 Variable Precedence
 ^^^^^^^^^^^^^^^^^^^
 
@@ -339,8 +341,8 @@ on the definitions in ``config.yml`` and can be used everywhere. (See ``inventor
       db_server: '{{ var }}'      # ok
 
 
-.. _ansible-add-route:
 
+.. _ansible-app-properties:
 
 Set Application Properties
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -361,6 +363,8 @@ Application properties can be set via *application_properties* variable:
     The value must be a string. Thus, use quotes where appropriate (i.e. ``'5'``,
     ``'true'``).
 
+
+.. _ansible-add-route:
 
 Add Routes / Endpoints
 ^^^^^^^^^^^^^^^^^^^^^^
