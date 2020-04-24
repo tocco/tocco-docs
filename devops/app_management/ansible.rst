@@ -182,7 +182,7 @@ Structure
 Variable Precedence
 ^^^^^^^^^^^^^^^^^^^
 
-Variables from lowest to highest priority. Higher priority precedes
+Variables from highest to lowest priority. Higher priority precedes
 lower priority:
 
 * Installation variables
