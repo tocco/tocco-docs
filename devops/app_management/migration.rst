@@ -55,7 +55,7 @@ Pre-Migration / Incremental Migration
 Preparations for Final Migration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-In order to enable S3, add this to ``customer/${CUSTOMER}/pom.xml``::
+#. In order to enable S3, add this to ``customer/${CUSTOMER}/pom.xml``::
 
     <dependency>
       <groupId>ch.tocco.nice2.optional.s3storage</groupId>
@@ -65,7 +65,12 @@ In order to enable S3, add this to ``customer/${CUSTOMER}/pom.xml``::
       <scope>compile</scope>
     </dependency>
 
-This change must be merged before running CD during the final migration.
+#. Confiure S3 in ``customer/${CUSTOMER}/etc/s3.properties``::
+
+    s3.main.endpoint=https://objects.cloudscale.ch
+    s3.main.bucketName=tocco-nice-${CUSTOMER}
+
+These changes must be merged before running CD during the final migration.
 
 
 Final Migration
