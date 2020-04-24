@@ -153,13 +153,17 @@ We now use `ReCaptcha v3 <https://www.google.com/recaptcha/intro/v3.html>`_ for 
 For each installation a client key and a secret (server) key needs to be configured.
 Each key is tied to a set of URLs.
 
-The keys for development (``localhost`` only) are configured as default and won't work when deployed.
-There is a default set of keys for the ``tocco.ch`` domain (incl. subdomain).
-See the 2.25 Migration comments in Backoffice for the links.
+The keys for development (``localhost`` only) are configured in hivemodule.xml and won't work when deployed.
+There is a default set of keys for the ``tocco.ch`` domain (incl. subdomains), which are automatically configured
+through ansible.
 
-If the installation is running in a custom domain (anything other than *.tocco.ch) this additional domains
+See the 2.25 Migration comments in Backoffice for the links to the ReCaptcha keys (where also additional URLs can be added).
+
+If the installation is running on a custom domain (anything other than *.tocco.ch) all additional domains
 need to be added to the ReCaptcha config. Currently this is only necessary when the login or password
 update dialog are used in the custom domain.
+
+If different keys need to be used for a certain installation the following properties need to be updated:
 
 The client key needs to be configured with the ``nice2.userbase.captcha.client.key`` property.
 The secret key needs to be configured with the ``nice2.userbase.captcha.secret`` property.
