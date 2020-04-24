@@ -85,12 +85,6 @@ Create a Solr Core
          nice-${INSTALLATION}:
            ensure: present
 
-Setup Monitoring
-----------------
-
-#. Setup Monitoring
-
-   See :ref:`monitoring-generate-checks`
 
 Update and Verify Installation Entry in BO
 ------------------------------------------
