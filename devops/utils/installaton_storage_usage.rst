@@ -13,20 +13,30 @@ About the Generated CSV
 The information is provided as CSV and contains these columns:
 
 ===================== =====================================================
+ Column                Description
+===================== =====================================================
  Customer              | Customer to which the installation belongs.
+
  Installation          | Installation name.
+
  DB Size               | Size of the database as reported by Postgres.
                        | This corresponds to the actual storage used
                        | on disk and may include dead rows, indexes
                        | other internally used data.
+
+ History DB Size       | Size of the history DB as reported by Postgres.
+
  S3 Size               | Size of the S3 bucket as reported by Cloudscale.
                        | All installations of a customer share a bucket.
                        | Thus, this size is only listed on one, the first,
                        | installation of a customer..
+
  Solr Size             | Size of the Solr search index.
+
  Total                 | Space used by an installation. S3 storage is
                        | included for the first installation of a customer
                        | only.
+
  Total Customer        | Total storage used by a customer.
 ===================== =====================================================
 
@@ -46,7 +56,7 @@ Generate CSV::
     cd ${ANSIBLE_REPO}/tocco
     ansible-playbook playbooks/storage_usage.yml -e output=data.csv -f 50
 
-This stores the data in *data.csv*.
+This stores the data in *playbooks/data.csv*.
 
 You can generate a report for a limited number of customers using ``-l`` like
 this: ``-l customer-agogis,customer-bk``.
