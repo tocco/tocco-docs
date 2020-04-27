@@ -291,4 +291,7 @@ for the previous version in the project **«Nice2 Specification»** and adjust t
 Setup Monitoring
 ----------------
 
-Enable monitoring for the new test system and the documentation. See :ref:`monitoring-generate-checks`.
+Enable monitoring for the documentation in `common.yml`_. Look for for *docs.tocco.ch*.
+
+
+.. _common.yml: https://git.vshn.net/tocco/tocco_hieradata/blob/master/common.yaml
