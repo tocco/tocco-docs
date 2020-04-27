@@ -74,17 +74,6 @@ will be updates should other servers be used in the future.
           ansible-playbook playbook.yml -l **customer-abc**
 
 
-Create a Solr Core
-------------------
-
-#. Add a new core in :hierra-repo:`infrastructure/solr.yaml`:
-
-   .. code-block:: yaml
-
-       profile_solr::hiera_cores:
-         nice-${INSTALLATION}:
-           ensure: present
-
 
 Update and Verify Installation Entry in BO
 ------------------------------------------
