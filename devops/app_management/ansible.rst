@@ -394,6 +394,8 @@ Add Routes / Endpoints
 
         ansible-playbook playbook.yml -t route -l **${INSTALLATION}**
 
+#. Add the new domain to the ReCaptcha configuration if necessary (see :ref:`recaptcha`)
+
 
 Remove Routes / Endpoints
 ^^^^^^^^^^^^^^^^^^^^^^^^^

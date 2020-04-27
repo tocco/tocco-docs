@@ -146,6 +146,8 @@ This steps can be done at any time after the migration.
    removed by *vacuumlo*).
 
 
+.. _recaptcha:
+
 2.25: ReCaptcha
 ---------------
 
