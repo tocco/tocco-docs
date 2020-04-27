@@ -177,10 +177,12 @@ Structure
             solr_core: nice-test                  #
 
 
+.. _ansible-variable-precedence:
+
 Variable Precedence
 ^^^^^^^^^^^^^^^^^^^
 
-Variables from lowest to highest priority. Higher priority precedes
+Variables from highest to lowest priority. Higher priority precedes
 lower priority:
 
 * Installation variables
@@ -339,8 +341,8 @@ on the definitions in ``config.yml`` and can be used everywhere. (See ``inventor
       db_server: '{{ var }}'      # ok
 
 
-.. _ansible-add-route:
 
+.. _ansible-app-properties:
 
 Set Application Properties
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -361,6 +363,8 @@ Application properties can be set via *application_properties* variable:
     The value must be a string. Thus, use quotes where appropriate (i.e. ``'5'``,
     ``'true'``).
 
+
+.. _ansible-add-route:
 
 Add Routes / Endpoints
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -389,6 +393,8 @@ Add Routes / Endpoints
     .. parsed-literal::
 
         ansible-playbook playbook.yml -t route -l **${INSTALLATION}**
+
+#. Add the new domain to the ReCaptcha configuration if necessary (see :ref:`recaptcha`)
 
 
 Remove Routes / Endpoints
