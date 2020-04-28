@@ -41,10 +41,10 @@ concerns application running on OpenShift only.
 |               +----------------+-----------+----------+----------+---------------------------------------+
 |               | app config     | x¹        | n/a      | x¹       |                                       |
 +---------------+----------------+-----------+----------+----------+---------------------------------------+
-| Solr          | user           |           |          |          | Account currently shared by **all**   |
+| Solr          | user           | x⁵        |          |          | Account currently shared by **all**   |
 |               |                |           |          |          | installations                         |
 |               +----------------+-----------+----------+----------+---------------------------------------+
-|               | core           |           |          |          |                                       |
+|               | core           | x         |          |          |                                       |
 |               +----------------+-----------+----------+----------+---------------------------------------+
 |               | app config     | x         |          |          |                                       |
 +---------------+----------------+-----------+----------+----------+---------------------------------------+
@@ -53,6 +53,10 @@ concerns application running on OpenShift only.
 |               | config         | x         | n/a      | x⁴       |                                       |
 |               +----------------+-----------+----------+----------+---------------------------------------+
 |               | routes         | x         | n/a      |          | Including DNS verification            |
+|               +----------------+-----------+----------+----------+---------------------------------------+
+|               | reCaptcha      |           |          |          | Domain needs to be added manually via |
+|               |                |           |          |          | Google web interface. See             |
+|               |                |           |          |          | :ticket:`TOCDEV-1799`                 |
 |               +----------------+-----------+----------+----------+---------------------------------------+
 |               | ACME           | x         | n/a      |          | Let's Encrypt integration             |
 +---------------+----------------+-----------+----------+----------+---------------------------------------+
@@ -83,6 +87,7 @@ concerns application running on OpenShift only.
 | ² Only managed if ``mail_domains`` variable is set.
 | ³ Only managed if ``app_server`` variable is set.
 | ⁴ Application properties, DB and S3 setting are managed.
+| ⁵ No dedicated user is created. Rather, one user account is shared and configured via Ansible.
 
 
 Repository
