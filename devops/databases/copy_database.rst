@@ -5,6 +5,88 @@ Copy/Dump/Restore Database
 
         If you want restore a backup have a look at :doc:`../backups/database`.
 
+.. _ansible-copy-db:
+
+Copy Database via Ansible
+-------------------------
+
+.. hint::
+
+    * If you haven't yet, :ref:`setup-ansible` first.
+    * If you want to restore to localhost (the default), also :ref:`setup-postgres`.
+
+Usage::
+
+    cd ${ANSIBLE_REPO}/tocco
+    ansible-playbook playbooks/copy_db.yml -l INSTALLATION[,INSTALLATION]... [-e target_server=TARGET] [-e no_binaries=yes]
+
+===================== ==========================================================
+ **INSTALLATION**      | Name of the installation, for instance *agogis*
+                       | or *agogistest*.
+ **TARGET**:           | Host on which to restore the DB, for instance
+                       | *postgres.tocco.ch*. If omitted, restore is done
+                       | on localhost via Unix socket.
+ **no_binaries=yes**   | Omit mail archive and binaries from copy.
+                       |
+                       | **Errors during restore are expected as referenced**
+                       | **rows will be missing.**
+===================== ==========================================================
+
+
+Example:
+
+.. parsed-literal::
+
+    $ cd ${ANSIBLE_REPO}/tocco
+    $ ansible-playbook playbooks/copy_db.yml -l magentatest -e target_server=postgres.tocco.ch
+    PLAY [tocco_installations]
+
+    *... omitted ...*
+
+    TASK [fetch DB size]
+    ok: [magentatest -> db1.tocco.cust.vshn.net]
+
+    TASK [print DB details]
+    ok: [magentatest] =>
+      msg: \|-
+        source:
+          db: nice_magentatest
+          size: 379 MB
+        target:
+          server: postgres.tocco.ch
+          db: nice_magentatest_20200422t145625_pgerber
+          user: nice_magentatest
+          password: XXXXXXXXXXXXXXXXXXXXXXXX
+
+        ---
+
+        **dataSource.serverName=postgres.tocco.ch**
+        **dataSource.databaseName=nice_magentatest_20200422t145625_pgerber**
+        **dataSource.user=nice_magentatest**
+        **dataSource.password=XXXXXXXXXXXXXXXXXXXXXXXX**
+
+    *... omitted ...*
+
+    TASK [copy_database]
+    changed: [magentatest]
+
+    TASK [details]
+    ok: [magentatest] =>
+      msg: \|-
+        **duration: 0:05:20.979651**
+
+    PLAY RECAP
+    magentatest                : ok=10   changed=3    unreachable=0    failed=0
+
+    Playbook run took 0 days, 0 hours, 5 minutes, 58 seconds
+
+Use the DB configuration printed **boldly** by copying it to *hikaricp.local.properties*.
+
+Passwords are generated deterministically and will always be the same for the same
+installation and server. For instance, any database of *agogistesto on *localhost*
+will always have the same password.
+
+
 Dump Database
 -------------
 
