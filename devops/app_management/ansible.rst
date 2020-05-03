@@ -626,10 +626,36 @@ Important Tags:
     ``--skip-tags TAG1,TAG2`` to skip tasks having certain tags assigned.
 
 
+Run Playbook in Batches
+^^^^^^^^^^^^^^^^^^^^^^^
+
+When applying changes to a large number of installations, in particular
+**if the change involves an automatic restart**, it's preferable to run the
+playbook on a limited number of installations at a time. To this end,
+``-e batch=BATCH_DEFINITION`` can be used to run the playbook in batches.
+
+Examples:
+
+Run the playbook for **one installation at a time**::
+
+    -e batch=1
+
+Run playbook on one installation first, then on five, and then keep
+running it 20% of the installations::
+
+    -e batch="[1,5,'20%']"
+
+The next batch is started only when all changes could be applied
+successfully.
+
+This is internally implemented using Ansible's `serial keyword`_. Any
+value accepted by *serial* can be used.
+
+
 Check Mode
 ^^^^^^^^^^
 
-The check mode can be used to show what would be changed without altually
+The check mode can be used to show what would be changed without actually
 applying the changes::
 
     $ cd ${ANSIBLE_GIT_REPO}/tocco
@@ -686,3 +712,4 @@ access and edit them via::
 
 .. _common.yaml: https://git.vshn.net/tocco/tocco_hieradata/blob/master/common.yaml
 .. _Git Repository: https://git.tocco.ch/admin/repos/ansible
+.. _serial keyword: https://docs.ansible.com/ansible/latest/user_guide/playbooks_delegation.html#rolling-update-batch-size
