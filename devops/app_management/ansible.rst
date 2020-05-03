@@ -536,19 +536,19 @@ Show Available Installations
     $ ansible-inventory --graph
       @all:
       |--@tocco_installations:
-      |  |--@customer-abbts:
+      |  |--@customer_abbts:
       |  |  |--abbts
       |  |  |--abbtstest
-      |  |--@customer-agogis:
+      |  |--@customer_agogis:
       |  |  |--agogis
       |  |  |--agogistest
-      |  |--@customer-anavant:
+      |  |--@customer_anavant:
       |  |  |--anavant
       |  |  |--anavanttest
       …
 
 | *abbts*, *abbtstest*, *agogis*, … are installations
-| *customer-abbts*, *customer-agogis*, … are customers
+| *customer_abbts*, *customer_agogis*, … are customers
 
 
 Run Full Playbook (=Configure Everything)
@@ -573,7 +573,7 @@ Run Full Playbook (=Configure Everything)
     executed. You may specify multiple installations and customers
     separated by comma::
 
-        -l abbts,customer-anavant
+        -l abbts,customer_anavant
 
     This will execute the playbook on installation *abbts* and
     all installations of customer *anavant*.
