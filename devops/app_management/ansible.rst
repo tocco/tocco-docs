@@ -391,7 +391,11 @@ Add Routes / Endpoints
                  www.xyz.ch:          # <=
              abctest:
 
-   Do **not** add a route for *${INSTALLATION}.tocco.ch* it is added implicitly.
+   The default route *${INSTALLATION}.tocco.ch* is added implicitly. Only add it
+   explicitly if you wish to override the default settings.
+
+   Technical note: the default route, if absent, is added by the inventory script
+   (``inventory.py``).
 
 #. Apply change:
 
@@ -405,7 +409,7 @@ Add Routes / Endpoints
 Remove Routes / Endpoints
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-#. Remove monitoring for endpoint from `common.yaml`_
+#. Remove route from ``config.yml``
 
 #. Find the route name (leftmost column)::
 
