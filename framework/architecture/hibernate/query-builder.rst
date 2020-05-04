@@ -57,9 +57,12 @@ condition to the query:
       A :java:ref:`Condition<ch.tocco.nice2.persist.qb2.Condition>` is first converted into a :java:ref:`Node<ch.tocco.nice2.conditionals.tree.Node>`
       instance using the :java:ref:`ConditionFactory<ch.tocco.nice2.persist.query.ConditionFactory>` and then transformed into a
       :java:extdoc:`Predicate<javax.persistence.criteria.Predicate>` using the :java:ref:`PredicateFactory<ch.tocco.nice2.persist.hibernate.PredicateFactory>`.
-    * Conditions added through the ``whereInsecure()`` methods are allowed to use the ``insecure`` keyword for subqueries (see :java:ref:`SubqueryFactoryImpl<ch.tocco.nice2.persist.hibernate.query.AbstractCriteriaBuilder.SubqueryFactoryImpl>`).
-      If an insecure condition is added through the ``where()`` method, an exception will be thrown. This is necessary for security reasons, otherwise
+    * Conditions added through the ``whereInsecure()`` methods are added in ``insecure`` mode (the ``isInsecure`` flag passed to ``QueryBuilderInterceptor#buildConditionFor()``
+      and ``QueryBuilderInterceptor#fieldUsedInQueryCondition()`` is set to true) - this means that no ACL conditions will be added to any joins or subqueries that are present in the condition.
+      The separate ``whereInsecure()`` method is necessary for security reasons to control where insecure conditions may be used, otherwise
       any user could execute insecure queries, for example through the REST API.
+      The ``secure`` and ``insecure`` TQL keywords are no longer supported and will be ignored. This was necessary with the introduction of the
+      query builder interceptors for joins because there was no way to mark a join as insecure (which caused huge ACL and constriction conditions).
 
 It also invokes the ``QueryBuilderInterceptor#buildConditionFor()`` method of all interceptors when
 the query initialization has been completed and adds the created conditions to the list of predicates.
@@ -204,6 +207,15 @@ When ``getResultList()`` is called, the following steps are taken:
       if it is a ``DISTINCT`` query.
       The missing columns are automatically added to the selection (``expandSelection(List<Order> order)``)
       and are removed again before the results are processed (``unwrapResults(List<Object[]> results)``).
+
+      If a ``SELECT CASE`` expression is used in the ordering clause, it also needs to be added to the selection. However in this case
+      the ``ORDER BY`` expression needs to be replaced with a literal reference to the selection (``ORDER BY 1`` for example),
+      otherwise PostgreSQL does not recognize that both of these expressions are the same. Since by default all literals
+      will be rendered as parameters we need to explicitly use ``CriteriaBuilderWrapper#inlineLiteral()`` that uses an
+      :java:ref:`InlineLiteralExpression<ch.tocco.nice2.persist.hibernate.InlineLiteralExpression>` which overrides the
+      default :java:extdoc:`LiteralHandlingMode<org.hibernate.query.criteria.LiteralHandlingMode>` to ``AUTO`` (we do
+      not use ``INLINE`` to make sure that strings are never inlined, as this would be an SQL injection risk).
+
       Due to a bug in hibernate an array selection of size 1 is not returned as array. As this breaks our code we
       add a dummy selection (the literal '1') if the the selection size is 1.
 
@@ -390,6 +402,16 @@ The method takes an instance of :java:ref:`QueryBuilderType<ch.tocco.nice2.persi
 which signifies by what kind of query builder it is called. Currently ``READ`` and ``DELETE`` are supported. The
 ``SecureQueryInterceptor`` uses this information to apply the correct security conditions depending on the query type.
 
+The argument :java:ref:`QueryBuilderSituation<ch.tocco.nice2.persist.hibernate.query.QueryBuilderInterceptor.QueryBuilderSituation>`
+indicates whether the returned conditions will be applied to a (sub)query or a join.
+
+``fieldUsedInQueryCondition()``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This method will be called whenever a field is used in a query condition, for example ``where username == 'user'``.
+The ``SecureQueryInterceptor`` will return conditions based on ``entityPath`` rules and will throw
+an exception when a field is used that is marked as ``privileged-only`` in the field model.
+
 ``createSelectionInterceptor()``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -412,6 +434,105 @@ One use case is to add the primary key of a 'base path' to the selection in orde
 The use case of the ``SecureQueryInterceptor`` is to find all primary keys of a base path using ``QueryResult#getValuesForPath()``
 then check access permissions and overwrite the value with null if access is denied (using ``QueryResult#findRowsWithValueAtPath()``
 and ``Row#setValueForPath()``.
+
+Interceptors for Joins
+----------------------
+
+The :java:ref:`QueryBuilderInterceptor<ch.tocco.nice2.persist.hibernate.query.QueryBuilderInterceptor>` is also called for
+joins that are used in conditions (in addition to subqueries and the root entity) to make sure
+that the conditions cannot be used to bypass ACL rules.
+
+For example the query ``find User where relUser_status.unique_id == "active"`` should not return any results
+if the principal does not have access to the related ``User_status`` entity or the ``relUser_status`` field of the ``User``
+entity.
+
+Unlike additional conditions for the root entity, additional conditions for joins cannot just be added to the query builder:
+
+``(relUser_status.unique_id == "active" or username is not null)`` would become
+``(relUser_status.unique_id == "active" or username is not null) and <interceptor-condition>``.
+This would never return any results if the condition added by the interceptor evaluates to false, even if the second part of the OR
+clause is true.
+Therefore the condition needs to be combined only with the clause that contains the join:
+``(relUser_status.unique_id == "active" and <interceptor-condition>) or username is not null``.
+
+.. note::
+
+    Due to this, large ``OR`` clauses should be replaced with an ``IN`` clause, as the ``OR`` clause can become very inefficient:
+    ``where value = 1 AND <interceptor-condition> OR value = 2 AND <interceptor-condition> ...`` versus
+    ``where value IN (1,2,...) AND <interceptor-condition>``.
+
+To achieve this we use an extended :java:extdoc:`CriteriaBuilder<javax.persistence.criteria.CriteriaBuilder>` that
+intercepts the creation of all predicates and wraps them with the conditions from the interceptors if necessary
+(:java:ref:`CriteriaBuilderWrapper<ch.tocco.nice2.persist.hibernate.query.CriteriaBuilderWrapper>`).
+
+The wrapper overrides methods like ``equal()`` and ``notEqual()``:
+
+    * The creation of the actual predicate is delegated to the 'real' criteria builder
+    * All expressions that are passed to the criteria builder (see below) are then processed by
+      the interceptors and the resulting :java:ref:`Node<ch.tocco.nice2.conditionals.tree.Node>` instances
+      will be converted to :java:extdoc:`Predicate<javax.persistence.criteria.Predicate>` instances using
+      a derived :java:ref:`PredicateFactory<ch.tocco.nice2.persist.hibernate.PredicateFactory>`. The predicate
+      factory needs to be derived to use the current join as the query root (as the conditions are based on this
+      entity, not the query root) and to use the real criteria builder to avoid endless recursion.
+    * The actual predicate is then combined with the interceptor predicates and an AND predicate is returned from the call
+      (only if there are any interceptor predicates, otherwise just the actual predicate is returned directly).
+
+Conditions are collected from the following expressions:
+
+:java:extdoc:`Path<javax.persistence.criteria.Path>`
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+A path might for example look like ``relEntity.relEntity2.field``. The :java:extdoc:`Path<javax.persistence.criteria.Path>` instance always references the last
+path element. If it is an instance of :java:extdoc:`From<javax.persistence.criteria.From>`, the last path element is
+a relation, otherwise it is a field.
+
+For the example path ``relUser.relAddress.city`` the conditions of the following interceptor calls
+are collected:
+
+    * ``fieldUsedInQueryCondition("Address", "city")`` (this call only applies when the path points to a field)
+    * ``buildConditionFor("Address")``
+    * ``fieldUsedInQueryCondition("User", "relAddress")``
+    * ``buildConditionFor("User")``
+    * ``fieldUsedInQueryCondition(ROOT, "relUser")``
+
+:java:extdoc:`ParameterizedFunctionExpression<org.hibernate.query.criteria.internal.expression.function.ParameterizedFunctionExpression>`
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+All parameter expressions of the function call are recursively evaluated (see above how :java:extdoc:`Path<javax.persistence.criteria.Path>`
+expression are evaluated).
+
+:java:extdoc:`Subquery<javax.persistence.criteria.Subquery>`
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+A (correlated) subquery might be created for example from the following condition ``exists(relUser.relAddress.relStatus where ... )``.
+
+In this example the ``relStatus`` join is the 'root' of the subquery: conditions of the ``Status`` entity do not need to be added to the join,
+they will already be added to the subquery. However it is necessary to check the field of that join (``Address#relStatus``).
+
+The ``relAddress`` join is the 'correlated' join. Conditions up to this join will be collected (see above how :java:extdoc:`Path<javax.persistence.criteria.Path>`
+expression are evaluated).
+
+So for the above example the following interceptor calls are made:
+
+    * ``fieldUsedInQueryCondition("Address", "relStatus")``
+    * ``buildConditionFor("Address")``
+    * ``fieldUsedInQueryCondition("User", "relAddress")``
+    * ``buildConditionFor("User")``
+    * ``fieldUsedInQueryCondition(ROOT, "relUser")``
+
+Joins and fields in the ORDER BY clause
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+It is also necessary to secure the ``ORDER BY`` clauses, it should not be possible to order by a field or relation
+that is not accessible.
+For that purpose the :java:ref:`CriteriaBuilderWrapper<ch.tocco.nice2.persist.hibernate.query.CriteriaBuilderWrapper>`
+also overrides the ``asc`` and ``desc`` methods and returns a modified order by clause that uses a ``SELECT CASE ... WHEN ...`` expression.
+
+Conditions are collected for the ``ORDER BY`` expression in the same way as described for conditions above.
+The collected conditions are then wrapped in the following way:
+
+``ORDER BY name`` becomes ``ORDER BY SELECT CASE <interceptor-condition> THEN name OTHERWISE null`` which means that
+rows where the ``ORDER BY`` clause is not accessible will be ordered like if the ``ORDER BY`` clause would evaluate to NULL.
 
 Custom JDBC Functions
 ---------------------
@@ -534,6 +655,9 @@ The actual work is done in :java:ref:`QueryBuilderJoinHelper<ch.tocco.nice2.pers
 If the path points to a primary key that is referenced in a many to one association, the foreign key field is returned
 instead of performing an unnecessary join (which results in ``address.fk_user = ?`` instead of ``INNER JOIN user ON user.pk = address.fk_user WHERE user.pk = ?``
 for performance reasons.
+This shortcut can only be used when the :java:ref:`QueryBuilderInterceptors<ch.tocco.nice2.persist.hibernate.query.QueryBuilderInterceptor>`
+do not need to add any conditions to that join. This is checked through the :java:ref:`JoinInfo<ch.tocco.nice2.persist.hibernate.JoinInfo>`
+class which internally uses the ``CriteriaBuilderWrapper#hasQueryRestrictions()`` method.
 
 When a join is created it corresponds to an actual JOIN in the SQL. Therefore it should be tried to reuse the join instances
 if the same entity is going to be joined multiple times.
