@@ -71,7 +71,7 @@ will be updates should other servers be used in the future.
    .. parsed-literal::
 
           cd ${GIT_ROOT}/tocco
-          ansible-playbook playbook.yml -l **customer-abc**
+          ansible-playbook playbook.yml -l **customer_abc**
 
 
 

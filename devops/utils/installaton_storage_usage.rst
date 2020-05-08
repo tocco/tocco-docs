@@ -59,7 +59,7 @@ Generate CSV::
 This stores the data in *playbooks/data.csv*.
 
 You can generate a report for a limited number of customers using ``-l`` like
-this: ``-l customer-agogis,customer-bk``.
+this: ``-l customer_agogis,customer_bk``.
 
 .. hint::
 
