@@ -309,7 +309,7 @@ Documentation:
 * `Jinja2 Documentation <https://jinja.palletsprojects.com>`__
 * `Ansible extensions <https://docs.ansible.com/ansible/latest/user_guide/playbooks_templating.html>`__
 
-Example:
+**Example:**
 
 .. code-block:: yaml
 
@@ -331,8 +331,55 @@ Example:
         db_name: NICE2_{{ installation_name|upper }}  #    db_server is "db1.blue.tocco.ch"
         location: blue                                #    history_db_name is "NICE2_ABCTEST_history"
 
-The special variables **customer_name** and **installation_name** set transparently based
-on the definitions in ``config.yml`` and can be used everywhere. (See ``inventory.py``)
+**Evaluation:**
+
+Junja2 templates are evaluated for every installation independently. Thus, *{{ installation_name }}*
+always correspond to the name of the installation being processed.
+
+Also, all expressions and statements are only evaluated when used. Thus, when setting these variables …:
+
+.. code-block:: yaml
+
+  is_production: "{{ not is_test }}"
+  is_test: "{{ installation_name.endswith('test') }}"
+  db_user: "{% if location == 'nine' %}{{ installation_name }}_user{% else %}{{ installation_name }}{% endif %}"
+
+… they are **not** evaluated until used. Here for instance by passing them to the debug module:
+
+.. code-block:: yaml
+
+    - name: print debug info
+      debug:
+        msg: '{{ db_user }}'
+      when: is_production
+
+``{{ not is_test }}``, ``{{ installation_name.endswith('test') }}`` and
+``{% if location == 'nine' %}…{% endif %}``, defined in the variables above, are only evaluated now,
+and will be evaluated again when used again.  Consequently, the variables *installation_name*,
+*location* and *is_test* used in the expressions/statements can be reference before they exist. This
+delayed evaluation is used extensively throughout the Ansible playbooks. It allows the use of global,
+customer, installation and run time variables without having to worry whether they have been set
+at that point.
+
+**Special variables:**
+
+A bunch special variables are set transparently based on the definitions in ``config.yml`` and can
+be used anywhere in a playbook. This variables are set by the inventory script (``inventory.py``).
+
+======================= ========================================================
+ customer_name           The customer to which the installation belongs.
+ installation_name       Name of the installation.
+ sibling_installations   Names of all other installations belonging to the same
+                         customer.
+======================= ========================================================
+
+Ansible itself has built-in `special variables`_ that can be used too.
+
+Ansible does not understand the concept of customers or installations.  For
+Ansible to be able make sense of it, installations are translated to hosts
+and customers to groups. This means, for instance, *hostvars*, contains the
+variables belonging to all installations and *groups* contains the names
+of all customers.
 
 .. hint::
 
@@ -713,3 +760,4 @@ access and edit them via::
 .. _common.yaml: https://git.vshn.net/tocco/tocco_hieradata/blob/master/common.yaml
 .. _Git Repository: https://git.tocco.ch/admin/repos/ansible
 .. _serial keyword: https://docs.ansible.com/ansible/latest/user_guide/playbooks_delegation.html#rolling-update-batch-size
+.. _special variables: https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html
