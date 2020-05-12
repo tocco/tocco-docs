@@ -356,15 +356,15 @@ Also, all expressions and statements are only evaluated when used. Thus, when se
 ``{{ not is_test }}``, ``{{ installation_name.endswith('test') }}`` and
 ``{% if location == 'nine' %}…{% endif %}``, defined in the variables above, are only evaluated now,
 and will be evaluated again when used again.  Consequently, the variables *installation_name*,
-*location* and *is_test* used in the expressions/statements can be reference before they exist. This
+*location* and *is_test* used in the expressions/statements can be referenced before they exist. This
 delayed evaluation is used extensively throughout the Ansible playbooks. It allows the use of global,
 customer, installation and run time variables without having to worry whether they have been set
 at that point.
 
 **Special variables:**
 
-A bunch special variables are set transparently based on the definitions in ``config.yml`` and can
-be used anywhere in a playbook. This variables are set by the inventory script (``inventory.py``).
+A bunch of special variables are set transparently based on the definitions in ``config.yml`` and can
+be used anywhere in a playbook. These variables are set by the inventory script (``inventory.py``).
 
 ======================= ========================================================
  customer_name           The customer to which the installation belongs.
