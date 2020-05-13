@@ -71,7 +71,7 @@ This rule applies to all ``User`` entities.
     * ``and stop`` marks this rule as final (see above).
 
 .. note::
-    All security features are disabled when the ``privileged()`` invoker of the :java:ref:`SecurityManager<ch.tocco.nice2.security.SecurityManager>`
+    All security features are disabled when the ``privileged()`` invoker of the :abbr:`SecurityManager (ch.tocco.nice2.security.SecurityManager)`
     is used.
 
 Keywords
@@ -84,13 +84,13 @@ Also, the keyword ``permission`` is currently reserved, but unused.
 Security domains
 ----------------
 
-Different objects are secured with different :java:ref:`SecurityDomains<ch.tocco.nice2.security.spi.SecurityDomain>`. A security domain defines which permissions are
+Different objects are secured with different :abbr:`SecurityDomains (ch.tocco.nice2.security.spi.SecurityDomain)`. A security domain defines which permissions are
 available and how or if conditions can be applied to a rule.
 
 entityManager
 ^^^^^^^^^^^^^
 
-The target of this domain is an :java:ref:`EntityModel<ch.tocco.nice2.persist.model.EntityModel>`.
+The target of this domain is an :abbr:`EntityModel (ch.tocco.nice2.persist.model.EntityModel)`.
 It provides the ``create`` permission, which allows creating a new instance of an entity.
 Conditions are not supported.
 
@@ -156,7 +156,7 @@ entities are returned from the database.
 Updating relations
 ..................
 
-When an entity is added to or removed from a :java:ref:`Relation<ch.tocco.nice2.persist.entity.Relation>` the
+When an entity is added to or removed from a :abbr:`Relation (ch.tocco.nice2.persist.entity.Relation)` the
 permissions of the *both* sides of the relation are combined:
 
     * ``GRANT`` + ``GRANT`` = ``GRANT``
@@ -196,7 +196,7 @@ entity containing the field and not the field itself).
 This denies write access only to a single field of an entity (*email* in this case).
 
 These rules are checked whenever ``getValue()`` or ``setValue()`` (or a similar method like ``getString()``) is
-called on the :java:ref:`Entity<ch.tocco.nice2.persist.entity.Entity>`.
+called on the :abbr:`Entity (ch.tocco.nice2.persist.entity.Entity)`.
 
 .. note::
     When a user has been granted access to an entity (through the ``entity`` security domain) and there are no
@@ -256,16 +256,16 @@ Controls whether a specific report may be generated:
 Policy
 ------
 
-All ACL rules are compiled into a security :java:ref:`Policy<ch.tocco.nice2.security.Policy>`.
+All ACL rules are compiled into a security :abbr:`Policy (ch.tocco.nice2.security.Policy)`.
 The rules are applied in the order they were defined in the ``*.acl`` files (and depending on module
 dependencies). So it is always possible to override an earlier rule (unless ``and stop`` was defined
 on a rule).
 
-Because the full policy (stored in the :java:ref:`SecurityManager<ch.tocco.nice2.security.SecurityManager>`) for all possible principals and all possible objects may get very big for a full-scale application,
+Because the full policy (stored in the :abbr:`SecurityManager (ch.tocco.nice2.security.SecurityManager)`) for all possible principals and all possible objects may get very big for a full-scale application,
 this policy will be reduced whenever possible. There are two points, where some important facts get known that allow to filter out rules that won't apply anyway:
 
-    * After login, the exact principal is known. At this point, a new policy will be generated for that user (stored in the :java:ref:`SecurityContext<ch.tocco.nice2.security.SecurityContext>`) that doesn't contain any rules anymore that don't affect that principal.
-    * When a guard is needed, the exact object is known. At this point, all rules that don't affect this object will be filtered out using the selector (stored in the :java:ref:`Guard<ch.tocco.nice2.security.Guard>`).
+    * After login, the exact principal is known. At this point, a new policy will be generated for that user (stored in the :abbr:`SecurityContext (ch.tocco.nice2.security.SecurityContext)`) that doesn't contain any rules anymore that don't affect that principal.
+    * When a guard is needed, the exact object is known. At this point, all rules that don't affect this object will be filtered out using the selector (stored in the :abbr:`Guard (ch.tocco.nice2.security.Guard)`).
 
 Therefore, in practice, the policy for a concrete object will finally be relatively compact.
 
@@ -273,7 +273,7 @@ Checking permissions manually
 -----------------------------
 
 Normally the permissions are checked automatically when querying or updating data. But sometimes it is necessary
-to check permissions manually. This can be done by obtaining a :java:ref:`Guard<ch.tocco.nice2.security.Guard>` from
-the :java:ref:`SecurityContext<ch.tocco.nice2.security.SecurityContext>`.
-The :java:ref:`Guard<ch.tocco.nice2.security.Guard>` instance can then be used to evaluate permissions.
+to check permissions manually. This can be done by obtaining a :abbr:`Guard (ch.tocco.nice2.security.Guard)` from
+the :abbr:`SecurityContext (ch.tocco.nice2.security.SecurityContext)`.
+The :abbr:`Guard (ch.tocco.nice2.security.Guard)` instance can then be used to evaluate permissions.
 

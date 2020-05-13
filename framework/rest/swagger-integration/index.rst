@@ -42,11 +42,11 @@ with ``href="swagger/swagger-ui.css"``
 2. NiceOpenApiServlet
 ^^^^^^^^^^^^^^^^^^^^^
 
-The :java:ref:`NiceOpenApiServlet<ch.tocco.nice2.rest.doc.impl.NiceOpenApiServlet>` extends the
-:java:ref:`OpenApiServlet<io.swagger.v3.jaxrs2.integration.OpenApiServlet>` which produces the `OpenAPI Specification`_
+The :abbr:`NiceOpenApiServlet (ch.tocco.nice2.rest.doc.impl.NiceOpenApiServlet)` extends the
+:abbr:`OpenApiServlet (io.swagger.v3.jaxrs2.integration.OpenApiServlet)` which produces the `OpenAPI Specification`_
 for the Swagger-UI page.
 
-In the :java:ref:`NiceOpenApiServlet<ch.tocco.nice2.rest.doc.impl.NiceOpenApiServlet>` the following is configured:
+In the :abbr:`NiceOpenApiServlet (ch.tocco.nice2.rest.doc.impl.NiceOpenApiServlet)` the following is configured:
  - All REST resources
  - Some information like the company and contact data
  - The authentication mechanism (so that authenticated requests can be executed)
@@ -57,7 +57,7 @@ The serlvet can be requested under ``<INSTALLATION>/nice2/openapi``.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To describe the REST resources `Swagger Annotations`_ are used. The
-:java:ref:`NiceOpenApiServlet<ch.tocco.nice2.rest.doc.impl.NiceOpenApiServlet>` converts these to the `OpenAPI Specification`_.
+:abbr:`NiceOpenApiServlet (ch.tocco.nice2.rest.doc.impl.NiceOpenApiServlet)` converts these to the `OpenAPI Specification`_.
 
 Check the `Swagger Annotation docs`_ to see how resources can be described.
 
