@@ -15,14 +15,12 @@ You need tho have this dependency installed:
 * python3-sphinx
 * python3-sphinx-rtd-theme
 * graphviz
-* javasphinx (`pip3 install --user javasphinx`)
 * python3-sphinx-autobuild (optional, needed for live reload)
 
 On Debian-based Linux, dependencies can be installed like this::
 
-    apt install python3 python3-sphinx-rtd-theme graphviz pip3
+    apt install python3 python3-sphinx-rtd-theme graphviz
     apt install python3-sphinx-autobuild  # optional, needed for live reload
-    pip3 install --user javasphinx
 
 
 Build the documentation

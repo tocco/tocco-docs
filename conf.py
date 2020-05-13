@@ -34,7 +34,6 @@ extensions = [
     'sphinx.ext.graphviz',
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
-    'javasphinx'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -369,5 +368,9 @@ extlinks = {
    'ansible-repo-file': ('https://git.tocco.ch/gitweb?p=ansible.git;a=blob;f=%s', '/'),
    'ansible-repo-dir': ('https://git.tocco.ch/gitweb?p=ansible.git;a=blob;a=tree;f=%s', '/'),
    'hierra-repo': ('https://git.vshn.net/tocco/tocco_hieradata/blob/master/%s', ''),
-   'tocco-manual': ('https://223.docs.tocco.ch/en/%s', None)
+   'tocco-manual': ('https://223.docs.tocco.ch/en/%s', ''),
+   'java': ('https://docs.oracle.com/en/java/javase/11/docs/api/java.base/%s.html', ''),
+   'java-hibernate': ('https://docs.jboss.org/hibernate/orm/5.4/javadocs/%s', ''),
+   'java-javax': ('https://javaee.github.io/javaee-spec/javadocs/%s', ''),
+   'java-javassist': ('http://www.javassist.org/html/%s', ''),
 }
