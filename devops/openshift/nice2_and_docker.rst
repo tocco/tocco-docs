@@ -47,7 +47,7 @@ Pull a Docker Image from VSHN's Registry
 
    .. hint::
    
-      An ``oc describe …`` on :term:`RC`\ s and :term:`Pod`\ s will also reveal the used images.
+      An ``oc describe …`` on :term:`RC`\ s and :term:`pod`\ s will also reveal the used images.
    
       :term:`Solr` and :term:`Nginx` images can be found in the project ``toco-shared-imagestreams``.
 

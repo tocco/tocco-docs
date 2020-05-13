@@ -355,7 +355,7 @@ rst_prolog = ".. include:: /global.rst\n\n"
 
 # add custom style sheet
 def setup(app):
-    app.add_stylesheet("css/custom.css")
+    app.add_css_file("css/custom.css")
 
 javadoc_url_map = {
     'org.hibernate' : ('https://docs.jboss.org/hibernate/orm/5.4/javadocs/', 'javadoc'),
