@@ -355,7 +355,7 @@ rst_prolog = ".. include:: /global.rst\n\n"
 
 # add custom style sheet
 def setup(app):
-    app.add_stylesheet("css/custom.css")
+    app.add_css_file("css/custom.css")
 
 extlinks = {
    'ticket': ('https://control.vshn.net/tickets/%s', ''),
