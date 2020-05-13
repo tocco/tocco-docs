@@ -116,7 +116,7 @@ the synchronization synchronizes this entity again.
 Starting the Report Synchronization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The report synchronization is done with the :java:ref:`ReportSynchronizer<ch.tocco.nice2.reporting.impl.sync.ReportSynchronizer>`
+The report synchronization is done with the :abbr:`ReportSynchronizer (ch.tocco.nice2.reporting.impl.sync.ReportSynchronizer)`
 service. This service is registered as ``starter`` but synchronizes the entities only in the ``RunEnv`` mode
 ``production`` and ``test`` during the start up.
 

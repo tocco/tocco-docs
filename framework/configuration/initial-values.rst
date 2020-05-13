@@ -174,14 +174,14 @@ Running initial values from changesets
 --------------------------------------
 
 It is possible to run specific initial values from changeset through the use of the
-:java:ref:`YamlInitialValueCustomChange<ch.tocco.nice2.dbrefactoring.impl.data.YamlInitialValueCustomChange>`. See the
+:abbr:`YamlInitialValueCustomChange (ch.tocco.nice2.dbrefactoring.impl.data.YamlInitialValueCustomChange)`. See the
 class for instructions how to use it, but make sure that you actually need to use it since it is a rather ugly fix for
 necessary interactions between existing changesets and new initial values.
 
 Migrating changesets to YAML initial values
 -------------------------------------------
 
-There is a action called :java:ref:`YamlLookupAction<ch.tocco.nice2.dbrefactoring.impl.yaml.YamlLookupAction>` that can
+There is a action called :abbr:`YamlLookupAction (ch.tocco.nice2.dbrefactoring.impl.yaml.YamlLookupAction)` that can
 be called directly by a developer. This will find all initial value changesets in the installed modules and will try to
 map them to new YAML initial values. It is not super cleanly implemented since it was mainly used to support a manual
 migration, so the results need to be checked carefully. But in general, most customers will not need to migrate their

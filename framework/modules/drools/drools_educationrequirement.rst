@@ -40,6 +40,6 @@ RequirementStatusUtil
 
 This class is used to set the status of the ``Requirement`` that is being evaluated. Additional reasons for the
 for the activation of this rule can be passed to it through the
-:java:ref:`addReason<ch.tocco.nice2.optional.educationrequirement.impl.requirementevaluation.globals.RequirementStatusUtil#addReason>`
+:abbr:`addReason (ch.tocco.nice2.optional.educationrequirement.impl.requirementevaluation.globals.RequirementStatusUtil#addReason)`
 method and the
-:java:ref:`Reason<ch.tocco.nice2.optional.educationrequirement.impl.requirementevaluation.globals.Reason>` class.
+:abbr:`Reason (ch.tocco.nice2.optional.educationrequirement.impl.requirementevaluation.globals.Reason)` class.

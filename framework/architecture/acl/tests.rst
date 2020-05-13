@@ -2,7 +2,7 @@ Tests
 =====
 
 The easiest way to test the ACL rules of a module is by extending
-:java:ref:`ch.tocco.nice2.persist.security.inject.AbstractModuleAclTest`. This base test class automatically sets the
+:abbr:`ch.tocco.nice2.persist.security.inject.AbstractModuleAclTest (AbstractModuleAclTest)`. This base test class automatically sets the
 ``entity.acl`` file of the current module as initial policy for the tests.
 
 
@@ -71,7 +71,7 @@ See the following example for the `nice2-optional-correspondence` module:
 Test methods
 ------------
 
-Among others, :java:ref:`ch.tocco.nice2.persist.security.inject.AbstractModuleAclTest` provides the following useful methods:
+Among others, :abbr:`ch.tocco.nice2.persist.security.inject.AbstractModuleAclTest (AbstractModuleAclTest)` provides the following useful methods:
 
 * `baseTestCase(ExpectedAccess expectedAccess, Principal principal, Callable<Entity> dataCreator, String... fields)`
 * `baseTestCase(List<String> aclFileNames, ExpectedAccess expectedAccess, Principal principal, Callable<Entity> dataCreator, String... fields)`

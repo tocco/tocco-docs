@@ -45,11 +45,11 @@ Listeners
 ---------
 There are three listeners that are responsible to keep all ``Calendar_event`` entities up-to-date.
 
-* :java:ref:`GenericCalendarEventListener<ch.tocco.nice2.optional.calendar.impl.entitylistener.calendarevent.GenericCalendarEventListener>`
+* :abbr:`GenericCalendarEventListener (ch.tocco.nice2.optional.calendar.impl.entitylistener.calendarevent.GenericCalendarEventListener)`
   generates ``Calendar_event`` entities for system calendars.
-* :java:ref:`EntityCalendarEventListener<ch.tocco.nice2.optional.calendar.impl.entitylistener.calendarevent.EntityCalendarEventListener>`
+* :abbr:`EntityCalendarEventListener (ch.tocco.nice2.optional.calendar.impl.entitylistener.calendarevent.EntityCalendarEventListener)`
   generates ``Calendar_event`` entities for entity-specific calendars.
-* :java:ref:`OfftimeEventMappingEntityListener<ch.tocco.nice2.optional.conflict.impl.OfftimeEventMappingEntityListener>`
+* :abbr:`OfftimeEventMappingEntityListener (ch.tocco.nice2.optional.conflict.impl.OfftimeEventMappingEntityListener)`
   creates ``Calendar_event`` entities for ``Offtime_event`` entities. If the ``Offtime_event`` has no related
   ``Calendar`` the ``Calendar_event`` entities are created in every existing ``Calendar``.
 
@@ -63,11 +63,11 @@ In addition, there are four contributions to ``nice2.entityoperation.CascadingDe
 Conflict
 --------
 ``Conflict`` entities are related to two ``Calendar_event`` entities in the same calendar which overlap. These are
-created in :java:ref:`CreateConflictEntityListener<ch.tocco.nice2.optional.conflict.impl.entitylistener.CreateConflictEntityListener>`.
+created in :abbr:`CreateConflictEntityListener (ch.tocco.nice2.optional.conflict.impl.entitylistener.CreateConflictEntityListener)`.
 Since ``Calendar_event`` entities are only recreated or deleted there are no listeners that update or delete ``Conflict``
 entities, they are just cascade deleted with their ``Calendar_event`` entities.
 
-:java:ref:`SetConflictsStatusListener<ch.tocco.nice2.optional.conflict.impl.entitylistener.SetConflictsStatusListener>`
+:abbr:`SetConflictsStatusListener (ch.tocco.nice2.optional.conflict.impl.entitylistener.SetConflictsStatusListener)`
 sets ``Conflict_status`` on ``Registration``, ``Lecturer_booking`` and ``Reservation``, depending on the existence
 of ``Conflict`` entities related to them.
 
