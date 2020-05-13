@@ -1,1 +1,1 @@
-javasphinx
+# Read the Docs mandates this file to be present
