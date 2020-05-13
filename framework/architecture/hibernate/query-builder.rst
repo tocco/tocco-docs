@@ -496,7 +496,7 @@ are collected:
     * ``fieldUsedInQueryCondition(ROOT, "relUser")``
 
 :java-hibernate:`ParameterizedFunctionExpression <org/hibernate/query/criteria/internal/expression/function/ParameterizedFunctionExpression>`
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 All parameter expressions of the function call are recursively evaluated (see above how :java-javax:`Path <javax/persistence/criteria/Path>`
 expression are evaluated).
