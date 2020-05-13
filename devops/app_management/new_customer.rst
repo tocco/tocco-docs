@@ -1,5 +1,5 @@
-Create new Customer
-===================
+Create new Customer or Installation
+===================================
 
 Add DNS Entry
 -------------
@@ -73,6 +73,13 @@ will be updates should other servers be used in the future.
           cd ${GIT_ROOT}/tocco
           ansible-playbook playbook.yml -l **customer_abc**
 
+.. hint::
+
+    When setting up the primary test system, "${CUSTOMER_NAME}test",
+    be sure to run the playbook for the production system too. This
+    because, once the test system is configured, Ansible will
+    reconfigure the production system to reuse the Docker image
+    used by the test system.
 
 
 Update and Verify Installation Entry in BO
