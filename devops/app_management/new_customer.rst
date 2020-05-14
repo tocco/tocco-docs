@@ -47,15 +47,33 @@ Create OpenShift Project, S3 Bucket and Database
                solr_server: solr2.tocco.cust.vshn.net
          # ...
 
-Just as shown in the example above, **do** use *db1.tocco.cust.vshn.net* and
-*solr2.tocco.cust.vshn.net* as DB and Solr server respectively. This example
-will be updates should other servers be used in the future.
+   Just as shown in the example above, **do** use *db1.tocco.cust.vshn.net* and
+   *solr2.tocco.cust.vshn.net* as DB and Solr server respectively. This example
+   will be updates should other servers be used in the future.
 
-    .. hint::
+   .. important::
 
-           More details about Ansible is available in :doc:`ansible`
+       Naming conventions:
 
-           Should you need more routes, see :ref:`ansible-add-route`.
+       ===================== ===================================================
+        Customer name         May only contain lower-case letters a-z and
+                              digits 0-9.
+
+        Installation name     * May only contain lower-case letters a-z,
+                                digits 0-9 and hypens (-).
+                              * All installation names should start with
+                                with the customer name.
+                              * The **production** system **must** have the
+                                same name as the customer itself. [#f1]_
+                              * The **primary test** system **must** be called
+                                *{{ customer_name }}test*.
+       ===================== ===================================================
+
+   .. hint::
+
+          More details about Ansible is available in :doc:`ansible`
+
+          Should you need more routes, see :ref:`ansible-add-route`.
 
 #. Run Ansible Playbook
 
@@ -96,6 +114,13 @@ Add Customer Module
 
 (This is done last as one cannot start an installation localy without
 running Ansible first. It creates the S3 bucket used locally too.)
+
+.. rubric:: Footnotes
+
+.. [#f1] By default, Ansible does check if *installation_name == customer_name* to
+         decide if an installation is a production system and it will use that
+         information to adjust the default settings. (See *installation_type*
+         variable in *config.yml*.)
 
 
 .. _common.yaml: https://git.vshn.net/tocco/tocco_hieradata/blob/master/common.yaml
