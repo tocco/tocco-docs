@@ -20,9 +20,9 @@ resources.
 
 The steps to implement a REST resource in any module:
     #. Add the required Maven dependency
-    #. Extend the Java interface :abbr:`ch.tocco.nice2.rest.core.spi.RestResource (RestResource)` and define
+    #. Extend the Java interface :abbr:`RestResource (ch.tocco.nice2.rest.core.spi.RestResource)` and define
        your methods and the corresponding JAX-RS annotations.
-    #. Implement your interface (by also extending the class :abbr:`ch.tocco.nice2.rest.core.spi.AbstractRestResource (AbstractRestResource)`)
+    #. Implement your interface (by also extending the class :abbr:`AbstractRestResource (ch.tocco.nice2.rest.core.spi.AbstractRestResource)`)
     #. Register your REST resource in the ``hivemodule.xml`` of the module.
 
 The following paragraphs explain in detail how this is done.
@@ -68,7 +68,7 @@ Additionally the module ``ch.tocco.nice2.rest.core.spi`` has to be imported in t
 Create Java interface
 ---------------------
 
-Create the Java interface for your resource by extending :abbr:`ch.tocco.nice2.rest.core.spi.RestResource (RestResource)`.
+Create the Java interface for your resource by extending :abbr:`RestResource (ch.tocco.nice2.rest.core.spi.RestResource)`.
 
 The following interface defines a REST resource which will be available on ``${BASE_PATH}/events/{city}``.
 It defines a method called ``getEvents()`` and a second method ``addEvent()``. The first method is mapped to
@@ -172,7 +172,7 @@ Implement resource
 ------------------
 
 Add the implementation for your resource by implementing your created interface and extending
-:abbr:`ch.tocco.nice2.rest.core.spi.AbstractRestResource (AbstractRestResource)`.
+:abbr:`AbstractRestResource (ch.tocco.nice2.rest.core.spi.AbstractRestResource)`.
 
 .. code-block:: Java
 
@@ -191,7 +191,7 @@ Add the implementation for your resource by implementing your created interface 
 How to test your resource
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Test your resource by extending :abbr:`ch.tocco.nice2.rest.testlib.AbstractInjectingJerseyTestCase (AbstractInjectingJerseyTestCase)`. Writing
+Test your resource by extending :abbr:`AbstractInjectingJerseyTestCase (ch.tocco.nice2.rest.testlib.AbstractInjectingJerseyTestCase)`. Writing
 tests for your resource by extending this base class allows you to implement **end-to-end** tests which test the
 whole process including routing (via JAX-RS annotations on your interface) and error handling (via the exception
 mappers you contribute in the test).
@@ -201,7 +201,7 @@ mappers you contribute in the test).
    Compared to simple unit tests, this is the preferred way to test your resource. However, lower level unit tests
    are important as well.
 
-Set up your test like any conventional :abbr:`ch.tocco.nice2.persist.testlib.inject.AbstractInjectingTestCase (AbstractInjectingTestCase)`
+Set up your test like any conventional :abbr:`AbstractInjectingTestCase (ch.tocco.nice2.persist.testlib.inject.AbstractInjectingTestCase)`
 and additionally implement the abstract method ``getRestResources():List<?>`` and optionally
 ``getExceptionMappers():List<ExceptionMapper>`` to test error handling.
 
