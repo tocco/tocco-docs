@@ -1,3 +1,5 @@
+.. _OpenShiftBasics:
+
 OpenShift Basics
 ================
 
