@@ -2,10 +2,10 @@ Commit-Info-Service
 ===================
 
 The commit-info-service uses data from the following sources and combines them to generate useful output that is
-accessible over its rest api.
+accessible over its REST API.
 
-- Tocco backoffice rest api to get a the list of installations and the installation urls
-- Jira rest api to retrieve issues / information about issues
+- Tocco backoffice REST API to get a the list of installations and the installation urls
+- JIRA REST API to retrieve issues / information about issues
 - The nice2 git repository (locally checked out) to get information about commits
 - ``/status-tocco`` of a selected nice2 installation to get the currently installed revision of an installation
 - ``/nice2/rest/modules`` of a selected nice2 installation to get a list of all modules
@@ -56,7 +56,7 @@ manage "toco-commit-info-service".
 Debugging tips
 --------------
 
-- Installations are cached in the tool, if an installation is added or an installation path was amended a restart may be required to see imediate results
+- Installations are cached in the tool, if an installation is added or an installation path was amended a restart may be required to see results immediately
 - Check if the url on the backoffice installation is correct, reachable and the ``status-tocco`` and ``nice2/rest/modules`` endpoints are reachable
 - Check if the git repository is properly updated (check logs)
 - Check if API Keys to backoffice and JIRA are valid (``TOCCO_API_USERNAME``, ``TOCCO_API_PASSWORD``, ``JIRA_API_USERNAME``, ``JIRA_API_TOKEN`` in ``dc/commit-info``)
@@ -112,7 +112,7 @@ Delta-Endpoint
         GET https://commit-info-service.tocco.ch/installation/{instance1}/delta?rev={rev}
         GET https://commit-info-service.tocco.ch/installation/{instance1}/delta?installation={instance2}
 
-Lists all commits that are on one instance and are not yet on the other installation or rev (api automatically
+Lists all commits that are on one instance and are not yet on the other installation or rev (API automatically
 determines which one is newer). Only lists commits that are relevant for the given installation.
 
 1. retrieves the installation urls of ``{instance1}`` and ``{instance2}`` (if ``installation=`` was used) from the installation endpoint
@@ -121,7 +121,7 @@ determines which one is newer). Only lists commits that are relevant for the giv
 4. use git to get all commits between the two: ``git log --abbrev-commit --name-only --full-index --no-merges --date=iso-strict {older-rev}..{newer-rev}"``
 5. get installed modules of {instance1}
 6. remove irrelevant commits based on changed files. Only keep commits that changed files of core-modules, installed optional-modules or the selected customer module
-7. retrieves information to all connected jira issues from the jira rest api
+7. retrieves information to all connected JIRA issues from the JIRA REST API
 
 Returns ``instance1-rev``, ``delta-rev``, ``older-rev``, ``newer-rev`` and a list of commits (``commitId``, ``author``,
 ``commitTimestamp``, ``comitMessage``, ``changedFiles``) containing information about the related issues (``key``,
@@ -140,7 +140,7 @@ Search-Endpoint
             "searchTerm" : "{searchTerm}"
         }
 
-This may be used to search for issues from the jira rest api. Returns ``key``, ``summary``, ``status``, ``projectType``
+This may be used to search for issues from the JIRA REST API. Returns ``key``, ``summary``, ``status``, ``projectType``
 for each issue found.
 
 Issue-Endpoint
@@ -150,7 +150,7 @@ Issue-Endpoint
 
         GET https://commit-info-service.tocco.ch/issue/{key}
 
-Get issue details for a given issue-key from the jira rest api. Returns ``key``, ``summary``, ``status``,
+Get issue details for a given issue-key from the JIRA REST API. Returns ``key``, ``summary``, ``status``,
 ``projectType``.
 
 Commit-Endpoint

@@ -361,7 +361,7 @@ def setup(app):
     if distutils.version.StrictVersion(sphinx.__version__) >= '1.8.0':
         app.add_css_file(css_file)
     else:
-        app.app.add_stylesheet(css_file)  # deprecated
+        app.add_stylesheet(css_file)  # deprecated
 
 extlinks = {
    'ticket': ('https://control.vshn.net/tickets/%s', ''),
