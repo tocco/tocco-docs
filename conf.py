@@ -16,7 +16,9 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
+import distutils
 import os
+import sphinx
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
@@ -355,7 +357,11 @@ rst_prolog = ".. include:: /global.rst\n\n"
 
 # add custom style sheet
 def setup(app):
-    app.add_css_file("css/custom.css")
+    css_file = "css/custom.css"
+    if distutils.version.StrictVersion(sphinx.__version__) >= '1.8.0':
+        app.add_css_file(css_file)
+    else:
+        app.app.add_stylesheet(css_file)  # deprecated
 
 extlinks = {
    'ticket': ('https://control.vshn.net/tickets/%s', ''),
