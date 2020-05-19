@@ -39,7 +39,7 @@ contact the development team for access (the number of users is limited as it is
 Plugin descriptor
 ^^^^^^^^^^^^^^^^^
 
-The plugin descriptor (``atlassian-connect.json``) is the entry point of the add-on. An URL to this file needs to be provided
+The plugin descriptor (``atlassian-connect.json``) is the entry point of the add-on. A URL to this file needs to be provided
 when the add-on is installed.
 The relevant part of the descriptor is the following:
 
@@ -91,6 +91,6 @@ After the add-on has been deployed it needs to be added to the Atlassian Marketp
 a `vendor account <https://marketplace.atlassian.com/manage/vendors/1217087/addons>`_ (contact the development
 team for access).
 
-The process how to publish the add-on to the marketplace und how to install the private add-on
+The process of how to publish the add-on to the marketplace und how to install the private add-on
 into to the productive JIRA instance is described `here <https://developer.atlassian.com/platform/marketplace/installing-cloud-apps/>`_.
 

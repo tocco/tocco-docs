@@ -28,8 +28,8 @@ A deployment is automatically started when a merge request is merged.
 Hosting / Accessing Logs
 ------------------------
 
-The commit-info-tool is run as in a docker container on our openshift platform. To access it you have to login and
-switch to the "toco-commit-info-service".
+The commit-info-tool is run in a docker container on our openshift platform. To access it you have to login and
+switch to the "toco-commit-info-service" project.
 
 The project can be managed as described in :ref:`OpenShiftBasics`. Please find below some commands that may be used to
 manage "toco-commit-info-service".
