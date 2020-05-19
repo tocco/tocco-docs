@@ -20,4 +20,5 @@ DevOps
    webserver/index
    maintenance/index
    ditac_manual/index
+   commit_info/index
    utils/index
