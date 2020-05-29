@@ -173,6 +173,27 @@ Pre-Move
     multiple blocks in the config too. Also, note that for every server block in a *container\*.conf*, two
     new blocks have to be created. One for HTTP and one for HTTPS.
 
+* Remove installation from legacy monitoring
+
+  Go to http://monitor01.tocco.ch
+
+  Remove installation:
+
+  * Tab: *Configuration*
+  * Sub-tab: *Hosts*
+  * In tree on left: *Hosts* → *Websites* → *${INSTALLATION}.tocco.ch* → Details
+  * Button: *Delete*
+
+  Apply change:
+
+  * Tab: *Configuration*
+  * Sub-tab: *Control*
+  * In tree on left: *Commit*
+  * Button: *Commit*
+
+  (At this point monitoring at VSHN is setup and will send alerts even while the installation
+  is still at Nine.)
+
 
 Move
 ----
