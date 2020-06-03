@@ -147,7 +147,7 @@ Pre-Move
 
     .. parsed-literal::
 
-        cp /etc/nginx/sites/sites-enabled/000-maintenance-page.template /etc/nginx/sites/sites-enabled/100-maintenance-page-\ **${INSTALLATION}**\ .conf
+        cp /etc/nginx/sites-available/000-maintenance-page.template /etc/nginx/sites/sites-available/100-maintenance-page-\ **${INSTALLATION}**\ .conf
 
   * Adjust page:
 
@@ -160,13 +160,13 @@ Pre-Move
 
     .. parsed-literal::
 
-        cp /etc/nginx/sites/sites-enabled/000-vshn-redirect.template /etc/nginx/sites/sites-enabled/200-vshn-redirect-\ **${INSTALLATION}**\ .conf
+        cp /etc/nginx/sites-available/000-vshn-redirect.template /etc/nginx/sites-available/200-vshn-redirect-\ **${INSTALLATION}**\ .conf
 
   * Replace the *${ … }* placeholders:
 
     .. parsed-literal::
 
-        vi /etc/nginx/sites/sites-enabled/200-vshn-redirect-\ **${INSTALLATION}**\ .conf
+        vi /etc/nginx/sites-available/200-vshn-redirect-\ **${INSTALLATION}**\ .conf
 
     Get **${SERVER_NAMES}**, **${SSL_CERTIFICATE_KEY}** and **${SSL_CERTIFICATE}** from *container\*.conf*.
     If there are multiple *server { … }* blocks referencing different TLS certs, you have to create
