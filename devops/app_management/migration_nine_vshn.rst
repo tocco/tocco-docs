@@ -147,7 +147,7 @@ Pre-Move
 
     .. parsed-literal::
 
-        cp /etc/nginx/sites-available/000-maintenance-page.template /etc/nginx/sites/sites-available/100-maintenance-page-\ **${INSTALLATION}**\ .conf
+        cp /etc/nginx/sites-available/000-maintenance-page.template /etc/nginx/sites-available/100-maintenance-page-\ **${INSTALLATION}**\ .conf
 
   * Adjust page:
 
