@@ -52,7 +52,7 @@ concerns application running on OpenShift only.
 | Kubernetes    +----------------+-----------+----------+----------+---------------------------------------+
 |               | config         | x         | n/a      | x⁴       |                                       |
 |               +----------------+-----------+----------+----------+---------------------------------------+
-|               | routes         | x         | n/a      |          | Including DNS verification            |
+|               | routes         | x         | x⁶       |          | Including DNS verification            |
 |               +----------------+-----------+----------+----------+---------------------------------------+
 |               | reCaptcha      |           |          |          | Domain needs to be added manually via |
 |               |                |           |          |          | Google web interface. See             |
@@ -88,6 +88,9 @@ concerns application running on OpenShift only.
 | ³ Only managed if ``app_server`` variable is set.
 | ⁴ Application properties, DB and S3 setting are managed.
 | ⁵ No dedicated user is created. Rather, one user account is shared and configured via Ansible.
+| ⁶ Routes managed by Ansible have the annotation 'tocco.ansible-managed' set to 'true. Ansible
+|   will not remove any routes that are missing this annotation. Hence, manually created routes
+|   as well as dynamically created routes are never removed by Ansible.
 
 
 Repository
@@ -458,15 +461,11 @@ Remove Routes / Endpoints
 
 #. Remove route from ``config.yml``
 
-#. Find the route name (leftmost column)::
-
-       oc get route
-
-#. Remove route:
+#. Apply change:
 
    .. parsed-literal::
 
-       oc delete route **${NAME}**
+        ansible-playbook playbook.yml -t route -l **${INSTALLATION}**
 
 
 Configure Email Sender Domains
