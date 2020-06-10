@@ -45,6 +45,19 @@ Pre-Move
 
         sudo openssl x509 -in ${PATH_TO_CERT} -text |grep -A 1 'Subject Alternative Name'
 
+    In case a regex is used, also check domains in CMS to verify nothing was missed::
+
+        SELECT DISTINCT substring(url from '^https?://([^/]+)') AS url
+        FROM (
+            SELECT unnest(regexp_split_to_array(alias, E'\n')) AS url
+            FROM nice_domain
+            WHERE alias <> ''
+            UNION SELECT url
+            FROM nice_domain
+            WHERE url <> ''
+        ) AS sub
+        ORDER BY 1;
+
   * Remove ``location: nine``
 
   * Remove ``app_server``
@@ -194,6 +207,10 @@ Pre-Move
   (At this point monitoring at VSHN is setup and will send alerts even while the installation
   is still at Nine.)
 
+* Enable outgoing mails on production system::
+
+      oc set env -c nice dc/nice NICE2_APP_recipientrewrite.enabled=false
+
 
 Move
 ----
@@ -254,7 +271,7 @@ Post-Move
 
   See also :doc:`/devops/openshift/dns`
 
-* Remove installation at Nine, see :doc:`/devops/maintenance/delete_client_system`
+* Remove installation at Nine, see :ref:`delete-installation-clean-up-app-server`
 
 * Remove DB dumps::
 

@@ -1,14 +1,33 @@
 Delete Tocco Installation
-^^^^^^^^^^^^^^^^^^^^^^^^^
+#########################
 
 Delete Installation at Nine
 ===========================
 
-#. Remove monitoring (Nagios).
+.. _delete-installation-clean-up-app-server:
+
+Clean Up App Server
+^^^^^^^^^^^^^^^^^^^
 
 #. Remove the installation from ``~tocco/manager/etc/manager.xml``.
 
 #. Reload config with mgrctl restart.
+
+#. Remove configuration from ``/etc/nginx/sites-enabled/*.conf`` and reload nginx (``nginx -s reload``)
+
+#. Remove Let's Encrypt certificate configuration on app03 at ``/etc/letsencrypt/renewal/*.conf``
+
+#. Remove installation directory
+
+   On app server::
+
+       rm -rf ~/nice2/${INSTALLATION}/
+
+
+Everything Else
+^^^^^^^^^^^^^^^
+
+#. Remove monitoring (Nagios).
 
 #. Remove DNS (https://cockpit.nine.ch).
 
@@ -26,16 +45,6 @@ Delete Installation at Nine
          and not exists(relInstallation where relInstallation_status.unique_id != "obsolete")
 
 #. Delete the customer's Maven module from the Nice2 Git repository (if there are no other installations that require the Customer module)
-
-#. Remove configuration from ``/etc/nginx/sites-enabled/*.conf`` and reload nginx (``nginx -s reload``)
-
-#. Remove Let's Encrypt certificate configuration on app03 at ``/etc/letsencrypt/renewal/*.conf``
-
-#. Remove installation directory
-
-   On app server::
-
-       rm -rf ~/nice2/${INSTALLATION}/
 
 #. Remove Solr index
 
