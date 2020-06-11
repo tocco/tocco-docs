@@ -57,51 +57,84 @@ Add the annotation:
 Troubleshooting
 ^^^^^^^^^^^^^^^
 
-In most cases where issuing a certificate fails, the DNS entry isn't correct or it wasn't correct when issuance was
-first attempted. If that's the case, the issuance of certificates is paused.
+.. hint::
 
-List all routes in a project with paused SSL issuance:
+   Expect certificate issuance to take up to 15 minutes.
+
+Check for missing TLS certificates in the OpenShift project::
+
+    oc project toco-nice-${INSTALLATION}
+    oc get route -o json | jq -r '
+        .items[]
+        |if .metadata.labels."acme.openshift.io/temporary" == "true" or (.spec.tls|has("key")) then
+           empty
+         else
+             "name: " + .metadata.name + "\n" +
+             "host: " + .spec.host + "\n" +
+             "path: " + (.spec.path//"/") + "\n" +
+             "kubernetes.io/tls-acme: " + .metadata.annotations."kubernetes.io/tls-acme" + "\n" +
+             "acme.openshift.io/status: " + "\n" +
+             "  " + (.metadata.annotations."acme.openshift.io/status"|split("\n")|join("\n  "))
+        end'
+
+Sample output:
+
+.. code-block:: yaml
+
+    name: nice-any.tocco.ch
+    host: any.tocco.ch
+    path: /
+    kubernetes.io/tls-acme: true  # <-- Certificates is only issued if this is enabled. Set
+                                  #     by Ansible.
+    acme.openshift.io/status:
+      provisioningStatus:
+        earliestAttemptAt: "2020-06-10T06:20:17.55709836Z"
+        orderStatus: pending      # <-- See below
+        orderURI: https://acme-v02.api.letsencrypt.org/acme/order/87247129/3706292941
+        startedAt: "2020-06-10T06:20:17.55709836Z"
+
+Meaning of ``orderStatus``:
+
+================ ================================================================
+ ``pending``      Validation has not yet succeeded.
+
+                  If the status is stuck in pending state, …
+
+                  * … wait a bit longer. Issuance can take 15 minutes.
+
+                  * … :ref:`verify that the DNS entry is correct
+                    <verify-dns-records>`.
+
+                  * … remove the route::
+
+                          oc delete route ${ROUTE_NAME}
+
+                    and recreate it::
+
+                        ansible-playbook playbook.yml -t route -l ${INSTALLATION}
+
+ ``ready``        Validation has succeeded.
+
+                  Certificate should be issued within minutes.
+
+ ``processing``   Certificate is being issued.
+
+                  Certificate should be ready within minutes.
+
+ ``valid``        Certificate is valid and has been added to the route.
+
+                  TLS connections should work.
+
+ ``…``            See https://godoc.org/golang.org/x/crypto/acme#pkg-constants
+================ ================================================================
 
 
-    Command:
+Related documentation:
 
-        .. code-block:: bash
-
-           oc get route -o json | jq '.items[]|if .spec.path//"/" == "/" then [.metadata.name, .spec.host, .metadata.annotations."kubernetes.io/tls-acme-paused"//"false" ] else empty end'
-
-    Sample output:
-
-        Format: ``[ route, hostname, paused ], …``
-
-        .. code-block:: javascript
-
-           [
-             "nice",               // <-- ${ROUTE}
-             "tocco.tocco.ch",
-             "true"                // <-- paused
-           ],
-           [
-             "nice-tocco.ch",      // <-- ${ROUTE}
-             "tocco.ch",
-             "true"                // <-- paused
-           ],
-           [
-             "nice-www.tocco.ch", // <-- ${ROUTE}
-             "www.tocco.ch",
-             "false"              // <-- not paused
-           ]
-
-In case a route is paused, ensure :ref:`the DNS entry is correct <verify-dns-records>` and then remove the paused annotation to force a retry.
-
-Remove paused annotation:
-
-.. parsed-literal::
-
-    oc annotate route **${ROUTE}** kubernetes.io/tls-acme-paused-
-
-.. warning::
-
-   Issuing a certificate can take several minutes.
+* `Let's Encrypt Integration`_ in the Appuio documentation.
+* `openshift-acme`_ , the ACME controller used on OpenShift.
 
 
 .. _common.yaml: https://git.vshn.net/tocco/tocco_hieradata/blob/master/common.yaml
+.. _openshift-acme: https://github.com/tnozicka/openshift-acme#openshift-acme
+.. _Let's Encrypt Integration: https://docs.appuio.ch/en/latest/letsencrypt-integration.html
