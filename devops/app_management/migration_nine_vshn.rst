@@ -141,6 +141,15 @@ Pre-Move
   ``/home/tocco/nice2/${CUSTOMER}/var/lms/`` need to be copied during the
   migration.
 
+* CMS:
+
+  Check for a cms directory on the server:
+
+      ssh ${installation}.tocco.ch ls -lh nice2/${installation}/var/cms
+
+  If the directory exists, a :ref:`persistent volume <persistent-volume>` needs to be
+  created and file need to be copied.
+
 * Configure memory
 
   Get the current configuration from ``/home/tocco/manager/etc/manager.xml`` and
