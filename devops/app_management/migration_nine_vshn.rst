@@ -148,7 +148,7 @@ Pre-Move
       ssh ${installation}.tocco.ch ls -lh nice2/${installation}/var/cms
 
   If the directory exists, a :ref:`persistent volume <persistent-volume>` needs to be
-  created and file need to be copied.
+  created and the files need to be copied.
 
 * Configure memory
 
