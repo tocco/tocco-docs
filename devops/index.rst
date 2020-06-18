@@ -4,6 +4,7 @@ DevOps
 .. toctree::
    :maxdepth: 2
 
+   infrastructure/index
    app_management/index
    server_access
    internal_servers/index
