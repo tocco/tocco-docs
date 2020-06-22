@@ -220,6 +220,33 @@ Pre-Move
 
       oc set env -c nice dc/nice NICE2_APP_recipientrewrite.enabled=false
 
+* Ensure https:// URLs are used.
+
+  .. hint::
+
+     On OpenShift all http:// requests are upgraded to https:// before
+     even reaching the application. As a result, URLs and aliases with
+     only a http:// entry will not work.
+
+  Domains::
+
+      select label, url, alias from nice_domain where url <> '';
+
+  *url* must be https:// and all *alias*\ es with an http:// entry must also
+  have an https:// entry.
+
+  Pages::
+
+      select title, alias from nice_page where alias <> '';
+
+  *alias*\ es with an http:// entry must also have an https:// entry.
+
+  Resources::
+
+      select label, alias from nice_resource where alias <> '';
+
+  *alias*\ es with an http:// entry must also have an https:// entry.
+
 
 Move
 ----
