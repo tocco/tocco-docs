@@ -54,9 +54,7 @@ concerns application running on OpenShift only.
 |               +----------------+-----------+----------+----------+---------------------------------------+
 |               | routes         | x         | x⁶       |          | Including DNS verification            |
 |               +----------------+-----------+----------+----------+---------------------------------------+
-|               | reCaptcha      |           |          |          | Domain needs to be added manually via |
-|               |                |           |          |          | Google web interface. See             |
-|               |                |           |          |          | :ticket:`TOCDEV-1799`                 |
+|               | reCaptcha      | x         | x        | x        |                                       |
 |               +----------------+-----------+----------+----------+---------------------------------------+
 |               | ACME           | x         | n/a      |          | Let's Encrypt integration             |
 +---------------+----------------+-----------+----------+----------+---------------------------------------+
@@ -452,8 +450,6 @@ Add Routes / Endpoints
     .. parsed-literal::
 
         ansible-playbook playbook.yml -t route -l **${INSTALLATION}**
-
-#. Add the new domain to the ReCaptcha configuration if necessary (see :ref:`recaptcha`)
 
 
 Remove Routes / Endpoints
