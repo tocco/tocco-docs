@@ -1,6 +1,8 @@
 DNS Records for Outgoing Mails
 ==============================
 
+.. _spf-record:
+
 Create SPF Record
 -----------------
 
@@ -26,6 +28,8 @@ Wikipedia has comprehensive article on `SPF`_ if more information is needed.
 
 .. _SPF: https://en.wikipedia.org/wiki/Sender_Policy_Framework
 
+
+.. _dkim-record:
 
 Create DKIM Record
 ------------------
