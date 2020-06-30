@@ -379,7 +379,7 @@ The section must be called *nice2*, the name is hardcoded in Nice2.
 
 .. tip::
 
-    For admins: how to issue a key is described in :doc:`/devops/s3/s3_bucket_for_dev`.
+    For admins: how to issue a key is described in :ref:`s3-user-creation`.
 
 
 S3 Access via ``s3cmd``

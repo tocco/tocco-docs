@@ -23,6 +23,7 @@ Who get what Account?
  GitLab              *Owner*                            x
  Docker Hub          *Owner*                            x
  Read the Docs       *Maintainer*                       x
+ S3                  -                         x        x
  Sonar               *sonar-administrators*             x
  Sonar               *sonar-users*             x
 =================== ======================== ===== ============
@@ -209,14 +210,40 @@ Sonar
 -----
 
 Create Account
---------------
+^^^^^^^^^^^^^^
 
 Add user on `Sonar's Users page`_.
 
 Remove Account
---------------
+^^^^^^^^^^^^^^
 
 Remove user on `Sonar's Users page`_.
+
+
+
+S3
+--
+
+.. _s3-user-creation:
+
+Create User
+^^^^^^^^^^^
+
+#. Add user as described in :doc:`/devops/s3/s3_bucket_for_dev`.
+
+   User name should be *dev-${SHORT_NAME}*. For Instance, the user
+   name for Jane Doe would be *dev-jado*.
+
+
+#. Grant permissions::
+
+       cd ${ANSIBLE_GIT_REPO}/tocco
+       ansible-playbook playbook.yml -t s3
+
+Remove User
+^^^^^^^^^^^
+
+#. Remove user via web interface. See also :doc:`/devops/s3/s3_bucket_for_dev`.
 
 
 .. _roles/ssh-key-sync/files/ssh_keys: https://git.tocco.ch/gitweb?p=ansible.git;a=blob;f=roles/ssh-key-sync/files/ssh_keys
