@@ -8,7 +8,7 @@ Open a Connection
 
     import boto
     connection = boto.connect_s3(
-        host="objects.cloudscale.ch",
+        host="objects.rma.cloudscale.ch",
         aws_access_key_id="ACCESS_KEY",
         aws_secret_access_key="SECRET_KEY")
 

@@ -400,8 +400,8 @@ Adjust the following configuration entries in ``~/.s3cfg``::
     [default]
     access_key = XXXXXXXXXXXXXXXXXXXX
     secret_key = XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-    host_base = objects.cloudscale.ch
-    host_bucket = %(bucket)s.objects.cloudscale.ch
+    host_base = objects.rma.cloudscale.ch
+    host_bucket = %(bucket)s.rma.objects.cloudscale.ch
 
 The access and secret keys are the keys you obtained in the previous step.
 

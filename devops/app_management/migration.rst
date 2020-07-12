@@ -67,7 +67,7 @@ Preparations for Final Migration
 
 #. Confiure S3 in ``customer/${CUSTOMER}/etc/s3.properties``::
 
-    s3.main.endpoint=https://objects.cloudscale.ch
+    s3.main.endpoint=https://objects.rma.cloudscale.ch
     s3.main.bucketName=tocco-nice-${CUSTOMER}
 
 These changes must be merged before running CD during the final migration.
