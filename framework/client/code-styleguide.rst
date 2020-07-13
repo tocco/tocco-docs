@@ -56,6 +56,29 @@ Module     Camel  searchForm
 Any other  Kebab  test-data
 ========== ====== ==============
 
+Tocco variable naming
+^^^^^^^^^^^^^^^^^^^^^
+To be consistent trough all apps following variable names should be chosen when dealing with the nice backend:
+
++-------------+------------------+---------------------------------------------------------------------------------------+
+| Name        | Alternative name | Description                                                                           |
++=============+==================+=======================================================================================+
+| entityName  | name             | Technical entity name e.g. User or Education_schedule                                 |
++-------------+------------------+---------------------------------------------------------------------------------------+
+| entityLabel | label            | Localized entity label  e.g. Person or Lehrplan                                       |
++-------------+------------------+---------------------------------------------------------------------------------------+
+| entityModel | model            | Object containing the whole model including the name, label and fields                |
++-------------+------------------+---------------------------------------------------------------------------------------+
+| entityKey   | key              | Primary key of entity. Avoid "id" or "pk" as substitute                               |
++-------------+------------------+---------------------------------------------------------------------------------------+
+| entityId    | id               | Object containing entityName and entityKey eg. {entityName: 'User, entityKey: "33"}   |
++-------------+------------------+---------------------------------------------------------------------------------------+
+| formName    |                  | Form name including the scope e.g. User_list                                          |
++-------------+------------------+---------------------------------------------------------------------------------------+
+| formBase    |                  | Only the form base without the scope e.g. UserSearch                                  |
++-------------+------------------+---------------------------------------------------------------------------------------+
+| form        |                  | Form object containing name and fields                                                |
++-------------+------------------+---------------------------------------------------------------------------------------+
 
 Javascript
 ----------
