@@ -10,7 +10,7 @@ as well as when developing locally, the same bucket is used.
 
 Configuration is done via the ``s3.properties`` file::
 
-    s3.main.endpoint=https://objects.cloudscale.ch
+    s3.main.endpoint=https://objects.rma.cloudscale.ch
     s3.main.bucketName=XXXXXXX
     s3.main.accessKeyId=XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     s3.main.secretAccessKey=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX

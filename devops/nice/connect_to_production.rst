@@ -7,10 +7,6 @@ Connect to Locally Running Nice2 to Production/Test DB/S3
 
       $ oc set env -c nice dc/nice --list \|grep -P '^NICE2_(HIKARI\|S3)_'
       NICE2_HIKARI_minimumIdle=2
-      **NICE2_S3_s3.main.endpoint=https://objects.cloudscale.ch**
-      **NICE2_S3_s3.main.bucketName=tocco-nice-toccotest**
-      **NICE2_S3_s3.main.accessKeyId=WGRDSJ4J3J5TBNEX1B7T**
-      **NICE2_S3_s3.main.secretAccessKey=OgymXsYjMQdGSEcYiRYFCWc6x6iMwUVXmKP5PLT4**
       NICE2_HIKARI_maximumPoolSize=5
       NICE2_HIKARI_leakDetectionThreshold=30000
       **NICE2_HIKARI_dataSource.databaseName=nice_toccotest**
@@ -30,21 +26,6 @@ Connect to Locally Running Nice2 to Production/Test DB/S3
       **dataSource.user=nice_toccotest**
       **dataSource.password=C6HAgYDIVZDyzvTHLpXjShiB**
       **dataSource.databaseName=nice_toccotest**
-
-#. Create a local override file for the S3 connection settings.
-
-   Create or edit the file ``customer/${CUSTOMER}/etc/s3.local.properties``:
-
-   .. parsed-literal::
-
-       # Configuration from previous output (without the NICE2_S3\_ prefix)
-       **s3.main.endpoint=https://objects.cloudscale.ch**
-       **s3.main.bucketName=tocco-nice-tocco**
-
-       # This two entries must exist and be empty to override the default overlay
-       # bucket configured in s3.properties.
-       s3.overlay.accessKeyId=
-       s3.overlay.secretAccessKey=
 
 #. Create an SSH tunnel to the DB server.
 
