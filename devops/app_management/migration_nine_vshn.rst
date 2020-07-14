@@ -264,9 +264,9 @@ Move
 
 * Copy DB from Nine to VSHN::
 
-      tadm@db01master.tocco.ch$ sudo -u postgres pg_dump -Fc -U postgres -Fc -f /postgres/_to_delete/${DATABASE}.psql ${DATABASE};
-      $ scp -3 tadm@db01master.tocco.ch:/postgres/_to_delete/${DATABASE}.psql db1.tocco.cust.vshn.net:
-      vshn$ sudo -u potsgres pg_restore -j 4 --role ${DB_USER} --no-owner --no-acl -d ${DB_NAME} ${DATABASE}.psql
+      ssh -J db1.tocco.cust.vshn.net db01master.tocco.ch sudo -u postgres pg_dump -Fc nice2_${INSTALLATION} \
+        | ssh db1.tocco.cust.vshn.net sudo -u postgres pg_restore --role nice_${INSTALLATION} --no-owner \
+            --no-acl -d nice_${INSTALLATION}
 
       # same again for history DB
 
@@ -288,6 +288,11 @@ Move
   See also :doc:`/devops/openshift/dns`
 
 * Test functionality
+
+  * Send test mail (ensure mails go out on prod)
+  * Test Solr index
+  * Test document download and upload
+  * Test all endpoint URLs
 
 * Check logs
 
