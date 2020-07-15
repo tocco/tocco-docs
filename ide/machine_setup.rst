@@ -407,7 +407,7 @@ The access and secret keys are the keys you obtained in the previous step.
 
 Test access::
 
-    s3cmd info s3://tocco-dev-nice-overlay >/dev/null
+    s3cmd info s3://tocco-nice-test >/dev/null
     # no output expected
 
 
