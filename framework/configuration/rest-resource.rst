@@ -57,12 +57,13 @@ Adding REST resources requires the following dependencies in the ``pom.xml`` of 
       <scope>provided</scope>
     </dependency>
 
-Additionally the module ``ch.tocco.nice2.rest.core.spi`` has to be imported in the file ``hivemodule.xml``
+Additionally the modules ``ch.tocco.nice2.rest.core.spi`` and ``jersey.extend`` have to be imported in the file ``hivemodule.xml``
 
 .. code-block:: XML
 
    <contribution configuration-id="hiveapp.ClassLoader">
     <import feature="ch.tocco.nice2.rest.core.spi" version="*"/>
+    <import feature="jersey.extend" version="*"/>
    </contribution>
 
 Create Java interface
