@@ -1,5 +1,6 @@
 .. _TestNG: https://testng.org/
 .. _EasyMock: https://easymock.org/
+.. _`H2 Database Engine`: http://www.h2database.com/
 .. _`Embedded Postgres`: https://github.com/zonkyio/embedded-postgres
 .. _`EasyMock Lifecycle Description`: https://dzone.com/refcardz/junit-and-easymock?chapter=10
 
@@ -12,7 +13,8 @@ We usually use the following technologies:
 
 * TestNG_ as unit test framework (**not Junit!**)
 * EasyMock_ to create mocks / dummies / stubs
-* `Embedded Postgres`_ for our unit test specific datamodel
+* `H2 Database Engine`_ for most of our unit test specific databases
+* `Embedded Postgres`_ for our unit test databases that require postgres specific features
 
 TestNG
 ------
@@ -286,7 +288,9 @@ the ability to test code that accesses or writes data.
 AbstractInjectingTestCase
 +++++++++++++++++++++++++
 
-**AbstractInjectingTestCase should no longer be used directly.**
+.. note::
+   EasyTestCase and its derivatives are recommended over direct AbstractInjectingTestCase usage. As all other described
+   tocco specific test classes extend the AbstractInjectingTestCase, the features described here apply to them as well.
 
 The ``AbstractInjectingTestCase`` is the base class that is used by all other classes. It provides a method
 ``setupTestModules`` that must be overridden and contains all modules that are required for a unit test and may
@@ -329,14 +333,16 @@ Please find below some example code of how these bindings may be used.
 EasyTestCase
 ++++++++++++
 
-The ``EasyTestCase`` is the base class of all the following "EasyXXTestCase" classes. It helps with the following
-things:
+The ``EasyTestCase`` is the base class of all the following "EasyXXTestCase" classes. The base class should be used
+if no other implementation fits (e.g. for Services, ...).
 
-* ``context`` and ``executor`` are injected and may be used in all subclasses
-* simplifies the unit-test procedure
-* it automates mock handling
-* it automatically creates lookup values
-* it provides a simplified way to create entities
+EasyTestCases provide the following features:
+
+* ``context`` and ``executor`` are injected in the base class and may be used in all subclasses
+* simplification of the unit-test procedure
+* automated mock handling
+* automated lookup value creation
+* simplified way to create entities
 
 To create an ``EasyTestCase`` you must define a DataModel and a method that instantiates the class to test.
 
@@ -455,6 +461,34 @@ by the ``getLookupTasks`` method as seen in the example below.
            }
        }
    }
+
+Creating Entities
+*****************
+
+EasyTestCases provide a method ``createEntity`` that creates an entity inside a transaction. It can either be used
+with just the EntityModel-name as parameter or with a function that gets an ``EntityBuilder`` as parameter and should
+return an ``EntityBuilder`` aswell.
+
+.. code-block:: java
+
+   public class TestServiceTest extends EasyTestCase<TestService> {
+       // ...
+       public void test() {
+           Entity simpleEntity = createEntity("Simple_entity"); //creates an entity without seting any values
+
+           //create an entity with an ``EntityBuilder``
+           createEntity("Test", builder -> builder
+               .field("test_field", "test_value")
+               .field("test_date", LocalDate.now())
+               .setRelatedLookupValue("relTest_status", "active")
+               .setRelatedEntity("relSimple_entity", simpleEntity));
+           // ...
+       }
+       // ...
+   }
+
+The ``EntityBuilder`` can be used without the ``createEntity`` method but it requires manual transaction management if
+you decide to do so.
 
 EasyBatchjobTestCase
 ++++++++++++++++++++
