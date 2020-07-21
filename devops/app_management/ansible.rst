@@ -451,6 +451,12 @@ Add Routes / Endpoints
 
         ansible-playbook playbook.yml -t route -l **${INSTALLATION}**
 
+.. hint::
+
+   The required TLS certificates are issued automatically in the background.
+   This can take some time though. See :ref:`acme-troubleshooting` if you
+   run into any issues.
+
 
 Remove Routes / Endpoints
 ^^^^^^^^^^^^^^^^^^^^^^^^^
