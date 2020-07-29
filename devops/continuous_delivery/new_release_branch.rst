@@ -293,5 +293,16 @@ Setup Monitoring
 
 Enable monitoring for the documentation in `common.yml`_. Look for for *docs.tocco.ch*.
 
+Check for Unused Modules
+------------------------
+
+Go to `Unused Dependencies`_ in TC and generate a new report (*Run* button). Wait
+for the build to complete. Then go to the *Artifacts* tab on the result page and
+open *result.txt*.
+
+Check for unused modules and have them removed. Note that modules can be listed
+as unused if they are new and not yet used.
+ 
 
 .. _common.yml: https://git.vshn.net/tocco/tocco_hieradata/blob/master/common.yaml
+.. _Unused Dependencies: https://tc.tocco.ch/buildConfiguration/Nice2_UnusedDependencies
