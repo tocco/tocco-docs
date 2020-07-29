@@ -300,7 +300,7 @@ Go to `Unused Dependencies`_ in TC and generate a new report (*Run* button). Wai
 for the build to complete. Then go to the *Artifacts* tab on the result page and
 open *result.txt*.
 
-Check if for unused modules and have them removed. Note that modules can be listed
+Check for unused modules and have them removed. Note that modules can be listed
 as unused if they are new and not yet used.
  
 
