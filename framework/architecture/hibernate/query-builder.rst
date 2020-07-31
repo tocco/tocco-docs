@@ -290,6 +290,13 @@ There currently are two different implementations available:
       to ``addPathToSelection()``.
     * :abbr:`MapResultRowMapper (ch.tocco.nice2.persist.hibernate.query.mapper.MapResultRowMapperFactory.MapResultRowMapper)` converts each row
       into a :java:`Map <java/util/Map>`. This creates a nested structure and is useful to group fields by their relation paths.
+    * :abbr:`CustomResultRowMapperFactory (ch.tocco.nice2.persist.hibernate.query.mapper.CustomResultRowMapperFactory)` supports custom beans.
+      Any java class that is annotated with :abbr:`QueryBuilderResult (ch.tocco.nice2.persist.hibernate.query.builder.QueryBuilderResult)`
+      is supported. If the field name of the bean matches the entity field name, it will be mapped automatically, otherwise the
+      :abbr:`ResultPath (ch.tocco.nice2.persist.hibernate.query.builder.ResultPath)` annotation must be used to specify
+      the mapping. It is also possible to map a sub-path of the result to a nested java bean using the :abbr:`NestedResultPath (ch.tocco.nice2.persist.hibernate.query.builder.NestedResultPath)`.
+      The nested bean supports the same features as the main bean (but the class level annotation is not necessary).
+      To-many paths are supported using a :java:`List <java/util/List>` or :java:`Set <java/util/Set>`.
 
 The ``PersistenceService#createPathQueryBuilder()`` methods builds an instance of :abbr:`ResultRowMapper (ch.tocco.nice2.persist.hibernate.query.mapper.ResultRowMapper)`
 using contributed :abbr:`ResultRowMapperFactory (ch.tocco.nice2.persist.hibernate.query.mapper.ResultRowMapperFactory)` instances, based on the
