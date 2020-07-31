@@ -93,14 +93,13 @@ The following principles apply:
     * The owning side of a many-to-many should be deleted first (because the owning side manages the join table).
     * If the models depend on each other (many-to-one association from both sides) the side which has the non-nullable foreign key needs to be deleted first.
 
-.. todo::
+.. note::
 
-    Can the same ordering code be used for both created and deleted entities?
+    The inserting and deleting code cannot use the same ordering logic. See comments in the issue TOCDEV-312 for more details.
 
-Batch deletion
-^^^^^^^^^^^^^^
-Using ``addDeletedEntityBatch()`` a list of entities can be scheduled for deletion with a single statement. This is more
-efficient than executing a single query for each entity.
+For performance reasons all deleted entities (either through ``Entity#delete()`` or through the delete query builder)
+are collected and then deleted using a single statement.
+Based on the ordering explained above, the following is executed per model:
 
 The entities are deleted using a :java-javax:`CriteriaDelete <javax/persistence/criteria/CriteriaDelete>` query.
 
@@ -109,6 +108,10 @@ First the entities are removed from loaded collections in the session (see ``Del
 and then the entities itself are detached from the session.
 
 And finally the after commit event must be manually triggered as well (see ``AfterCommitListener#registerEntityDeletedEvent()``).
+
+Before any delete query is executed, the session must be flushed to make sure that all ``UPDATE`` statements are executed first
+(as they might reference an entity that will be deleted in the same transaction and because the :java-javax:`CriteriaDelete <javax/persistence/criteria/CriteriaDelete>`
+queries are executed immediately and not when the session is flushed).
 
 .. _delete_event_listener:
 

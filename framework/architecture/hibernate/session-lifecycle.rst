@@ -77,7 +77,8 @@ A :java-hibernate:`BaseSessionEventListener <org/hibernate/BaseSessionEventListe
 which detaches the closed session and re-attaches the previous session (if there was one).
 
 A :abbr:`SessionFactoryManagerListener (ch.tocco.nice2.persist.hibernate.session.SessionFactoryManagerListener)` can be registered
-with the SessionFactoryManager. It's ``sessionClosing()`` method is called for every session that is about to be closed.
+with the SessionFactoryManager. It's  ``sessionCreated()`` and ``sessionClosing()`` methods are called for every session that has been created
+or closed.
 
 Current context
 ^^^^^^^^^^^^^^^

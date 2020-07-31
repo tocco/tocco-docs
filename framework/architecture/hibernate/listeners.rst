@@ -125,6 +125,7 @@ it is meant to be used internally by the persistence framework only.
 This is a replacement of the :abbr:`TransactionAware (ch.tocco.nice2.persist.tx.TransactionAware)` of the old persistence
 implementation.
 
+    - ``TransactionListener#onTransactionStart()`` is called when a new transaction has been started
     - ``TransactionListener#onCommit()`` is called after ``CommitListener#onBeforeCommit()`` has already been called
       and can be used to clean up resources for example.
     - ``TransactionListener#onRollback()`` is called just before a transaction will be rolled back
@@ -132,3 +133,30 @@ implementation.
 
 A :abbr:`TransactionListener (ch.tocco.nice2.persist.hibernate.ch.tocco.nice2.persist.hibernate.TransactionListener)` can be registered with
 the :abbr:`TransactionControl (ch.tocco.nice2.persist.hibernate.TransactionControl)` of a transaction.
+
+In addition it can also be added through the :abbr:`PersistenceService (ch.tocco.nice2.persist.hibernate.PersistenceService)`
+(``addTransactionListener()`` method). Listeners registered in this way will be applied to all transactions of the current
+session and are passed to the :abbr:`TransactionControl (ch.tocco.nice2.persist.hibernate.TransactionControl)` when
+a new transaction is started.
+
+ContextListener
+---------------
+
+The :abbr:`ContextListener (ch.tocco.nice2.persist.ContextListener)` is part of the legacy API and contains two methods:
+
+    * ``transactionStarted()`` is called when a new transaction has been started
+    * ``contextDestroying()`` is called when a context is being closed
+
+It can be registered using the ``Context#addContextListener()`` method and will be wrapped in a
+:abbr:`ContextListenerAdapter (ch.tocco.nice2.persist.hibernate.legacy.ContextAdapter.ContextListenerAdapter)`.
+The adapter class implements both :abbr:`TransactionListener (ch.tocco.nice2.persist.hibernate.ch.tocco.nice2.persist.hibernate.TransactionListener)`
+(to implement the ``transactionStarted()`` method)
+and :abbr:`SessionFactoryManagerListener (ch.tocco.nice2.persist.hibernate.session.SessionFactoryManagerListener)`
+(to implement the ``contextDestroying()`` method) to make sure that events are properly fired through both the old and new API.
+
+ContextCreationListener
+-----------------------
+
+The :abbr:`ContextCreationListener (ch.tocco.nice2.persist.ContextCreationListener)` is also implemented using an adapter class
+to delegate the events to the ``SessionFactoryManagerListener#sessionCreated()`` event.
+
