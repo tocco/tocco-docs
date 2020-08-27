@@ -328,6 +328,21 @@ Test if Maven build works:
     # Depending on the Java version required, use ``mvn8``, etc.
     mvn11 -am install -T1.5C -DskipTests  # add "-Dmac" on Mac
 
+Create IDEA Project (Nice2 Integration)
+---------------------------------------
+
+open ``idea`` and find **File** → **New** → **Project from Existing Sources...** and follow the steps described below
+
+#. select root directory of your nice2 clone (e.g. ``~/tocco/src/nice2-2.25``)
+#. click **OK**
+#. choose option **Import project from external model** → **Maven**
+#. click **Finish**
+#. open new project either in a new window or in the existing window
+
+.. tip::
+
+    It is recommended to create different git clones and idea projects for each released version. For example one clone and project for master, one for v2.24, one for v2.25 and so on.
+
 .. _setup-openshift-client:
 
 Setup OpenShift Client
