@@ -341,7 +341,7 @@ open ``idea`` and find **File** → **New** → **Project from Existing Sources.
 
 .. tip::
 
-    It is recommended to create different git clones and idea projects for each released version. For example one clone and project for master, one for v2.24, one for v2.25 and so on.
+    It is recommended to create different git clone and idea project for each available version. For example one clone and project for master, one for v2.24, one for v2.25 and so on.
 
 .. _setup-openshift-client:
 
