@@ -9,3 +9,4 @@ Tocco Framework
    configuration/index
    rest/index
    modules/index
+   coding-guidelines

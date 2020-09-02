@@ -187,13 +187,28 @@ By default, the memory limit is based on available memory but that might not alw
 Repository Access
 `````````````````
 
-.. code-block:: bash
+Add the following snippet to the ``~/.m2/settings.xml`` file (Ask one of your colleagues to get the ``USERNAME`` and ``PASSWORD``):
 
-    mkdir -p ~/.m2
-    cat >~/.m2/settings.xml <<EOF
-        THE ACTUAL CONTENT THAT GOES HERE CONTAINS A PASSWORD, GET IT AT:
-        https://wiki.tocco.ch/wiki/index.php/Maven_2#settings.xml
-    EOF
+.. code-block:: XML
+   :emphasize-lines: 6
+
+   <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                         http://maven.apache.org/xsd/settings-1.0.0.xsd">
+     <servers>
+       <server>
+         <id>tocco-nice2</id>
+         <username>USERNAME</username>
+         <password>PASSWORD</password>
+       </server>
+       <server>
+         <id>tocco-nice2-plugins</id>
+         <username>USERNAME</username>
+         <password>PASSWORD</password>
+       </server>
+     </servers>
+   </settings>
 
 Increase Max. Number of Open Files
 ``````````````````````````````````
