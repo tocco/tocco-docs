@@ -93,6 +93,21 @@ Create OpenShift Project, S3 Bucket and Database
 
 .. hint::
 
+    Ansible as shipped by many distribution is currently suffering from an
+    incompatibility with our S3-compatible storage:
+
+      Failed to get bucket tags: An error occurred (NoSuchTagSetError) when calling
+      the GetBucketTagging operation: Unknown
+
+    Should you see this error, it's easiest to patch Ansible locally to
+    work around the issue. You have to find ``s3_bucket.py`` locally and
+    patch it as shown `here <issue-150>`_. The file is likely somewhere
+    in ``/usr``::
+
+      find /usr -name s3_bucket.py
+
+.. hint::
+
     When setting up the primary test system, "${CUSTOMER_NAME}test",
     be sure to run the playbook for the production system too. This
     because, once the test system is configured, Ansible will
@@ -125,3 +140,4 @@ running Ansible first. It creates the S3 bucket used locally too.)
 
 .. _common.yaml: https://git.vshn.net/tocco/tocco_hieradata/blob/master/common.yaml
 .. _Ansible Repository: https://git.tocco.ch/admin/repos/ansible
+.. _issue-150: https://github.com/ansible-collections/amazon.aws/pull/150/files
