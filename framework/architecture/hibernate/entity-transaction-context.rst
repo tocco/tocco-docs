@@ -3,7 +3,7 @@
 Transaction context
 ===================
 
-The :abbr:`EntityTransactionContext (ch.tocco.nice2.persist.hibernate.cascade.EntityTransactionContext)` collects
+The :nice:`EntityTransactionContext <ch/tocco/nice2/persist/hibernate/cascade/EntityTransactionContext>` collects
 entities that have been created or deleted during the transaction and applies these changes to the session before
 the transaction is committed.
 
@@ -15,7 +15,7 @@ will be reordered so that no constraint violations can occur on the database. Th
 order the entities are deleted by the user.
 
 The service is a singleton and all changes are stored in maps using the current :java-hibernate:`Session <org/hibernate/Session>`
-as key. The values are removed by the :abbr:`TransactionControl (ch.tocco.nice2.persist.hibernate.TransactionControl)`
+as key. The values are removed by the :nice:`TransactionControl <ch/tocco/nice2/persist/hibernate/TransactionControl>`
 after each commit or rollback.
 
 Created entities
@@ -25,8 +25,8 @@ In a first step all entities that are created and deleted in the same transactio
 of entities to be inserted. This is necessary sometimes, as all entities are going to be saved automatically
 when they are created within a transaction.
 
-After that all newly created entities are passed to the :abbr:`EntityInsertActionResolver (ch.tocco.nice2.persist.hibernate.cascade.EntityInsertActionResolver)`
-which creates a list of :abbr:`EntityInsertAction (ch.tocco.nice2.persist.hibernate.cascade.EntityInsertAction)`.
+After that all newly created entities are passed to the :nice:`EntityInsertActionResolver <ch/tocco/nice2/persist/hibernate/cascade/EntityInsertActionResolver>`
+which creates a list of :nice:`EntityInsertAction <ch/tocco/nice2/persist/hibernate/cascade/EntityInsertAction>`.
 The returned list is ordered such that no constraint violations can occur when the insert statements are executed.
 
 All that needs to be done is to make sure that unsaved entities which have non-nullable many-to-one reference
@@ -36,28 +36,28 @@ references) are correctly ordered by hibernate.
 .. note::
 
     Also have a look at the javadoc in :abbr:`EntityTransactionContextTest (ch.tocco.nice2.persist.hibernate.EntityTransactionContextTest)`
-    and :abbr:`EntityInsertActionResolver (ch.tocco.nice2.persist.hibernate.cascade.EntityInsertActionResolver)`
+    and :nice:`EntityInsertActionResolver <ch/tocco/nice2/persist/hibernate/cascade/EntityInsertActionResolver>`
     for more implementation details.
 
 Entity factory
 ^^^^^^^^^^^^^^
 
-All :abbr:`Entity (ch.tocco.nice2.persist.entity.Entity)` instances are instantiated by the :abbr:`EntityFactoryImpl (ch.tocco.nice2.persist.hibernate.pojo.EntityFactoryImpl)`:
+All :nice:`Entity <ch/tocco/nice2/persist/entity/Entity>` instances are instantiated by the :nice:`EntityFactoryImpl <ch/tocco/nice2/persist/hibernate/pojo/EntityFactoryImpl>`:
 
     * All entities created by the user are delegated from ``PersistenceService#create()`` to the entity factory.
     * Entities that are instantiated by Hibernate (for example as a result of a query) are also delegated to
-      the entity factory by the :abbr:`CustomEntityPersister (ch.tocco.nice2.persist.hibernate.CustomEntityPersister)` (see :ref:`persister-entity-instantiation`).
+      the entity factory by the :nice:`CustomEntityPersister <ch/tocco/nice2/persist/hibernate/CustomEntityPersister>` (see :ref:`persister-entity-instantiation`).
 
-The first purpose is to inject several necessary services into the :abbr:`Entity (ch.tocco.nice2.persist.entity.Entity)`
-instances, for example the current :abbr:`Context (ch.tocco.nice2.persist.Context)` or the :abbr:`NiceEntityModel (ch.tocco.nice2.model.NiceEntityModel)`.
+The first purpose is to inject several necessary services into the :nice:`Entity <ch/tocco/nice2/persist/entity/Entity>`
+instances, for example the current :nice:`Context <ch/tocco/nice2/persist/Context>` or the :abbr:`NiceEntityModel (ch.tocco.nice2.model.NiceEntityModel)`.
 
 In addition the following listeners are invoked when an entity was instantiated:
 
     * ``EntityFacadeListener#entityCreating`` is called for every newly created entity (this is *not* called for entities that are loaded from the database).
-    * :abbr:`EntityCreationListener (ch.tocco.nice2.persist.hibernate.EntityCreationListener)` are called for every
+    * :nice:`EntityCreationListener <ch/tocco/nice2/persist/hibernate/EntityCreationListener>` are called for every
       created entity instance (``entityCreated()`` for new entities and ``entityLoaded()`` for existing entities).
 
-Newly created entities are added to :abbr:`EntityTransactionContext (ch.tocco.nice2.persist.hibernate.cascade.EntityTransactionContext)`
+Newly created entities are added to :nice:`EntityTransactionContext <ch/tocco/nice2/persist/hibernate/cascade/EntityTransactionContext>`
 so that they will be persisted at the end of the transaction.
 
 .. note::
@@ -67,11 +67,11 @@ so that they will be persisted at the end of the transaction.
     to pass the proxy instance to the listeners (instead of the actual entity instance). Otherwise there are multiple
     entity instances representing the same database row, which will lead to unexpected side effects.
 
-:abbr:`EntityCreationListener (ch.tocco.nice2.persist.hibernate.EntityCreationListener)`
+:nice:`EntityCreationListener <ch/tocco/nice2/persist/hibernate/EntityCreationListener>`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This listener (comparable to ``EntityFacadeListener#entityCreating``) is meant to be used by framework
-code and will be called before all :abbr:`EntityFacadeListener (ch.tocco.nice2.persist.entity.events.EntityFacadeListener)`
+code and will be called before all :nice:`EntityFacadeListener <ch/tocco/nice2/persist/entity/events/EntityFacadeListener>`
 which are supposed to be used by business code.
 
 

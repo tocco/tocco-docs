@@ -1,8 +1,8 @@
 Abstract entity base class
 ==========================
 
-All (non-transient) entities inherit from :abbr:`AbstractPojoEntity (ch.tocco.nice2.persist.hibernate.pojo.AbstractPojoEntity)`.
-This class provides all functionality required by the :abbr:`Entity (ch.tocco.nice2.persist.entity.Entity)` interface.
+All (non-transient) entities inherit from :nice:`AbstractPojoEntity <ch/tocco/nice2/persist/hibernate/pojo/AbstractPojoEntity>`.
+This class provides all functionality required by the :nice:`Entity <ch/tocco/nice2/persist/entity/Entity>` interface.
 
 
 Primary Key
@@ -10,9 +10,9 @@ Primary Key
 
 In hibernate the primary key is simply a property (typically a :java:`Long <java/lang/Long>`) annotated
 with :java-javax:`Id <javax/persistence/Id>`. In the old API the primary key value was encapsulated behind the
-:abbr:`PrimaryKey (ch.tocco.nice2.persist.entity.PrimaryKey)` interface.
+:nice:`PrimaryKey <ch/tocco/nice2/persist/entity/PrimaryKey>` interface.
 
-An instance of :abbr:`PrimaryKey (ch.tocco.nice2.persist.entity.PrimaryKey)` is created when ``getKey()`` or ``requireKey()``
+An instance of :nice:`PrimaryKey <ch/tocco/nice2/persist/entity/PrimaryKey>` is created when ``getKey()`` or ``requireKey()``
 is called for the first name. The key is cached so that always the same instance is returned, which is expected by
 some of the business code.
 
@@ -22,7 +22,7 @@ Accessing values
 PropertyAccessorService
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-The :abbr:`PropertyAccessorServiceImpl (ch.tocco.nice2.persist.hibernate.pojo.PropertyAccessorServiceImpl)` efficiently
+The :nice:`PropertyAccessorServiceImpl <ch/tocco/nice2/persist/hibernate/pojo/PropertyAccessorServiceImpl>` efficiently
 reads and writes entity properties.
 
 Different strategies are used depending on the property type. For all persistent properties, the calls are delegated
@@ -39,10 +39,10 @@ Reading values
 ^^^^^^^^^^^^^^
 
 All calls to the different ``Entity#getValue()`` methods are delegated to ``AbstractHibernateEntity#internalGetValue()``,
-where the actual field is resolved and read using the :abbr:`PropertyAccessorService (ch.tocco.nice2.persist.hibernate.pojo.PropertyAccessorService)`.
+where the actual field is resolved and read using the :nice:`PropertyAccessorService <ch/tocco/nice2/persist/hibernate/pojo/PropertyAccessorService>`.
 
 For backwards compatibility, the resulting value is passed to ``TypeManager#isolate()`` before it is returned
-(which creates a copy of :abbr:`Binary (ch.tocco.nice2.persist.entity.Binary)` instances).
+(which creates a copy of :nice:`Binary <ch/tocco/nice2/persist/entity/Binary>` instances).
 
 It is also attempted to convert the value to the requested type.
 
@@ -50,10 +50,10 @@ Writing values
 ^^^^^^^^^^^^^^
 
 All calls to the different ``Entity#setValue()`` methods are delegated to ``AbstractHibernateEntity#internalSetValue()``,
-where the actual field is resolved and updated using the :abbr:`PropertyAccessorService (ch.tocco.nice2.persist.hibernate.pojo.PropertyAccessorService)`.
+where the actual field is resolved and updated using the :nice:`PropertyAccessorService <ch/tocco/nice2/persist/hibernate/pojo/PropertyAccessorService>`.
 
 At first the value is converted to the required target type (if this is not already the case and a suitable
-:abbr:`Converter (ch.tocco.nice2.types.spi.Converter)` exists).
+:nice:`Converter <ch/tocco/nice2/types/spi/Converter>` exists).
 
 The resulting value is then compared to the old value - if they are the same, the method silently returns.
 After the value has been set, a ``EntityFacadeListener#entityChanging()`` event will be fired.
@@ -74,28 +74,28 @@ Resolving relations
 -------------------
 
 An association in hibernate is simply an instance of the referenced type (or a collection if it's a to-many relation).
-In the old API it was required to 'resolve' a relation ( ``Entity#resolve()`` ) to a :abbr:`RelationQuery (ch.tocco.nice2.persist.query.RelationQuery)`.
-This relation query can then be executed to get an instance of :abbr:`Relation (ch.tocco.nice2.persist.entity.Relation)`.
+In the old API it was required to 'resolve' a relation ( ``Entity#resolve()`` ) to a :nice:`RelationQuery <ch/tocco/nice2/persist/query/RelationQuery>`.
+This relation query can then be executed to get an instance of :nice:`Relation <ch/tocco/nice2/persist/entity/Relation>`.
 
 To-One relations
 ^^^^^^^^^^^^^^^^
 
 All to one associations are explicitly configured to be loaded lazily (JPA default is eager).
 
-:abbr:`ToOneRelationQueryAdapter (ch.tocco.nice2.persist.hibernate.pojo.relation.ToOneRelationQueryAdapter)` is the
-implementation of :abbr:`RelationQuery (ch.tocco.nice2.persist.query.RelationQuery)` used for to-one associations.
+:nice:`ToOneRelationQueryAdapter <ch/tocco/nice2/persist/hibernate/pojo/relation/ToOneRelationQueryAdapter>` is the
+implementation of :nice:`RelationQuery <ch/tocco/nice2/persist/query/RelationQuery>` used for to-one associations.
 It does not contain any special logic, it simply delegates the calls to the wrapped entity.
 
-:abbr:`ToOneRelationAdapter (ch.tocco.nice2.persist.hibernate.pojo.relation.ToOneRelationAdapter)` is the implementation
-of :abbr:`Relation (ch.tocco.nice2.persist.entity.Relation)` for to-one associations. This class implements getting, setting
+:nice:`ToOneRelationAdapter <ch/tocco/nice2/persist/hibernate/pojo/relation/ToOneRelationAdapter>` is the implementation
+of :nice:`Relation <ch/tocco/nice2/persist/entity/Relation>` for to-one associations. This class implements getting, setting
 and removing the associated instance.
 
-All access (read or write) goes through the :abbr:`RelationInterceptor (ch.tocco.nice2.persist.hibernate.RelationInterceptor)`,
+All access (read or write) goes through the :nice:`RelationInterceptor <ch/tocco/nice2/persist/hibernate/RelationInterceptor>`,
 this allows other modules to add functionality (for example security checks).
 In order to enforce cleaner code, methods that were meant for to-many associations (for example ``RelationInterceptor#addEntity()``)
 are not supported.
 
-The :abbr:`ToOneRelationAdapter (ch.tocco.nice2.persist.hibernate.pojo.relation.ToOneRelationAdapter)` provides the last
+The :nice:`ToOneRelationAdapter <ch/tocco/nice2/persist/hibernate/pojo/relation/ToOneRelationAdapter>` provides the last
 interceptor in the chain, which actually accesses the underlying entity.
 
 * Reading the value means simply calling ``Entity#getValue()`` on the source entity. Internally this calls the generated
@@ -122,19 +122,19 @@ See :ref:`collection_reloading` for further information.
 Every time a to-many relation is resolved, it should be reloaded from the database (because this is the behaviour of the
 old persistence implementation).
 
-:abbr:`ToManyRelationQueryAdapter (ch.tocco.nice2.persist.hibernate.pojo.relation.ToManyRelationQueryAdapter)` is the
-implementation of :abbr:`RelationQuery (ch.tocco.nice2.persist.query.RelationQuery)` used for to-many associations.
+:nice:`ToManyRelationQueryAdapter <ch/tocco/nice2/persist/hibernate/pojo/relation/ToManyRelationQueryAdapter>` is the
+implementation of :nice:`RelationQuery <ch/tocco/nice2/persist/query/RelationQuery>` used for to-many associations.
 It mainly delegates to the wrapped collection of entities.
 However hibernate does not support pagination or (dynamic) sorting of associations, therefore these cases have to be
 implemented specifically: If a relations needs to be resolved with a specific ordering or pagination an additional query
 will be executed to get the desired results (the collection won't be touched). The results are returned as an
 unmodifiable collection, because changes to this collection would be ignored (as it is unknown to hibernate).
 
-:abbr:`ToManyRelationAdapter (ch.tocco.nice2.persist.hibernate.pojo.relation.ToManyRelationAdapter)` is the implementation
-of :abbr:`Relation (ch.tocco.nice2.persist.entity.Relation)` for to-many associations. This class implements applying
+:nice:`ToManyRelationAdapter <ch/tocco/nice2/persist/hibernate/pojo/relation/ToManyRelationAdapter>` is the implementation
+of :nice:`Relation <ch/tocco/nice2/persist/entity/Relation>` for to-many associations. This class implements applying
 modifications to the underlying collection.
 
-Like its 'to-one' counterpart it implements the final :abbr:`RelationInterceptor (ch.tocco.nice2.persist.hibernate.RelationInterceptor)`
+Like its 'to-one' counterpart it implements the final :nice:`RelationInterceptor <ch/tocco/nice2/persist/hibernate/RelationInterceptor>`
 that actually accesses the underlying collection and also enforces the usage of the correct methods.
 
 If an operation (``addEntity`` or ``removeEntity``) causes a change:
@@ -218,21 +218,21 @@ The states are checked in the following order (important):
 Dirty checking
 --------------
 
-The :abbr:`Entity (ch.tocco.nice2.persist.entity.Entity)` interface differentiates between ``touched`` and ``changed``
+The :nice:`Entity <ch/tocco/nice2/persist/entity/Entity>` interface differentiates between ``touched`` and ``changed``
 properties. A field is touched when ``setValue()`` has been called at least once for that field, even if the value is still the same.
 As this distinction rarely makes sense, we no longer support it - only ``changed`` fields are returned from the
 dirty checking methods (for example ``Entity#getChangedFields()`` or ``Entity#getTouchedFields()``).
 
-The dirty fields are managed by the abstract base class :abbr:`AbstractDirtyCheckingEntity (ch.tocco.nice2.persist.hibernate.pojo.AbstractDirtyCheckingEntity)`
+The dirty fields are managed by the abstract base class :nice:`AbstractDirtyCheckingEntity <ch/tocco/nice2/persist/hibernate/pojo/AbstractDirtyCheckingEntity>`
 in the ``changedFields`` property.
-All calls to the setter methods are intercepted using a custom :abbr:`PropertyAccessorService (ch.tocco.nice2.persist.hibernate.pojo.PropertyAccessorService)`.
+All calls to the setter methods are intercepted using a custom :nice:`PropertyAccessorService <ch/tocco/nice2/persist/hibernate/pojo/PropertyAccessorService>`.
 If the value to be set is different from the `Old value`_, the field is marked as changed.
 
 To check for modified collections (to-many relations) we can simply use the ``isDirty()`` method of the
 :java-hibernate:`PersistentCollection <org/hibernate/collection/spi/PersistentCollection>`.
 
 The list of changed fields needs to be reset when the changes are flushed to the database. This is done by the
-:abbr:`ValidationInterceptor (ch.tocco.nice2.persist.hibernate.validation.ValidationInterceptor)` after the entity
+:nice:`ValidationInterceptor <ch/tocco/nice2/persist/hibernate/validation/ValidationInterceptor>` after the entity
 validation has been completed.
 
 .. note::
@@ -247,7 +247,7 @@ validation has been completed.
 Old value
 ---------
 
-The :abbr:`Entity (ch.tocco.nice2.persist.entity.Entity)` interface allows to query for the old value. This is the value
+The :nice:`Entity <ch/tocco/nice2/persist/entity/Entity>` interface allows to query for the old value. This is the value
 of a certain property when it was loaded from the database at the beginning of the transaction, ignoring all
 uncommitted changes.
 
@@ -259,15 +259,15 @@ default dirty checking mechanism.
 EntityInterceptor
 -----------------
 
-The :abbr:`EntityInterceptor (ch.tocco.nice2.persist.hibernate.EntityInterceptor)` interface allows
+The :nice:`EntityInterceptor <ch/tocco/nice2/persist/hibernate/EntityInterceptor>` interface allows
 customizing the core entity functionality. The following functions can be intercepted:
 
     * Reading and writing fields
     * Deleting entities
     * Modifying relations
 
-An entity interceptor instance is injected into every entity by the :abbr:`EntityFactoryImpl (ch.tocco.nice2.persist.hibernate.pojo.EntityFactoryImpl)`.
-The instance is created by the :abbr:`EntityInterceptorFactoryImpl (ch.tocco.nice2.persist.hibernate.interceptor.EntityInterceptorFactoryImpl)`
+An entity interceptor instance is injected into every entity by the :nice:`EntityFactoryImpl <ch/tocco/nice2/persist/hibernate/pojo/EntityFactoryImpl>`.
+The instance is created by the :nice:`EntityInterceptorFactoryImpl <ch/tocco/nice2/persist/hibernate/interceptor/EntityInterceptorFactoryImpl>`
 which combines all interceptor contributions into an interceptor chain.
 The inner most interceptor (which actually accesses the entity fields and so on) is provided by the entity itself
 (``AbstractHibernateEntity#getInnerInterceptor()``).
@@ -285,10 +285,10 @@ Accessing values
 The method ``EntityInterceptor#accessField()`` can be used to intercept read or write access to a field.
 It is always called when a value is accessed by the entity (typically when ``Entity#get/setValue()`` is called).
 
-The default inner interceptor simply resolves the field name using the :abbr:`FieldResolver (ch.tocco.nice2.persist.hibernate.interceptor.FieldResolver)`.
+The default inner interceptor simply resolves the field name using the :nice:`FieldResolver <ch/tocco/nice2/persist/hibernate/interceptor/FieldResolver>`.
 If write access is requested it additionally checks if the field is not a primary key or other generated field.
 
-The :abbr:`SecurityEntityInterceptorContribution (ch.tocco.nice2.persist.security.hibernate.SecurityEntityInterceptorContribution)`
+The :nice:`SecurityEntityInterceptorContribution <ch/tocco/nice2/persist/security/hibernate/SecurityEntityInterceptorContribution>`
 uses this method to check the read or write permission of the given field. If the given field is a localized field, the base field (``label``
 instead of ``label_de``) is used to check permissions.
 
@@ -297,22 +297,22 @@ Deleting entities
 
 ``EntityInterceptor#deleteEntity()`` is called when an entity is deleted (``Entity#delete()``).
 The inner interceptor fires an ``EntityFacadeListener#entityDeleting()`` event and (unless the entity is unsaved)
-schedules the entity for deletion with the :abbr:`EntityTransactionContext (ch.tocco.nice2.persist.hibernate.cascade.EntityTransactionContext)`.
+schedules the entity for deletion with the :nice:`EntityTransactionContext <ch/tocco/nice2/persist/hibernate/cascade/EntityTransactionContext>`.
 
-In addition the :abbr:`SecurityEntityInterceptorContribution (ch.tocco.nice2.persist.security.hibernate.SecurityEntityInterceptorContribution)`
+In addition the :nice:`SecurityEntityInterceptorContribution <ch/tocco/nice2/persist/security/hibernate/SecurityEntityInterceptorContribution>`
 checks if the ``delete`` permission is granted for the current user.
 
 Modifying relations
 ^^^^^^^^^^^^^^^^^^^
 
-A :abbr:`RelationInterceptor (ch.tocco.nice2.persist.hibernate.RelationInterceptor)` can be obtained from
+A :nice:`RelationInterceptor <ch/tocco/nice2/persist/hibernate/RelationInterceptor>` can be obtained from
 the entity interceptor using ``createRelationInterceptor()``. The relation interceptor can be used to intercept
-:abbr:`Relation (ch.tocco.nice2.persist.entity.Relation)` modifications.
+:nice:`Relation <ch/tocco/nice2/persist/entity/Relation>` modifications.
 
-The inner interceptors are provided by the :abbr:`AbstractRelationAdapter (ch.tocco.nice2.persist.hibernate.pojo.relation.AbstractRelationAdapter)`
+The inner interceptors are provided by the :nice:`AbstractRelationAdapter <ch/tocco/nice2/persist/hibernate/pojo/relation/AbstractRelationAdapter>`
 implementations. These update the relation value or collection and fire an ``EntityFacadeListener#entityRelationChanging()`` event.
 
-In addition the :abbr:`SecurityEntityInterceptorContribution (ch.tocco.nice2.persist.security.hibernate.SecurityEntityInterceptorContribution)`
+In addition the :nice:`SecurityEntityInterceptorContribution <ch/tocco/nice2/persist/security/hibernate/SecurityEntityInterceptorContribution>`
 checks if the current user is allowed to modify a relation.
 
 The :abbr:`BusinessUnitEntityInterceptor (ch.tocco.nice2.businessunit.impl.intercept.BusinessUnitEntityInterceptorContribution.BusinessUnitEntityInterceptor)`
@@ -322,7 +322,7 @@ and ``NONE`` may be changed by the user).
 FieldResolver
 ^^^^^^^^^^^^^
 
-The :abbr:`FieldResolverImpl (ch.tocco.nice2.persist.hibernate.interceptor.FieldResolverImpl)` resolves a property name
+The :nice:`FieldResolverImpl <ch/tocco/nice2/persist/hibernate/interceptor/FieldResolverImpl>` resolves a property name
 to the name of the corresponding entity field.
 Usually the property name is equal to the entity field name, however there are two exceptions:
 

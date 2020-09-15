@@ -20,9 +20,9 @@ resources.
 
 The steps to implement a REST resource in any module:
     #. Add the required Maven dependency
-    #. Extend the Java interface :abbr:`RestResource (ch.tocco.nice2.rest.core.spi.RestResource)` and define
+    #. Extend the Java interface :nice:`RestResource <ch/tocco/nice2/rest/core/spi/RestResource>` and define
        your methods and the corresponding JAX-RS annotations.
-    #. Implement your interface (by also extending the class :abbr:`AbstractRestResource (ch.tocco.nice2.rest.core.spi.AbstractRestResource)`)
+    #. Implement your interface (by also extending the class :nice:`AbstractRestResource <ch/tocco/nice2/rest/core/spi/AbstractRestResource>`)
     #. Register your REST resource in the ``hivemodule.xml`` of the module.
 
 The following paragraphs explain in detail how this is done.
@@ -69,7 +69,7 @@ Additionally the modules ``ch.tocco.nice2.rest.core.spi`` and ``jersey.extend`` 
 Create Java interface
 ---------------------
 
-Create the Java interface for your resource by extending :abbr:`RestResource (ch.tocco.nice2.rest.core.spi.RestResource)`.
+Create the Java interface for your resource by extending :nice:`RestResource <ch/tocco/nice2/rest/core/spi/RestResource>`.
 
 The following interface defines a REST resource which will be available on ``${BASE_PATH}/events/{city}``.
 It defines a method called ``getEvents()`` and a second method ``addEvent()``. The first method is mapped to
@@ -173,7 +173,7 @@ Implement resource
 ------------------
 
 Add the implementation for your resource by implementing your created interface and extending
-:abbr:`AbstractRestResource (ch.tocco.nice2.rest.core.spi.AbstractRestResource)`.
+:nice:`AbstractRestResource <ch/tocco/nice2/rest/core/spi/AbstractRestResource>`.
 
 .. code-block:: Java
 

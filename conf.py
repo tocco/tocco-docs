@@ -374,4 +374,5 @@ extlinks = {
    'java-hibernate': ('https://docs.jboss.org/hibernate/orm/5.4/javadocs/%s', ''),
    'java-javax': ('https://javaee.github.io/javaee-spec/javadocs/%s', ''),
    'java-javassist': ('https://www.javassist.org/html/%s', ''),
+   'nice': ('https://apidocs.tocco.ch/%s.html', ''),
 }

@@ -4,7 +4,7 @@ Entity class generation
 Introduction
 ------------
 All entities in nice2 are currently defined by \*.xml files, which are then parsed
-into an :abbr:`EntityModel (ch.tocco.nice2.persist.model.EntityModel)` instance.
+into an :nice:`EntityModel <ch/tocco/nice2/persist/model/EntityModel>` instance.
 
 There are two different :java-hibernate:`EntityMode <org/hibernate/EntityMode>` in hibernate:
 
@@ -12,7 +12,7 @@ There are two different :java-hibernate:`EntityMode <org/hibernate/EntityMode>` 
 - MAP (entities based on maps)
 
 As the two modes cannot be mixed and we would like to be able to use typed entities (instead of just the
-:abbr:`Entity (ch.tocco.nice2.persist.entity.Entity)` interface) in the future we need to dynamically generate classes for the entity models.
+:nice:`Entity <ch/tocco/nice2/persist/entity/Entity>` interface) in the future we need to dynamically generate classes for the entity models.
 
 The `javassist <https://www.javassist.org/>`_ library is used to generate the classes. The same
 library is used by  Hibernate 5.2.x itself to generate proxy classes. `Bytebuddy <https://bytebuddy.net/>`_ would
@@ -23,8 +23,8 @@ Class generation
 The classes are generated during startup by the :abbr:`JavassistEntityPojoFactory (ch.tocco.nice2.persist.hibernate.pojo.ch.tocco.nice2.persist.hibernate.pojo.JavassistEntityPojoFactory)`.
 At first an 'empty' class is generated for each entity model, so that they can already be referenced by other classes.
 
-All generated entity classes inherit from the same base class (:abbr:`AbstractPojoEntity (ch.tocco.nice2.persist.hibernate.pojo.AbstractPojoEntity)`),
-which implements all of the logic required by the :abbr:`Entity (ch.tocco.nice2.persist.entity.Entity)`
+All generated entity classes inherit from the same base class (:nice:`AbstractPojoEntity <ch/tocco/nice2/persist/hibernate/pojo/AbstractPojoEntity>`),
+which implements all of the logic required by the :nice:`Entity <ch/tocco/nice2/persist/entity/Entity>`
 interface.
 
 The generated classes contain the following:
@@ -44,9 +44,9 @@ Transient entities
 ^^^^^^^^^^^^^^^^^^
 
 There are so called 'session-only' entities in nice2 which are not mapped to the database (used only for data binding and the like).
-A different base class (:abbr:`AbstractSessionOnlyEntity (ch.tocco.nice2.persist.hibernate.pojo.AbstractSessionOnlyEntity)`)
+A different base class (:nice:`AbstractSessionOnlyEntity <ch/tocco/nice2/persist/hibernate/pojo/AbstractSessionOnlyEntity>`)
 is used for those entities and no JPA annotations are added.
-They are basically normal java beans that implement the :abbr:`Entity (ch.tocco.nice2.persist.entity.Entity)` interface.
+They are basically normal java beans that implement the :nice:`Entity <ch/tocco/nice2/persist/entity/Entity>` interface.
 If such an entity is used in an association with a normal entity, no JPA annotations may be used on both sides, only
 a normal field (or collection) is created.
 
@@ -87,7 +87,7 @@ The ``text`` datatype is a :java:`String <java/lang/String>` that should be save
 
     However the behaviour changed in version 5.2.11 (see the `migration guide <https://github.com/hibernate/hibernate-orm/wiki/Migration-Guide---5.2>`_).
     To be compatible with existing databases, we need the behaviour of 5.2.10. In order to accomplish this, a custom
-    :java-hibernate:`ClobTypeDescriptor <org/hibernate/type/descriptor/sql/ClobTypeDescriptor>` is registered in the :abbr:`ToccoPostgreSQLDialect (ch.tocco.nice2.persist.hibernate.dialect.ToccoPostgreSQLDialect)`
+    :java-hibernate:`ClobTypeDescriptor <org/hibernate/type/descriptor/sql/ClobTypeDescriptor>` is registered in the :nice:`ToccoPostgreSQLDialect <ch/tocco/nice2/persist/hibernate/dialect/ToccoPostgreSQLDialect>`
     which restores the behaviour of 5.2.10.
 
 **Counter fields**
@@ -95,8 +95,8 @@ The ``text`` datatype is a :java:`String <java/lang/String>` that should be save
 The ``counter`` datatype is a numeric type whose value is automatically generated. The value is incremented for every new entity instance.
 The counter values are managed in the ``nice_counter`` table.
 
-Counter fields are annotated with :abbr:`Counter (ch.tocco.nice2.persist.hibernate.pojo.generator.Counter)`, which configures
-the :abbr:`CounterGeneration (ch.tocco.nice2.persist.hibernate.pojo.generator.CounterGeneration)` value generator. This
+Counter fields are annotated with :nice:`Counter <ch/tocco/nice2/persist/hibernate/pojo/generator/Counter>`, which configures
+the :nice:`CounterGeneration <ch/tocco/nice2/persist/hibernate/pojo/generator/CounterGeneration>` value generator. This
 generator is only applied whenever a new entity is inserted (not when an entity is updated).
 
 If the value of a counter field is manually set in the transaction it will not be overwritten.
@@ -130,8 +130,8 @@ Generated fields
 ^^^^^^^^^^^^^^^^
 
 It is possible to define custom data types whose values are automatically set when an entity is saved or updated.
-These fields are annotated either with the :abbr:`AlwaysGeneratedValue (ch.tocco.nice2.persist.hibernate.pojo.generator.AlwaysGeneratedValue)`
-for fields which should be updated on create and update or the :abbr:`InsertGeneratedValue (ch.tocco.nice2.persist.hibernate.pojo.generator.InsertGeneratedValue)`
+These fields are annotated either with the :nice:`AlwaysGeneratedValue <ch/tocco/nice2/persist/hibernate/pojo/generator/AlwaysGeneratedValue>`
+for fields which should be updated on create and update or the :nice:`InsertGeneratedValue <ch/tocco/nice2/persist/hibernate/pojo/generator/InsertGeneratedValue>`
 for fields which should only be updated when the entity is created.
 
 See :ref:`generated-values`.
@@ -161,7 +161,7 @@ on the annotation. Per default only to many associations are loaded lazily, that
 it for to one associations.
 
 When a collection has been initialized it cannot be reloaded from the database (unless the entire object is reloaded).
-However when a  :abbr:`Relation (ch.tocco.nice2.persist.entity.Relation)` is resolved, the data should always be
+However when a  :nice:`Relation <ch/tocco/nice2/persist/entity/Relation>` is resolved, the data should always be
 loaded from the database (because this was the behaviour of the old persistence implementation).
 To support this behaviour we use a custom collection type (:java-hibernate:`CollectionType <org/hibernate/annotations/CollectionType>`).
 
@@ -173,7 +173,7 @@ A custom :java-hibernate:`CollectionPersister <org/hibernate/persister/collectio
 Class loading
 -------------
 
-The :abbr:`ClassUtils (ch.tocco.nice2.persist.hibernate.session.ClassUtils)` can be used to load the generated classes
+The :nice:`ClassUtils <ch/tocco/nice2/persist/hibernate/session/ClassUtils>` can be used to load the generated classes
 by name.
 The classes are retrieved from the hibernate :java-hibernate:`Metamodel <org/hibernate/Metamodel>`. The reason for this is that
 those classes are generated during the initialization of Hibernate and getting them from the Metamodel ensures

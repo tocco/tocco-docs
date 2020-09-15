@@ -152,12 +152,12 @@ Technical implementation
 Hierachical business units actually do not have anything to do with the with business unit handling itself. It is more
 something built on top of the business unit.
 
-The read and write permissions are handled by the :abbr:`GenericHierarchyPolicyProcessor (ch.tocco.nice2.businessunit.impl.hierarchy.GenericHierarchyPolicyProcessor)`.
-This policy processor adds rules (:abbr:`Rule (ch.tocco.nice2.security.Rule)`) depending on the contributed
-:abbr:`HierarchySpecification (ch.tocco.nice2.businessunit.impl.hierarchy.HierarchySpecification)` during the login phase.
+The read and write permissions are handled by the :nice:`GenericHierarchyPolicyProcessor <ch/tocco/nice2/businessunit/impl/hierarchy/GenericHierarchyPolicyProcessor>`.
+This policy processor adds rules (:nice:`Rule <ch/tocco/nice2/security/Rule>`) depending on the contributed
+:nice:`HierarchySpecification <ch/tocco/nice2/businessunit/impl/hierarchy/HierarchySpecification>` during the login phase.
 
 The rules are actually created by the handlers for the different strategies (`self`, `hierarchical`) which are provided
-by the :abbr:`HierarchyStrategyProvider (ch.tocco.nice2.businessunit.impl.hierarchy.strategies.HierarchyStrategyProvider)`.
+by the :nice:`HierarchyStrategyProvider <ch/tocco/nice2/businessunit/impl/hierarchy/strategies/HierarchyStrategyProvider>`.
 
 Miscellaneous
 -------------

@@ -108,7 +108,7 @@ File resources in changesets
 There are moments when we need to write files to the database as initial values (mostly used to upload images used in
 report generation). This can be done by creating a changeset in version ``9.9.9.9`` (since the rest of the database must
 must be up to date for the DMS services to work) and using the custom change
-:abbr:`AddEntityDocChange (ch.tocco.nice2.dbrefactoring.impl.liquibase.AddEntityDocChange)`. This custom change
+:nice:`AddEntityDocChange <ch/tocco/nice2/dbrefactoring/impl/liquibase/AddEntityDocChange>`. This custom change
 then uploads the file to the DMS and sets the hash on the given entity.
 
 Working with Liquibase

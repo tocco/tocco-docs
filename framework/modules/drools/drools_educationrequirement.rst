@@ -42,4 +42,4 @@ This class is used to set the status of the ``Requirement`` that is being evalua
 for the activation of this rule can be passed to it through the
 :abbr:`addReason (ch.tocco.nice2.optional.educationrequirement.impl.requirementevaluation.globals.RequirementStatusUtil#addReason)`
 method and the
-:abbr:`Reason (ch.tocco.nice2.optional.educationrequirement.impl.requirementevaluation.globals.Reason)` class.
+:nice:`Reason <ch/tocco/nice2/optional/educationrequirement/impl/requirementevaluation/globals/Reason>` class.

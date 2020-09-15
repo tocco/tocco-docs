@@ -39,13 +39,13 @@ Additionally the module has to be imported in the file ``hivemodule.xml``
 CollectingEntityListener
 ------------------------
 
-Collecting entity listeners fetch all :abbr:`EntityFacadeEvent (ch.tocco.nice2.persist.entity.events.EntityFacadeEvent)` until
+Collecting entity listeners fetch all :nice:`EntityFacadeEvent <ch/tocco/nice2/persist/entity/events/EntityFacadeEvent>` until
 the current transaction is about to commit. This means a collecting entity listener is executed only once right before
-the commit. All :abbr:`EntityFacadeEvents (ch.tocco.nice2.persist.entity.events.EntityFacadeEvent)` which are produced later,
+the commit. All :nice:`EntityFacadeEvents <ch/tocco/nice2/persist/entity/events/EntityFacadeEvent>` which are produced later,
 for example by an other collecting entity listener which runs after the current, are discarded.
 
-To add a :abbr:`CollectingEntityListener (ch.tocco.nice2.persist.util.CollectingEntityListener)` add a Java class which
-extends the class :abbr:`CollectingEntityListener (ch.tocco.nice2.persist.util.CollectingEntityListener)`. Add the
+To add a :nice:`CollectingEntityListener <ch/tocco/nice2/persist/util/CollectingEntityListener>` add a Java class which
+extends the class :nice:`CollectingEntityListener <ch/tocco/nice2/persist/util/CollectingEntityListener>`. Add the
 class in the ``impl`` module where you working on. The method ``onBeforeCommit`` must be overwritten. This is the method
 which gets called by the nice2 framework just before the commit takes place.
 
@@ -71,7 +71,7 @@ The created listener must be registered as hivemind service in the file ``hivemo
 .. important::
    The service model must be ``threaded`` on collecting entity listeners (``model="threaded"``). This means that the service
    is instantiated once per :abbr:`Thread (java.lang.Thread)` and bound to this :abbr:`Thread (java.lang.Thread)`
-   only. This is needed because the collecting entity listener fetches every :abbr:`EntityFacadeEvent (ch.tocco.nice2.persist.entity.events.EntityFacadeEvent)`
+   only. This is needed because the collecting entity listener fetches every :nice:`EntityFacadeEvent <ch/tocco/nice2/persist/entity/events/EntityFacadeEvent>`
    of one transaction only. For more information about hivemind service models see `Threaded Service Model`_.
 
 Now the service needs to be contributed as Listener. With the contribution also the entity model on which the listener
@@ -97,7 +97,7 @@ be contributed as listener.
 Handle Events
 ^^^^^^^^^^^^^
 
-The class :abbr:`CollectingEntityListener (ch.tocco.nice2.persist.util.CollectingEntityListener)` provides some useful
+The class :nice:`CollectingEntityListener <ch/tocco/nice2/persist/util/CollectingEntityListener>` provides some useful
 methods to handle the :abbr:`EntityFacadeEvents (ch.tocco.nice2.persist.history.impl.tasks.FacadeEvent)` correctly.
 The most important methods are described here. Open the class ``ch.tocco.nice2.persist.util.CollectingEntityListener`` to
 see all methods.
@@ -195,7 +195,7 @@ model which the listener was contributed to listen to.
 Using the ``Context`` in Collecting Entity Listeners
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The context can be received by the :abbr:`Transaction (ch.tocco.nice2.persist.tx.Transaction)` passed to the
+The context can be received by the :nice:`Transaction <ch/tocco/nice2/persist/tx/Transaction>` passed to the
 ``onBeforeCommit`` method.
 
 .. code-block:: Java
@@ -209,8 +209,8 @@ The context can be received by the :abbr:`Transaction (ch.tocco.nice2.persist.tx
    }
 
 .. important::
-   Do not inject the :abbr:`Context (ch.tocco.nice2.persist.Context)` in a CollectingEntityListener but get it from
-   the passed :abbr:`Transaction (ch.tocco.nice2.persist.tx.Transaction)`
+   Do not inject the :nice:`Context <ch/tocco/nice2/persist/Context>` in a CollectingEntityListener but get it from
+   the passed :nice:`Transaction <ch/tocco/nice2/persist/tx/Transaction>`
 
 The Order of Collecting Entity Listeners
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -232,20 +232,20 @@ listener does not process the user created by the second listener.
 InterruptibleEntityFacadeAdapter
 --------------------------------
 
-An :abbr:`InterruptibleEntityFacadeAdapter (ch.tocco.nice2.persist.entity.events.InterruptibleEntityFacadeAdapter)` is
+An :nice:`InterruptibleEntityFacadeAdapter <ch/tocco/nice2/persist/entity/events/InterruptibleEntityFacadeAdapter>` is
 executed for every :abbr:`EntityFacadeEvent (ch.tocco.nice2.persist.history.impl.tasks.FacadeEvent)` which belongs to
 the entity on which the listener is contributed to listen to. This means every time ``setValue`` or a similar method
-is called on the entity the :abbr:`InterruptibleEntityFacadeAdapter (ch.tocco.nice2.persist.entity.events.InterruptibleEntityFacadeAdapter)`
+is called on the entity the :nice:`InterruptibleEntityFacadeAdapter <ch/tocco/nice2/persist/entity/events/InterruptibleEntityFacadeAdapter>`
 is executed.
 
 .. note::
-   The :abbr:`InterruptibleEntityFacadeAdapter (ch.tocco.nice2.persist.entity.events.InterruptibleEntityFacadeAdapter)`
-   is almost the same as the :abbr:`EntityFacadeListener (ch.tocco.nice2.persist.entity.events.EntityFacadeListener)`
+   The :nice:`InterruptibleEntityFacadeAdapter <ch/tocco/nice2/persist/entity/events/InterruptibleEntityFacadeAdapter>`
+   is almost the same as the :nice:`EntityFacadeListener <ch/tocco/nice2/persist/entity/events/EntityFacadeListener>`
    but handles rolled-back transactions and InterruptedExceptions itself. Always use the
-   :abbr:`InterruptibleEntityFacadeAdapter (ch.tocco.nice2.persist.entity.events.InterruptibleEntityFacadeAdapter)` if
+   :nice:`InterruptibleEntityFacadeAdapter <ch/tocco/nice2/persist/entity/events/InterruptibleEntityFacadeAdapter>` if
    there is not a good reason to not use it.
 
-To add a :abbr:`InterruptibleEntityFacadeAdapter (ch.tocco.nice2.persist.entity.events.InterruptibleEntityFacadeAdapter)`
+To add a :nice:`InterruptibleEntityFacadeAdapter <ch/tocco/nice2/persist/entity/events/InterruptibleEntityFacadeAdapter>`
 add a Java class which extends the class. Add the class in the ``impl`` module where you working on.
 
 .. code-block:: Java
@@ -352,13 +352,13 @@ on ``Users`` if they're older than 18 years. This could be done like this:
    }
 
 This would work without any problems. But most probably this listener would be executed a lot of times even it would not
-be necessary. Because :abbr:`InterruptibleEntityFacadeAdapters (ch.tocco.nice2.persist.entity.events.InterruptibleEntityFacadeAdapter)`
+be necessary. Because :nice:`InterruptibleEntityFacadeAdapters <ch/tocco/nice2/persist/entity/events/InterruptibleEntityFacadeAdapter>`
 are executed every time ``setValue`` is called on the entity, this listener is also executed if for example only the name
 of the user was changed. The name has nothing to do with the age of user.
 
-A :abbr:`EntityChangedEvent (ch.tocco.nice2.persist.entity.events.EntityChangedEvent)` is passed to the method
+A :nice:`EntityChangedEvent <ch/tocco/nice2/persist/entity/events/EntityChangedEvent>` is passed to the method
 ``entityChangingInterruptible`` which has some additional methods over the
-:abbr:`EntityFacadeEvent (ch.tocco.nice2.persist.entity.events.EntityFacadeEvent)` to work with. The above example
+:nice:`EntityFacadeEvent <ch/tocco/nice2/persist/entity/events/EntityFacadeEvent>` to work with. The above example
 can be rewritten to the following:
 
 .. code-block:: Java
@@ -380,7 +380,7 @@ can be rewritten to the following:
 Before the whole logic (setting the adult flag) is processed, we check if the change which is done to the entity belongs to
 the field ``brithdate`` because this is the only field which is relevant for this listener. Then instead of reading the
 field ``birthdate`` from the entity we just call the method ``getNewValue`` on the
-A :abbr:`EntityChangedEvent (ch.tocco.nice2.persist.entity.events.EntityChangedEvent)`. Because ``getNewValue`` returns
+A :nice:`EntityChangedEvent <ch/tocco/nice2/persist/entity/events/EntityChangedEvent>`. Because ``getNewValue`` returns
 an :abbr:`Object (java.lang.Object)` it needs to be casted first.
 
 entityRelationChangingInterruptible
@@ -402,13 +402,13 @@ This method gets called if a relation on the entity was changed.
 EntityRelationChangedEvent
 ++++++++++++++++++++++++++
 
-A :abbr:`EntityRelationChangedEvent (ch.tocco.nice2.persist.entity.events.EntityRelationChangedEvent)` is passed to
+A :nice:`EntityRelationChangedEvent <ch/tocco/nice2/persist/entity/events/EntityRelationChangedEvent>` is passed to
 the method ``entityRelationChangingInterruptible`` which has some additional methods over the
-:abbr:`EntityFacadeEvent (ch.tocco.nice2.persist.entity.events.EntityFacadeEvent)` to work with.
+:nice:`EntityFacadeEvent <ch/tocco/nice2/persist/entity/events/EntityFacadeEvent>` to work with.
 
 
 To check what relation was changed the method ``getRelation`` can get called on the
-:abbr:`EntityRelationChangedEvent (ch.tocco.nice2.persist.entity.events.EntityRelationChangedEvent)`.
+:nice:`EntityRelationChangedEvent <ch/tocco/nice2/persist/entity/events/EntityRelationChangedEvent>`.
 
 .. code-block:: Java
 
@@ -447,7 +447,7 @@ There also methods to check how the relation got changed.
 Using the ``Context`` in Entity Facade Listeners
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The context can be received by the :abbr:`EntityFacadeEvent (ch.tocco.nice2.persist.entity.events.EntityFacadeEvent)`
+The context can be received by the :nice:`EntityFacadeEvent <ch/tocco/nice2/persist/entity/events/EntityFacadeEvent>`
 passed to the overwritten methods.
 
 .. code-block:: Java
@@ -460,14 +460,14 @@ passed to the overwritten methods.
    }
 
 .. important::
-   Do not inject the :abbr:`Context (ch.tocco.nice2.persist.Context)` in a
-   :abbr:`InterruptibleEntityFacadeAdapter (ch.tocco.nice2.persist.entity.events.InterruptibleEntityFacadeAdapter)`
+   Do not inject the :nice:`Context <ch/tocco/nice2/persist/Context>` in a
+   :nice:`InterruptibleEntityFacadeAdapter <ch/tocco/nice2/persist/entity/events/InterruptibleEntityFacadeAdapter>`
    but get it from the source entity.
 
 Avoid Infinite Loops
 ^^^^^^^^^^^^^^^^^^^^
 
-With :abbr:`InterruptibleEntityFacadeAdapters (ch.tocco.nice2.persist.entity.events.InterruptibleEntityFacadeAdapter)`
+With :nice:`InterruptibleEntityFacadeAdapters <ch/tocco/nice2/persist/entity/events/InterruptibleEntityFacadeAdapter>`
 it is possible to create infinite loops. Because these listeners are executed every time a change has made to the entity
 which the listener listens to. In the picture below an example of an infinite loop is shown (example does not make any
 sense).
@@ -481,12 +481,12 @@ sets a value on the field ``lastname``. Listener ``B`` listens to the field ``la
 CollectingAfterCommitListener
 -----------------------------
 
-:abbr:`CollectingAfterCommitListeners (ch.tocco.nice2.persist.util.CollectingAfterCommitListener)` are fired after the
+:nice:`CollectingAfterCommitListeners <ch/tocco/nice2/persist/util/CollectingAfterCommitListener>` are fired after the
 transaction was committed. This can be useful if something only must be done if something else was persisted before.
-For example mails are sent often with :abbr:`CollectingAfterCommitListeners (ch.tocco.nice2.persist.util.CollectingAfterCommitListener)`.
+For example mails are sent often with :nice:`CollectingAfterCommitListeners <ch/tocco/nice2/persist/util/CollectingAfterCommitListener>`.
 Lets say a user should receive an e-mail if he was registered to an event. This could be done within a
-:abbr:`InterruptibleEntityFacadeAdapter (ch.tocco.nice2.persist.entity.events.InterruptibleEntityFacadeAdapter)` or
-:abbr:`CollectingEntityListener (ch.tocco.nice2.persist.util.CollectingEntityListener)`.
+:nice:`InterruptibleEntityFacadeAdapter <ch/tocco/nice2/persist/entity/events/InterruptibleEntityFacadeAdapter>` or
+:nice:`CollectingEntityListener <ch/tocco/nice2/persist/util/CollectingEntityListener>`.
 
 .. code-block:: Java
 
@@ -502,11 +502,11 @@ Lets say a user should receive an e-mail if he was registered to an event. This 
 But if the current transaction for some reason fails, it will be rolled back and the registration entity is not persisted.
 In this case the user would have received an e-mail but was not actually registered to the event.
 
-That is when :abbr:`CollectingAfterCommitListeners (ch.tocco.nice2.persist.util.CollectingAfterCommitListener)` are
+That is when :nice:`CollectingAfterCommitListeners <ch/tocco/nice2/persist/util/CollectingAfterCommitListener>` are
 useful.
 
-:abbr:`CollectingAfterCommitListeners (ch.tocco.nice2.persist.util.CollectingAfterCommitListener)` need to be registered
-and contributed as listener the same way as :abbr:`CollectingEntityListener (ch.tocco.nice2.persist.util.CollectingEntityListener)`
+:nice:`CollectingAfterCommitListeners <ch/tocco/nice2/persist/util/CollectingAfterCommitListener>` need to be registered
+and contributed as listener the same way as :nice:`CollectingEntityListener <ch/tocco/nice2/persist/util/CollectingEntityListener>`
 are.
 
 .. code-block:: XML
@@ -525,8 +525,8 @@ are.
 
 
 The listener must extend the class
-:abbr:`CollectingAfterCommitListener (ch.tocco.nice2.persist.util.CollectingAfterCommitListener)` and overwrite the
-method ``getAfterCommitTask`` which returns an :abbr:`AfterCommitTask (ch.tocco.nice2.persist.util.AfterCommitTask)`.
+:nice:`CollectingAfterCommitListener <ch/tocco/nice2/persist/util/CollectingAfterCommitListener>` and overwrite the
+method ``getAfterCommitTask`` which returns an :nice:`AfterCommitTask <ch/tocco/nice2/persist/util/AfterCommitTask>`.
 
 
 .. code-block:: Java
@@ -548,7 +548,7 @@ method ``getAfterCommitTask`` which returns an :abbr:`AfterCommitTask (ch.tocco.
    }
 
 .. note::
-   A :abbr:`CollectingAfterCommitListener (ch.tocco.nice2.persist.util.CollectingAfterCommitListener)` does not know
+   A :nice:`CollectingAfterCommitListener <ch/tocco/nice2/persist/util/CollectingAfterCommitListener>` does not know
    what has changed on the entities itself. But if the entity got created, updated or deleted is known.
 
 .. _Threaded Service Model: https://hivemind.apache.org/hivemind1/services.html#Threaded+Service+Model

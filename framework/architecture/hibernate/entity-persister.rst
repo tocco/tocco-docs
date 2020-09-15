@@ -8,7 +8,7 @@ Custom entity persister
 
 The :java-hibernate:`EntityPersister <org/hibernate/persister/entity/EntityPersister>` interface contains information how to
 map an entity to the database table. There is one instance per mapped class.
-We extend Hibernate's default implementations to achieve some custom behaviour (:abbr:`CustomEntityPersister (ch.tocco.nice2.persist.hibernate.CustomEntityPersister)`).
+We extend Hibernate's default implementations to achieve some custom behaviour (:nice:`CustomEntityPersister <ch/tocco/nice2/persist/hibernate/CustomEntityPersister>`).
 
 Lazy initialization of UniqueEntityLoader cache
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -50,8 +50,8 @@ Entity instantiation
 
 By default Hibernate instantiates entity classes by invoking their default constructor.
 Entity instantiation is intercepted by overriding ``EntityPersister#instantiate()``; the instantiation itself is then
-delegated to the :abbr:`EntityFactory (ch.tocco.nice2.persist.hibernate.pojo.EntityFactory)`.
-The :abbr:`EntityFactory (ch.tocco.nice2.persist.hibernate.pojo.EntityFactory)` injects services into
+delegated to the :nice:`EntityFactory <ch/tocco/nice2/persist/hibernate/pojo/EntityFactory>`.
+The :nice:`EntityFactory <ch/tocco/nice2/persist/hibernate/pojo/EntityFactory>` injects services into
 the created entities, tracks new entities and invokes listeners.
 
 Before the entity factory is called it is verified whether the entity to be created belongs to the current

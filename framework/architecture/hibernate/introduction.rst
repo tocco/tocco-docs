@@ -23,8 +23,8 @@ At first it is described how Hibernate is initialized (:doc:`session-factory-pro
 XML entity definitions are converted into Java classes (:doc:`entity-class-generation`).
 
 Next it is explained how the automatically generated Java classes implement the functionality of the
-:abbr:`Entity (ch.tocco.nice2.persist.entity.Entity)` interface (:doc:`abstract-pojo-entity`) and how
-the :abbr:`Relation (ch.tocco.nice2.persist.entity.Relation)` interface is mapped to the JPA associations
+:nice:`Entity <ch/tocco/nice2/persist/entity/Entity>` interface (:doc:`abstract-pojo-entity`) and how
+the :nice:`Relation <ch/tocco/nice2/persist/entity/Relation>` interface is mapped to the JPA associations
 (:doc:`collections`).
 
 There is additional in depth information available about the mapping of the data:
@@ -34,8 +34,8 @@ There is additional in depth information available about the mapping of the data
     * :doc:`entity-tuplizer`
     * :doc:`generated-values`
 
-The next chapters describes the lifecycle of the :abbr:`Context (ch.tocco.nice2.persist.Context)` (:doc:`session-lifecycle`)
-and the :abbr:`Transaction (ch.tocco.nice2.persist.tx.Transaction)` (:doc:`transaction-lifecycle` and :doc:`entity-transaction-context`).
+The next chapters describes the lifecycle of the :nice:`Context <ch/tocco/nice2/persist/Context>` (:doc:`session-lifecycle`)
+and the :nice:`Transaction <ch/tocco/nice2/persist/tx/Transaction>` (:doc:`transaction-lifecycle` and :doc:`entity-transaction-context`).
 
 It is also explained how the different kind of listeners are integrated into the persistence layer (:doc:`listeners`).
 

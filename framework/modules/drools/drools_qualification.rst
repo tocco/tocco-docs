@@ -19,8 +19,8 @@ Node
 ^^^^
 
 This represents a node in the qualification structure. It can be either a
-:abbr:`EvalNode (ch.tocco.nice2.optional.qualification.impl.drools.facts.qs.EvalNode)`, wrapping a
-``Evaluation_node``, or a :abbr:`RatingNode (ch.tocco.nice2.optional.qualification.impl.drools.facts.qs.RatingNode)`,
+:nice:`EvalNode <ch/tocco/nice2/optional/qualification/impl/drools/facts/qs/EvalNode>`, wrapping a
+``Evaluation_node``, or a :nice:`RatingNode <ch/tocco/nice2/optional/qualification/impl/drools/facts/qs/RatingNode>`,
 wrapping a ``Input_node``.
 
 Grade
