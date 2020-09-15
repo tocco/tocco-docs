@@ -101,7 +101,7 @@ Create OpenShift Project, S3 Bucket and Database
 
     Should you see this error, it's easiest to patch Ansible locally to
     work around the issue. You have to find ``s3_bucket.py`` locally and
-    patch it as shown `here <issue-150>`_. The file is likely somewhere
+    patch it as shown in `this pull request`_. The file is likely somewhere
     in ``/usr``::
 
       find /usr -name s3_bucket.py
@@ -140,4 +140,4 @@ running Ansible first. It creates the S3 bucket used locally too.)
 
 .. _common.yaml: https://git.vshn.net/tocco/tocco_hieradata/blob/master/common.yaml
 .. _Ansible Repository: https://git.tocco.ch/admin/repos/ansible
-.. _issue-150: https://github.com/ansible-collections/amazon.aws/pull/150/files
+.. _this pull request: https://github.com/ansible-collections/amazon.aws/pull/150/files
