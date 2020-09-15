@@ -17,7 +17,7 @@ The database has to be created as follows:
 - **Owner:** Must be equal to the database name (in the example above: ``nice_${CUSTOMER}`` example: nice_tocco).
 - **Password for the owner:** Same password as for the owner of the Nice database.
 
-Initializing the database can be done either by running the :abbr:`HistoryDataStoreFragment (ch.tocco.nice2.persist.history.impl.store.HistoryDataStoreFragment)`
+Initializing the database can be done either by running the :nice:`HistoryDataStoreFragment <ch/tocco/nice2/persist/history/impl/store/HistoryDataStoreFragment>`
 or by manually executing these statements:
 
 .. code:: sql

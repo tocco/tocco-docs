@@ -10,7 +10,7 @@ features to be able to provide exactly the same behaviour as the old Persistence
 Build the SessionFactory
 ------------------------
 The first step is to initialize a :java-hibernate:`SessionFactory <org/hibernate/SessionFactory>`.
-This is done by the :abbr:`SessionFactoryProvider (ch.tocco.nice2.persist.hibernate.bootstrap.SessionFactoryProvider)`,
+This is done by the :nice:`SessionFactoryProvider <ch/tocco/nice2/persist/hibernate/bootstrap/SessionFactoryProvider>`,
 which is a hivemind :abbr:`ServiceImplementationFactory (org.apache.hivemind.ServiceImplementationFactory)`. This is a sort of a factory service that can be used to
 inject the generated object (in this case the :java-hibernate:`SessionFactory <org/hibernate/SessionFactory>`) into other services.
 
@@ -25,19 +25,19 @@ Participate in the bootstrap process
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 It is possible for other hivemind modules to apply custom configuration options during the building of the
-session factory by contributing a :abbr:`HibernateBootstrapContribution (ch.tocco.nice2.persist.hibernate.HibernateBootstrapContribution)`.
+session factory by contributing a :nice:`HibernateBootstrapContribution <ch/tocco/nice2/persist/hibernate/HibernateBootstrapContribution>`.
 This contribution provides several methods to participate in various steps of the bootstrapping process. It's also possible
 to provide a priority to control the execution order of the different contributions.
 This can for example be used for registering custom user types.
 
-The main configuration is done by :abbr:`HibernateCoreBootstrapContribution (ch.tocco.nice2.persist.hibernate.bootstrap.HibernateCoreBootstrapContribution)`.
+The main configuration is done by :nice:`HibernateCoreBootstrapContribution <ch/tocco/nice2/persist/hibernate/bootstrap/HibernateCoreBootstrapContribution>`.
 
 .. _classLoaderService:
 
 ContributionClassLoaderService
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The :abbr:`ContributionClassLoaderService (ch.tocco.nice2.persist.hibernate.ContributionClassLoaderService)` is a custom
+The :nice:`ContributionClassLoaderService <ch/tocco/nice2/persist/hibernate/ContributionClassLoaderService>` is a custom
 :java-hibernate:`ClassLoaderService <org/hibernate/boot/registry/classloading/spi/ClassLoaderService>` which makes it easy
 to contribute services at runtime and to avoid having to use the :java:`ServiceLoader <java/util/ServiceLoader>`
 API used by the default implementation.
@@ -48,12 +48,12 @@ Bootstrap steps
 Register custom user extensions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Several user extensions are registered with the :abbr:`ContributionClassLoaderService (ch.tocco.nice2.persist.hibernate.ContributionClassLoaderService)`:
+Several user extensions are registered with the :nice:`ContributionClassLoaderService <ch/tocco/nice2/persist/hibernate/ContributionClassLoaderService>`:
 
     - For each custom user type a :java-hibernate:`TypeContributor <org/hibernate/boot/model/TypeContributor>` is contributed.
       There are some default types (for example ``binary`` or ``datetime``) that are always registered, but other modules can
       contribute user types as well (see :ref:`user-types`).
-    - :abbr:`FieldGenerator (ch.tocco.nice2.persist.hibernate.pojo.FieldGenerator)` contributions (fields that are set
+    - :nice:`FieldGenerator <ch/tocco/nice2/persist/hibernate/pojo/FieldGenerator>` contributions (fields that are set
       automatically by the framework, like the create/update timestamps and users) (see :ref:`generated-values`).
 
 Generate entity classes
@@ -68,15 +68,15 @@ Apply Hibernate properties
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The next step is to apply the Hibernate configuration settings.
-The interface :abbr:`HibernatePropertiesProvider (ch.tocco.nice2.persist.hibernate.HibernatePropertiesProvider)`
+The interface :nice:`HibernatePropertiesProvider <ch/tocco/nice2/persist/hibernate/HibernatePropertiesProvider>`
 defines some common properties in a default method.
 
-The only implementation (:abbr:`HibernatePropertiesProviderImpl (ch.tocco.nice2.persist.hibernate.bootstrap.HibernatePropertiesProviderImpl)`)
+The only implementation (:nice:`HibernatePropertiesProviderImpl <ch/tocco/nice2/persist/hibernate/bootstrap/HibernatePropertiesProviderImpl>`)
 adds the connection options to the default properties. These are read from the different ``hikaricp.properties`` files
 (base, customer and local).
 The properties need to be transformed to a different format as Hibernate uses different options than HikariCP.
 
-The :abbr:`ToccoDialectResolver (ch.tocco.nice2.persist.hibernate.dialect.ToccoDialectResolver)` is a custom
+The :nice:`ToccoDialectResolver <ch/tocco/nice2/persist/hibernate/dialect/ToccoDialectResolver>` is a custom
 :java-hibernate:`DialectResolver <org/hibernate/engine/jdbc/dialect/spi/DialectResolver>`, which makes sure that our custom dialects are used
 by hibernate. It is configured using the ``hibernate.dialect_resolvers`` property.
 
@@ -92,19 +92,19 @@ Hibernate interceptor
 
 A custom Hibernate :java-hibernate:`Interceptor <org/hibernate/Interceptor>` is registered as well.
 In order to be able to split up the functionality of the interceptor into different classes
-(perhaps from different modules) the :abbr:`DelegatingHibernateInterceptor (ch.tocco.nice2.persist.hibernate.listener.DelegatingHibernateInterceptor)`
+(perhaps from different modules) the :nice:`DelegatingHibernateInterceptor <ch/tocco/nice2/persist/hibernate/listener/DelegatingHibernateInterceptor>`
 is used (as it is not possible to register multiple interceptors). This class then delegates the events to the
 actual interceptor implementations.
 
 Currently only one interceptor is used:
 
-    - :abbr:`ValidationInterceptor (ch.tocco.nice2.persist.hibernate.validation.ValidationInterceptor)` which runs the
+    - :nice:`ValidationInterceptor <ch/tocco/nice2/persist/hibernate/validation/ValidationInterceptor>` which runs the
       entity validation before the changes are flushed to the database.
 
 JDBC function registration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-All :abbr:`JdbcFunction (ch.tocco.nice2.persist.hibernate.query.JdbcFunction)` are registered with the
+All :nice:`JdbcFunction <ch/tocco/nice2/persist/hibernate/query/JdbcFunction>` are registered with the
 :java-hibernate:`SessionFactoryBuilder <org/hibernate/boot/SessionFactoryBuilder>`.
 
 Event listener registration
@@ -112,14 +112,14 @@ Event listener registration
 
 Multiple Hibernate listeners (see :java-hibernate:`EventType <org/hibernate/event/spi/EventType>`) are registered:
 
-    - :abbr:`ExtendedInitializeCollectionEventListener (ch.tocco.nice2.persist.hibernate.interceptor.ExtendedInitializeCollectionEventListener)`
+    - :nice:`ExtendedInitializeCollectionEventListener <ch/tocco/nice2/persist/hibernate/interceptor/ExtendedInitializeCollectionEventListener>`
       initializes collections using a custom query which includes security and business unit predicates. See :doc:`collections`.
     - :abbr:`CustomDeleteEventListener (ch.tocco.nice2.persist.hibernate.cascade.CustomDeleteEventListener)` makes sure
       that deleted entities are automatically removed from many to many associations (see :ref:`delete_event_listener`).
-    - :abbr:`CustomFlushEntityEventListener (ch.tocco.nice2.persist.hibernate.listener.CustomFlushEntityEventListener)` handles
+    - :nice:`CustomFlushEntityEventListener <ch/tocco/nice2/persist/hibernate/listener/CustomFlushEntityEventListener>` handles
       custom after commit events (see :ref:`flush_event`)
-    - :abbr:`AfterCommitListener (ch.tocco.nice2.persist.hibernate.listener.AfterCommitListener)` and
-      :abbr:`CustomFlushEntityEventListener (ch.tocco.nice2.persist.hibernate.listener.CustomFlushEntityEventListener)`
+    - :nice:`AfterCommitListener <ch/tocco/nice2/persist/hibernate/listener/AfterCommitListener>` and
+      :nice:`CustomFlushEntityEventListener <ch/tocco/nice2/persist/hibernate/listener/CustomFlushEntityEventListener>`
       are responsible for firing after commit events (see :ref:`Listeners`).
 
 Startup time improvements
@@ -139,9 +139,9 @@ This makes sense for a production environment, but during development a quicker 
 usually only a fraction of all entities is used. It therefore makes more sense to initialize these objects on the fly when
 they are needed for the first time.
 
-To support this we use the :abbr:`CustomEntityPersister (ch.tocco.nice2.persist.hibernate.CustomEntityPersister)` that
+To support this we use the :nice:`CustomEntityPersister <ch/tocco/nice2/persist/hibernate/CustomEntityPersister>` that
 returns a custom lazy implementation of :java-hibernate:`UniqueEntityLoader <org/hibernate/loader/entity/UniqueEntityLoader>`
 which is not initialized until it is needed.
 
-Similarly, the :abbr:`CustomEntityTuplizer (ch.tocco.nice2.persist.hibernate.CustomEntityTuplizer)` does not initialize
+Similarly, the :nice:`CustomEntityTuplizer <ch/tocco/nice2/persist/hibernate/CustomEntityTuplizer>` does not initialize
 the :java-hibernate:`ProxyFactory <org/hibernate/proxy/ProxyFactory>` until it is needed.
