@@ -306,3 +306,8 @@ as unused if they are new and not yet used.
 
 .. _common.yml: https://git.vshn.net/tocco/tocco_hieradata/blob/master/common.yaml
 .. _Unused Dependencies: https://tc.tocco.ch/buildConfiguration/Nice2_UnusedDependencies
+
+Update Initial Values
+---------------------
+
+Run the scripts as explained in section :ref:`initial-values` to update the initial values in the *integration/master* branch.
