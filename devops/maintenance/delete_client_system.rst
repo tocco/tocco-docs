@@ -92,4 +92,4 @@ Everything Else
 Delete Installation at VSHN
 ===========================
 
-See :doc:`devops/app_management/remove_customer`
+See :doc:`/devops/app_management/remove_customer`
