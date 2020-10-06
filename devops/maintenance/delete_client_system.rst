@@ -88,78 +88,8 @@ Everything Else
        s3cmd rm -rf s3://tocco-nice-${CUSTOMER}
        s3cmd rb s3://tocco-nice-${CUSTOMER}
 
+
 Delete Installation at VSHN
 ===========================
 
-#. Remove installation from Ansible repo, remove it from *tocco/config.yml* and apply the change::
-
-       cd ${ANSIBLE_GIT_REPO}/tocco
-       ansible-playbook playbook.yml -t monitoring
-
-#. Remove DNS (cockpit.nine.ch)
-
-   Check for other domains hosted by us, remove them too::
-
-       oc project toco-nice-${INSTALLATION}
-       oc get route
-
-#. Remove the OpenShift project (https://control.vshn.net/appuio/projects)
-
-#. Remove the project of the installation in Teamcity.
-
-#. Set the status on the installation to "veraltet" in the Tocco BackOffice.
-
-#. Set the customer module that is linked to the installation to "Obsolete" if all associated installations are *obsolete*.
-
-   TQL finding all customers with only obsolete installations::
-
-       relModule_status.unique_id != "outdated"
-         and relModule_type.unique_id == "customer_module"
-         and exists(relInstallation)
-         and not exists(relInstallation where relInstallation_status.unique_id != "obsolete")
-
-#. Delete the Customer's Maven module from the Nice2-Git repository (if there are no other installations that require the Customer module)
-
-#. Remove Solr index
-
-   Obtain password to access Solr::
-
-       cd ${ANSIBLE_GIT_REPO}/tocco
-       ansible-vault view secrets2.yml |grep solr
-
-   On solr server (e.g. solr2.tocco.cust.vshn.net):
-
-   .. parsed-literal::
-
-       curl 'https\://localhost:8983/solr/admin/cores?action=UNLOAD&deleteInstanceDir=true&core=nice-\ **${INSTALLATION}**\ ' --insecure -u tocco -p
-
-#. Drop databases:
-
-   .. warning::
-
-       Consider waiting a few days before removing the databases to ensure
-       the final states of the databases have been backed up.
-
-   .. code::
-
-       DROP DATABASE nice_${INSTALLATION};
-       DROP DATABASE nice_${INSTALLATION}_history;
-
-#. Remove S3 bucket
-
-   .. warning::
-
-       Consider waiting a few days before removing the S3 bucket to ensure
-       the final state of the S3 bucket has been backed up.
-
-   **Only do this if there is no other installation left for the customer.** Buckets
-   are shared among all installations of a customer.
-
-   .. code::
-
-       s3cmd rm -rf s3://tocco-nice-${INSTALLATION}
-       s3cmd rb s3://tocco-nice-${INSTALLATION}
-
-
-.. _common.yml: https://git.vshn.net/tocco/tocco_hieradata/blob/master/common.yaml
-.. _solr.yml: https://git.vshn.net/tocco/tocco_hieradata/blob/master/infrastructure/solr.yaml
+See :doc:`/devops/app_management/remove_customer`
