@@ -5,7 +5,8 @@ Config
 ------
 
 The way duplicate entities are identified can be configured in the entity ``Duplicate_config``. ``Duplicate_field``
-entities are grouped into ``Duplicate_field_group`` entities. For each ``Duplicate_field`` a field to check and the
+entities are grouped into ``Duplicate_field_group`` entities. Fields in a group are combined as AND conditions, while
+groups themselves are combined as OR conditions. For each ``Duplicate_field`` a field to check and the
 ``Duplicate_comparison_type`` have to be set. Currently there exist two options:
 
 * ``exact``
@@ -29,14 +30,38 @@ Enabling duplicate search for new entity models
 #. Create relations from ``Duplicate`` to new entity model, like ``Duplicate_relAddress``.
 #. Deny all write rights on this new relation.
 #. Add rights for manager role to see duplicates.
+#. Set :nice:`DuplicateListener <ch/tocco/nice2/duplicate/impl/search/DuplicateListener>` to run for new entity model in ``hivemodule.xml``.
+#. Create ``Duplicate_config``, ``Duplicate_field_group`` and ``Duplicate_field`` entities.
+#. Activate the new ``Duplicate_config`` once you're satisfied with it.
 
-    .. code-block:: none
-        :caption: Example for ``User``
+.. code-block:: xml
+        :caption: Relation example for ``User``
+
+        <?xml version="1.0" encoding="UTF-8"?>
+        <relation xmlns="http://nice2.tocco.ch/schema/relation.xsd">
+          <source entity-model="Duplicate">
+            <delete cascade="no"/>
+          </source>
+          <target entity-model="User">
+            <delete cascade="no"/>
+          </target>
+          <cardinality>n:n</cardinality>
+        </relation>
+
+.. code-block:: none
+        :caption: ACL example for ``User``
+
+        entityPath(Duplicate, relUser):
+            deny access(write);
 
         entity(Duplicate):
             grant access to usermanager if count(relUser) > 1;
 
-#. Set :nice:`DuplicateListener <ch/tocco/nice2/duplicate/impl/search/DuplicateListener>` to run for new entity model in ``hivemodule.xml``.
-#. Create ``Duplicate_config``, ``Duplicate_field_group`` and ``Duplicate_field`` entities;
-#. Activate the new ``Duplicate_config`` once you're satisfied with it.
+.. code-block:: xml
+        :caption: Hivemodule example for ``User``
 
+        <dependency module-id="nice2.duplicate"/>
+
+        <contribution configuration-id="nice2.persist.core.EntityListeners">
+          <listener listener="service:nice2.duplicate.DuplicateListener" filter="User"/>
+        </contribution>
