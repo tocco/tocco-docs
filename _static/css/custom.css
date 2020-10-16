@@ -39,7 +39,17 @@ pre.literal-block {
  color: black;
      background: #fc888a;
 }
+
 .deprecated > .admonition-title {
      background: #d67173 !important;
+}
 
+/* We do not want tables to be arbitrarily truncated after 800px forcing people to scroll sideways … */
+.wy-nav-content {
+  max-width: none;
+}
+
+/* … but we still want text to be wrapped. */
+p {
+  max-width: 800px;
 }
