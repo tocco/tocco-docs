@@ -55,7 +55,7 @@ Enabling duplicate search for new entity models
             deny access(write);
 
         entity(Duplicate):
-            grant access to usermanager if count(relUser) > 1;
+            grant access to usermanager;
 
 .. code-block:: xml
         :caption: Hivemodule example for ``User``
