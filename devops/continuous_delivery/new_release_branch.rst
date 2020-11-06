@@ -183,7 +183,7 @@ A new JIRA task should be created in the `TOCBO`_ project and assigned to the Bu
 .. _demo.tocco.ch: https://demo.tocco.ch
 
 For `integration.tocco.ch`_ migration
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Approximately one week before the release date, our integration installation `integration.tocco.ch`_ should be updated to the new
 version. This is done by the Tocco Business Services.
