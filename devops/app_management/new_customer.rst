@@ -32,24 +32,31 @@ Create OpenShift Project, S3 Bucket and Database
 
        definitions:
          # ...
-         abc:                                            # <-- customer
-           mail_sender_default: info@domain.ch           # <-- fallback mail address
-           mail_sender_noreply: noreply@domain.ch        # <-- fallback noreply address
-           mail_domains:                                 # <-- domains allowed as email sender address
+         abc:                                                # <-- customer
+           mail_sender_default: info@domain.ch               # <-- fallback mail address
+           mail_sender_noreply: noreply@domain.ch            # <-- fallback noreply address
+           mail_domains:                                     # <-- domains allowed as email sender address
              domain.ch:
              domain.net:
            installations:
-             abc:                                        # <-- installation
-               db_server: db1.tocco.cust.vshn.net
+             abc:                                            # <-- production installation
+               db_server: db3.tocco.cust.vshn.net
                solr_server: solr2.tocco.cust.vshn.net
-             abctest:                                    # <-- installation
-               db_server: db1.tocco.cust.vshn.net
-               solr_server: solr2.tocco.cust.vshn.net
+             abctest:                                        # <-- test installation
+               db_server: db1.stage.tocco.cust.vshn.net
+               solr_server: solr1.stage.tocco.cust.vshn.net
          # ...
 
-   Just as shown in the example above, **do** use *db1.tocco.cust.vshn.net* and
-   *solr2.tocco.cust.vshn.net* as DB and Solr server respectively. This example
-   will be updates should other servers be used in the future.
+   Just as shown in the example above, use these servers:
+
+   ================== =========================================
+    Environment        Servers
+   ================== =========================================
+    production         | db: db3.tocco.cust.vshn.net
+                       | solr: solr2.tocco.cust.vshn.net
+    test               | db: db1.stage.tocco.cust.vshn.net
+                       | solr: solr1.stage.tocco.cust.vshn.net
+   ================== =========================================
 
    .. important::
 

@@ -23,6 +23,9 @@ archive, see below.
 Backup Locations
 ----------------
 
+Production Cluster 1
+^^^^^^^^^^^^^^^^^^^^
+
 =======================  ========  ==================================  ==============================================
         Server            Role                 Daily Backups                    Triggered backups (during CD)
 =======================  ========  ==================================  ==============================================
@@ -30,6 +33,25 @@ db1.tocco.cust.vshn.net   master    n/a                                 ``/var/l
 db2.tocco.cust.vshn.net   slave     ``/var/lib/postgresql-backup/``     n/a
 =======================  ========  ==================================  ==============================================
 
+Production Cluster 2
+^^^^^^^^^^^^^^^^^^^^
+
+=======================  ========  ==================================  ==============================================
+        Server            Role                 Daily Backups                    Triggered backups (during CD)
+=======================  ========  ==================================  ==============================================
+db3.tocco.cust.vshn.net   master    n/a                                 ``/var/lib/postgresql-backup/deploy-dumps/``
+db4.tocco.cust.vshn.net   slave     ``/var/lib/postgresql-backup/``     n/a
+=======================  ========  ==================================  ==============================================
+
+Staging Cluster 1
+^^^^^^^^^^^^^^^^^
+
+=============================  ========  ==================================  ==============================================
+        Server                  Role                 Daily Backups                    Triggered backups (during CD)
+=============================  ========  ==================================  ==============================================
+db1.stage.tocco.cust.vshn.net   master    n/a                                 ``/var/lib/postgresql-backup/deploy-dumps/``
+db2.stage.tocco.cust.vshn.net   slave     ``/var/lib/postgresql-backup/``     n/a
+=============================  ========  ==================================  ==============================================
 
 Get Backup from Archive
 -----------------------
@@ -52,7 +74,7 @@ List Available Archives
 
 .. parsed-literal::
 
-      $ sudo burp -c /etc/burp/slave.conf -C db2.tocco.cust.vshn.net -a list
+      $ sudo burp -c /etc/burp/slave.conf -C **${NAME_OF_SLAVE}** -a list
       Backup: 0000155 2018-01-31 03:03:22 +0100 (deletable)
       Backup: 0000162 2018-02-09 01:14:05 +0100 (deletable)
       Backup: :green:`0000169` 2018-02-16 01:10:54 +0100 (deletable)
@@ -61,9 +83,9 @@ List Available Archives
 
 .. hint::
 
-   If ``-C …`` is not specified, the archives from the current host are listed. ``-C`` allows you to restore
-   a dumps made on the slave directly on the master.
-
+   If ``-C ${NAME_OF_SLAVE}`` is not specified, the archives from the current host are
+   listed. ``-C`` allows you to restore a dumps made on the slave directly on the master.
+   See tables above to find out which slave belong to which master.
 
 List Files in Archive
 ^^^^^^^^^^^^^^^^^^^^^
@@ -72,7 +94,7 @@ Show the content of directory ``/var/lib/postgresql-backup/`` in archive :green:
 
 .. parsed-literal::
 
-      $ sudo burp -c /etc/burp/slave.conf -C db2.tocco.cust.vshn.net -a list -b :green:`0000169` -r '^/var/lib/postgresql-backup/'
+      $ sudo burp -c /etc/burp/slave.conf -C **${NAME_OF_SLAVE}** -a list -b :green:`0000169` -r '^/var/lib/postgresql-backup/'
       Backup: 0000169 2018-02-16 01:10:54 +0100 (deletable)
       With regex: ^/var/lib/postgresql-backup/
       /var/lib/postgresql-backup/nice_awpf.dump
@@ -90,7 +112,7 @@ Restore **nice_bnftest.dump** from backup :green:`0000169` to directory **~/rest
 .. parsed-literal::
 
       $ mkdir -p :blue:`~/restores/`
-      $ sudo burp -c /etc/burp/slave.conf -C db2.tocco.cust.vshn.net -a restore -b :green:`0000169` -d :blue:`~/restores/` -r '^\ :red:`/var/lib/postgresql-backup/postgres-nice_bnftest.dump.gz`'
+      $ sudo burp -c /etc/burp/slave.conf -C **${NAME_OF_SLAVE}** -a restore -b :green:`0000169` -d :blue:`~/restores/` -r '^\ :red:`/var/lib/postgresql-backup/postgres-nice_bnftest.dump.gz`'
       …
       2018-03-09 16:01:30 +0100: burp[23156] restore finished
       $ ls -lh :blue:`~/restores/`:red:`var/lib/postgresql-backup/nice_bnftest.dump`
