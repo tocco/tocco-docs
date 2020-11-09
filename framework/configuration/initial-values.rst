@@ -41,16 +41,20 @@ by a default value. Check the corresponding documentations under :ref:`Configura
         localized:
             label: entities.Entity_model.identifer # string, a text resource key
         relations:
-            fk_other_entity: nice_other_entity WHERE unique_id = 'identifier' # string, table name and condition of a SQL query
+            fk_other_entity: nice_other_entity WHERE unique_id = 'identifier' # string, table name and condition of a SQL query (should return single result)
+        single-relations:
+            relOther_entity: nice_other_entity WHERE unique_id = 'identifier' # string, relation name and condition of a SQL query (should return single result)
+        multi-relations:
+            fk_other_entity: nice_other_entity WHERE unique_id IN ('identifier', 'some-other-id') # string, relation name and condition of a SQL query (can return many result)
 
 .. _Configuration:
 
 Configuration
 -------------
 
-:ref:`fields`, :ref:`localized` and :ref:`relations` are used to define the values to be written into the database.
-Any field or relation that does not exist in the database schema will be ignored. If your record has no localized fields
-or relations, you may omit those parts completely.
+:ref:`fields`, :ref:`localized`, :ref:`relations`, :ref:`single-relations` and :ref:`multi-relations` are used to define
+the values to be written into the database. Any field or relation that does not exist in the database schema will be
+ignored. If your record has no localized fields or relations, you may omit those parts completely.
 
 :ref:`config` is used to define how the record is created or updated. A default value exists for all configurations.
 
@@ -97,8 +101,8 @@ Define the mode that should be used when handling entities with business unit de
     Create a record for each business unit in the database. Existing records are then identified by the combination of
     the identifier field value and the relation to the business unit.
 * use_field_value
-    Do not set the business unit relation automatically, but use whatever was defined in :ref:`relations` (or
-    :ref:`fields`).
+    Do not set the business unit relation automatically, but use whatever was defined in :ref:`relations`,
+    :ref:`fields`, :ref:`single-relations` or :ref:`multi-relations`.
 
 priority
 """"""""
@@ -140,7 +144,8 @@ or updating a record.
     Use :ref:`localized` to define values in properly localized text resources, instead of having to set each field for
     each locale by yourself.
 
-    Use :ref:`relations` to dynamically find keys for related entities, instead of having to set fixed keys here.
+    Use :ref:`relations`, :ref:`single-relations` or :ref:`multi-relations` to dynamically find keys for related
+    entities, instead of having to set fixed keys here.
 
 .. _localized:
 
@@ -157,18 +162,63 @@ that is installed on the system. See :doc:`textresources`.
 relations
 ^^^^^^^^^
 
-Define queries that should be used to fill relations. The key always corresponds to a field on the database. The value
-will be used as part of a SQL query to determine the key that should be written to the field. Your value should contain
-the table name of the target table and a ``WHERE`` condition that uniquely identifies a single record.
+Define queries that should be used to fill n:1 or n:0..1 relations. The key always corresponds to a field on the
+database. The value will be used as part of a SQL query to determine the key that should be written to the field. Your
+value should contain the table name of the target table and a ``WHERE`` condition that uniquely identifies a single
+record.
 
 .. code-block:: sql
    :caption: Example
 
     -- value as defined in initial value
-    nice_target_table WHERE unique_id = 'identifier'
+    fk_target_table: nice_target_table WHERE unique_id = 'identifier'
 
     -- query that will be executed on the database
     SELECT pk FROM nice_target_table WHERE unique_id = 'identifier'
+
+.. _single-relations:
+
+single-relations
+^^^^^^^^^^^^^^^^
+
+Works the exact same way as :ref:`relations`, but you can use the relation name from Nice as the field name.
+
+.. code-block:: sql
+   :caption: Example for a relation Source_relTarget
+
+    -- value as defined in initial value
+    relTarget: nice_target_table WHERE unique_id = 'identifier'
+
+    -- query that will be executed on the database
+    SELECT pk FROM nice_target_table WHERE unique_id = 'identifier'
+
+.. _multi-relations:
+
+multi-relations
+^^^^^^^^^^^^^^^
+
+Define queries that should be used to fill n:n relations. The key has to correspond to a relation in Nice. The value
+will be used as part of a SQL query to determine the keys that should be inserted in to the relation table. Your value
+should contain the table name of the target table and a ``WHERE`` condition that identifies the records you wish to
+relate. The information on the relation table name and the foreign key names are taken from the link definition in the
+relation file.
+
+.. warning::
+
+    Setting n:n relations will only increase the version on the side that was the source for a change. For example,
+    changing Address_relAddress_code1 will only increase the version on the Address, not the Address_code1. Keep this
+    in mind when deciding into which initial values file to put your multi-relations, as the wrong side might result
+    in all relations being reset on each deployment if the source entity is usually not edited.
+
+.. code-block:: sql
+   :caption: Example for a relation Source_relTarget
+
+    -- value as defined in initial value
+    relTarget: nice_target_table WHERE unique_id IN ('identifier', 'some-other-id')
+
+    -- queries that will be executed on the database
+    SELECT pk FROM nice_target_table WHERE IN ('identifier', 'some-other-id');
+    INSERT INTO nice_source_to_target (fk_source, fk_target) VALUES (source-pk, target-pk);
 
 Running initial values from changesets
 --------------------------------------
