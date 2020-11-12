@@ -61,6 +61,15 @@ Create new test system
 - Create new test system :doc:`via Ansible </devops/app_management/new_customer>`
 - Adjust parameters, :ref:`triggers <trigger-deployments>`
 
+Update internal SSO App
+^^^^^^^^^^^^^^^^^^^^^^^
+
+1. Login to Microsoft Azure https://portal.azure.com/
+2. Open the ``Tocco intern SSO`` app (Open ``App registrations`` service via search and find item in list)
+3. Open ``Authentication`` tab
+4. Add new ``Redirect URI`` for the created test system  (e.g. https://test225.tocco.ch/nice2/sso-callback for ``test225``)
+5. Save
+
 Change version in files
 -----------------------
 Change version in these files in the **master** branch:
