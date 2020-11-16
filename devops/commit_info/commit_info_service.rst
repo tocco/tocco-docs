@@ -163,3 +163,47 @@ Commit-Endpoint
 Get all commits that contain an issue key in the commit message: ``git log --all --abbrev-commit --name-only --full-index --no-merges --date=iso-strict --grep={key}``
 
 Returns ``commitId``, ``author``, ``commitTimestamp``, ``comitMessage``, ``changedFiles`` for each commit.
+
+Artifact-Resource
+^^^^^^^^^^^^^^^^^
+
+All Artifacts by Model Name Endpoint
+************************************
+
+    .. code-block:: text
+
+        GET https://commit-info-service.tocco.ch/artifact/{modelName}
+
+Get all artifacts of a certain model name (e.g. ``Artefact_action``). Returns ``key``, ``nr``, ``label``, ``moduleLabel``,
+``moduleTypeLabel`` for each artifact found.
+
+All Artifacts by Issue Endpoint
+*******************************
+
+    .. code-block:: text
+
+        GET https://commit-info-service.tocco.ch/artifact/issue/{issueKey}
+
+Get all artifacts of a certain jira issue grouped by the model name. Returns a map where the model name is the key
+and a list of artifacts as value. An artifact has the properties ``key``, ``nr``, ``label``, ``moduleLabel``, ``moduleTypeLabel``.
+
+Update Artifacts linked to Issue Endpoint
+*****************************************
+
+    .. code-block:: text
+
+        PUT https://commit-info-service.tocco.ch/artifact/issue/{issueKey}
+        {
+            "artifacts" : {
+                "modelName" : [
+                    "key",
+                    ...
+                    "otherKey"
+                ],
+                "otherModelName" : [
+                    ...
+                ]
+            }
+        }
+
+Update the artifacts linked to a certain issue.
