@@ -90,3 +90,17 @@ by the :nice:`StringToBinaryParameterConverter <ch/tocco/nice2/persist/hibernate
 
 See chapter :ref:`large_objects` for more details about large objects.
 
+``compressed-text`` type
+------------------------
+
+The :nice:`CompressedTextUserType <ch.tocco.nice2.persist.hibernate.usertype.CompressedTextUserType>` is a sub-type of
+the ``string`` type. It compresses and decompresses the string data when writing and reading the field from
+the database. Zstd compression is used, the compression level can be configured using the ``persist.core.zstd.compression.level``
+property (default value is 19).
+
+.. note::
+
+    This is useful for storing large text fields, but keep in mind that the content of the string cannot be used
+    in a query, as only the compressed data is available on the database.
+
+

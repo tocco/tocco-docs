@@ -116,6 +116,15 @@ The events are fired by the :abbr:`TransactionControlImpl (ch.tocco.nice2.persis
 just before or after the database transaction is committed. ``CommitListener#onAfterCommit()`` is only called if the commit
 was successful.
 
+The method ``afterFlush()`` is called after the hibernate session is flushed, but before the transaction is committed.
+This means that all data that has been modified during this transaction is already available on the database when these listeners
+are called. The method returns a ``boolean`` which indicates if the current listener has changed data on the database.
+If ``true`` is returned, the session is flushed again before the ``afterFlush()`` method of the next listener is called.
+
+This functionality is usually used through the :nice:`CollectingAfterFlushEntityListener <ch.tocco.nice2.persist.util.CollectingAfterFlushEntityListener>`.
+Since this is the last listener that will be called before a transaction is committed, they must be ordered carefully using the ``priority()``
+method, to make sure that no entity events are missed, because they were triggered by a listener that is executed later.
+
 TransactionListener
 -------------------
 
