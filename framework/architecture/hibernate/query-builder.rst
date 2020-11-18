@@ -483,6 +483,9 @@ The wrapper overrides methods like ``equal()`` and ``notEqual()``:
       entity, not the query root) and to use the real criteria builder to avoid endless recursion.
     * The actual predicate is then combined with the interceptor predicates and an AND predicate is returned from the call
       (only if there are any interceptor predicates, otherwise just the actual predicate is returned directly).
+    * The ``unwrap()`` method may be used to access the underlying criteria builder. However this should only be used
+      internally when necessary, as conditions created using the underlying criteria builder directly won't
+      contain any security conditions.
 
 Conditions are collected from the following expressions:
 
