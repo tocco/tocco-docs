@@ -116,17 +116,11 @@ Restore Database
 
        CREATE DATABASE **${DB_NAME}** WITH OWNER **${DB_USER}**;
 
-**\*.psql** and **\*.dump** files:
+Restore dump file or directory:
 
     .. code-block:: bash
 
-        pg_restore -j 4 -U postgres -h ${DB_SERVER} --role ${DB_USER} --no-owner --no-acl -d ${DB_NAME} ${DUMP_FILE_PATH}
-
-**\*.dump.gz** files:
-
-    .. code-block:: bash
-
-        gzip -cd ${DUMP_FILE_PATH} | pg_restore -U postgres -h ${DB_SERVER} --role ${DB_USER} --no-owner --no-acl -d ${DB_NAME}
+        pg_restore -j 4 -U postgres -h ${DB_SERVER} --role ${DB_USER} --no-owner --no-acl -d ${DB_NAME} ${DUMP_FILE_OR_DIRECTORY}
 
 .. hint::
 
