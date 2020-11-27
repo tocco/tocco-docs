@@ -118,7 +118,12 @@ Restore Database
 
 Restore dump file or directory:
 
-    .. code-block:: bash
+
+    \*.zstd files::
+
+        zstd -qcd ${DUMP_FILE} | pg_restore -U postgres -h ${DB_SERVER} --role ${DB_USER} --no-owner --no-acl -d ${DB_NAME}
+
+    other files and directories::
 
         pg_restore -j 4 -U postgres -h ${DB_SERVER} --role ${DB_USER} --no-owner --no-acl -d ${DB_NAME} ${DUMP_FILE_OR_DIRECTORY}
 
