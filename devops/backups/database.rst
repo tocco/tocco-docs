@@ -26,32 +26,32 @@ Backup Locations
 Production Cluster 1
 ^^^^^^^^^^^^^^^^^^^^
 
-=======================  ========  ==================================  ==============================================
+=======================  ========  ==================================  =====================================================
         Server            Role                 Daily Backups                    Triggered backups (during CD)
-=======================  ========  ==================================  ==============================================
-db1.tocco.cust.vshn.net   master    n/a                                 ``/var/lib/postgresql-backup/deploy-dumps/``
-db2.tocco.cust.vshn.net   slave     ``/var/lib/postgresql-backup/``     n/a
-=======================  ========  ==================================  ==============================================
+=======================  ========  ==================================  =====================================================
+db1.tocco.cust.vshn.net   master    n/a                                 ``/var/lib/postgresql-backup/deploy-dumps/`` [#f1]_
+db2.tocco.cust.vshn.net   slave     ``/var/lib/postgresql-backup/``     ``/var/lib/postgresql-backup/deploy-dumps/`` [#f1]_
+=======================  ========  ==================================  =====================================================
 
 Production Cluster 2
 ^^^^^^^^^^^^^^^^^^^^
 
-=======================  ========  ==================================  ==============================================
+=======================  ========  ==================================  =====================================================
         Server            Role                 Daily Backups                    Triggered backups (during CD)
-=======================  ========  ==================================  ==============================================
-db3.tocco.cust.vshn.net   master    n/a                                 ``/var/lib/postgresql-backup/deploy-dumps/``
-db4.tocco.cust.vshn.net   slave     ``/var/lib/postgresql-backup/``     n/a
-=======================  ========  ==================================  ==============================================
+=======================  ========  ==================================  =====================================================
+db3.tocco.cust.vshn.net   master    n/a                                 ``/var/lib/postgresql-backup/deploy-dumps/`` [#f1]_
+db4.tocco.cust.vshn.net   slave     ``/var/lib/postgresql-backup/``     ``/var/lib/postgresql-backup/deploy-dumps/`` [#f1]_
+=======================  ========  ==================================  =====================================================
 
 Staging Cluster 1
 ^^^^^^^^^^^^^^^^^
 
-=============================  ========  ==================================  ==============================================
+=============================  ========  ==================================  =====================================================
         Server                  Role                 Daily Backups                    Triggered backups (during CD)
-=============================  ========  ==================================  ==============================================
-db1.stage.tocco.cust.vshn.net   master    n/a                                 ``/var/lib/postgresql-backup/deploy-dumps/``
-db2.stage.tocco.cust.vshn.net   slave     ``/var/lib/postgresql-backup/``     n/a
-=============================  ========  ==================================  ==============================================
+=============================  ========  ==================================  =====================================================
+db1.stage.tocco.cust.vshn.net   master    n/a                                 ``/var/lib/postgresql-backup/deploy-dumps/`` [#f1]_
+db2.stage.tocco.cust.vshn.net   slave     ``/var/lib/postgresql-backup/``     ``/var/lib/postgresql-backup/deploy-dumps/`` [#f1]_
+=============================  ========  ==================================  =====================================================
 
 Get Backup from Archive
 -----------------------
@@ -119,3 +119,9 @@ Restore **nice_bnftest.dump** from backup :green:`0000169` to directory **~/rest
       -rw-rw-r-- 1 postgres postgres 4.1G Feb 16 01:26 /home/peter.gerber/restores/var/lib/postgresql-backup/nice_bnftest.dump
 
 :ref:`restore-database` explains how to restore a dump.
+
+
+.. rubric:: Footnotes
+
+.. [#f1] The output of the *dump* step in CD prints the server on which the dump is located as
+         well as the path to it on the server.
