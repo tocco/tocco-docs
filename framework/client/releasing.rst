@@ -16,21 +16,29 @@ PATCH  For bug fixes
 
 Release package
 ---------------
+.. warning::
+
+  Before you start, make sure:
+
+  - You checked out the master branch and your local branch is called "master" too
+  - You're logged into the NPM registry with the "tocconpm" user (check with ``npm whoami``).
+    See :ref:`npm-authentication` below for details.
+
 Once the package is ready it can be released / published. A package will be released on master only.
 
 .. code-block:: console
 
   yarn release-package {PACKAGE_NAME}
 
-This will run yarn setup at the beginning to make sure all local dependencies are up to date. 
+This will run yarn setup at the beginning to make sure all local dependencies are up to date.
 After that the new version can be entered. The script will then create a changelog entry which can be edited manually,
 bumps the version of the package, creates a git release tag and uploads the package to the npm registry.
 Everything gets committed but needs to be pushed to origin.
 
 .. warning::
 
-  **tocco-resource-scheduler** packages needs a license that is not committed with the code base. This license needs to be 
-  added prior to releasing. 
+  **tocco-resource-scheduler** packages needs a license that is not committed with the code base. This license needs to be
+  added prior to releasing.
 
 
 To check the upcoming changelog:
@@ -39,16 +47,17 @@ To check the upcoming changelog:
 
   yarn changelog {PACKAGE_NAME}
 
+.. _npm-authentication:
 
 Configure npm authentication
 ------------------------------
-We use the default `NPM Registry`_ to upload the packages. All developers use the same user on npm (npm@tocco.ch).
-To setup the authentication execute following command:
+We use the default `NPM Registry`_ to upload the packages. All developers use the same user on npm (user "tocconpm" with
+email npm@tocco.ch). To setup the authentication execute following command:
 
 .. code-block:: console
 
-  npm adduser 
+  npm adduser
 
 The password can be found on our Sharepoint.
 
-.. _NPM Registry: https://www.npmjs.com/ 
+.. _NPM Registry: https://www.npmjs.com/
