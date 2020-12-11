@@ -45,6 +45,8 @@ a) … domains that already have a SPF record.
 
        v=spf1 ip4:193.246.64.0/19 include:spf.tocco.ch redirect=spf.mail.hostpoint.ch -all
 
+   (``include:spf.tocco.ch`` can appear anywhere between ``v=spf1`` and ``-all``.)
+
 b) … domains that have no SPF records yet.
 
    In this case we'll have to find out what other providers send mails using the domain.
@@ -54,7 +56,7 @@ b) … domains that have no SPF records yet.
    ================= ================== ========================================
     Name              Type               SPF Policy
    ================= ================== ========================================
-    Abacus                               ?
+    Abacus                               ? (required record varies)
     Atlassian                            ``include:_spf.atlassian.net``
     HostPoint         Hosting            ``include:spf.mail.hostpoint.ch``
     Google            Office             ``include:_spf.google.com``
@@ -85,8 +87,10 @@ Who has to Update the Records
 
 In most cases DNS is managed by the customer or a third party.
 
-Some domains are managed by us (blue in spread sheet). In this case we have
-to make DNS adjustments ourselves.
+Some domains are managed by us. In this case we have to make DNS
+adjustments ourselves.
+
+See also :ref:`dns-who-updates-record`.
 
 
 How to Collect the Required Information
@@ -100,6 +104,7 @@ Phase 1: Collect Domains Customer wants to Use
 a) New customers / initial domains:
 
    Information is collected during preliminary project phase.
+
 b) Existing customer / new domains:
 
    Project manager, BS or sales receive request to add or remove domain(s).
