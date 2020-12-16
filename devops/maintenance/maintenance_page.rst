@@ -16,7 +16,7 @@ Initially clone the repository (``git clone https://gitlab.com/toccoag/maintenan
 
 1. Login ``oc login``
 2. Go to the project where the maintenance page should be deployed (e.g. ``oc project toco-nice-master``)
-3. Enable maintenance page ``mntnc start [-c tocco] [-t "24.12.2020 6:00"] [-r 10]``
+3. Enable maintenance page ``./mntnc start [-c tocco] [-t "24.12.2020 6:00"] [-r 1]``
 
 The following optional arguments are supported:
 
@@ -25,7 +25,7 @@ The following optional arguments are supported:
 * ``-r``/``--replicas``: number of replicas deployed (default: ``1``)
 
 4. Disable/enable bypass as needed via https://master.tocco.ch/_maintenance/bypass/
-5. Disable maintenance page ``mntnc stop``
+5. Disable maintenance page ``./mntnc stop``
 
 Theme
 =====
