@@ -265,14 +265,8 @@ If we check again a few minutes later, the old instance has disappeared. Also, t
     nice-61-pkksw   2/2       Running   0          7m
     solr-6-c6t2t    1/1       Running   0          9d
 
-Start PSQL
-----------
 
-This open the database the pod uses.
+Start PSQL (SQL Console)
+------------------------
 
-.. code::
-
-    $ oc rsh -c nice PODNAME psql
-    psql (9.4.13, server 9.5.9)
-
-    nice_test212=> …
+See :ref:`connect-to-db-via-openshift`.
