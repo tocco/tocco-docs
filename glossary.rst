@@ -12,7 +12,9 @@ Glossary
         It can be found at https://git.tocco.ch/gitweb?p=ansible.git;a=summary.
 
     Ansible Vault
-        Used to store passwords and other secrets.
+        Used to store passwords and other secrets securely.
+
+        Two are currently in use, :term:`secrets.yml` and :term:`secrets2.yml`.
 
         See section *Ansible Vault* in `this document <https://git.tocco.ch/gitweb?p=ansible.git
         ;a=blob;f=docs/ansible/basics.rst>`_ for a detailed documentation.
@@ -178,6 +180,43 @@ Glossary
         There is one RC per deployment. Use ``oc describe rc …`` to see the configuration (:term:`DC`) that was used for a deployment.
 
         Accessible via ``oc {get|describe|edit|…} pod …``
+
+    secrets.yml
+
+       Used to store passwords, API keys and other secrets. Encrypted using
+       :term:`Ansible Vault` and stored in the :term:`Ansible Repository`.
+
+       **secrets.yml** contains secrets required for setting up servers and services
+       other than Nice. See also :term:`secrets2.yml`.
+
+       View secrets::
+
+           $ cd ${ANSIBLE_REPO}
+           $ ansible-vault view secrets.yml
+
+       Edit secrets::
+
+           $ cd ${ANSIBLE_REPO}
+           $ ansible-edit view secrets.yml
+
+    secrets2.yml
+
+       Used to store passwords, API keys and other secrets. Encrypted using
+       :term:`Ansible Vault` and stored in the :term:`Ansible Repository`.
+
+       **secrets2.yml** contains secrets required for setting up Nice and related
+       services. As general rule, secrets required so setup an installation go
+       here. See also :term:`secrets.yml`.
+
+       View secrets::
+
+           $ cd ${ANSIBLE_REPO}/tocco
+           $ ansible-vault view secrets2.yml
+
+       Edit secrets::
+
+           $ cd ${ANSIBLE_REPO}/tocco
+           $ ansible-edit view secrets2.yml
 
     service
     SVC
