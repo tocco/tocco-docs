@@ -64,6 +64,8 @@ Add DNS Record for a Domain managed by Us
 
 #. Go to `Nine's Cockpit`_.
 
+   Username/password in :term:`secrets2.yml`.
+
 #. Find the right domain and click on it.
 
 #. Create or update entries

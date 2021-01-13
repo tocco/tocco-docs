@@ -31,6 +31,8 @@ Everything Else
 
 #. Remove DNS (https://cockpit.nine.ch).
 
+   Username/password in :term:`secrets2.yml`.
+
 #. Remove the project of installation in Teamcity.
 
 #. Update status on the installation to "veraltet" in the Tocco BackOffice.

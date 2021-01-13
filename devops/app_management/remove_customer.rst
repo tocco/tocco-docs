@@ -64,6 +64,8 @@ Remove DNS Entry
 Go to https://cockpit.nine.ch and remove the DNS record for ${installation}.tocco.ch
 and any other records associated with the installation.
 
+Username/Password in :term:`secrets2.yml`.
+
 
 Update information in :term:`BO`
 --------------------------------

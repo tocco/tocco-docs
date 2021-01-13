@@ -23,7 +23,7 @@ Access the Web Interface
 .. important::
 
     Only a selected number of people have access to the Web interface and REST API. Those people can
-    find the credentials in the :term:`Ansible Vault`.
+    find the credentials in :term:`secrets.yml`.
 
 S3 users and buckets can be managed via the web interface available at https://control.cloudscale.ch/objects.
 

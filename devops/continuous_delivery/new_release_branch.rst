@@ -264,8 +264,8 @@ Documentation
   **«nice2_specification»** to create it.
 - Run the first build in TeamCity. Please note that ${VERSION}.docs.tocco.ch won't serve any content before the first
   build has completed.
-- Add the DNS entry for the new version ${VERSION}.docs.tocco.ch. DNS is available under cockpit.nine.ch
-  (user:tocco/pw:standard-old).
+- Add the DNS entry for the new version ${VERSION}.docs.tocco.ch. DNS is available under https://cockpit.nine.ch.
+  (username/password in :term:`secrets2.yml`.)
 - Create all files needed for Openshift to deploy the new version. You can find a template in the openshift directory
   in the ansible repository. Replace **${VERSION}** with the version number without any characters which aren't numeric
   (e.g. 2.18 -> `218`).
@@ -284,7 +284,7 @@ Documentation
   Here again, ${VERSION} is *218* rather than *2.18*.
 
 - Site Search can be configured on https://control.freefind.com and is registered by toccosupport@gmail.com for
-  https\://documentation.tocco.ch. Username and password can be found in the :term:`Ansible Vault`.
+  https\://documentation.tocco.ch. Username and password can be found in :term:`secrets.yml`.
 
   1. Set an additional starting point in "/Build Index/Set starting point" to ensure that the subdomain is indexed.
   2. Define a new subsection in "/Build Index/Define subsections" to ensure that user can search inside a specific documentation.
