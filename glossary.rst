@@ -197,7 +197,7 @@ Glossary
        Edit secrets::
 
            $ cd ${ANSIBLE_REPO}
-           $ ansible-edit view secrets.yml
+           $ ansible-vault edit secrets.yml
 
     secrets2.yml
 
@@ -216,7 +216,7 @@ Glossary
        Edit secrets::
 
            $ cd ${ANSIBLE_REPO}/tocco
-           $ ansible-edit view secrets2.yml
+           $ ansible-vault edit  secrets2.yml
 
     service
     SVC
