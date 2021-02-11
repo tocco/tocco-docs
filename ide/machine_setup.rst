@@ -243,8 +243,8 @@ Create a Key
 
 .. code-block:: bash
 
-    ssh-keygen -t rsa -b 4096
-    cat ~/.ssh/id_rsa.pub # copy key and paste in the next step
+    ssh-keygen -t ed25519
+    cat ~/.ssh/id_ed25519.pub # copy key and paste in the next step
 
 
 Distribute Key
@@ -252,7 +252,7 @@ Distribute Key
 
 Add key on https://git.tocco.ch (**Your name** (top right corner) → **Settings** → **SSH Public Keys** → **Add Key** …)
 
-You also want to give the content of **~/.ssh/id_rsa.pub** to someone of operations. To that regard, you can
+You also want to give the content of **~/.ssh/id_ed25519.pub** to someone of operations. To that regard, you can
 post the **public** key in the :term:`Operations Public channel` and ask for it to be granted access.
 
 .. tip::
