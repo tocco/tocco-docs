@@ -26,12 +26,12 @@ Backup Locations
 Production Cluster 1
 ^^^^^^^^^^^^^^^^^^^^
 
-=======================  ========  ==================================  =====================================================
-        Server            Role                 Daily Backups                    Triggered backups (during CD)
-=======================  ========  ==================================  =====================================================
-db1.tocco.cust.vshn.net   master    n/a                                 ``/var/lib/postgresql-backup/deploy-dumps/`` [#f1]_
-db2.tocco.cust.vshn.net   slave     ``/var/lib/postgresql-backup/``     ``/var/lib/postgresql-backup/deploy-dumps/`` [#f1]_
-=======================  ========  ==================================  =====================================================
+============================  ========  ==================================  =====================================================
+        Server                 Role                 Daily Backups                    Triggered backups (during CD)
+============================  ========  ==================================  =====================================================
+db1.prod.tocco.cust.vshn.net   master    n/a                                 ``/var/lib/postgresql-backup/deploy-dumps/`` [#f1]_
+db2.prod.tocco.cust.vshn.net   slave     ``/var/lib/postgresql-backup/``     ``/var/lib/postgresql-backup/deploy-dumps/`` [#f1]_
+============================  ========  ==================================  =====================================================
 
 Production Cluster 2
 ^^^^^^^^^^^^^^^^^^^^
