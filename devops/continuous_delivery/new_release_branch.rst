@@ -99,6 +99,11 @@ Replace **${VERSION}** with the version number without any characters which aren
 
    git checkout -b nice-releases/**${VERSION}** && git push
 
+Afterwards checkout master again and replace the nice version inside the file `nice-current-version`_ . 
+This change must be committed and pushed and a pull-request should be opened.
+
+.. _nice-current-version: https://github.com/tocco/tocco-client/blob/master/nice-current-version.txt
+
 TeamCity build configs in `developer dashboard`_
 ------------------------------------------------
 
