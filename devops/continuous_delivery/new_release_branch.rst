@@ -88,21 +88,38 @@ Change the database of the test customer in the created **release** branch:
 
       The commit will automatically be merged into master and needs to be reverted there.
 
-Create release branch in tocco-client repository
+New Client version change
 ------------------------------------------------
 Head over to the `tocco-client Repository`_ and create a new release branch based on the current master revision.
 Replace **${VERSION}** with the version number without any characters which aren’t numeric (e.g. 2.18 -> 218).
 
 .. _tocco-client Repository: https://github.com/tocco/tocco-client
 
-.. parsed-literal::
+.. code-block:: console
 
-   git checkout -b nice-releases/**${VERSION}** && git push
+        git checkout -b nice-releases/${VERSION} && git push
 
 Afterwards checkout master again and replace the nice version inside the file `nice-current-version`_ . 
 This change must be committed and pushed and a pull-request should be opened.
 
 .. _nice-current-version: https://github.com/tocco/tocco-client/blob/master/nice-current-version.txt
+
+The last step is to create a npm distribution tag for each package for the new nice version. Usually this could be achieved by 
+creating a new tag that point to the same version as the previous nice release tag.
+
+.. code-block:: console
+
+        npm dist-tag add ${NPM PACKAGE NAME}@${LATEST VERSION} ${NICE VERSION TAG}
+
+
+Example for the package entity-browser where *0.2.0* is the version, the tag *nice228* is pointing to.
+
+.. code-block:: console
+
+        npm dist-tag add tocco-entity-browser@0.2.0 nice229
+
+        
+And finally the version in every package.json inside the nice repository can be adjusted accordingly.
 
 TeamCity build configs in `developer dashboard`_
 ------------------------------------------------
