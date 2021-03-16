@@ -61,6 +61,14 @@ Create new test system
 - Create new test system :doc:`via Ansible </devops/app_management/new_customer>`
 - Adjust parameters, :ref:`triggers <trigger-deployments>`
 
+Remove old test system(s)
+-------------------------
+
+Keep *master* and the most recent 7 test systems (all supported versions plus the just
+created test system) and remove any older test system.
+
+See :doc:`/devops/app_management/remove_customer`
+
 Update internal SSO App
 ^^^^^^^^^^^^^^^^^^^^^^^
 
