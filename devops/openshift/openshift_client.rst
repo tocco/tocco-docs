@@ -177,7 +177,7 @@ Retry failed deployment of Nice:
 
 .. code::
 
-    oc deploy --retry dc/nice
+    oc rollout retry dc/nice
 
 
 Open a Remote Shell in a Pod
