@@ -6,6 +6,9 @@ Merge
 
 Per default all fields and relations from the detail form plus the relations tabs are considered for merging.
 If a user does not have write access for a relation (or for some related entities) a to-many relation is automatically moved and is not displayed.
+If the moving fails because the current user does not have enough rights to move some related entities
+(and the relation is not defined as privileged), the user gets the following hint in the summary screen:
+*The following records could not be moved: Salary (2)*.
 
 There are some simple ``RelationMergeHandler`` implementations such as ``ToManyRelationMergeHandler``,
 ``ToManyRelationMergeHandler`` or ``PrivilegedRelationMergeHandler`` which process the merging.
