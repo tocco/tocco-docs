@@ -343,3 +343,12 @@ Update Initial Values
 ---------------------
 
 Run the scripts as explained in section :ref:`initial-values` to update the initial values in the *integration/master* branch.
+
+Address Provider
+----------------
+
+1. Update the data source as described here https://gitlab.com/toccoag/address-provider#update-data-source (if nothing changed you can skip the remaining steps)
+2. Create a pull request
+3. After the pull request is merged the test address provider is automatically deployed (takes a few minutes)
+4. Check on a test system such as https://master.tocco.ch/ if the location suggestion on the address entity is still working
+5. Deploy the production address provider via teamcity
