@@ -41,7 +41,7 @@ Execute Script
 
    Set ``ID`` to something like ``updateCountry_XKV_to_UNK/2.27``, ``OLD_VALUE`` is the old iso3 code and ``NEW_VALUE`` is the new iso3 code
 
-   Additionally, update ``src/bin/initialvalues/input/{licence_plate, sorting, zip_city}.csv`` if necessary
+   Additionally, update ``src/bin/initialvalues/input/{licence_plate, sorting}.csv`` if necessary
 
     * Else, write a change set to set the country to inactive:
 
@@ -69,6 +69,5 @@ Additional Information
 ^^^^^^^^^^^^^^^^^^^^^^
 
 * The ``licence_plate`` field is not part of the data source. There is a static file under ``src/bin/initialvalues/country/input/licence_plate.csv`` as data source in the format ``Iso3,Licence_plate_code``
-* The ``zip_city`` field is an internal Tocco field. All countries which are listed in the ``src/bin/initialvalues/country/input/zip_city.csv`` file are set to ``true`` otherwise the value will be ``false``
 * The ``sorting`` field is an internal Tocco field. Per default a country obtains the value ``100``. If a non-default value is required there is a static file under ``src/bin/initialvalues/country/input/sorting.csv`` in the format ``Iso3,number`` to define the value per country
 * Some countries have multiple currency codes and calling codes. In such a case the values are comma-separated written into the text field
