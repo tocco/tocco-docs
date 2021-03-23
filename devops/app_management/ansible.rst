@@ -616,7 +616,7 @@ Run Full Playbook (=Configure Everything)
 .. code::
 
     $ cd ${ANSIBLE_GIT_REPO}/tocco
-    $ ansible-playbooka playbook.yml -l abbts
+    $ ansible-playbook playbook.yml -l abbts
 
 
 .. tip::

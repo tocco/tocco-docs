@@ -108,7 +108,7 @@ The following environment variables are supported:
 
 ===================  ===================================================================================================
 NICE2_APP_*          Add custom entries to ``application.local.properties``.
-NICE2_HIKARI_*       Add custom entries to ``hikiricp.local.properties``.
+NICE2_HIKARI_*       Add custom entries to ``hikaricp.local.properties``.
 NICE2_JAVA_PARAM_*   Pass custom parameters to Java.
 NICE2_NICE_ARG_*     Pass custom argument to Nice. (Not applied in :term:`pre-hook pod`)
 ===================  ===================================================================================================
