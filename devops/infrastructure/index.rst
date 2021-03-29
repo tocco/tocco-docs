@@ -234,6 +234,32 @@ Simple `dashboard`_ for our developers.
 
 .. _dashboard: https://github.com/tocco/tocco-dashboard
 
+Address Provider
+----------------
+
+External `addressprovider`_ service
+
+.. list-table::
+   :header-rows: 1
+   :widths: 10 20 20
+
+   * - Name
+     - Provided Service
+     - Management
+   * - dc/\*
+     -
+     - Manually
+   * - | route/\*
+       | svc/\*
+     -
+     - Manually
+   * - is/\*
+     -
+     - | Production: Deployed via TeamCity
+       | Test: Deployed via GitLab
+
+.. _addressprovider: https://gitlab.com/toccoag/address-provider
+
 Managed Servers - VSHN
 ----------------------
 
