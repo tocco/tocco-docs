@@ -107,7 +107,7 @@ Replace **${VERSION}** with the version number without any characters which aren
 
    git checkout -b nice-releases/**${VERSION}** && git push
 
-Afterwards checkout master again and replace the nice version inside the file `nice-current-version`_ . 
+Afterwards checkout master again and replace the nice version inside the file `nice-current-version`_ .
 This change must be committed and pushed and a pull-request should be opened.
 
 .. _nice-current-version: https://github.com/tocco/tocco-client/blob/master/nice-current-version.txt
@@ -213,6 +213,14 @@ version. This is done by the Tocco Business Services.
 A new JIRA task should be created in the `TOCBO`_ project and assigned to the Business Services team.
 
 .. _integration.tocco.ch: https://integration.tocco.ch
+
+For image service
+^^^^^^^^^^^^^^^^^
+
+Check https://github.com/h2non/imaginary if a new version is available or other adjustments on our end are necessary. If
+there are, create a task to deploy a new version, first in test and then in production as usual.
+
+See :ref:`image_service` for details on the service.
 
 Store entity model snapshot on SharePoint
 -----------------------------------------
@@ -334,7 +342,7 @@ open *result.txt*.
 
 Check for unused modules and have them removed. Note that modules can be listed
 as unused if they are new and not yet used.
- 
+
 
 .. _common.yml: https://git.vshn.net/tocco/tocco_hieradata/blob/master/common.yaml
 .. _Unused Dependencies: https://tc.tocco.ch/buildConfiguration/Nice2_UnusedDependencies
