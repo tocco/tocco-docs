@@ -53,3 +53,19 @@ pre.literal-block {
 p {
   max-width: 800px;
 }
+
+/*
+    Pick up Host-Strict-Transport-Security (HSTS) header from https://tocco.ch.
+
+    I want to enable HSTS with includeSubDomains to tell browsers that all http
+    request going to tocco.ch and its subdomainshould be upgraded to https. In
+    order to ensure this doesn't cause any issues, I'll start telling browsers
+    to upgrade the requests for a short time only. To get some test coverage, I
+    need a few places our people are likely to visit, like this documentation,
+    and force loading of a resource from https://tocco.ch to ensure the browser
+    picks up the HSTS header.
+*/
+a.icon-home {
+    /* 1x1 transparent pixel with 15 min. caching */
+    background-image: url(https://tocco.ch/img/s.gif) !important;
+}
