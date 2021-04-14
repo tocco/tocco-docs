@@ -20,11 +20,11 @@ Release package
 
   Before you start, make sure:
 
-  - You checked out the master branch and your local branch is called "master" too
+  - You checked out the master or a nice-release/* branch. A package should not be released on a feature branch.
   - You're logged into the NPM registry with the "tocconpm" user (check with ``npm whoami``).
     See :ref:`npm-authentication` below for details.
 
-Once the package is ready it can be released / published. A package will be released on master only.
+Once the package is ready it can be released / published.
 
 .. code-block:: console
 
@@ -33,7 +33,8 @@ Once the package is ready it can be released / published. A package will be rele
 This will run yarn setup at the beginning to make sure all local dependencies are up to date.
 After that the new version can be entered. The script will then create a changelog entry which can be edited manually,
 bumps the version of the package, creates a git release tag and uploads the package to the npm registry.
-Everything gets committed but needs to be pushed to origin.
+Everything gets committed and pushed to a new branch with the name of the release. To merge this changes to master or nice-release branch a pull request must be created.
+To keep tags intact, the pull request must be closed with "Create a merge commit" and **not** "Rebase and merge". 
 
 .. warning::
 
