@@ -260,6 +260,33 @@ External `addressprovider`_ service
 
 .. _addressprovider: https://gitlab.com/toccoag/address-provider
 
+
+.. _image_service:
+
+Image service
+-------------
+
+We use a service called `imaginary <https://github.com/h2non/imaginary>`_ running in its own pod. The Openshift project
+containing the service is called ``toco-image-service``. All calls to the service require a header ``API-Key`` be used,
+containing the key as defined in ``image_service_api_key`` in :term:`secrets2.yml`.
+
+From the backend we call the ``/crop`` endpoint of the service to generate thumbnails. Other endpoints may be used freely
+if the need ever arises, nothing is blocked.
+
+.. list-table::
+   :header-rows: 1
+   :widths: 10 20 20
+
+   * - Name
+     - Provided Service
+     - Management
+   * - dc/\*
+     -
+     - Manually
+   * - is/\*
+     -
+     - Deployed manually
+
 Managed Servers - VSHN
 ----------------------
 
