@@ -63,11 +63,13 @@ Validation
 ----------
 
 Entities that have been created or modified during a transaction will be validated before the transaction is committed.
-The validation is started by the :nice:`ValidationInterceptor <ch/tocco/nice2/persist/hibernate/validation/ValidationInterceptor>`
-(which is a Hibernate :java-hibernate:`Interceptor <org/hibernate/Interceptor>`).
 
-The ``onSave()`` event is called for every entity instance that is created during the transaction (before it is saved to the
-database using ``Session#save()`` by the :ref:`transaction-context` - not when the entity instance is created).
+The validation for new entities is started in ``EntityTransactionContext#executeEntityOperations()`` just before
+``Session#save()`` is called. ``ValidationContext.Operation.INSERT`` is passed to the validation context for newly created entities.
+
+The validation of updated entities is started by the :nice:`ValidationInterceptor <ch/tocco/nice2/persist/hibernate/validation/ValidationInterceptor>`
+(which is a Hibernate :java-hibernate:`Interceptor <org/hibernate/Interceptor>`).
 
 All modified entities are validated by the ``preFlush()`` event that is called for all entities which are in the Hibernate session
 before the changes are flushed to the database. Only dirty entities will be validated.
+``ValidationContext.Operation.UPDATE`` is passed to the validation context for updated entities.
