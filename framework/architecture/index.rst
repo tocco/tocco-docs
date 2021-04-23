@@ -11,3 +11,4 @@ Architecture
    s3/index
    dependencies/index
    reports/index
+   spring/index
