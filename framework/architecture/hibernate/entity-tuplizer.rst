@@ -14,6 +14,10 @@ In addition this saves some memory as, most likely, proxies are not created for 
 This is achieved by overriding ``buildProxyFactory()`` and returning a proxy instance that is initialized when it is used for the
 first time.
 
+If the JVM argument ``hiveapp.eager.service.initialization`` is set to true the lazy proxy factory is initialized immediately.
+This leads to a longer startup time, but makes sure that everything is initialized when startup is completed, so
+that the first few requests aren't slowed down by initialization.
+
 Custom proxy factory
 --------------------
 
