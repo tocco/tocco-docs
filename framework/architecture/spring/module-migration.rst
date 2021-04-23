@@ -28,7 +28,7 @@ for modularization. First we need to create the module descriptor ``module-info.
 
     }
 
-The module name should be in the following format: ``nice.core/optional/customer.<module-name>``. Note that the module
+The module name should be in the following format: ``nice.{core, optional, customer}.<module-name>``. Note that the module
 must be ``open``. This allows other modules to access the module classes by reflection, which is necessary for
 the discovery of the beans by spring. It would also be possible to only open certain packages to certain modules
 using the ``opens <package> to <module>`` syntax.
