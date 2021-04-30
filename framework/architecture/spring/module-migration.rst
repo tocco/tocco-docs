@@ -77,6 +77,24 @@ The test sources belong in the ``src/test/java`` (or ``src/test/groovy``) direct
 do not have a ``module-info.java`` class, which means that internal classes of other modules are also accessible
 in tests. However it is possible to add a module descriptor if the modularization is required for integration tests.
 
+.. note::
+
+    Spock tests are no longer supported. Spock is based on JUnit but we mainly use TestNG and to avoid
+    an unnecessarily complicated Gradle configuration it is easier to just migrate them to normal Groovy tests
+    as there were very few Spock tests anyway.
+
+'Test-Jars' / Test Fixtures
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Test classes that should be available in other modules should be placed in the ``src/testFixtures/java``
+folder.
+
+They can then be referenced in a ``build.gradle`` in the following way: ``testImplementation(testFixtures(project(":boot")))``
+
+It is also possible to declare dependencies specifically for the test fixtures using ``testFixturesApi`` (transitive)
+or ``testFixturesImplementation``.
+See the `manual <https://docs.gradle.org/current/userguide/java_testing.html#sec:java_test_fixtures>`_ for details.
+
 Adding dependencies
 -------------------
 
@@ -170,6 +188,11 @@ The above example only contributes a service.
 The only thing to do here is to annotate the setter method with  ``@Autowired`` where the configuration
 should be injected. Instead of the using a setter it's also possible to use the constructor for injection.
 
+.. note::
+
+    If there are no contributions that match the setter that is marked with ``@Autowired`` spring
+    will throw an exception. To avoid this the annotation attribute ``required`` may be set to false.
+
 The approach above only works if the different contributions implement the same interface.
 If the contributions do not implement a common interface, an annotation can be used instead
 (have a look at `this commit <https://gitlab.com/toccoag/spring-boot-test/-/commit/9df5ba92ca6ca66c3339bcd69ad73f2e6ade725c>`_
@@ -210,6 +233,8 @@ Services
 ^^^^^^^^
 
 It is usually sufficient to annotate the service implementation with the ``@Component`` annotation.
+If the service was a "threaded" HiveApp service the ``@ThreadScope`` annotation must be added as well
+to achieve the same behaviour.
 
   .. code-block:: xml
 
@@ -237,3 +262,39 @@ How contributions are migrated depends on how the corresponding configuration po
     * If there is an additional metadata annotation it needs to be placed on the class as well
     * If a custom contribution class is used, an instance of this class needs to be returned from a
       method that is annotated with ``@Bean`` and is in class that is annotated with ``@Configuration``
+
+Miscellaneous
+-------------
+
+application.properties
+^^^^^^^^^^^^^^^^^^^^^^
+
+An ``application.properties`` file is supported per default by Spring.
+There should only be one ``application.properties``file on the classpath
+(that means only one file per customer module in the ``resources`` directory).
+
+To locally override properties an ``application-{profile}.properties`` file can be used,
+where {profile} corresponds to the active Spring profile (for example ``development``).
+This is the replacement of the ``application.local.properties`` file.
+
+Lazy initialization
+^^^^^^^^^^^^^^^^^^^
+
+Per default all spring beans are initialized lazily because the property ``spring.main.lazy-initialization``
+has been set to true in the ``application.properties``.
+
+To enable eager loading of all beans this property must be set to false.
+To force eager loading only for certain beans they must be annotated with ``@Lazy(false)``
+
+Logging
+^^^^^^^
+
+Spring uses Logback by default and each customer module contains a ``logback-spring.xml`` that configures
+the logging. By default these files just include the default logging configuration that is part of the ``boot``
+module. But this approach allows different logging configs for different customers.
+
+The logback config supports the ``<springProfile>`` tag to customize the logging depending on the current
+run environment.
+
+The logging config for tests is defined in the ``logback-test.xml`` contained by the test fixture of the ``boot``
+module (which is included in the main ``build.gradle`` for all modules).
