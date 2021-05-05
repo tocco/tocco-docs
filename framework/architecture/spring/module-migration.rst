@@ -11,6 +11,8 @@ This guide explains how to migrate an existing Tocco module from HiveApp to Spri
     * ``nice2_repo_username=...``
     * ``nice2_repo_password=...``
 
+    The values of the maven project are stored in ``~/.m2/settings.xml``.
+
 Create new module
 -----------------
 
@@ -256,7 +258,9 @@ to achieve the same behaviour.
     <set-configuration configuration-id="ServicePointCategoryExtractors" property="categoryExtractors"/>
 
 If a configuration-point is injected into the service the setter has to be annotated with ``@Autowired``
-or the property has to be moved into the constructor.
+or the property has to be moved into the constructor. Note that the injection order of several
+``@Autowired`` methods is undefined. If the order is important they should be merged into one method
+or moved into the constructor.
 
   .. code-block:: xml
 
