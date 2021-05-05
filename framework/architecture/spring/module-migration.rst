@@ -3,6 +3,16 @@ Module migration
 
 This guide explains how to migrate an existing Tocco module from HiveApp to Spring Boot.
 
+.. note::
+
+    We use a custom Maven Artifact Repository. To be able to use it the credentials need to be stored
+    in the ``~/.gradle/gradle.properties`` file:
+
+    * ``nice2_repo_username=...``
+    * ``nice2_repo_password=...``
+
+    The values of the maven project are stored in ``~/.m2/settings.xml``.
+
 Create new module
 -----------------
 
@@ -236,12 +246,21 @@ It is usually sufficient to annotate the service implementation with the ``@Comp
 If the service was a "threaded" HiveApp service the ``@ThreadScope`` annotation must be added as well
 to achieve the same behaviour.
 
+.. note::
+
+    If no scope is specified, the default scope ``singleton`` is used. It's also possible to use
+    ``@Scope("prototype")`` to get a new instance when this dependency is injected. See also
+    this `article <https://www.baeldung.com/spring-inject-prototype-bean-into-singleton>`_ about
+    the implications of using different scopes.
+
   .. code-block:: xml
 
     <set-configuration configuration-id="ServicePointCategoryExtractors" property="categoryExtractors"/>
 
 If a configuration-point is injected into the service the setter has to be annotated with ``@Autowired``
-or the property has to be moved into the constructor.
+or the property has to be moved into the constructor. Note that the injection order of several
+``@Autowired`` methods is undefined. If the order is important they should be merged into one method
+or moved into the constructor.
 
   .. code-block:: xml
 
@@ -262,6 +281,13 @@ How contributions are migrated depends on how the corresponding configuration po
     * If there is an additional metadata annotation it needs to be placed on the class as well
     * If a custom contribution class is used, an instance of this class needs to be returned from a
       method that is annotated with ``@Bean`` and is in class that is annotated with ``@Configuration``
+
+.. note::
+
+    It's easy to overlook a detail in the ``hivemodule.xml`` file, therefore it makes sense to search the file
+    for terms like ``threaded`` (missing ``@ThreadScope`` annotation?), ``initialize-method`` (missing
+    ``@PostConstruct`` annotation?), ``<set property`` (missing ``@Value`` annotation?) or
+    ``<set-configuration`` (missing ``@Autowired`` annotation?).
 
 Miscellaneous
 -------------
@@ -298,3 +324,9 @@ run environment.
 
 The logging config for tests is defined in the ``logback-test.xml`` contained by the test fixture of the ``boot``
 module (which is included in the main ``build.gradle`` for all modules).
+
+Nice Version
+^^^^^^^^^^^^
+
+The ``current-version.txt`` file no longer exists, the version number is now defined in the ``default.properties``
+file of the ``boot`` module.
