@@ -63,6 +63,12 @@ In addition the module  must be registered in the ``build.gradle`` (see `https:/
         mainModule.set("nice.customer.test")
     }
 
+If the new module is a core module it should also be added to the ``build.gradle`` in the ``customer`` folder, so
+that it will be included for all customers.
+If it is an optional module, it needs to be included in the ``build.gradle`` of the ``test`` customer directly.
+This will make sure that the ``StartupTest`` integration test will pickup the new module and makes sure that
+the spring configuration is correct.
+
 Adding sources
 --------------
 
@@ -124,7 +130,7 @@ Dependencies may be declared in the ``build.gradle`` file of the module:
 See also the gradle `documentation <https://docs.gradle.org/current/userguide/java_library_plugin.html>`_ for more details.
 
     * The ``api`` dependencies are transitive and are automatically available for all modules that depend on this module.
-      This should be used if the dependency is required by a class in the API package (that is exported from the module).
+      This should be used if the dependency is required by the public API of a class in an exported package (see gradle docs for details).
 
     * ``implementation`` should be used for all other dependencies that are only used internally.
 
@@ -268,6 +274,22 @@ or moved into the constructor.
 
 Setter for properties can be removed and replaced with the ``@Value("${..}")`` annotation directly on the field.
 
+.. note::
+
+    If there are circular dependencies in the beans, this can be solved by placing the ``@Lazy`` annotation on the
+    problematic constructor or method parameter. See also
+    `this article <https://www.baeldung.com/circular-dependencies-in-spring>`_ about
+    other options how to solve this issue.
+    This approach can also be used when an interface should be autowired, but there aren't any implementations yet
+    (will be added in a later module).
+
+.. note::
+
+    In contrast to HiveMind a service does not have to implement an interface to be a bean. In fact an interface should only be
+    used if:
+
+        * the service must be exported form the module, but the implementation details should remain hidden in the module
+        * there are multiple implementations
 
 Contributions
 ^^^^^^^^^^^^^
@@ -330,3 +352,16 @@ Nice Version
 
 The ``current-version.txt`` file no longer exists, the version number is now defined in the ``default.properties``
 file of the ``boot`` module.
+
+EventEmitter
+^^^^^^^^^^^^
+
+Usages of the EventEmitter can usually be replaced by Spring's ``ApplicationEvent`` but require
+a bit of refactoring:
+
+    * Create a new event that extends the ``ApplicationEvent``
+    * Inject the ``ApplicationEventPublisher`` into the bean where events
+      need to be fired
+    * Use the ``@EventListener`` annotation to receive the published events.
+
+See `here <https://www.baeldung.com/spring-events>`_ for more details.
