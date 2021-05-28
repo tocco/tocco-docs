@@ -26,8 +26,6 @@ The new module needs to be registered in the ``settings.gradle`` file in the roo
 
     include 'core:<module-name>'
 
-At this point it is recommended to refresh the Gradle project in IDEA in order to have IDE support for the next steps.
-
 We use the `Java Platform Module System <https://www.oracle.com/corporate/features/understanding-java-9-modules.html>`_
 for modularization. First we need to create the module descriptor ``module-info.java`` in the main source directory
 ``src/main/java``:
@@ -37,6 +35,14 @@ for modularization. First we need to create the module descriptor ``module-info.
     open module nice.core.reporting {
 
     }
+
+At this point it is recommended to refresh the Gradle project in IDEA in order to have IDE support for the next steps.
+
+.. note::
+
+    IDEA should not be refreshed before the ``module-info.java`` file has been created. Otherwise the project files
+    might become corrupt (module visibility not working properly for the new module) and the ``.idea`` folder has to be
+    deleted and restored.
 
 The module name should be in the following format: ``nice.{core, optional, customer}.<module-name>``. Note that the module
 must be ``open``. This allows other modules to access the module classes by reflection, which is necessary for
@@ -311,6 +317,9 @@ How contributions are migrated depends on how the corresponding configuration po
     ``@PostConstruct`` annotation?), ``<set property`` (missing ``@Value`` annotation?) or
     ``<set-configuration`` (missing ``@Autowired`` annotation?).
 
+    Also keep in mind that HiveMind automatically calls a method named ``initializeService`` if it exists
+    on a service, even when there is no ``initialize-method`` in the ``hivemodule.xml`` file.
+
 Miscellaneous
 -------------
 
@@ -356,7 +365,7 @@ file of the ``boot`` module.
 EventEmitter
 ^^^^^^^^^^^^
 
-Usages of the EventEmitter can usually be replaced by Spring's ``ApplicationEvent`` but require
+Usages of the ``EventEmitter`` can usually be replaced by Spring's ``ApplicationEvent`` but require
 a bit of refactoring:
 
     * Create a new event that extends the ``ApplicationEvent``
@@ -365,3 +374,6 @@ a bit of refactoring:
     * Use the ``@EventListener`` annotation to receive the published events.
 
 See `here <https://www.baeldung.com/spring-events>`_ for more details.
+
+Alternatively a ``EventEmitter<Listener> emitter`` can simply be replaced with ``List<Listener> listener`` and
+``emiter.emitter().listenerMethod()`` with ``listeners.forEach(l -> l.listenerMethod())``.
