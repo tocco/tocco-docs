@@ -74,7 +74,7 @@ List Available Archives
 
 .. parsed-literal::
 
-      $ sudo burp -c /etc/burp/slave.conf -C **${NAME_OF_SLAVE}** -a list
+      $ sudo burp -Q -c /etc/burp/slave.conf -C **${NAME_OF_SLAVE}** -a list
       Backup: 0000155 2018-01-31 03:03:22 +0100 (deletable)
       Backup: 0000162 2018-02-09 01:14:05 +0100 (deletable)
       Backup: :green:`0000169` 2018-02-16 01:10:54 +0100 (deletable)
@@ -94,7 +94,7 @@ Show the content of directory ``/var/lib/postgresql-backup/`` in archive :green:
 
 .. parsed-literal::
 
-      $ sudo burp -c /etc/burp/slave.conf -C **${NAME_OF_SLAVE}** -a list -b :green:`0000169` -r '^/var/lib/postgresql-backup/'
+      $ sudo burp -Q -c /etc/burp/slave.conf -C **${NAME_OF_SLAVE}** -a list -b :green:`0000169` -r '^/var/lib/postgresql-backup/'
       Backup: 0000169 2018-02-16 01:10:54 +0100 (deletable)
       With regex: ^/var/lib/postgresql-backup/
       /var/lib/postgresql-backup/nice_awpf.dump
@@ -112,7 +112,7 @@ Restore **nice_bnftest.dump** from backup :green:`0000169` to directory **~/rest
 .. parsed-literal::
 
       $ mkdir -p :blue:`~/restores/`
-      $ sudo burp -c /etc/burp/slave.conf -C **${NAME_OF_SLAVE}** -a restore -b :green:`0000169` -d :blue:`~/restores/` -r '^\ :red:`/var/lib/postgresql-backup/postgres-nice_bnftest.dump.gz`'
+      $ sudo burp -Q -c /etc/burp/slave.conf -C **${NAME_OF_SLAVE}** -a restore -b :green:`0000169` -d :blue:`~/restores/` -r '^\ :red:`/var/lib/postgresql-backup/postgres-nice_bnftest.dump`'
       …
       2018-03-09 16:01:30 +0100: burp[23156] restore finished
       $ ls -lh :blue:`~/restores/`:red:`var/lib/postgresql-backup/nice_bnftest.dump`
