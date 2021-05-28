@@ -239,6 +239,15 @@ Address Provider
 
 External `addressprovider`_ service
 
+The service is deployed via GitLab CI and the service definition is managed
+via Ansible (:ansible-repo-file:`playbook <services/playbook.yml>`,
+:ansible-repo-dir:`role <services/roles/address-provider>`).
+
+Deployment::
+
+    $ cd ${ANSIBLE_REPO/services
+    $ ansible-playbook playbook.yml -t address-provider
+
 .. list-table::
    :header-rows: 1
    :widths: 10 20 20
@@ -272,6 +281,15 @@ containing the key as defined in ``image_service_api_key`` in :term:`secrets2.ym
 
 From the backend we call the ``/crop`` endpoint of the service to generate thumbnails. Other endpoints may be used freely
 if the need ever arises, nothing is blocked.
+
+The service is deployed via GitLab CI and the service definition is managed
+via Ansible (:ansible-repo-file:`playbook <services/playbook.yml>`,
+:ansible-repo-dir:`role <services/roles/image-service>`).
+
+Deployment::
+
+    $ cd ${ANSIBLE_REPO/services
+    $ ansible-playbook playbook.yml -t image-service
 
 .. list-table::
    :header-rows: 1

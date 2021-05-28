@@ -359,4 +359,6 @@ Address Provider
 2. Create a pull request
 3. After the pull request is merged the test address provider is automatically deployed (takes a few minutes)
 4. Check on a test system such as https://master.tocco.ch/ if the location suggestion on the address entity is still working
-5. Deploy the production address provider via teamcity
+5. Deploy the production address provider via GitLab by finding the play button for the *prod_deploy* job belonging to the current `pipeline`_.
+
+.. _pipeline: https://gitlab.com/toccoag/address-provider/-/pipelines
