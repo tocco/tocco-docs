@@ -15,6 +15,81 @@ For every customer we operate an independent instance and every
 instance is in an independent OpenShift project with the name
 toco-nice-${INSTALLATION_NAME}.
 
+.. graphviz::
+
+    digraph {
+        rankdir=LR
+        newrank=true
+        label="OpenShift Setup - One Installation with Two Instances"
+
+        ### Nodes ###
+
+        inet [ label="Internet/\nClient" shape=pentagon ]
+        postgres [ label="Postgres\nDB server" ]
+        solr [ label="Solr\nfulltext search" ]
+        s3 [ label="S3\nobject storage" ]
+
+        subgraph cluster_openshift {
+            label="Openshift"
+
+            haproxy [ label="HAProxy\nload balancer" ]
+
+            subgraph cluster_pod1 {
+                label="Pod"
+
+                nginx1 [ label="Nginx\nreverse proxy" ]
+                nice1 [ label="Tocco\napplication" ]
+            }
+
+            subgraph cluster_pod2 {
+                label="Pod"
+
+                nginx2 [ label="Nginx\nreverse proxy" ]
+                nice2 [ label="Nice\napplication" ]
+            }
+
+            addr_service1 [ label="Address Service" ]
+            addr_service2 [ label="Address Service" ]
+            image_service1 [ label="Image Service" ]
+            image_service2 [ label="Image Service" ]
+        }
+
+        ### Edges ###
+
+        addr_service1 -> { postgres solr } [ style=invis ]
+
+        inet -> haproxy [ color=blue fontcolor=blue ]
+        haproxy -> nginx1 [ color=blue ]
+        haproxy -> nginx2 [ color=gray ]
+        nginx1 -> nice1 [ color=blue ]
+        nginx2 -> nice2 [ color=gray ]
+        nice1 -> { addr_service1 image_service1 solr postgres } [ color=blue style=dashed ]
+        nice1 -> { addr_service2 image_service2 } [ color=gray style=dashed ]
+        nice2 -> { addr_service1 addr_service2 image_service1 image_service2 solr postgres } [ color=gray ]
+        inet -> s3 [ label="object fetch" color=blue style=dashed ]
+        nice1 -> s3 [ label="object store" color=blue style=dashed ]
+        nice2 -> s3 [ color=gray style=dashed ]
+
+        ### Legend ###
+
+        subgraph cluster_legend {
+            label=Legend
+
+            a [ shape=point ]
+            b [ shape=point ]
+            c [ shape=point ]
+            d [ shape=point ]
+            e [ shape=point ]
+            f [ shape=point ]
+
+            a -> b [ color=blue label="an HTTP request" ]
+            c -> d [ color=blue style=dashed label="possible, additional requests required to statisfy request" ]
+            e -> f [ color=gray label="(gray) alternative path using secondary instance" ]
+        }
+        { rank=same a c e inet }
+        { rank=same b d f nginx1 }
+    }
+
 On a Kubernetes-level our setup looks something like this:
 
 .. list-table::
