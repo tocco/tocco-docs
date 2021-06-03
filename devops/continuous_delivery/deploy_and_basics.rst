@@ -1,4 +1,4 @@
-Continious Delivery (CD)
+Continuous Delivery (CD)
 ========================
 
 Teamcity Project "Continuous Delivery NG"
@@ -166,7 +166,7 @@ from the new, updated test system`:
 
 The old test system is usally kept for a short while, in order to be
 able to verify potential regression that resulted from the upgrade.
-Then, the old test system is removed and were back to the regular setup:
+Then, the old test system is removed and we're back to the regular setup:
 
 
 .. graphviz::
