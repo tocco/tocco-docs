@@ -98,6 +98,11 @@ Change the database of the test customer in the created **release** branch:
 
 Create release branch in tocco-client repository
 ------------------------------------------------
+
+    .. warning::
+
+      Before creating a new release branch make sure that all packages are released!
+
 Head over to the `tocco-client Repository`_ and create a new release branch based on the current master revision.
 Replace **${VERSION}** with the version number without any characters which aren’t numeric (e.g. 2.18 -> 218).
 
@@ -111,6 +116,14 @@ Afterwards checkout master again and replace the nice version inside the file `n
 This change must be committed and pushed and a pull-request should be opened.
 
 .. _nice-current-version: https://github.com/tocco/tocco-client/blob/master/nice-current-version.txt
+
+Create a new npm tag for each released package with the command
+
+.. parsed-literal::
+
+    npm dist-tag add tocco-${PACKAGE}@${PACKAGE_VERSION} nice${VERSION}
+
+On the master branch of the backend replace the old release tag with the new one in all **package.json** (Example commit: 5da731cc9a39841061016c6ab8cb36239221c8d2).
 
 TeamCity build configs in `developer dashboard`_
 ------------------------------------------------
