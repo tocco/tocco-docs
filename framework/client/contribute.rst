@@ -106,12 +106,11 @@ Assumed it's a critical bug, otherwise it will just be fixed in master with a pu
 
 #. Find out the oldest yet supported version of Nice that contains the package with the bug.
 #. Create a fix branch based on the release branch (e.g. ``git checkout -b pr/217/login/bug nice-releases/217``)
-#. Commit fix to branch. Preferably with a regression test to verify the fix.
+#. Commit fix to branch. Preferably with a regression test to verify the fix. (Add ``Cherry-pick: Up`` to the commit message that the commit is automatically cherry picked and released in the versions 2.18 - master)
 #. Create a pull request, wait until approved and rebase into release branch.
-#. Checkout release branch and publish the affected package. It's important to not increment the PATCH version for hotfixes in older versions. Chances are that this version already exists on a newer branch. Therefore a --hotfix has to be added to the current version. For more info see `Naming`_ chapter.
-#. Publish an npm tag for the version (e.g. ``npm dist-tag add tocco-login@1.0.2-hotfix217.1 nice217``. With this tag it's possible to change the Nice package.json to this tag instead of a specific version. New fixes will then automatically be installed.
+#. Checkout release branch and publish the affected package. It's important to not increment the PATCH version for hotfixes in older versions. Chances are that this version already exists on a newer branch. Therefore a --hotfix has to be added to the current version. For more info see `Naming`_ chapter and :ref:`releasing-script`.
 #. Delete fix branch.
-#. Merge release branch in next version and publish there as well. (this will hopefully be automated sometime)
+#. Merge release branch in next version and publish there as well. (see requirements for automation in step 3)
 #. Repeat until hotfix is no more relevant or the bug is fixed in the newest version (master).
 
 Naming
