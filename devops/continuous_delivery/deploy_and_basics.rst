@@ -1,18 +1,18 @@
-Deploy / Basics
-===============
+Continuous Delivery (CD)
+========================
 
-Teamcity Project "Continuous Delivery"
---------------------------------------
+Teamcity Project "Continuous Delivery NG"
+-----------------------------------------
 
 The `Continuous Delivery project`_ is the entry point to CD.
 
-.. _Continuous Delivery project: https://dev.tocco.ch/teamcity/project.html?projectId=Nice2ContinuousDelivery
+.. _Continuous Delivery project: https://tc.tocco.ch/project/ContinuousDeliveryNg
 
 .. figure:: deploy_and_basics_static/tc_main.png
    :scale: 60%
    :name: main page
 
-   *Continuous delivery* project on on TC's main page
+   *Continuous delivery* project on TC's main page
 
 Deliver (Simple)
 ----------------
@@ -54,8 +54,6 @@ Deliver (Advanced)
 Dump Mode 
 ---------
 
-.. note:: dump mode is currently not available 
-
 .. figure:: deploy_and_basics_static/tc_dump_modes_dropdown.png
 
    **Dump Mode** dropdown on **Parameters** tab in **Run** menu
@@ -63,8 +61,6 @@ Dump Mode
 =========================  =============================================================================================
 do not dump database       Deploy without creating a dump first (default for test systems.)
 dump database              Create a dump and only then deploy (default for production systems.)
-dump and restore database  In case of a deployment failure, automatically roll back by restoring the created dump.
-                           **In case of a rollback, changes made to the DB, after starting the dump, are lost!**
 =========================  =============================================================================================
 
 
@@ -81,26 +77,107 @@ Deploy a Specific Git Tag
           In that case remove the CD parameter "DOCKER_PULL_URL". `See deploy a Specific Docker Image <#deploy-a-specific-docker-image>`_.
 
 
-Deploy a Specific Docker Image
-------------------------------
+Handling of Version Upgrades
+----------------------------
 
-This is used for production systems, it allows you to deploy a docker image that was once installed on the test
-system. The image is determined by the DOCKER_PULL_URL parameter. It allows you to pick a image from a project an deploy it on your target project.
-E.g. This deploys the image from toccotest if you're deploying tocco. For this you can fill the parameter with the following: 
+Regular Setup
+^^^^^^^^^^^^^
 
-**registry.appuio.ch/toco-nice-%env.INSTALLATION%test/%env.DOCKER_IMAGE%.**
+During regular operations, there is one prduction and one test
+system. When **test** is deployed, a new Docker image is built and
+pushed to OpenShift. When **production** is deployed, the image
+from test is copied.
 
-After the evaluation of the CD parameters it will appear as an URL like this: 
-         
-``registry.appuio.ch/tocco-nice-toccotest/nice:latest`` [#f1]_
+.. graphviz::
+
+    digraph {
+        label="Normal Operations"
+
+        tc [ label=TeamCity ]
+        prod [ label="prod (v3.0)" ]
+        test [ label="test (v3.0)" ]
+
+        tc -> test [ label="push fresh Docker image" ]
+        test -> prod [ label="copy image" ]
+    }
 
 
-.. rubric:: Footnotes
+Upgrade to a new Version of Nice
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. [#f1] It is also possible to deploy an image from any other system on your target system.
-         E.g. test213 -> test214
-         After that, test214 will have the state of test213 which obvosuly makes no sense at all.
-
-         So be aware of that, and only use it to deploy a test image on a production system.
+First a second test system is :green:`created` and updated to the new version:
 
 
+.. graphviz::
+
+    digraph {
+        label="Adding a Secondary Test System"
+
+        tc [ label=TeamCity ]
+        prod [ label="prod (v3.0)" ]
+        test [ label="test (v3.0)" ]
+        test2 [ label="test (v3.5)" color=green fontcolor=green ]
+
+        { rank=same test test2 }
+
+        tc -> test [ label="push" ]
+        tc -> test2 [ label="push" color=green fontcolor=green ]
+        test -> prod [ label="copy" ]
+    }
+
+TeamCity decides what Docker image to copy based on the ``env.DOCKER_IMAGE``
+parameter configured for every installation. By default, the image from
+the test system called ``${INSTALLATION}test`` is copied. That is, when an
+installation called *abc* is deployed, the Docker image of *abctest* is
+copied:
+
+.. parsed-literal::
+
+    registry.appuio.ch/toco-nice-%env.INSTALLATION%\ **test**\ /%env.DOCKER_IMAGE%
+
+Should you want to copy the image from *abctest2* instead, adjust the
+``env.DOCKER_IMAGE`` parameter accordingly:
+
+.. parsed-literal::
+
+    registry.appuio.ch/toco-nice-%env.INSTALLATION%\ **test2**\ /%env.DOCKER_IMAGE%
+
+Once the new test system has been fully tested and is ready to
+be deployed, TeamCity is configured to :green:`copy the Docker image
+from the new, updated test system`:
+
+.. graphviz::
+
+    digraph {
+        label="Uprading Production"
+
+        tc [ label=TeamCity ]
+        prod [ label="prod (v3.5)" ]
+        test [ label="test (v3.0)" ]
+        test2 [ label="test (v3.5)" ]
+
+        { rank=same test test2 }
+
+        tc -> test [ label="push" ]
+        tc -> test2 [ label="push" ]
+        test -> prod [ label="(removed)", style=dotted, color=gray, fontcolor=gray ]
+        test2 -> prod [ label="copy" color=green fontcolor=green ]
+    }
+
+The old test system is usally kept for a short while, in order to be
+able to verify potential regression that resulted from the upgrade.
+Then, the old test system is removed and we're back to the regular setup:
+
+
+.. graphviz::
+
+    digraph {
+        label="Regular Operations, Again"
+
+        tc [ label=TeamCity ]
+        prod [ label="prod (v3.5)" ]
+        test [ label="test (v3.5)" ]
+
+        tc -> test [ label="push" ]
+        test -> prod [ label="copy" ]
+    }
