@@ -377,3 +377,14 @@ See `here <https://www.baeldung.com/spring-events>`_ for more details.
 
 Alternatively a ``EventEmitter<Listener> emitter`` can simply be replaced with ``List<Listener> listener`` and
 ``emiter.emitter().listenerMethod()`` with ``listeners.forEach(l -> l.listenerMethod())``.
+
+NPM
+^^^
+
+If NPM packages need to be installed for the javascript components, the ``npm.gradle`` script in the root directory needs to be
+included for that module: ``apply from: '../../npm.gradle'``.
+
+The ``package.json`` file needs to be placed in the ``resources/resources/webapp`` directory.
+``npm install`` is called during the build and the contents of the ``node_modules`` directory are accessible
+under the ``/js`` path: ``loadJs('/js/tocco-login/dist/...');``.
+
