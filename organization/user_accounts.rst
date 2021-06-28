@@ -103,7 +103,8 @@ Allow Access
     .. hint::
 
         Users with role ``@user`` have access as user *tocco* on some hosts. User with role ``@root`` have access as
-        *tadm* and *tocco* on all hosts.
+        *tadm* and *tocco* on all hosts. For users that should only have access to :doc:`/ide/pseudo-vpn`, use role
+        ``@remote``.
 
 
 Revoke Access
