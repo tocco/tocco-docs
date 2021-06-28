@@ -235,8 +235,10 @@ On **Ubuntu 18.04 and newer** install the following dependencies::
 (libraries dynamically loaded by :term:`wkhtmltopdf`)
 
 
-Setup SSH
----------
+.. _set-up-ssh:
+
+Set up SSH
+----------
 
 Create a Key
 ````````````
