@@ -110,12 +110,14 @@ Replace **${VERSION}** with the version number without any characters which aren
 
 .. parsed-literal::
 
-   git checkout -b nice-releases/**${VERSION}** && git push
+   git checkout -b nice-releases/**${VERSION}** && git tag auto-merge/**${VERSION}** && git push
 
 Afterwards checkout master again and replace the nice version inside the file `nice-current-version`_ .
 This change must be committed and pushed and a pull-request should be opened.
 
 .. _nice-current-version: https://github.com/tocco/tocco-client/blob/master/nice-current-version.txt
+
+On the last release branch (e.g. 217) change the content of the file ``target-branch.txt`` to ``nice-releases/${VERSION}``.
 
 Create a new npm tag for each released package with the command
 
