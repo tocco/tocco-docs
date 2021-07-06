@@ -40,7 +40,10 @@ Similar to `Karma`_ commit messages follow this convention:
   <type>(<scope>): <subject>
 
   <body>
+
   Changelog: <feature>
+  Refs: <Jira Task Number>
+  Cherry-pick: Up 
 
 Message subject (first line)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -84,6 +87,15 @@ If a release relevant feature is added with the commit, a Changelog line can be 
 
 A commit can have several changelog entries but an entry needs to be on one single line.
 The changelog entries are used to generate the changelog of the corresponding `<scope>` package.
+
+**Refs**
+
+At the moment there is no interface between Jira and the new client code. But with Refs a commit can be 
+linked to a task which might be helpful to comprehend a change.
+
+**Cherry-pick**
+
+Should only be set in commits for older versions. See `Maintaining older versions`_ 
 
 
 Maintaining older versions
