@@ -29,11 +29,13 @@ Setup
   Make sure to check if the variable is available. Maybe a restart is required.
   The value of {TOKEN} can be found on `Sharepoint`_
 
+  This variable is used in the ``.npmrc`` file.
+
 .. _Sharepoint: https://tocco.sharepoint.com/:w:/s/Technik/EVZGmuS-ok5PnEd6kJJMNcwBynYU4BZXu8TrjAzJQ26oQg?e=WrmATb
   
 
 
-Just install `Yarn`_ and execute the following commands:
+Install `Yarn`_ and execute the following commands:
 
 .. _Yarn: https://yarnpkg.com/en/docs/install 
 
@@ -42,14 +44,12 @@ Just install `Yarn`_ and execute the following commands:
 
   git clone https://github.com/tocco/tocco-client.git
   cd tocco-client
-  npm install --global lerna@v3.10.5
   yarn setup
 
 
-For some packages/components you may need secret keys or passwords you can't commit or save in the codebase. In such cases
-you can set your secret environment variables in a ``/.env`` and add documentation to the Plop template.
+For some packages/components you may need secret keys or passwords you can't commit or save in the codebase. 
 
-Enter this command to create your ``/.env`` file:
+Enter this command to create your ``/.env`` file containing the known secrets without values.
 
 .. code-block:: console
 
@@ -81,6 +81,11 @@ Optional parameters
 ``--backend={BACKEND_URL}``  Enable an alternative backend. E.g. master deployment of Tocco.
 =========================== ============================
 
+This command will locally start the admin and uses the master deployment as backend.
+
+.. code-block:: console
+
+  yarn start --package=admin --backend=https://master.tocco.ch
 
 
 Storybook
