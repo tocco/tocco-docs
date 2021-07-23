@@ -199,6 +199,17 @@ Glossary
            $ cd ${ANSIBLE_REPO}
            $ ansible-vault edit secrets.yml
 
+       Encrypt a file::
+
+           $ cd ${ANSIBLE_REPO}
+           $ ansible-vault encrypt --encrypt-vault-id ops ${PATH_TO_FILE}
+
+       .. tip::
+
+          When an encrypted file needs to be available in the server config
+          as well as from within ``/tocco/`` or ``/services/``, use
+          ``--encrypted-vault-id dev``.
+
     secrets2.yml
 
        Used to store passwords, API keys and other secrets. Encrypted using
@@ -217,6 +228,15 @@ Glossary
 
            $ cd ${ANSIBLE_REPO}/tocco
            $ ansible-vault edit  secrets2.yml
+
+       Encrypt a file::
+
+           $ cd ${ANSIBLE_REPO}/tocco
+           $ ansible-vault encrypt --encrypt-vault-id dev ${PATH_TO_FILE}
+
+       .. note::
+
+           *secrets2.yml* is also used by services defined in ``/services/``.
 
     service
     SVC
